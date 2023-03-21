@@ -1,14 +1,12 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Spot.hasMany(models.SpotImage, { foreignKey: "spotId" });
+      Spot.belongsToMany(models.User, { through: models.Booking });
+      Spot.belongsToMany(models.User, { through: models.Review });
     }
   }
   Spot.init(
@@ -16,34 +14,61 @@ module.exports = (sequelize, DataTypes) => {
       address: {
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          isAlpha: true,
+        },
       },
       city: {
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          isAlpha: true,
+        },
       },
       state: {
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          isAlpha: true,
+          len: [2,2]
+        },
       },
       country: {
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          isAlpha: true,
+        },
       },
       lat: {
         type: DataTypes.DECIMAL,
+        validate: {
+          len: [4, 10],
+        },
       },
       lng: {
         type: DataTypes.DECIMAL,
+        validate: {
+          len: [4, 10],
+        },
       },
       name: {
+        allowNull: false,
         type: DataTypes.STRING,
       },
       description: {
         type: DataTypes.STRING,
+        validate: {
+          max: 400,
+        },
       },
       price: {
+        // minimum is 0
         allowNull: false,
         type: DataTypes.DECIMAL,
+        validate: {
+          min: 0,
+        },
       },
       ownerId: {
         allowNull: false,
