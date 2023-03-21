@@ -28,9 +28,7 @@ module.exports = {
           allowNull: false,
           type: Sequelize.INTEGER,
           references: {
-            model: {
-              tableName: "Spots",
-            },
+            model: "Spots",
           },
         },
         createdAt: {
