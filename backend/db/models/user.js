@@ -4,10 +4,11 @@ const { Model, Validator } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // define association here
+      User.hasMany(models.Spot, { foreignKey: "ownerId" });
+      User.belongsToMany(models.Spot, { through: models.Booking });
+      User.belongsToMany(models.Spot, { through: models.Review });
     }
   }
-
   User.init(
     {
       firstName: {
@@ -58,3 +59,6 @@ module.exports = (sequelize, DataTypes) => {
   );
   return User;
 };
+
+
+// 20230317031332-addColumnsToUser.js
