@@ -59,3 +59,6 @@ module.exports = (sequelize, DataTypes) => {
   );
   return User;
 };
+
+
+// 20230317031332-addColumnsToUser.js
