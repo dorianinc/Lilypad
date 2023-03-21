@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      address: {
+      address: { // must be alphabetic
         allowNull: false,
         type: Sequelize.STRING,
       },
-      city: {
+      city: { // must be alphabetic
         allowNull: false,
         type: Sequelize.STRING,
       },
@@ -20,23 +20,24 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      country: {
+      country: { // must be alphabetic
         allowNull: false,
         type: Sequelize.STRING,
       },
-      lat: {
+      lat: { // must be number, length of at least 4
         type: Sequelize.DECIMAL,
-      },
-      lng: {
+      }, // index lat and lng with unique
+      lng: { // must be number, length of at least 4
         type: Sequelize.DECIMAL,
       },
       name: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
       description: {
         type: Sequelize.STRING,
       },
-      price: {
+      price: { // minimum is 0
         allowNull: false,
         type: Sequelize.DECIMAL,
       },

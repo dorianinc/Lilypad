@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       reviewId: {
         allowNull: false,
-
         type: DataTypes.INTEGER,
       },
     },

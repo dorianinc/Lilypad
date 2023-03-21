@@ -14,36 +14,65 @@ module.exports = (sequelize, DataTypes) => {
   Spot.init(
     {
       address: {
+        // must be alphabetic
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          isAlpha: true,
+        },
       },
       city: {
+        // must be alphabetic
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          isAlpha: true,
+        },
       },
       state: {
+        // must be alphabetic
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          isAlpha: true,
+        },
       },
       country: {
+        // must be alphabetic
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          isAlpha: true,
+        },
       },
       lat: {
+        // must be number, length of at least 4
         type: DataTypes.DECIMAL,
+        validate: {
+          len: [4, 10],
+        },
       },
       lng: {
+        // must be number, length of at least 4
         type: DataTypes.DECIMAL,
+        validate: {
+          len: [4, 10],
+        },
       },
       name: {
+        allowNull: false,
         type: DataTypes.STRING,
       },
       description: {
         type: DataTypes.STRING,
       },
       price: {
+        // minimum is 0
         allowNull: false,
         type: DataTypes.DECIMAL,
+        validate: {
+          min: 0,
+        },
       },
       ownerId: {
         allowNull: false,
