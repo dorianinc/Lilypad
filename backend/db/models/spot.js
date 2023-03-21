@@ -1,20 +1,17 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Spot.hasMany(models.SpotImage, { foreignKey: "spotId" });
+      Spot.belongsToMany(models.User, { through: models.Booking });
+      Spot.belongsToMany(models.User, { through: models.Review });
     }
   }
   Spot.init(
     {
       address: {
-        // must be alphabetic
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
@@ -22,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       city: {
-        // must be alphabetic
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
@@ -30,15 +26,14 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       state: {
-        // must be alphabetic
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
           isAlpha: true,
+          len: [2,2]
         },
       },
       country: {
-        // must be alphabetic
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
@@ -46,14 +41,12 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       lat: {
-        // must be number, length of at least 4
         type: DataTypes.DECIMAL,
         validate: {
           len: [4, 10],
         },
       },
       lng: {
-        // must be number, length of at least 4
         type: DataTypes.DECIMAL,
         validate: {
           len: [4, 10],
@@ -65,6 +58,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       description: {
         type: DataTypes.STRING,
+        validate: {
+          max: 400,
+        },
       },
       price: {
         // minimum is 0
