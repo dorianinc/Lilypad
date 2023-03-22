@@ -1,7 +1,7 @@
 const express = require("express");
 const { check } = require("express-validator");
 const { validateSpotPost } = require("../../utils/validation");
-const { sequelize, Spot, SpotImage, Review } = require("../../db/models");
+const { sequelize, Spot, SpotImage, Review, User } = require("../../db/models");
 
 const router = express.Router();
 
@@ -38,7 +38,7 @@ router.post("/:spotId/images", async (req, res) => {
   const userId = user.id;
   const { url } = req.body;
   const spot = await Spot.findByPk(req.params.spotId, { raw: true });
-  if (!spot) res.status(404).json("Spot does not exist");
+  if (!spot) res.status(404).json("Error: This spot does not exist");
   console.log("userId", userId);
   console.log("spot.ownerId", spot.ownerId);
   if (userId === spot.ownerId) {
@@ -72,17 +72,64 @@ router.get("/current", async (req, res) => {
         spotId: currentSpot.id,
       },
     });
-    let starCount = await Review.count({
+    let totalReviews = await Review.count({
       where: {
         spotId: currentSpot.id,
       },
     });
 
-    average = starSum / starCount;
+    average = starSum / totalReviews;
     currentSpot.avgRating = average;
   }
 
   res.json(userSpots);
+});
+
+// get specific spot details based on spotId
+router.get("/:spotId", async (req, res) => {
+  const currentSpotId = req.params.spotId;
+  const spot = await Spot.findByPk(currentSpotId, {
+    include: [
+      {
+        model: User,
+        as: "owner",
+        attributes: ["id", "firstName", "lastName"],
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+    raw: true,
+  });
+
+  if (!spot) res.status(404).json("Error: This spot does not exist");
+
+  const totalReviews = await Review.count({
+    where: {
+      spotId: currentSpotId,
+    },
+  });
+  spot.numReviews = totalReviews;
+
+  const starSum = await Review.sum("stars", {
+    where: {
+      spotId: currentSpotId,
+    },
+  });
+  spot.avgStarRating = starSum / totalReviews;
+
+  spot.images = [];
+  const spotImages = await SpotImage.findAll({
+    where: {
+      spotId: currentSpotId,
+    },
+    attributes: ["id", "url", "preview"],
+    raw: true,
+  });
+
+  for (image of spotImages) spot.images.push(image);
+
+  res.json(spot);
 });
 
 module.exports = router;
