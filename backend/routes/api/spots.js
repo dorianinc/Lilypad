@@ -10,9 +10,10 @@ router.get("/", async (req, res) => {
   res.status(200).json(spots);
 });
 
+// post a new spot
 router.post("/", validateSpotPost, async (req, res) => {
   const { user } = req;
-  const userId = user.dataValues.id;
+  const userId = user.id;
   const { address, city, state, country, name, description, price } = req.body;
   if (!user) return res.status(400).json(`Something went wrong!`);
 
@@ -31,14 +32,15 @@ router.post("/", validateSpotPost, async (req, res) => {
   res.json(`Successfully created new spot for user ${userId}`);
 });
 
+// add image to a spot through spot id
 router.post("/:spotId/images", async (req, res) => {
   const { user } = req;
-  const userId = user.dataValues.id;
+  const userId = user.id;
   const { url } = req.body;
   const spot = await Spot.findByPk(req.params.spotId, { raw: true });
   if (!spot) res.status(404).json("Spot does not exist");
-  console.log("userId", userId)
-  console.log("spot.ownerId", spot.ownerId)
+  console.log("userId", userId);
+  console.log("spot.ownerId", spot.ownerId);
   if (userId === spot.ownerId) {
     const newImage = await SpotImage.create({
       url,
@@ -49,6 +51,19 @@ router.post("/:spotId/images", async (req, res) => {
   } else {
     res.json("Only an owner of a spot can add an image");
   }
+});
+
+// get all spots based on ownerId
+router.get("/current", async (req, res) => {
+  const { user } = req;
+  const userId = user.id;
+  const userSpots = await Spot.findAll({
+    where: {
+      ownerId: userId,
+    },
+    raw: true
+  });
+  res.json(userSpots);
 });
 
 module.exports = router;
