@@ -14,7 +14,7 @@ router.post("/", validateSpotPost, async (req, res) => {
   const { user } = req;
   const userId = user.dataValues.id;
   const { address, city, state, country, name, description, price } = req.body;
-  if (user) return res.status(400).json(`Something went wrong!`);
+  if (!user) return res.status(400).json(`Something went wrong!`);
 
   await Spot.create({
     address,
