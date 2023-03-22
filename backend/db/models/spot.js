@@ -14,30 +14,26 @@ module.exports = (sequelize, DataTypes) => {
       address: {
         allowNull: false,
         type: DataTypes.STRING,
-        validate: {
-          isAlpha: true,
-        },
       },
       city: {
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
-          isAlpha: true,
+          len: [5, 58],
         },
       },
       state: {
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
-          isAlpha: true,
-          len: [2,2]
+          len: [2, 2],
         },
       },
       country: {
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
-          isAlpha: true,
+          len: [4, 15],
         },
       },
       lat: {
@@ -55,6 +51,9 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         allowNull: false,
         type: DataTypes.STRING,
+        validate: {
+          len: [5, 25],
+        },
       },
       description: {
         type: DataTypes.STRING,
@@ -78,6 +77,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Spot",
+      raw: true,
     }
   );
   return Spot;
