@@ -37,6 +37,8 @@ router.post("/:spotId/images", async (req, res) => {
   const { url } = req.body;
   const spot = await Spot.findByPk(req.params.spotId, { raw: true });
   if (!spot) res.status(404).json("Spot does not exist");
+  console.log("userId", userId)
+  console.log("spot.ownerId", spot.ownerId)
   if (userId === spot.ownerId) {
     const newImage = await SpotImage.create({
       url,
@@ -45,7 +47,7 @@ router.post("/:spotId/images", async (req, res) => {
     res.status(201);
     res.json(newImage);
   } else {
-    res.json("something went wrong");
+    res.json("Only an owner of a spot can add an image");
   }
 });
 
