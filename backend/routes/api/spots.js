@@ -1,7 +1,7 @@
 const express = require("express");
 const { check } = require("express-validator");
 const { validateSpotPost } = require("../../utils/validation");
-const { Spot, SpotImage, Review} = require("../../db/models");
+const { sequelize, Spot, SpotImage, Review } = require("../../db/models");
 
 const router = express.Router();
 
@@ -61,9 +61,27 @@ router.get("/current", async (req, res) => {
     where: {
       ownerId: userId,
     },
-    include: [{ model: SpotImage, attributes: ["url"] }, { model: Review }],
+    include: [{ model: SpotImage, as: "previewImage", attributes: ["url"] }],
     raw: true,
+    // group: "address",
   });
+
+  for (currentSpot of userSpots) {
+    let starSum = await Review.sum("stars", {
+      where: {
+        spotId: currentSpot.id,
+      },
+    });
+    let starCount = await Review.count({
+      where: {
+        spotId: currentSpot.id,
+      },
+    });
+
+    average = starSum / starCount;
+    currentSpot.avgRating = average;
+  }
+
   res.json(userSpots);
 });
 
