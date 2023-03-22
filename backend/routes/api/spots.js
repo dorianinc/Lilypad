@@ -1,7 +1,7 @@
 const express = require("express");
 const { check } = require("express-validator");
 const { validateSpotPost } = require("../../utils/validation");
-const { Spot, SpotImage } = require("../../db/models");
+const { Spot, SpotImage, Review} = require("../../db/models");
 
 const router = express.Router();
 
@@ -61,7 +61,8 @@ router.get("/current", async (req, res) => {
     where: {
       ownerId: userId,
     },
-    raw: true
+    include: [{ model: SpotImage, attributes: ["url"] }, { model: Review }],
+    raw: true,
   });
   res.json(userSpots);
 });

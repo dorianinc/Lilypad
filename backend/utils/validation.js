@@ -84,7 +84,7 @@ const validateSpotPost = [
 // const validateSpotImage = [
 
 // ]
-
+ 
 
 module.exports = {
   validateSignup,
