@@ -4,8 +4,14 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Booking extends Model {
     static associate(models) {
-      Booking.belongsTo(models.Spot, { foreignKey: "spotId" });
-      Booking.belongsTo(models.User, { foreignKey: "userId" });
+      Booking.belongsTo(models.Spot, {
+        // otherKey: "userId",
+        foreignKey: "spotId",
+      });
+      Booking.belongsTo(models.User, {
+        // otherKey: "spotId",
+        foreignKey: "userId",
+      });
     }
   }
   Booking.init(
@@ -14,15 +20,15 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.DATE,
         validate: {
-          isDate: true, 
-        }
+          isDate: true,
+        },
       },
       endDate: {
         allowNull: false,
         type: DataTypes.DATE,
         validate: {
-          isDate: true, 
-        }
+          isDate: true,
+        },
       },
       spotId: {
         allowNull: false,
