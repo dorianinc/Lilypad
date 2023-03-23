@@ -1,7 +1,8 @@
 const express = require("express");
 const { check } = require("express-validator");
 const { validateSpotPost } = require("../../utils/validation");
-const { sequelize, Spot, SpotImage, Review, User } = require("../../db/models");
+const { restoreUser, requireAuth } = require("../../utils/auth");
+const { Spot, SpotImage, Review, User } = require("../../db/models");
 
 const router = express.Router();
 
@@ -37,8 +38,7 @@ router.get("/", async (req, res) => {
 });
 
 // get all spots based on ownerId
-router.get("/current", async (req, res) => {
-  const { user } = req;
+router.get("/current",[restoreUser, requireAuth], async (req, res) => {
   const userId = user.id;
   const userSpots = await Spot.findAll({
     where: {
@@ -122,8 +122,7 @@ router.get("/:spotId", async (req, res) => {
 });
 
 // post a new spot
-router.post("/", validateSpotPost, async (req, res) => {
-  const { user } = req;
+router.post("/",  [restoreUser, requireAuth, validateSpotPost], async (req, res) => {
   const userId = user.id;
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
@@ -146,7 +145,7 @@ router.post("/", validateSpotPost, async (req, res) => {
 });
 
 // add image to a spot through spot id
-router.post("/:spotId/images", async (req, res) => {
+router.post("/:spotId/images", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
   const userId = user.id;
   const { url } = req.body;
@@ -167,6 +166,10 @@ router.post("/:spotId/images", async (req, res) => {
   } else {
     res.json("Only an owner of a spot can add an image");
   }
+});
+
+router.put("/:spotId", async (req, res) => {
+  res.json("hello world");
 });
 
 module.exports = router;

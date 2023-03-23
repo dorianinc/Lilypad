@@ -2,7 +2,7 @@ const express = require("express");
 const { Op } = require("sequelize");
 const bcrypt = require("bcryptjs");
 const { validateLogin } = require("../../utils/validation");
-const { setTokenCookie, restoreUser } = require("../../utils/auth");
+const { setTokenCookie, restoreUser, requireAuth } = require("../../utils/auth");
 const { User } = require("../../db/models");
 const router = express.Router();
 
@@ -46,11 +46,11 @@ router.post("/", validateLogin, async (req, res, next) => {
 // Log out
 router.delete("/", (_req, res) => {
   res.clearCookie("token");
-  return res.json({ message: "success" });
+  return res.json({ message: "you are logged out" });
 });
 
 // Restore session user
-router.get("/", (req, res) => {
+router.get("/", [restoreUser, requireAuth], (req, res) => {
   const { user } = req;
   if (user) {
     const safeUser = {
@@ -67,3 +67,24 @@ router.get("/", (req, res) => {
 });
 
 module.exports = router;
+
+
+// // Restore session user
+// router.get("/", (req, res) => {
+//   const { user } = req;
+//   if (user) {
+//     const safeUser = {
+//       id: user.id,
+//       firstName: user.fistName,
+//       lastName: user.lastName,
+//       email: user.email,
+//       username: user.username,
+//     };
+//     return res.json({
+//       user: safeUser,
+//     });
+//   } else return res.status(401).json({
+//     "message": "Authentication required",
+//     "statusCode": 401
+//   });
+// });

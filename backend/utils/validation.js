@@ -83,12 +83,19 @@ const validateSpotPost = [
   handleValidationErrors,
 ];
 
-// const validateSpotImage = [
-
-// ]
+const authenticateUser = (req, res) => {
+  const { user } = req;
+  if (!user) {
+    return res.status(401).json({
+      "message": "Authentication required",
+      "statusCode": 401
+    });
+  }
+};
 
 module.exports = {
   validateSignup,
   validateLogin,
+  authenticateUser,
   validateSpotPost,
 };
