@@ -5,15 +5,18 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+
+const routes = require('./routes');
+
+const { ValidationError } = require('sequelize');
+
 const { environment } = require('./config');
 const isProduction = environment === 'production';
-const { ValidationError } = require('sequelize');
-// initialize express
-const routes = require('./routes');
+
 const app = express();
-// connect to morgan middleware for logging info and requests/responses
+
 app.use(morgan('dev'));
-// adding cookie parser and autoparsing json
+
 app.use(cookieParser());
 app.use(express.json());
 
@@ -42,7 +45,7 @@ app.use(
 );
 ////////////////////////// End of Security Middleware /////////////////////////
 
-app.use(routes); // Connect all the routes
+app.use(routes); 
 
 ////////////////////////// Start of Error Handlers /////////////////////////
 // Catch unhandled requests and forward to error handler.
@@ -53,7 +56,6 @@ app.use((_req, _res, next) => {
   err.status = 404;
   next(err);
 });
-
 
 // Process sequelize errors
 app.use((err, _req, _res, next) => {
