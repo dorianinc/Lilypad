@@ -17,13 +17,13 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        review: {
-          allowNull: false,
-          type: Sequelize.STRING,
-        },
-        stars: {
+        userId: {
           allowNull: false,
           type: Sequelize.INTEGER,
+          references: {
+            model: "Users",
+          },
+          onDelete: 'cascade'
         },
         spotId: {
           allowNull: false,
@@ -33,13 +33,13 @@ module.exports = {
           },
           onDelete: 'cascade'
         },
-        userId: {
+        review: {
+          allowNull: false,
+          type: Sequelize.STRING,
+        },
+        stars: {
           allowNull: false,
           type: Sequelize.INTEGER,
-          references: {
-            model: "Users",
-          },
-          onDelete: 'cascade'
         },
         createdAt: {
           allowNull: false,

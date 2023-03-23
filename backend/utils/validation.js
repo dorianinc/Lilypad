@@ -53,7 +53,7 @@ const validateLogin = [
 ];
 
 // validator for when trying to create new spot
-const validateSpotPost = [
+const validateSpot = [
   check("address")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Street address is required"),
@@ -83,6 +83,16 @@ const validateSpotPost = [
   handleValidationErrors,
 ];
 
+const validateReview = [
+  check("review")
+    .exists({ checkFalsy: true, checkNull: true }) 
+    .withMessage("Review text is required"),
+  check("stars")
+  .custom((value) => value >= 1 && value <= 5)
+    .withMessage("Stars must be an integer from 1 to 5"),
+  handleValidationErrors,
+];
+
 const authenticateUser = (req, res) => {
   const { user } = req;
   if (!user) {
@@ -97,5 +107,6 @@ module.exports = {
   validateSignup,
   validateLogin,
   authenticateUser,
-  validateSpotPost,
+  validateSpot,
+  validateReview
 };
