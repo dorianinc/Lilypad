@@ -38,7 +38,8 @@ router.get("/", async (req, res) => {
 });
 
 // get all spots based on ownerId
-router.get("/current",[restoreUser, requireAuth], async (req, res) => {
+router.get("/current", [restoreUser, requireAuth], async (req, res) => {
+  const { user } = req;
   const userId = user.id;
   const userSpots = await Spot.findAll({
     where: {
@@ -118,29 +119,19 @@ router.get("/:spotId", async (req, res) => {
     raw: true,
   });
   spot.Owner = owner;
-  res.json(spot);
+  res.status(200).json(spot);
 });
 
 // post a new spot
-router.post("/",  [restoreUser, requireAuth, validateSpotPost], async (req, res) => {
-  const userId = user.id;
-  const { address, city, state, country, lat, lng, name, description, price } =
-    req.body;
-  if (!user) return res.status(400).json(`Something went wrong!`);
+router.post("/", [restoreUser, requireAuth, validateSpotPost], async (req, res) => {
+  const { user } = req;
+  const userData = { ownerId: user.id };
 
-  const newSpot = await Spot.create({
-    ownerId: userId,
-    address,
-    city,
-    state,
-    country,
-    lat,
-    lng,
-    name,
-    description,
-    price,
-  });
-
+  for (property in req.body) {
+    let value = req.body[property];
+    userData[property] = value;
+  }
+  const newSpot = await Spot.create({ ...userData });
   res.status(201).json(newSpot);
 });
 
@@ -164,12 +155,22 @@ router.post("/:spotId/images", [restoreUser, requireAuth], async (req, res) => {
     res.status(201);
     res.json(newImage);
   } else {
-    res.json("Only an owner of a spot can add an image");
+    res.status(401).json("Only the owner of a spot can add an image");
   }
 });
 
-router.put("/:spotId", async (req, res) => {
-  res.json("hello world");
+router.put("/:spotId", [restoreUser, requireAuth, validateSpotPost], async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+  if (!spot)
+    res.status(404).json({
+      message: "Spot couldn't be found",
+    });
+  for (property in req.body) {
+    let value = req.body[property];
+    spot[property] = value;
+  }
+  await spot.save();
+  res.status(200).json(spot);
 });
 
 module.exports = router;
