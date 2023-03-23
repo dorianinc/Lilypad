@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
     let previewImage = await SpotImage.findOne({
       where: {
         spotId: currentSpot.id,
-        preview: 1,
+        preview: true,
       },
       raw: true,
     });
@@ -62,7 +62,7 @@ router.get("/current", async (req, res) => {
     let previewImage = await SpotImage.findOne({
       where: {
         spotId: currentSpot.id,
-        preview: 1,
+        preview: true,
       },
       raw: true,
     });
@@ -80,7 +80,10 @@ router.get("/:spotId", async (req, res) => {
   const currentSpotId = req.params.spotId;
   const spot = await Spot.findByPk(currentSpotId, { raw: true });
 
-  if (!spot) res.status(404).json("Error: This spot does not exist");
+  if (!spot) res.status(404).json({
+    "message": "Spot couldn't be found",
+    "statusCode": 404
+  });
 
   const totalReviews = await Review.count({
     where: {
@@ -114,7 +117,6 @@ router.get("/:spotId", async (req, res) => {
     raw: true
   });
   spot.Owner = owner
-
   res.json(spot);
 });
 
