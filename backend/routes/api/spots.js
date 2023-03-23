@@ -63,7 +63,7 @@ router.get("/current", async (req, res) => {
     },
     include: [{ model: SpotImage, as: "previewImage", attributes: ["url"] }],
     raw: true,
-    group: ["previewImage.url","Spot.id"],
+    group: "Spot.id",
   });
 
   for (currentSpot of userSpots) {
