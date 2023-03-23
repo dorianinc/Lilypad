@@ -23,7 +23,7 @@ module.exports = {
         },
         preview: {
           type: Sequelize.BOOLEAN,
-          defaultValue: true,
+          defaultValue: false,
         },
         spotId: {
           allowNull: false,

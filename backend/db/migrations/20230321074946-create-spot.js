@@ -17,6 +17,13 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
+        ownerId: {
+          allowNull: false,
+          type: Sequelize.INTEGER,
+          references: {
+            model: "Users",
+          },
+        },
         address: {
           allowNull: false,
           type: Sequelize.STRING(45),
@@ -49,13 +56,6 @@ module.exports = {
         price: {
           allowNull: false,
           type: Sequelize.DECIMAL,
-        },
-        ownerId: {
-          allowNull: false,
-          type: Sequelize.INTEGER,
-          references: {
-            model: "Users",
-          },
         },
         createdAt: {
           allowNull: false,
