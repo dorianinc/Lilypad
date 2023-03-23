@@ -170,6 +170,7 @@ router.post("/:spotId/images", [restoreUser, requireAuth], async (req, res, next
   res.json(newImage);
 });
 
+// edit spot by id
 router.put("/:spotId", [restoreUser, requireAuth, validateSpot], async (req, res) => {
   const { user } = req;
 
