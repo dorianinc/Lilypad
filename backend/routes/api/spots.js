@@ -124,22 +124,23 @@ router.get("/:spotId", async (req, res) => {
 router.post("/", validateSpotPost, async (req, res) => {
   const { user } = req;
   const userId = user.id;
-  const { address, city, state, country, name, description, price } = req.body;
+  const { address, city, state, country, lat, lng, name, description, price } = req.body;
   if (!user) return res.status(400).json(`Something went wrong!`);
 
-  await Spot.create({
+  const newSpot = await Spot.create({
     ownerId: userId,
     address,
     city,
     state,
-    city,
     country,
+    lat,
+    lng,
     name,
     description,
     price,
   });
   res.status(201);
-  res.json(`Successfully created new spot for user ${userId}`);
+  res.json(newSpot);
 });
 
 // add image to a spot through spot id
