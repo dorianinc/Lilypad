@@ -139,8 +139,8 @@ router.post("/", validateSpotPost, async (req, res) => {
     description,
     price,
   });
-  res.status(201);
-  res.json(newSpot);
+  
+  res.status(201).json(newSpot);
 });
 
 // add image to a spot through spot id
