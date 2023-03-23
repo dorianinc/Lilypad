@@ -17,7 +17,7 @@ const handleValidationErrors = (req, _res, next) => {
     const err = Error("Bad Request");
     err.errors = errors;
     err.status = 400;
-    // err.title = "Bad Request";
+    err.title = "Bad Request";
     next(err);
   }
   next();
@@ -67,10 +67,10 @@ const validateSpotPost = [
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Country is required"),
   check("lat")
-    .custom((value) => value === null || value === "" || value.match(latRegex))
+    .custom((value) => value === null || value.match(latRegex))
     .withMessage("Latitude is not valid"),
   check("lng")
-    .custom((value) => value === null || value === "" || value.match(lngRegex))
+    .custom((value) => value === null || value.match(lngRegex))
     .withMessage("Longitude is not valid"),
   check("name")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null

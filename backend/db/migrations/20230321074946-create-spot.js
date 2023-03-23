@@ -23,6 +23,7 @@ module.exports = {
           references: {
             model: "Users",
           },
+          onDelete: 'cascade'
         },
         address: {
           allowNull: false,
