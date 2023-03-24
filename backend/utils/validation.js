@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-const { check } = require("express-validator");
+const { check, body } = require("express-validator");
 
 const lngRegex = /^-?((([0-9]|[1-9][0-9]|1[0-7][0-9])(\.\d+)?)|180(\.0+)?)/;
 const latRegex = /^-?(([0-8][0-9](\.\d+)?)|90(\.0+)?)/;
@@ -10,9 +10,7 @@ const handleValidationErrors = (req, _res, next) => {
 
   if (!validationErrors.isEmpty()) {
     const errors = {};
-    validationErrors
-      .array()
-      .forEach((error) => (errors[error.param] = error.msg));
+    validationErrors.array().forEach((error) => (errors[error.param] = error.msg));
 
     const err = Error("Bad Request");
     err.errors = errors;
@@ -46,9 +44,7 @@ const validateLogin = [
     .exists({ checkFalsy: true })
     .notEmpty()
     .withMessage("Please provide a valid email or username."),
-  check("password")
-    .exists({ checkFalsy: true })
-    .withMessage("Please provide a password."),
+  check("password").exists({ checkFalsy: true }).withMessage("Please provide a password."),
   handleValidationErrors,
 ];
 
@@ -72,11 +68,11 @@ const validateSpot = [
   check("lng")
     .custom((value) => value === null || value.match(lngRegex))
     .withMessage("Longitude is not valid"),
-  check("name")
+  check("name", "add name bro")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Name is required")
-    .isLength({ max: 25 })
-    .withMessage("Name must be less than 50 characters"),
+    .isLength({ max: 25 }),
+    // .withMessage("Name must be less than 50 characters"),
   check("price")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Price per day is required"),
@@ -85,23 +81,46 @@ const validateSpot = [
 
 const validateReview = [
   check("review")
-    .exists({ checkFalsy: true, checkNull: true }) 
+    .exists({ checkFalsy: true, checkNull: true })
     .withMessage("Review text is required"),
   check("stars")
-  .custom((value) => value >= 1 && value <= 5)
+    .custom((value) => value >= 1 && value <= 5)
     .withMessage("Stars must be an integer from 1 to 5"),
   handleValidationErrors,
 ];
 
+// const validateBooking = [
+//   check("endDate")
+//     .custom((value, { req }) => isBefore("2019-12-30", { comparisonDate: "2019-12-31" }))
+//     .withMessage("endDate cannot be on or before startDate"),
+//   handleValidationErrors,
+// ];
 
 const validateBooking = [
-  check("startDate", "endDate")
-]
+  check("endDate")
+    .custom((value, { req }) => new Date(req.body.startDate) < new Date(value))
+    .withMessage("endDate cannot be on or before startDate"),
+  handleValidationErrors,
+];
 
+// const validateBooking = (req, res, next) => {
+//   const {startDate} = req.body
+//   console.log("dsfdsf", body("endDate").isDate())
+//   // .withMessage("Stars must be an integer from 1 to 5")
+
+//   next()
+// }
+// const validateBooking = (req, res, next) => {
+//   check("endDate")
+//   .isAfter()
+//   .withMessage("endDate cannot be on or before startDate"),
+//   handleValidationErrors,
+// }
 module.exports = {
   handleValidationErrors,
   validateSignup,
   validateLogin,
   validateSpot,
-  validateReview
+  validateReview,
+  validateBooking,
 };
