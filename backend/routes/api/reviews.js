@@ -93,39 +93,37 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
 
 
 
-// // edit review by id
-// router.put("/:reviewId", [restoreUser, requireAuth], async (req, res) => {
-//   const { user } = req;
+// edit review by id
+router.put("/:reviewId", [restoreUser, requireAuth, validateReview], async (req, res) => {
+  const { user } = req;
 
-//   if (!user) {
-//     return res.status(401).json({
-//       message: "Authentication required",
-//       statusCode: 401,
-//     });
-//   }
+  if (!user) {
+    return res.status(401).json({
+      message: "Authentication required",
+      statusCode: 401,
+    });
+  }
 
-//   const userId = user.id;
-//   const review = await Review.findByPk(req.params.reviewId);
-//   if (!review)
-//     return res.status(404).json({
-//       message: "Review couldn't be found",
-//       statusCode: 404,
-//     });
-//   for (property in req.body) {
-//     let value = req.body[property];
-//     review[property] = value;
-//   }
+  const userId = user.id;
+  const review = await Review.findByPk(req.params.reviewId);
+  if (!review)
+    return res.status(404).json({
+      message: "Review couldn't be found",
+      statusCode: 404,
+    });
+  for (property in req.body) {
+    let value = req.body[property];
+    review[property] = value;
+  }
+  if (userId !== review.userId) {
+    return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+  }
+  await review.save();
+  res.status(200).json(review);
+});
 
-//   if (userId !== review.ownerId) {
-//     return res.status(403).json({
-//       message: "Forbidden",
-//       statusCode: 403,
-//     });
-//   }
-//   await review.save();
-//   res.status(200).json(review);
-// });
-
-////////////////// potential get all reviews by user id
 
 module.exports = router;
