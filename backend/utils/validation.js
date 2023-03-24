@@ -93,20 +93,15 @@ const validateReview = [
   handleValidationErrors,
 ];
 
-const authenticateUser = (req, res) => {
-  const { user } = req;
-  if (!user) {
-    return res.status(401).json({
-      "message": "Authentication required",
-      "statusCode": 401
-    });
-  }
-};
+
+const validateBooking = [
+  check("startDate", "endDate")
+]
 
 module.exports = {
+  handleValidationErrors,
   validateSignup,
   validateLogin,
-  authenticateUser,
   validateSpot,
   validateReview
 };

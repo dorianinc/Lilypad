@@ -1,6 +1,6 @@
 const express = require("express");
 const { check } = require("express-validator");
-const { validateSpot, validateReview } = require("../../utils/validation");
+const { compvalidateReview } = require("../../utils/validation");
 const { restoreUser, requireAuth } = require("../../utils/auth");
 const { ReviewImage, Review, User, Spot } = require("../../db/models");
 
@@ -91,8 +91,6 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
   res.status(200).json({ Reviews: reviewObj });
 });
 
-
-
 // edit review by id
 router.put("/:reviewId", [restoreUser, requireAuth, validateReview], async (req, res) => {
   const { user } = req;
@@ -125,5 +123,34 @@ router.put("/:reviewId", [restoreUser, requireAuth, validateReview], async (req,
   res.status(200).json(review);
 });
 
+// delete a review
+router.delete("/:reviewId", [restoreUser, requireAuth], async (req, res) => {
+  const { user } = req;
+
+  if (!user) {
+    return res.status(401).json({
+      message: "Authentication required",
+      statusCode: 401,
+    });
+  }
+  const userId = user.id;
+  const review = await Review.findByPk(req.params.reviewId);
+  if (!review)
+  return res.status(404).json({
+    message: "Spot couldn't be found",
+    statusCode: 404,
+  });
+if (userId !== review.userId) {
+  return res.status(403).json({
+    message: "Forbidden",
+    statusCode: 403,
+  });
+}
+  await review.destroy();
+  res.status(200).json({
+    message: "Successfully deleted",
+    statusCode: 200,
+  });
+});
 
 module.exports = router;
