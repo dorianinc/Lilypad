@@ -2,7 +2,7 @@ const express = require("express");
 const { check } = require("express-validator");
 const { validateSpot, validateReview } = require("../../utils/validation");
 const { restoreUser, requireAuth } = require("../../utils/auth");
-const { ReviewImage, Review, User } = require("../../db/models");
+const { ReviewImage, Review, User, Spot } = require("../../db/models");
 
 const router = express.Router();
 
@@ -51,6 +51,46 @@ router.post("/:reviewId/images", [restoreUser, requireAuth], async (req, res, ne
   res.json(newImage);
 });
 
+// get all reviews of current user
+router.get("/current", [restoreUser, requireAuth], async (req, res) => {
+  const { user } = req;
+  const reviews = await Review.findAll({
+    where: {
+      userId: user.id,
+    },
+    include: [
+      { model: User, attributes: ["id", "firstName", "lastName"] },
+      {
+        model: Spot,
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      },
+      {
+        model: ReviewImage,
+        attributes: {
+          exclude: ["reviewId", "createdAt", "updatedAt"],
+        },
+      },
+    ],
+  });
+  const reviewObj = [];
+  for (let i = 0; i < reviews.length; i++) {
+    const review = reviews[i];
+    reviewObj.push(review.toJSON());
+  }
+
+  for (let i = 0; i < reviewObj.length; i++) {
+    const spotObj = reviewObj[i].Spot;
+    const imgObj = reviewObj[i].ReviewImages;
+
+    if (imgObj.length) spotObj.previewImage = imgObj[0].url;
+    else spotObj.previewImage = "image url";
+  }
+
+  res.status(200).json({ Reviews: reviewObj });
+});
+
 // // edit review by id
 // router.put("/:reviewId", [restoreUser, requireAuth], async (req, res) => {
 //   const { user } = req;
@@ -83,5 +123,7 @@ router.post("/:reviewId/images", [restoreUser, requireAuth], async (req, res, ne
 //   await review.save();
 //   res.status(200).json(review);
 // });
+
+////////////////// potential get all reviews by user id
 
 module.exports = router;
