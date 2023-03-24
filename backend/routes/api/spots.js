@@ -25,15 +25,14 @@ router.get("/", async (req, res) => {
     let previewImage = await SpotImage.findOne({
       where: {
         spotId: currentSpot.id,
-        preview: true
       },
     });
-    const test = previewImage
-    console.log("previewImage 👉", test.dataValues)
+
+    console.log("previewImage 👉", previewImage.url)
 
     average = starSum / totalReviews;
     currentSpot.avgRating = average;
-    // currentSpot.previewImage = previewImage.url;
+    currentSpot.previewImage = previewImage.url;
   }
 
   res.status(200).json({ Spots: spots });
