@@ -1,8 +1,8 @@
 const express = require("express");
 const { check } = require("express-validator");
-const { validateSpot, validateReview } = require("../../utils/validation");
+const { validateSpot, validateReview, validateBooking } = require("../../utils/validation");
 const { restoreUser, requireAuth } = require("../../utils/auth");
-const { Spot, SpotImage, Review, User, ReviewImage } = require("../../db/models");
+const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require("../../db/models");
 
 const router = express.Router();
 
@@ -25,14 +25,15 @@ router.get("/", async (req, res) => {
     let previewImage = await SpotImage.findOne({
       where: {
         spotId: currentSpot.id,
-        preview: true,
+        preview: true
       },
-      raw: true,
     });
+    const test = previewImage
+    console.log("previewImage 👉", test.dataValues)
 
     average = starSum / totalReviews;
     currentSpot.avgRating = average;
-    currentSpot.previewImage = previewImage.url;
+    // currentSpot.previewImage = previewImage.url;
   }
 
   res.status(200).json({ Spots: spots });
@@ -277,11 +278,32 @@ router.get("/:spotId/reviews", [restoreUser, requireAuth], async (req, res) => {
     ],
   });
   if (!reviews.length)
-  return res.status(404).json({
-    message: "Spot couldn't be found",
-    statusCode: 404,
-  });
+    return res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404,
+    });
   res.json({ Reviews: reviews });
+});
+
+router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], async (req, res) => {
+  const { user } = req;
+  if (!user) {
+    return res.status(401).json({
+      message: "Authentication required",
+      statusCode: 401,
+    });
+  }
+  if(await Spot.findOne({where: {ownerId: user.id}})) console.log("this the owners! rruuuuuun")
+  const { startDate, endDate } = req.body;
+  const newBooking = await Booking.create({
+    spotId: req.params.spotId,
+    userId: user.id,
+    startDate,
+    endDate,
+  });
+  console.log("newBooking 👉", newBooking.toJSON());
+
+  res.status(200).json(newBooking);
 });
 
 module.exports = router;
