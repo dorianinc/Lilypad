@@ -1,12 +1,6 @@
 const express = require("express");
 const { body } = require("express-validator");
-const {
-  validateSpot,
-  validateReview,
-  validateBooking,
-  checkAvailability,
-  test,
-} = require("../../utils/validation");
+const {validateSpot, validateReview, validateBooking, checkAvailability} = require("../../utils/validation");
 const { restoreUser, requireAuth } = require("../../utils/auth");
 const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require("../../db/models");
 
