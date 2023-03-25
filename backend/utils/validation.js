@@ -1,6 +1,5 @@
 const { validationResult } = require("express-validator");
-const { check, body } = require("express-validator");
-
+const { check } = require("express-validator");
 const lngRegex = /^-?((([0-9]|[1-9][0-9]|1[0-7][0-9])(\.\d+)?)|180(\.0+)?)/;
 const latRegex = /^-?(([0-8][0-9](\.\d+)?)|90(\.0+)?)/;
 
@@ -68,11 +67,11 @@ const validateSpot = [
   check("lng")
     .custom((value) => value === null || value.match(lngRegex))
     .withMessage("Longitude is not valid"),
-  check("name", "add name bro")
+  check("name")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Name is required")
     .isLength({ max: 25 }),
-    // .withMessage("Name must be less than 50 characters"),
+  // .withMessage("Name must be less than 50 characters"),
   check("price")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Price per day is required"),
@@ -88,14 +87,6 @@ const validateReview = [
     .withMessage("Stars must be an integer from 1 to 5"),
   handleValidationErrors,
 ];
-
-// const validateBooking = [
-//   check("endDate")
-//     .custom((value, { req }) => isBefore("2019-12-30", { comparisonDate: "2019-12-31" }))
-//     .withMessage("endDate cannot be on or before startDate"),
-//   handleValidationErrors,
-// ];
-
 const validateBooking = [
   check("endDate")
     .custom((value, { req }) => new Date(req.body.startDate) < new Date(value))
@@ -103,24 +94,39 @@ const validateBooking = [
   handleValidationErrors,
 ];
 
-// const validateBooking = (req, res, next) => {
-//   const {startDate} = req.body
-//   console.log("dsfdsf", body("endDate").isDate())
-//   // .withMessage("Stars must be an integer from 1 to 5")
+const checkAvailability = (startDate, endDate, bookedDates, res) => {
+  const errorHandler = {
+    message: "Sorry, this spot is already booked for the specified dates",
+    statusCode: 403,
+    errors: {},
+  };
 
-//   next()
-// }
-// const validateBooking = (req, res, next) => {
-//   check("endDate")
-//   .isAfter()
-//   .withMessage("endDate cannot be on or before startDate"),
-//   handleValidationErrors,
-// }
+  const requestedStart = new Date(startDate).getTime();
+  const requestedEnd = new Date(endDate).getTime();
+
+  for (let i = 0; i < bookedDates.length; i++) {
+    let bookedStartDate = new Date(bookedDates[i].startDate).getTime();
+    let bookedEndDate = new Date(bookedDates[i].endDate).getTime();
+    if (requestedStart >= bookedStartDate && requestedStart <= bookedEndDate) {
+      errorHandler.errors.startDate = "Start date conflicts with an existing booking";
+    }
+    if (requestedEnd >= bookedStartDate && requestedEnd <= bookedEndDate) {
+      errorHandler.errors.endDate = "End date conflicts with an existing booking";
+    }
+    if (requestedStart < bookedStartDate && requestedEnd > bookedEndDate) {
+      errorHandler.errors.startDate = "Start date conflicts with an existing booking";
+      errorHandler.errors.endDate = "End date conflicts with an existing booking";
+    }
+
+    if (Object.values(errorHandler.errors).length) return res.status(403).json(errorHandler);
+  }
+};
+
 module.exports = {
-  handleValidationErrors,
   validateSignup,
   validateLogin,
   validateSpot,
   validateReview,
   validateBooking,
+  checkAvailability,
 };

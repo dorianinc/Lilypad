@@ -16,15 +16,15 @@ module.exports = {
           // 1
           spotId: 1,
           userId: 1,
-          startDate: "2021-07-01",
-          endDate: "2021-07-05",
+          startDate: "2021-07-15",
+          endDate: "2021-07-20",
         },
         {
           // 2
           spotId: 2,
           userId: 1,
-          startDate: "2021-11-19",
-          endDate: "2021-11-20"
+          startDate: "2021-11-10", // nov 10th 2021
+          endDate: "2021-11-15" // Nov 15th 2021
         },
         {
           // 3

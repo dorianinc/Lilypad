@@ -1,6 +1,12 @@
 const express = require("express");
-const { check } = require("express-validator");
-const { validateSpot, validateReview, validateBooking } = require("../../utils/validation");
+const { body } = require("express-validator");
+const {
+  validateSpot,
+  validateReview,
+  validateBooking,
+  checkAvailability,
+  test,
+} = require("../../utils/validation");
 const { restoreUser, requireAuth } = require("../../utils/auth");
 const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require("../../db/models");
 
@@ -28,7 +34,7 @@ router.get("/", async (req, res) => {
       },
     });
 
-    console.log("previewImage 👉", previewImage.url)
+    console.log("previewImage 👉", previewImage.url);
 
     average = starSum / totalReviews;
     currentSpot.avgRating = average;
@@ -284,6 +290,7 @@ router.get("/:spotId/reviews", [restoreUser, requireAuth], async (req, res) => {
   res.json({ Reviews: reviews });
 });
 
+// create new booking using spot
 router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], async (req, res) => {
   const { user } = req;
   if (!user) {
@@ -292,17 +299,31 @@ router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], as
       statusCode: 401,
     });
   }
-  if(await Spot.findOne({where: {ownerId: user.id}})) console.log("this the owners! rruuuuuun")
-  const { startDate, endDate } = req.body;
-  const newBooking = await Booking.create({
-    spotId: req.params.spotId,
-    userId: user.id,
-    startDate,
-    endDate,
-  });
-  console.log("newBooking 👉", newBooking.toJSON());
+  const spot = await Spot.findByPk(req.params.spotId, { raw: true });
+  if (!spot) {
+    res.status(404).json({
+      message: "Spot couldn't be found",
+      statusCode: 404,
+    });
+  }
 
-  res.status(200).json(newBooking);
+  const { startDate, endDate } = req.body;
+  const bookedDates = await Booking.findAll({
+    attributes: ["id", "startDate", "endDate"],
+    raw: true,
+  });
+
+  if (spot.ownerId !== user.id) {
+    if (!checkAvailability(startDate, endDate, bookedDates, res)) {
+      const newBooking = await Booking.create({
+        spotId: spot.id,
+        userId: user.id,
+        startDate,
+        endDate,
+      });
+      res.status(200).json(newBooking);
+    }
+  }
 });
 
 module.exports = router;
