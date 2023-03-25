@@ -16,20 +16,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   Booking.init(
     {
-      startDate: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        // validate: {
-        //   isDate: true,
-        // },
-      },
-      endDate: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        // validate: {
-        //   isDate: true,
-        // },
-      },
       spotId: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -38,10 +24,29 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
+      startDate: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        validate: {
+          isDate: true,
+        },
+      },
+      endDate: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        validate: {
+          isDate: true,
+        },
+      },
     },
     {
       sequelize,
       modelName: "Booking",
+      defaultScope: {
+        attributes: {
+          exclude: ["id", "userId", "createdAt", "updatedAt"],
+        },
+      },
     }
   );
   return Booking;
