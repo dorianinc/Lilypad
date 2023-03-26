@@ -94,33 +94,6 @@ const validateBooking = [
   handleValidationErrors,
 ];
 
-const checkAvailability = (startDate, endDate, bookedDates, res) => {
-  const errorHandler = {
-    message: "Sorry, this spot is already booked for the specified dates",
-    statusCode: 403,
-    errors: {},
-  };
-
-  const requestedStart = new Date(startDate).getTime();
-  const requestedEnd = new Date(endDate).getTime();
-
-  for (let i = 0; i < bookedDates.length; i++) {
-    let bookedStartDate = new Date(bookedDates[i].startDate).getTime();
-    let bookedEndDate = new Date(bookedDates[i].endDate).getTime();
-    if (requestedStart >= bookedStartDate && requestedStart <= bookedEndDate) {
-      errorHandler.errors.startDate = "Start date conflicts with an existing booking";
-    }
-    if (requestedEnd >= bookedStartDate && requestedEnd <= bookedEndDate) {
-      errorHandler.errors.endDate = "End date conflicts with an existing booking";
-    }
-    if (requestedStart < bookedStartDate && requestedEnd > bookedEndDate) {
-      errorHandler.errors.startDate = "Start date conflicts with an existing booking";
-      errorHandler.errors.endDate = "End date conflicts with an existing booking";
-    }
-
-    if (Object.values(errorHandler.errors).length) return res.status(403).json(errorHandler);
-  }
-};
 
 module.exports = {
   validateSignup,
@@ -128,5 +101,4 @@ module.exports = {
   validateSpot,
   validateReview,
   validateBooking,
-  checkAvailability,
 };
