@@ -67,24 +67,3 @@ router.get("/", [restoreUser, requireAuth], (req, res) => {
 });
 
 module.exports = router;
-
-
-// // Restore session user
-// router.get("/", (req, res) => {
-//   const { user } = req;
-//   if (user) {
-//     const safeUser = {
-//       id: user.id,
-//       firstName: user.fistName,
-//       lastName: user.lastName,
-//       email: user.email,
-//       username: user.username,
-//     };
-//     return res.json({
-//       user: safeUser,
-//     });
-//   } else return res.status(401).json({
-//     "message": "Authentication required",
-//     "statusCode": 401
-//   });
-// });

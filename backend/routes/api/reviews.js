@@ -1,57 +1,39 @@
 const express = require("express");
-const { check } = require("express-validator");
 const { validateReview } = require("../../utils/validation");
-const { restoreUser, requireAuth } = require("../../utils/auth");
+const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { ReviewImage, Review, User, Spot } = require("../../db/models");
 
 const router = express.Router();
 
-// add image to a review through review id
+// Add Image to Review
 router.post("/:reviewId/images", [restoreUser, requireAuth], async (req, res, next) => {
   const { user } = req;
   const { url } = req.body;
 
-  if (!user) {
-    return res.status(401).json({
-      message: "Authentication required",
-      statusCode: 401,
-    });
-  }
-
-  const userId = user.id;
   const review = await Review.findByPk(req.params.reviewId, { raw: true });
-  if (!review) {
-    return res.status(404).json({
-      message: "Review couldn't be found",
-      statusCode: 404,
+  if (!review) res.status(404).json(doesNotExist("Review"));
+
+  if (isAuthorized(user.id, review.userId)) {
+    let imageCount = await ReviewImage.count("url", {
+      where: {
+        reviewId: review.id,
+      },
     });
-  }
-  if (userId !== review.userId) {
-    return res.status(403).json({
-      message: "Forbidden",
-      statusCode: 403,
-    });
-  }
-  let imageCount = await ReviewImage.count("url", {
-    where: {
+    if (imageCount > 10) {
+      res.status(403).json({
+        message: "Maximum number of images for this resource was reached",
+        statusCode: 403,
+      });
+    }
+    const newImage = await ReviewImage.create({
+      url,
       reviewId: review.id,
-    },
-  });
-  if (imageCount > 10) {
-    res.status(403).json({
-      message: "Maximum number of images for this resource was reached",
-      statusCode: 403,
     });
+    res.status(200).json(newImage);
   }
-  const newImage = await ReviewImage.create({
-    url,
-    reviewId: review.id,
-  });
-  res.status(201);
-  res.json(newImage);
 });
 
-// get all reviews of current user
+// Get all Reviews of Current User
 router.get("/current", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
   const reviews = await Review.findAll({
@@ -91,66 +73,37 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
   res.status(200).json({ Reviews: reviewObj });
 });
 
-// edit review by id
+// Update a Review
 router.put("/:reviewId", [restoreUser, requireAuth, validateReview], async (req, res) => {
   const { user } = req;
 
-  if (!user) {
-    return res.status(401).json({
-      message: "Authentication required",
-      statusCode: 401,
-    });
-  }
-
-  const userId = user.id;
   const review = await Review.findByPk(req.params.reviewId);
-  if (!review)
-    return res.status(404).json({
-      message: "Review couldn't be found",
-      statusCode: 404,
-    });
-  for (property in req.body) {
-    let value = req.body[property];
-    review[property] = value;
+  if (!review) res.status(404).json(doesNotExist("Review"));
+
+  if (isAuthorized(user.id, review.userId)) {
+    for (property in req.body) {
+      let value = req.body[property];
+      review[property] = value;
+    }
+    await review.save();
+    res.status(200).json(review);
   }
-  if (userId !== review.userId) {
-    return res.status(403).json({
-      message: "Forbidden",
-      statusCode: 403,
-    });
-  }
-  await review.save();
-  res.status(200).json(review);
 });
 
-// delete a review
+// Delete a Review
 router.delete("/:reviewId", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
 
-  if (!user) {
-    return res.status(401).json({
-      message: "Authentication required",
-      statusCode: 401,
+  const review = await Review.findByPk(req.params.reviewId);
+  if (!review) res.status(404).json(doesNotExist("Review"));
+
+  if (isAuthorized(user.id, review.userId)) {
+    await review.destroy();
+    res.status(200).json({
+      message: "Successfully deleted",
+      statusCode: 200,
     });
   }
-  const userId = user.id;
-  const review = await Review.findByPk(req.params.reviewId);
-  if (!review)
-  return res.status(404).json({
-    message: "Spot couldn't be found",
-    statusCode: 404,
-  });
-if (userId !== review.userId) {
-  return res.status(403).json({
-    message: "Forbidden",
-    statusCode: 403,
-  });
-}
-  await review.destroy();
-  res.status(200).json({
-    message: "Successfully deleted",
-    statusCode: 200,
-  });
 });
 
 module.exports = router;

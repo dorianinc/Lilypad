@@ -48,7 +48,7 @@ const restoreUser = (req, res, next) => {
         attributes: {
           include: ["email", "createdAt", "updatedAt"],
         },
-        raw: true
+        raw: true,
       });
     } catch (e) {
       res.clearCookie("token");
@@ -72,5 +72,15 @@ const requireAuth = function (req, _res, next) {
   return next(err);
 };
 
+const isAuthorized = (user, owner, res) => {
+  if (user === owner) return true;
+  else {
+    res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403,
+    });
+    return false;
+  }
+};
 
-module.exports = { setTokenCookie, restoreUser, requireAuth };
+module.exports = { setTokenCookie, restoreUser, requireAuth, isAuthorized };
