@@ -61,13 +61,13 @@ router.put("/:bookingId", [restoreUser, requireAuth, validateBooking], async (re
   });
   if (!booking) res.status(404).json(doesNotExist("Booking"));
 
-  if (!hasPassed(booking.endDate, res)) {
+  if (!hasPassed(null, booking.endDate, res)) {
     const bookedDates = await Booking.findAll({
       attributes: ["id", "startDate", "endDate"],
       raw: true,
     });
-    
-    if (isAuthorized(booking.userId, user.id, res)) {
+
+    if (isAuthorized(user.id, booking.userId, res)) {
       if (isAvailable(startDate, endDate, bookedDates, res)) {
         for (property in req.body) {
           let value = req.body[property];
@@ -76,6 +76,24 @@ router.put("/:bookingId", [restoreUser, requireAuth, validateBooking], async (re
         await booking.save();
         res.status(200).json(booking);
       }
+    }
+  }
+});
+
+// Delete a Booking
+router.delete("/:bookingId", [restoreUser, requireAuth], async (req, res) => {
+  console.log(req.body);
+  const { user } = req;
+  const booking = await Booking.unscoped().findByPk(req.params.bookingId);
+  if (!booking) res.status(404).json(doesNotExist("Booking"));
+  console.log("from booking", booking.startDate)
+  if (isAuthorized(user.id, booking.userId, res)) {
+    if (!hasPassed(booking.startDate, null, res)) {
+      await booking.destroy();
+      res.status(200).json({
+        message: "Successfully deleted",
+        statusCode: 200,
+      });
     }
   }
 });
