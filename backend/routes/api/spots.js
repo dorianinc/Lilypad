@@ -10,28 +10,27 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const spots = await Spot.findAll({ raw: true });
 
-  for (currentSpot of spots) {
+  for (spot of spots) {
     const starSum = await Review.sum("stars", {
       where: {
-        spotId: currentSpot.id,
+        spotId: spot.id,
       },
     });
-
     const totalReviews = await Review.count({
       where: {
-        spotId: currentSpot.id,
+        spotId: spot.id,
       },
     });
-
-    const image = await SpotImage.findOne({
-      where: {
-        spotId: currentSpot.id,
-      },
-    });
-
     average = starSum / totalReviews;
-    currentSpot.avgRating = average;
-    currentSpot.previewImage = image.url;
+    spot.avgRating = average;
+
+    const previewImage = await SpotImage.findOne({
+      where: {
+        spotId: spot.id,
+      },
+    });
+    if(previewImage) spot.previewImage = previewImage.url;
+    else spot.previewImage = "No Images Available"
   }
 
   res.status(200).json({ Spots: spots });
@@ -41,57 +40,56 @@ router.get("/", async (req, res) => {
 router.get("/current", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
 
-  const userSpots = await Spot.findAll({
+  const spots = await Spot.findAll({
     where: {
       ownerId: user.id,
     },
     raw: true,
   });
 
-  for (currentSpot of userSpots) {
+  for (spot of spots) {
     const starSum = await Review.sum("stars", {
       where: {
-        spotId: currentSpot.id,
+        spotId: spot.id,
       },
     });
-
     const totalReviews = await Review.count({
       where: {
-        spotId: currentSpot.id,
+        spotId: spot.id,
       },
     });
-
-    const image = await SpotImage.findOne({
-      where: {
-        spotId: currentSpot.id,
-      },
-    });
-    console.log("image =>", image);
     average = starSum / totalReviews;
-    currentSpot.avgRating = average;
-    currentSpot.previewImage = image.url;
+    spot.avgRating = average;
+
+    const previewImage = await SpotImage.findOne({
+      where: {
+        spotId: spot.id,
+      }
+    });
+    if(previewImage) spot.previewImage = previewImage.url;
+    else spot.previewImage = "No Images Available"
   }
 
-  res.status(200).json({ Spots: userSpots });
+  res.status(200).json({ Spots: spots });
 });
 
 // Get Details of Specific Spot
 router.get("/:spotId", async (req, res) => {
-  const currentSpotId = req.params.spotId;
-  const spot = await Spot.findByPk(currentSpotId, { raw: true });
+  const spotId = req.params.spotId;
+  const spot = await Spot.findByPk(spotId, { raw: true });
 
   if (!spot) res.status(404).json(doesNotExist("Spot"));
   else {
     const totalReviews = await Review.count({
       where: {
-        spotId: currentSpotId,
+        spotId: spotId,
       },
     });
     spot.numReviews = totalReviews;
 
     const starSum = await Review.sum("stars", {
       where: {
-        spotId: currentSpotId,
+        spotId: spotId,
       },
     });
     spot.avgStarRating = starSum / totalReviews;
@@ -99,7 +97,7 @@ router.get("/:spotId", async (req, res) => {
     spot.SpotImages = [];
     const spotImages = await SpotImage.findAll({
       where: {
-        spotId: currentSpotId,
+        spotId: spotId,
       },
       attributes: ["id", "url", "preview"],
       raw: true,

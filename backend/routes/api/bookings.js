@@ -40,7 +40,7 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
       }
     }
     if (!booking.Spot.previewImage) {
-      booking.Spot.previewImage = "No Image Available";
+      booking.Spot.previewImage = "No Images Available";
     }
     delete booking.Spot.SpotImages;
   }
