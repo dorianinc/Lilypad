@@ -30,7 +30,7 @@ router.get("/", async (req, res) => {
       },
     });
     if(previewImage) spot.previewImage = previewImage.url;
-    else spot.previewImage = "No Images Available"
+    else spot.previewImage = "image url"
   }
 
   res.status(200).json({ Spots: spots });
@@ -67,7 +67,7 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
       }
     });
     if(previewImage) spot.previewImage = previewImage.url;
-    else spot.previewImage = "No Images Available"
+    else spot.previewImage = "image url"
   }
 
   res.status(200).json({ Spots: spots });
