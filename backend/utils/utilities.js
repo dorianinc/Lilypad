@@ -34,12 +34,23 @@ const doesNotExist = (object) => {
   };
 };
 
-const hasPassed = (endDate, res) => {
-  if (new Date(endDate).getTime() < new Date().getTime()) {
-    res.status(400).json({
-      message: "Past bookings can't be modified",
-    });
-    return true;
+const hasPassed = (startDate, endDate, res) => {
+  if(startDate){
+    if (new Date(startDate).getTime() <= new Date().getTime()) {
+      console.log("we in it now")
+      res.status(400).json({
+        message: "Bookings that have been started can't be deleted",
+      });
+      return true;
+    }
+  }
+  if(endDate){
+    if (new Date(endDate).getTime() < new Date().getTime()) {
+      res.status(400).json({
+        message: "Past bookings can't be modified",
+      });
+      return true;
+    }
   }
 };
 

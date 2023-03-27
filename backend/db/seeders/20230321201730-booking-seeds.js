@@ -37,15 +37,15 @@ module.exports = {
           // 4
           spotId: 4,
           userId: 1,
-          startDate: "2026-07-01T00:00:00",
-          endDate: "2026-07-05T00:00:00",
+          startDate: "2023-03-26T00:00:00",
+          endDate: "2025-03-30T00:00:00",
         },
         {
           // 5
           spotId: 5,
           userId: 1,
-          startDate: "2027-07-01T00:00:00",
-          endDate: "2029-07-05T00:00:00",
+          startDate: "2023-03-25T00:00:00",
+          endDate: "2025-03-31T00:00:00",
         },
         {
           // 6

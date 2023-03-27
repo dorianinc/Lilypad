@@ -174,7 +174,7 @@ router.delete("/:spotId", [restoreUser, requireAuth], async (req, res) => {
   if (!spot) res.status(404).json(doesNotExist("Spot"));
 
   if (isAuthorized(user.id, spot.ownerId, res)) {
-    spot.destroy();
+   await spot.destroy();
     res.status(200).json({
       message: "Successfully deleted",
       statusCode: 200,
