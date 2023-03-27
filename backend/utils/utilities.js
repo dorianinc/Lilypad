@@ -30,7 +30,6 @@ const isAvailable = (startDate, endDate, bookedDates, res) => {
 const doesNotExist = (object) => {
   return {
     message: `${object} couldn't be found`,
-    statusCode: 404,
   };
 };
 

@@ -1,5 +1,6 @@
 const express = require("express");
 const { validateReview } = require("../../utils/validation");
+const {  doesNotExist } = require("../../utils/utilities.js");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { ReviewImage, Review, User, Spot } = require("../../db/models");
 
@@ -47,7 +48,7 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
       {
         model: Spot,
         attributes: {
-          exclude: ["createdAt", "updatedAt"],
+          exclude: ["description", "createdAt", "updatedAt"],
         },
       },
       {

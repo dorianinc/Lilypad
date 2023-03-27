@@ -21,12 +21,8 @@ const handleValidationErrors = (req, _res, next) => {
 };
 // validator for when new user is signing up
 const validateSignup = [
-  check("firstName")
-  .exists({ checkFalsy: true })
-  .withMessage("First Name is required"),
-  check("lastName")
-  .exists({ checkFalsy: true })
-  .withMessage("Last Name is required"),
+  check("firstName").exists({ checkFalsy: true }).withMessage("First Name is required"),
+  check("lastName").exists({ checkFalsy: true }).withMessage("Last Name is required"),
   check("email")
     .exists({ checkFalsy: true })
     .isEmail()
@@ -76,8 +72,11 @@ const validateSpot = [
   check("name")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Name is required")
-    .isLength({ max: 25 }),
-  // .withMessage("Name must be less than 50 characters"),
+    .isLength({ max: 25 })
+    .withMessage("Name must be less than 50 characters"),
+    check("description")
+    .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
+    .withMessage("Description is required"),
   check("price")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Price per day is required"),

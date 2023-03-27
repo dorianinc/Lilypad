@@ -297,6 +297,7 @@ router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], as
   else {
     const { startDate, endDate } = req.body;
     const bookedDates = await Booking.findAll({
+      where: { spotId: spot.id },
       attributes: ["id", "startDate", "endDate"],
       raw: true,
     });
@@ -311,7 +312,7 @@ router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], as
         res.status(200).json(newBooking);
       }
     } else {
-      res.json("Owers cannot book their own spots");
+      res.status(403).json("Owers Cannot Book Their Own Spots");
     }
   }
 });
