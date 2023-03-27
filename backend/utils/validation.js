@@ -94,6 +94,33 @@ const validateBooking = [
   handleValidationErrors,
 ];
 
+validateQueries = [
+  check("page")
+    .custom((value) => value === undefined || value >= 1)
+    .withMessage("Page must be greater than or equal to 1"),
+  check("size")
+    .custom((value) => value === undefined || value >= 1)
+    .withMessage("Size must be greater than or equal to 1"),
+  check("minLat")
+    .custom((value) => value === undefined || value >= -90)
+    .withMessage("Minimum latitude is invalid"),
+  check("maxLat")
+    .custom((value) => value === undefined || value <= 90)
+    .withMessage("Maximum latitude is invalid"),
+  check("minLng")
+    .custom((value) => value === undefined || value >= -180)
+    .withMessage("Minimum longitude is invalid"),
+  check("maxLng")
+    .custom((value) => value === undefined || value <= 180)
+    .withMessage("Maximum longitude is invalid"),
+  check("minPrice")
+    .custom((value) => value === undefined || value >= 0)
+    .withMessage("Minimum price must be greater than or equal to 0"),
+  check("maxPrice")
+    .custom((value) => value === undefined || value >= 0)
+    .withMessage("Maximum price must be greater than or equal to 0"),
+  handleValidationErrors,
+];
 
 module.exports = {
   validateSignup,
@@ -101,4 +128,5 @@ module.exports = {
   validateSpot,
   validateReview,
   validateBooking,
+  validateQueries,
 };

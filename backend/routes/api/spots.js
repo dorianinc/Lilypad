@@ -1,14 +1,77 @@
 const express = require("express");
-const { validateSpot, validateReview, validateBooking } = require("../../utils/validation");
+const {
+  validateSpot,
+  validateReview,
+  validateBooking,
+  validateQueries,
+} = require("../../utils/validation");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { isAvailable, doesNotExist } = require("../../utils/utilities.js");
 const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require("../../db/models");
-
+const { Op } = require("sequelize");
 const router = express.Router();
 
 // Get all Spots
-router.get("/", async (req, res) => {
-  const spots = await Spot.findAll({ raw: true });
+router.get("/", validateQueries, async (req, res) => {
+  //  start of querying settings //
+  ////////// start of page and size logic /////////////
+  let { page, size } = req.query;
+  console.log("input page =>", page);
+  console.log("input size =>", size);
+
+  // set defaults for page and sizes
+  if (!page) page = 1;
+  if (!size) size = 20;
+
+  // convert page and size into numbers
+  page = parseInt(page);
+  size = parseInt(size);
+
+  // declare limits for page and size
+  if (page > 10) page = 10;
+  if (size > 20) size = 20;
+
+  let pagination = {};
+  pagination.limit = size;
+  pagination.offset = size * (page - 1);
+  ////////// end of page and size logic /////////////
+
+  ////////// start of filtering logic /////////////
+  const { city, state, country } = req.query;
+  const { minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+  const where = {}; // will hold all our filters
+
+  // Latitude
+  if (minLat) {
+    where.lat = { [Op.gte]: minLat };
+  }
+  if (maxLat) {
+    where.lat = { [Op.lte]: maxLat };
+  }
+
+  // Longitude
+  if (minLng) {
+    where.lng = { [Op.gte]: minLng };
+  }
+  if (maxLng) {
+    where.lng = { [Op.lte]: maxLng };
+  }
+
+  // Price
+  if (minPrice) {
+    where.price = { [Op.gte]: minPrice };
+  }
+  if (maxPrice) {
+    where.price = { [Op.lte]: maxPrice };
+  }
+  ////////// end of filtering logic /////////////
+  // end of querying settings //
+
+  const spots = await Spot.findAll({
+    where,
+    ...pagination,
+    raw: true,
+  });
 
   for (spot of spots) {
     const starSum = await Review.sum("stars", {
@@ -29,8 +92,8 @@ router.get("/", async (req, res) => {
         spotId: spot.id,
       },
     });
-    if(previewImage) spot.previewImage = previewImage.url;
-    else spot.previewImage = "image url"
+    if (previewImage) spot.previewImage = previewImage.url;
+    else spot.previewImage = "image url";
   }
 
   res.status(200).json({ Spots: spots });
@@ -64,10 +127,10 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
     const previewImage = await SpotImage.findOne({
       where: {
         spotId: spot.id,
-      }
+      },
     });
-    if(previewImage) spot.previewImage = previewImage.url;
-    else spot.previewImage = "image url"
+    if (previewImage) spot.previewImage = previewImage.url;
+    else spot.previewImage = "image url";
   }
 
   res.status(200).json({ Spots: spots });
