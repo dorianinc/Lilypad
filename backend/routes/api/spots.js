@@ -1,7 +1,7 @@
 const express = require("express");
 const { validateSpot, validateReview, validateBooking } = require("../../utils/validation");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
-const { isAvailable, doesNotExist} = require("../../utils/utilities.js")
+const { isAvailable, doesNotExist } = require("../../utils/utilities.js");
 const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require("../../db/models");
 
 const router = express.Router();
@@ -40,11 +40,10 @@ router.get("/", async (req, res) => {
 // Get all Spots of Specfic Owner
 router.get("/current", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
-  const userId = user.id;
 
   const userSpots = await Spot.findAll({
     where: {
-      ownerId: userId,
+      ownerId: user.id,
     },
     raw: true,
   });
@@ -67,7 +66,7 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
         spotId: currentSpot.id,
       },
     });
-
+    console.log("image =>", image);
     average = starSum / totalReviews;
     currentSpot.avgRating = average;
     currentSpot.previewImage = image.url;
@@ -82,41 +81,42 @@ router.get("/:spotId", async (req, res) => {
   const spot = await Spot.findByPk(currentSpotId, { raw: true });
 
   if (!spot) res.status(404).json(doesNotExist("Spot"));
+  else {
+    const totalReviews = await Review.count({
+      where: {
+        spotId: currentSpotId,
+      },
+    });
+    spot.numReviews = totalReviews;
 
-  const totalReviews = await Review.count({
-    where: {
-      spotId: currentSpotId,
-    },
-  });
-  spot.numReviews = totalReviews;
+    const starSum = await Review.sum("stars", {
+      where: {
+        spotId: currentSpotId,
+      },
+    });
+    spot.avgStarRating = starSum / totalReviews;
 
-  const starSum = await Review.sum("stars", {
-    where: {
-      spotId: currentSpotId,
-    },
-  });
-  spot.avgStarRating = starSum / totalReviews;
+    spot.SpotImages = [];
+    const spotImages = await SpotImage.findAll({
+      where: {
+        spotId: currentSpotId,
+      },
+      attributes: ["id", "url", "preview"],
+      raw: true,
+    });
+    for (image of spotImages) spot.SpotImages.push(image);
 
-  spot.SpotImages = [];
-  const spotImages = await SpotImage.findAll({
-    where: {
-      spotId: currentSpotId,
-    },
-    attributes: ["id", "url", "preview"],
-    raw: true,
-  });
-  for (image of spotImages) spot.SpotImages.push(image);
+    const owner = await User.findOne({
+      where: {
+        id: spot.ownerId,
+      },
+      attributes: ["id", "firstName", "lastName"],
+      raw: true,
+    });
+    spot.Owner = owner;
 
-  const owner = await User.findOne({
-    where: {
-      id: spot.ownerId,
-    },
-    attributes: ["id", "firstName", "lastName"],
-    raw: true,
-  });
-  spot.Owner = owner;
-
-  res.status(200).json(spot);
+    res.status(200).json(spot);
+  }
 });
 
 // Create a new Spot
@@ -140,13 +140,14 @@ router.post("/:spotId/images", [restoreUser, requireAuth], async (req, res, next
 
   const spot = await Spot.findByPk(req.params.spotId, { raw: true });
   if (!spot) res.status(404).json(doesNotExist("Spot"));
-
-  if (isAuthorized(user.id, spot.ownerId, res)) {
-    const newImage = await SpotImage.create({
-      url,
-      spotId: spot.id,
-    });
-    res.status(200).json(newImage);
+  else {
+    if (isAuthorized(user.id, spot.ownerId, res)) {
+      const newImage = await SpotImage.create({
+        url,
+        spotId: spot.id,
+      });
+      res.status(200).json(newImage);
+    }
   }
 });
 
@@ -156,29 +157,32 @@ router.put("/:spotId", [restoreUser, requireAuth, validateSpot], async (req, res
 
   const spot = await Spot.findByPk(req.params.spotId);
   if (!spot) res.status(404).json(doesNotExist("Spot"));
-
-  if (isAuthorized(user.id, spot.ownerId, res)) {
-    for (property in req.body) {
-      let value = req.body[property];
-      spot[property] = value;
+  else {
+    if (isAuthorized(user.id, spot.ownerId, res)) {
+      for (property in req.body) {
+        let value = req.body[property];
+        spot[property] = value;
+      }
+      await spot.save();
+      res.status(200).json(spot);
     }
-    await spot.save();
-    res.status(200).json(spot);
   }
 });
+
 // Delete a Spot
 router.delete("/:spotId", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
 
   const spot = await Spot.findByPk(req.params.spotId);
   if (!spot) res.status(404).json(doesNotExist("Spot"));
-
-  if (isAuthorized(user.id, spot.ownerId, res)) {
-   await spot.destroy();
-    res.status(200).json({
-      message: "Successfully deleted",
-      statusCode: 200,
-    });
+  else {
+    if (isAuthorized(user.id, spot.ownerId, res)) {
+      await spot.destroy();
+      res.status(200).json({
+        message: "Successfully deleted",
+        statusCode: 200,
+      });
+    }
   }
 });
 
@@ -189,22 +193,22 @@ router.post("/:spotId/reviews", [restoreUser, requireAuth, validateReview], asyn
 
   const spot = await Spot.findByPk(req.params.spotId, { raw: true });
   if (!spot) res.status(404).json(doesNotExist("Spot"));
-
-  if (await Review.findOne({ where: { userId: user.id, spotId: spot.id } })) {
-    return res.status(403).json({
-      message: "User already has a review for this spot",
-      statusCode: 403,
-    });
+  else {
+    if (await Review.findOne({ where: { userId: user.id, spotId: spot.id } })) {
+      return res.status(403).json({
+        message: "User already has a review for this spot",
+        statusCode: 403,
+      });
+    } else {
+      const newReview = await Review.create({
+        userId: user.id,
+        spotId: spot.id,
+        review,
+        stars,
+      });
+      res.status(200).json(newReview);
+    }
   }
-
-  const newReview = await Review.create({
-    userId: user.id,
-    spotId: spot.id,
-    review,
-    stars,
-  });
-
-  res.status(200).json(newReview);
 });
 
 // Get all Reviews of Specific Spot
@@ -229,25 +233,25 @@ router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], as
 
   const spot = await Spot.findByPk(req.params.spotId, { raw: true });
   if (!spot) res.status(404).json(doesNotExist("Spot"));
-
-  const { startDate, endDate } = req.body;
-  const bookedDates = await Booking.findAll({
-    attributes: ["id", "startDate", "endDate"],
-    raw: true,
-  });
-
-  if (user.id !== spot.ownerId) {
-    if (isAvailable(startDate, endDate, bookedDates, res)) {
-      const newBooking = await Booking.create({
-        spotId: spot.id,
-        userId: user.id,
-        startDate,
-        endDate,
-      });
-      res.status(200).json(newBooking);
+  else {
+    const { startDate, endDate } = req.body;
+    const bookedDates = await Booking.findAll({
+      attributes: ["id", "startDate", "endDate"],
+      raw: true,
+    });
+    if (user.id !== spot.ownerId) {
+      if (isAvailable(startDate, endDate, bookedDates, res)) {
+        const newBooking = await Booking.create({
+          spotId: spot.id,
+          userId: user.id,
+          startDate,
+          endDate,
+        });
+        res.status(200).json(newBooking);
+      }
+    } else {
+      res.json("Owers cannot book their own spots");
     }
-  } else {
-    res.json("Bro, you cant book your own spot");
   }
 });
 
@@ -257,25 +261,33 @@ router.get("/:spotId/bookings", [restoreUser, requireAuth], async (req, res) => 
 
   const spot = await Spot.findByPk(req.params.spotId, { raw: true });
   if (!spot) res.status(404).json(doesNotExist("Spot"));
+  else {
+    let bookings;
+    const bookingsObj = [];
 
-  let booking;
-
-  if (user.id === spot.ownerId) {
-    booking = await Booking.unscoped().findAll({
-      where: {
-        spotId: req.params.spotId,
-      },
-      include: { model: User, attributes: ["id", "firstName", "lastName"] },
-    });
-  } else {
-    booking = await Booking.findAll({
-      where: {
-        spotId: req.params.spotId,
-      },
-    });
+    if (user.id === spot.ownerId) {
+      bookings = await Booking.unscoped().findAll({
+        where: {
+          spotId: req.params.spotId,
+        },
+        include: { model: User, attributes: ["id", "firstName", "lastName"] },
+      });
+      for (let i = 0; i < bookings.length; i++) {
+        const booking = bookings[i].toJSON();
+        const { id, spotId, userId, startDate, endDate, createdAt, updatedAt, User } = booking;
+        const newBooking = { User, id, spotId, userId, startDate, endDate, createdAt, updatedAt };
+        bookingsObj.push(newBooking);
+      }
+      res.status(200).json({ Booking: bookingsObj });
+    } else {
+      bookings = await Booking.findAll({
+        where: {
+          spotId: req.params.spotId,
+        },
+      });
+      res.status(200).json({ Booking: bookings });
+    }
   }
-
-  res.status(200).json(booking);
 });
 
 module.exports = router;

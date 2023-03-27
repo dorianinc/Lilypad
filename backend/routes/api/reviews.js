@@ -12,24 +12,26 @@ router.post("/:reviewId/images", [restoreUser, requireAuth], async (req, res, ne
 
   const review = await Review.findByPk(req.params.reviewId, { raw: true });
   if (!review) res.status(404).json(doesNotExist("Review"));
-
-  if (isAuthorized(user.id, review.userId)) {
-    let imageCount = await ReviewImage.count("url", {
-      where: {
-        reviewId: review.id,
-      },
-    });
-    if (imageCount > 10) {
-      res.status(403).json({
-        message: "Maximum number of images for this resource was reached",
-        statusCode: 403,
+  else {
+    if (isAuthorized(user.id, review.userId, res)) {
+      let imageCount = await ReviewImage.count({
+        where: {
+          reviewId: review.id,
+        },
       });
+      if (imageCount > 10) {
+        res.status(403).json({
+          message: "Maximum number of images for this resource was reached",
+          statusCode: 403,
+        });
+      } else {
+        const newImage = await ReviewImage.create({
+          url,
+          reviewId: review.id,
+        });
+        res.status(200).json(newImage);
+      }
     }
-    const newImage = await ReviewImage.create({
-      url,
-      reviewId: review.id,
-    });
-    res.status(200).json(newImage);
   }
 });
 
@@ -79,14 +81,15 @@ router.put("/:reviewId", [restoreUser, requireAuth, validateReview], async (req,
 
   const review = await Review.findByPk(req.params.reviewId);
   if (!review) res.status(404).json(doesNotExist("Review"));
-
-  if (isAuthorized(user.id, review.userId)) {
-    for (property in req.body) {
-      let value = req.body[property];
-      review[property] = value;
+  else {
+    if (isAuthorized(user.id, review.userId, res)) {
+      for (property in req.body) {
+        let value = req.body[property];
+        review[property] = value;
+      }
+      await review.save();
+      res.status(200).json(review);
     }
-    await review.save();
-    res.status(200).json(review);
   }
 });
 
@@ -96,13 +99,14 @@ router.delete("/:reviewId", [restoreUser, requireAuth], async (req, res) => {
 
   const review = await Review.findByPk(req.params.reviewId);
   if (!review) res.status(404).json(doesNotExist("Review"));
-
-  if (isAuthorized(user.id, review.userId)) {
-    await review.destroy();
-    res.status(200).json({
-      message: "Successfully deleted",
-      statusCode: 200,
-    });
+  else {
+    if (isAuthorized(user.id, review.userId, res)) {
+      await review.destroy();
+      res.status(200).json({
+        message: "Successfully deleted",
+        statusCode: 200,
+      });
+    }
   }
 });
 

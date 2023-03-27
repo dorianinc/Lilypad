@@ -39,7 +39,6 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
         booking.Spot.previewImage = image.url;
       }
     }
-
     if (!booking.Spot.previewImage) {
       booking.Spot.previewImage = "No Image Available";
     }
@@ -60,21 +59,21 @@ router.put("/:bookingId", [restoreUser, requireAuth, validateBooking], async (re
     },
   });
   if (!booking) res.status(404).json(doesNotExist("Booking"));
-
-  if (!hasPassed(null, booking.endDate, res)) {
-    const bookedDates = await Booking.findAll({
-      attributes: ["id", "startDate", "endDate"],
-      raw: true,
-    });
-
-    if (isAuthorized(user.id, booking.userId, res)) {
-      if (isAvailable(startDate, endDate, bookedDates, res)) {
-        for (property in req.body) {
-          let value = req.body[property];
-          booking[property] = value;
+  else {
+    if (!hasPassed(null, booking.endDate, res)) {
+      const bookedDates = await Booking.findAll({
+        attributes: ["id", "startDate", "endDate"],
+        raw: true,
+      });
+      if (isAuthorized(user.id, booking.userId, res)) {
+        if (isAvailable(startDate, endDate, bookedDates, res)) {
+          for (property in req.body) {
+            let value = req.body[property];
+            booking[property] = value;
+          }
+          await booking.save();
+          res.status(200).json(booking);
         }
-        await booking.save();
-        res.status(200).json(booking);
       }
     }
   }
@@ -86,14 +85,15 @@ router.delete("/:bookingId", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
   const booking = await Booking.unscoped().findByPk(req.params.bookingId);
   if (!booking) res.status(404).json(doesNotExist("Booking"));
-  console.log("from booking", booking.startDate)
-  if (isAuthorized(user.id, booking.userId, res)) {
-    if (!hasPassed(booking.startDate, null, res)) {
-      await booking.destroy();
-      res.status(200).json({
-        message: "Successfully deleted",
-        statusCode: 200,
-      });
+  else{
+    if (isAuthorized(user.id, booking.userId, res)) {
+      if (!hasPassed(booking.startDate, null, res)) {
+        await booking.destroy();
+        res.status(200).json({
+          message: "Successfully deleted",
+          statusCode: 200,
+        });
+      }
     }
   }
 });
