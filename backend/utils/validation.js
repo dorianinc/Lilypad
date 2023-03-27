@@ -62,10 +62,10 @@ const validateSpot = [
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Country is required"),
   check("lat")
-    .custom((value) => value === null || value.match(latRegex))
+    .custom((value) => value === null || value.toString().match(latRegex))
     .withMessage("Latitude is not valid"),
   check("lng")
-    .custom((value) => value === null || value.match(lngRegex))
+    .custom((value) => value === null || value.toString().match(lngRegex))
     .withMessage("Longitude is not valid"),
   check("name")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
