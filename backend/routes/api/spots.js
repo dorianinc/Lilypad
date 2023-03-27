@@ -96,7 +96,7 @@ router.get("/", validateQueries, async (req, res) => {
     else spot.previewImage = "image url";
   }
 
-  res.status(200).json({ Spots: spots });
+  res.status(200).json({ Spots: spots, page, size });
 });
 
 // Get all Spots of Specfic Owner
