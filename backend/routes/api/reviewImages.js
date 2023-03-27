@@ -21,5 +21,4 @@ router.delete("/:imageId", [restoreUser, requireAuth], async (req, res) => {
     }
   }
 });
-console.log('spare the sympathy')
 module.exports = router;

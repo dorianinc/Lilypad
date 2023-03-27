@@ -75,7 +75,7 @@ const validateSpot = [
     .isLength({ max: 25 })
     .withMessage("Name must be less than 50 characters"),
     check("description")
-    .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
+    .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or nullls
     .withMessage("Description is required"),
   check("price")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
