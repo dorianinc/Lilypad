@@ -90,6 +90,7 @@ router.get("/", validateQueries, async (req, res) => {
     const previewImage = await SpotImage.findOne({
       where: {
         spotId: spot.id,
+        preview: true
       },
     });
     if (previewImage) spot.previewImage = previewImage.url;
@@ -127,6 +128,7 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
     const previewImage = await SpotImage.findOne({
       where: {
         spotId: spot.id,
+        preview: true
       },
     });
     if (previewImage) spot.previewImage = previewImage.url;
@@ -197,7 +199,7 @@ router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
 // Add Image to a Spot
 router.post("/:spotId/images", [restoreUser, requireAuth], async (req, res, next) => {
   const { user } = req;
-  const { url } = req.body;
+  const { url, preview } = req.body;
 
   const spot = await Spot.findByPk(req.params.spotId, { raw: true });
   if (!spot) res.status(404).json(doesNotExist("Spot"));
@@ -205,6 +207,7 @@ router.post("/:spotId/images", [restoreUser, requireAuth], async (req, res, next
     if (isAuthorized(user.id, spot.ownerId, res)) {
       const newImage = await SpotImage.create({
         url,
+        preview,
         spotId: spot.id,
       });
       res.status(200).json(newImage);

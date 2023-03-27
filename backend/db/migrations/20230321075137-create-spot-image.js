@@ -17,14 +17,6 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        url: {
-          allowNull: false,
-          type: Sequelize.STRING,
-        },
-        preview: {
-          type: Sequelize.BOOLEAN,
-          defaultValue: false,
-        },
         spotId: {
           allowNull: false,
           type: Sequelize.INTEGER,
@@ -32,6 +24,14 @@ module.exports = {
             model: "Spots",
           },
           onDelete: 'cascade'
+        },
+        url: {
+          allowNull: false,
+          type: Sequelize.STRING,
+        },
+        preview: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
         },
         createdAt: {
           allowNull: false,
