@@ -42,14 +42,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
-          len: [2, 12],
+          len: [2, 20],
         },
       },
       country: {
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
-          len: [4, 30],
+          len: [4, 35],
         },
       },
       lat: {
