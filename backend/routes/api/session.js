@@ -20,7 +20,7 @@ router.post("/", validateLogin, async (req, res, next) => {
   });
 
   if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-    console.log("user =>", user)
+    console.log("user =>", user);
     const err = new Error("Login failed");
     err.status = 401;
     err.title = "Login failed";
@@ -43,19 +43,14 @@ router.post("/", validateLogin, async (req, res, next) => {
   });
 });
 
-// Log out
-router.delete("/", (_req, res) => {
-  res.clearCookie("token");
-  return res.json({ message: "you are logged out" });
-});
-
 // Restore session user
-router.get("/", [restoreUser, requireAuth], (req, res) => {
+router.get("/", restoreUser, (req, res) => {
+  console.log("getting user...");
   const { user } = req;
   if (user) {
     const safeUser = {
       id: user.id,
-      firstName: user.fistName,
+      firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
       username: user.username,
@@ -64,6 +59,12 @@ router.get("/", [restoreUser, requireAuth], (req, res) => {
       user: safeUser,
     });
   } else return res.json({ user: null });
+});
+
+// logout user
+router.delete("/", (_req, res) => {
+  res.clearCookie("token");
+  return res.json({ message: "success" });
 });
 
 module.exports = router;
