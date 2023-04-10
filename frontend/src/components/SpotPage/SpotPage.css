@@ -1,0 +1,72 @@
+.mainContainer.spot {
+  width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.2rem;
+  grid-auto-columns: 1fr;
+  grid-template-areas:
+  "one one two three"
+  "one one four five";
+}
+
+.box-1 {
+  grid-area: one;
+}
+
+.box-2 {
+  grid-area: two;
+}
+
+.box-3 {
+  grid-area: three;
+}
+
+.box-4 {
+  grid-area: four;
+}
+
+.box-5 {
+  grid-area: five;
+}
+
+/* @media (min-width: 800px) and (max-width: 1024px) {
+  .container {
+    grid-template-areas:
+      "one one one"
+      "two three four"
+      "five five five";
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    grid-template-areas:
+      "one one two three"
+      "four five five three";
+  }
+} */
+
+.boxes {
+  padding: 15px;
+  border-radius: 15px;
+}
+
+#orange {
+  background-color: orange;
+}
+
+#purple {
+  background-color: rgb(165, 29, 165);
+}
+
+#blue {
+  background-color: rgb(3, 99, 252);
+}
+
+#green {
+  background-color: green;
+}
+
+#red {
+  background-color: red;
+}

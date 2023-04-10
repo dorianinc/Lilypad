@@ -5,7 +5,6 @@ const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
 
 const setUser = (user) => {
-    console.log("in set user")
   return {
     type: SET_USER,
     payload: user,
