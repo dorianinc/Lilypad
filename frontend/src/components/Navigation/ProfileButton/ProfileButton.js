@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
-import * as sessionActions from '../../store/session';
-import OpenModalButton from '../OpenModalButton';
-import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormModal';
+import { useDispatch } from "react-redux";
+import * as sessionActions from "../../../store/session";
+import OpenModalButton from "../../OpenModalButton";
+import LoginFormModal from "../../LoginFormModal";
+import SignupFormModal from "../../SignupFormModal";
+import "./ProfileButton.css"
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ function ProfileButton({ user }) {
       }
     };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
@@ -37,48 +38,54 @@ function ProfileButton({ user }) {
     closeMenu();
   };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const dropdown = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <>
+    <div className="userButton">
       <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+        <div className="menuIcon">
+          <i className="fa-solid fa-bars" />
+        </div>
+        <div className="userIcon">
+          <i className="fas fa-user-circle" />
+        </div>
       </button>
-      <ul className={ulClassName} ref={ulRef}>
+      <div className={dropdown} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
+            <div>{user.username}</div>
+            <div>
+              {user.firstName} {user.lastName}
+            </div>
+            <div>{user.email}</div>
+            <div>
+              <button className="modalButtons" onClick={logout}>Log Out</button>
+            </div>
           </>
         ) : (
           <>
-            <li>
-              <OpenModalButton
-                buttonText="Log In"
-                onButtonClick={closeMenu}
-                modalComponent={<LoginFormModal />}
-              />
-            </li>
-            <li>
+            <div>
               <OpenModalButton
                 buttonText="Sign Up"
                 onButtonClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />
-            </li>
+            </div>
+            <div>
+              <OpenModalButton
+                buttonText="Log In"
+                onButtonClick={closeMenu}
+                modalComponent={<LoginFormModal />}
+              />
+            </div>
           </>
         )}
-      </ul>
-    </>
+      </div>
+    </div>
   );
 }
 
 export default ProfileButton;
-
 
 // import React, { useState, useEffect, useRef } from "react";
 // import { useDispatch } from 'react-redux';
@@ -156,4 +163,3 @@ export default ProfileButton;
 // }
 
 // export default ProfileButton;
-

@@ -1,0 +1,19 @@
+.logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .logo {
+    transform: rotate(180deg);
+  }
+  
+  .title {
+    color: #ff5d63;
+    font-weight: 600;
+    font-size: 21.5px;
+    text-decoration: none;
+  }
+
+  a:link {
+    text-decoration: none;
+  }
