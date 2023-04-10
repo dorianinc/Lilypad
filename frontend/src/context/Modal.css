@@ -20,5 +20,24 @@
   
   #modal-content {
     position: absolute;
+    border-radius: 20px;
+    padding: 20px;
     background-color: white;
   }
+
+  .header {
+    text-align: center;
+  }
+  
+  .submitButton {
+    color: white;
+    background-color: #ff5d63;
+    height: 45px;
+  }
+
+  input {
+    height: 30px;
+    width: 350px;
+  }
+  
+
