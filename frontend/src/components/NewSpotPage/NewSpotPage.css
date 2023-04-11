@@ -1,0 +1,76 @@
+.mainContainer.newSpot {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.oneLiner {
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.flexedInputs {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+}
+
+#state {
+    width: 205px;
+}
+
+#city {
+    width: 355px;
+
+}
+
+#longitude {
+    width: 280px;
+}
+
+#latitude {
+    width: 280px;
+
+}
+
+.flexLabel{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.images{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+textarea {
+  resize: none;
+  width: 100%;
+  height: 150px;
+}
+
+hr {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+#buttonContainer{
+    display: flex;
+    justify-content: center;
+}
+#createButton{
+    margin: 20px;
+    width: 325px;
+    height: 40px;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    background-color: #ff5d63;
+}
+
+.errors{
+    color: red;
+    font-weight: bold;
+}

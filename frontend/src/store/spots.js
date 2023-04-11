@@ -1,10 +1,10 @@
+import { csrfFetch } from "./csrf";
 /** Action Type Constants: */
 export const LOAD_SPOTS = "spots/LOAD_SPOTS";
 export const PREVIEW_SPOT = "spots/PREVIEW_SPOT";
 export const CLEAR_SPOTS = "spots/CLEAR_SPOTS";
 // export const UPDATE_SPOTS = "spots/UPDATE_SPOTS";
 // export const REMOVE_SPOTS = "spots/REMOVE_SPOTS";
-// export const ADD_SPOTS = "spots/ADD_SPOTS";
 
 /**  Action Creators: */
 export const loadSpotsAction = (spots) => ({
@@ -63,25 +63,41 @@ export const previewSpotThunk = (spotId) => async (dispatch) => {
   }
 };
 
-// export const createReport = (spot) => async (dispatch) => {
-//   // console.log("before fetch")
-//   const res = await fetch('/api/spots/', {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json"
-//     },
-//     body: JSON.stringify(spot)
-//   })
-//   // console.log("after fetch")
-//   if(res.ok){
-//     console.log("res is okay")
-//     const data = await res.json();
-//     // console.log("data 👉", data)
-//     dispatch(receiveReport(data))
-//     return data
-//   }
+export const createSpotThunk = (spot) => async (dispatch) => {
+  const res = await csrfFetch("/api/spots/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(spot),
+  });
+  if (res.ok) {
+    const data = await res.json();
+    console.log("data 👉", data)
+    return data;
+    // dispatch(previewSpotAction(data));
+  }
+};
 
-// }
+export const addImageThunk= (spotId, imageObj) => async (dispatch) => {
+  console.log("spotId from thunk 👉", spotId)
+  console.log("imageObj from thunk 👉", imageObj)
+  console.log("in add image before fetch")
+  const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(imageObj),
+  });
+  console.log("after fetch")
+  if (res.ok) {
+    const data = await res.json();
+    console.log("data 👉", data)
+    // dispatch(previewSpotAction(data));
+    return data;
+  }
+}
 
 const spotsReducer = (state = {}, action) => {
   let newState;
