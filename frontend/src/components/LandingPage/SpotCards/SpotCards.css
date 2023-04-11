@@ -12,16 +12,16 @@
   border-radius: 10px;
 }
 
-.titleCard {
+.cardTitle {
   font-weight: 600;
 }
 
-.infoCard {
+.cardInfo {
   display: flex;
   justify-content: space-between;
 }
 
-.priceCard > span {
+.cardPrice > span {
   font-weight: 600;
 }
 

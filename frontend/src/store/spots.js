@@ -1,6 +1,7 @@
 /** Action Type Constants: */
 export const LOAD_SPOTS = "spots/LOAD_SPOTS";
 export const PREVIEW_SPOT = "spots/PREVIEW_SPOT";
+export const CLEAR_SPOTS = "spots/CLEAR_SPOTS";
 // export const UPDATE_SPOTS = "spots/UPDATE_SPOTS";
 // export const REMOVE_SPOTS = "spots/REMOVE_SPOTS";
 // export const ADD_SPOTS = "spots/ADD_SPOTS";
@@ -25,6 +26,10 @@ export const previewSpotAction = (spot) => ({
 //   type: REMOVE_SPOTS,
 //   spotId,
 // });
+
+export const clearSpots = () => ({
+  type: CLEAR_SPOTS,
+});
 
 /** Thunk Action Creators: */
 
@@ -79,15 +84,18 @@ export const previewSpotThunk = (spotId) => async (dispatch) => {
 // }
 
 const spotsReducer = (state = {}, action) => {
+  let newState;
   switch (action.type) {
     case LOAD_SPOTS:
-      const newState = {};
+      newState = { ...state };
       action.spots.forEach((spot) => {
         newState[spot.id] = spot;
       });
       return newState;
     case PREVIEW_SPOT:
       return { ...state, [action.spot.id]: action.spot };
+    case CLEAR_SPOTS:
+      return {};
     default:
       return state;
   }

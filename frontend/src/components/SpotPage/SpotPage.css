@@ -1,32 +1,80 @@
-.mainContainer.spot {
+.mainContainer.spots {
   width: 1000px;
   margin: 0 auto;
+}
+
+#imagesContainer {
   display: grid;
-  gap: 1.2rem;
-  grid-auto-columns: 1fr;
+  gap: 5px;
+  grid-auto-columns: 2fr;
   grid-template-areas:
-  "one one two three"
-  "one one four five";
+    "one one two three"
+    "one one four five";
 }
 
-.box-1 {
+.boxes {
+  border-radius: 15px;
+}
+.boxes > img {
+  width: 100%;
+  height: 100%;
+}
+
+#box-1 {
   grid-area: one;
+  height: 500px;
 }
 
-.box-2 {
+#box-2 {
   grid-area: two;
 }
 
-.box-3 {
+#box-3 {
   grid-area: three;
 }
 
-.box-4 {
+#box-4 {
   grid-area: four;
 }
 
-.box-5 {
+#box-5 {
   grid-area: five;
+}
+
+#spotMenu {
+  display: flex;
+  gap: 10px;
+}
+#spotMenu > h2 {
+  margin-top: 0px;
+}
+#spotDescription {
+  text-align: left;
+}
+#reserveSection {
+  border: 3px solid black;
+  border-radius: 10px;
+  margin-top: 25px;
+  height: 125px;
+  width: 400px;
+}
+
+#priceAndRating {
+  display: flex;
+  justify-content: space-between;
+}
+
+#spotPrice > span {
+  font-size: 20px;
+}
+
+#reserveButton {
+  width: 325px;
+  height: 40px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: #ff5d63;
 }
 
 /* @media (min-width: 800px) and (max-width: 1024px) {
@@ -45,28 +93,3 @@
       "four five five three";
   }
 } */
-
-.boxes {
-  padding: 15px;
-  border-radius: 15px;
-}
-
-#orange {
-  background-color: orange;
-}
-
-#purple {
-  background-color: rgb(165, 29, 165);
-}
-
-#blue {
-  background-color: rgb(3, 99, 252);
-}
-
-#green {
-  background-color: green;
-}
-
-#red {
-  background-color: red;
-}

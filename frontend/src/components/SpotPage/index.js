@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { previewSpotThunk } from "../../store/spots";
+import { previewSpotThunk, clearSpots } from "../../store/spots";
 import { useSelector, useDispatch } from "react-redux";
 import "./SpotPage.css";
 
@@ -9,30 +9,50 @@ function SpotPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const data = dispatch(previewSpotThunk(spotId));
-  }, [dispatch]);
+    dispatch(previewSpotThunk(spotId));
+  }, []);
+
   const spotsObj = useSelector((state) => state.spots);
-  const spots = Object.values(spotsObj);
-  const spot = spots.find((spot) => spot.id === Number(spotId));
-  console.log("spot =>", spot)
-  if(!spot) return null;
-  const previewImage = spot.SpotImages(image => image.preview === true)
+  const spot = Object.values(spotsObj)[0];
+  if (!spot || !spot.Owner) return null;
+  const previewImage = spot.SpotImages.find((image) => image.preview === 1);
+  const images = spot.SpotImages.filter((image) => image.id !== previewImage.id);
+
   return (
-    <div className="mainContainer spot">
-      <div class="boxes box-1" id="orange">
-        {/* <img src={spot.SpotImages[0].url} /> */}
+    <div class="mainContainer spots">
+      <h1>{spot.name}</h1>
+      <h2>
+        {spot.city}, {spot.state}
+      </h2>
+      <div id="imagesContainer">
+        <div class="boxes" id="box-1">
+          <img id="previewImage" alt="preview" src={previewImage.url} />
+        </div>
+        {images.map((image) => (
+          <div class="boxes" id={`box-${image.id}`}>
+            <img src={image.url} />
+          </div>
+        ))}
       </div>
-      <div class="boxes box-2" id="purple">
-        {/* <img src={spot.SpotImages[1].url} /> */}
-      </div>
-      <div class="boxes box-3" id="blue">
-        {/* <img src={spot.SpotImages[2].url} /> */}
-      </div>
-      <div class="boxes box-4" id="green">
-        {/* <img src={spot.SpotImages[3].url} /> */}
-      </div>
-      <div class="boxes box-5 span-col" id="red">
-        {/* <img src={spot.SpotImages[4].url} /> */}
+      <div id="spotMenu">
+        <div id="spotInfo">
+          <h2>
+            Hosted By: {spot.Owner.firstName} {spot.Owner.lastName}
+          </h2>
+          <p id="spotDescription">{spot.description}</p>
+        </div>
+        <div id="reserveSection">
+          <div id="priceAndRating">
+            <p id="spotPrice">
+              <span>${spot.price.toFixed(2)}</span> night
+            </p>
+            <p id="spotRating">
+              <i class="fa-solid fa-star" />
+              {`${spot.avgStarRating.toFixed(2)} ${spot.numReviews} reviews`}
+            </p>
+          </div>
+          <button id="reserveButton">Reserve</button>
+        </div>
       </div>
     </div>
   );
