@@ -20,43 +20,15 @@ function NewSpotPage() {
   const [image3, setImage3] = useState({ url: "", preview: 0 });
   const [image4, setImage4] = useState({ url: "", preview: 0 });
   const [errors, setErrors] = useState({});
-  
+
   const dispatch = useDispatch();
   const history = useHistory();
-  
-  // const newArray = new Array(5).fill(null);
-  // const handleImages = (value, position) => {
-  //   console.log("value 👉", value)
-    
-  //   if (position === 0) {
-  //     setPreviewImage({ url: value, preview: 1 });
-  //     newArray[0] = previewImage;
-  //   }
-  //   if (position === 1) {
-  //     setImage1({ url: value, preview: 0 });
-  //     newArray[1] = image1;
-  //   }
-  //   if (position === 2) {
-  //     setImage2({ url: value, preview: 0 });
-  //     newArray[2] = image2;
-  //   }
-  //   if (position === 3) {
-  //     setImage3({ url: value, preview: 0 });
-  //     newArray[3] = image3;
-  //   }
-  //   if (position === 4) {
-  //     setImage4({ url: value, preview: 0 });
-  //     newArray[4] = image4;
-  //   }
-  //   console.log("newArray 👉", newArray);
-  //   // setImages(newArray);
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("handling");
     const err = {};
     const spot = { address, city, state, country, lat, lng, name, description, price };
-    // console.table({country, address, city, state, lng, lat, description, name, price, previewImage})
     if (address === null || address === "") err.address = "Address is required";
     if (city === null || city === "") err.city = "City is required";
     if (state === null || state === "") err.state = "State is required";
@@ -66,22 +38,37 @@ function NewSpotPage() {
     if (price === null || price === "" || price === 0) {
       err.price = "Price is required";
     }
-    if (previewImage === null || previewImage === "") {
+    /// images ///
+    const acceptedFormats = ["png", "jpg", "jpeg"];
+    console.log(image3.url.split(".")[1]);
+    if (previewImage.url === null || previewImage.url === "") {
       err.previewImage = "Preview image is required";
     }
+    if (image1.url.length > 0 && !acceptedFormats.includes(image1.url.split(".")[1])) {
+      err.image1 = "Image URL must end in .png, .jpg, or .jpeg";
+    }
+    if (image2.url.length > 0 && !acceptedFormats.includes(image2.url.split(".")[1])) {
+      err.image2 = "Image URL must end in .png, .jpg, or .jpeg";
+    }
+    if (image3.url.length > 0 && !acceptedFormats.includes(image3.url.split(".")[1])) {
+      err.image3 = "Image URL must end in .png, .jpg, or .jpeg";
+    }
+    if (image4.url.length > 0 && !acceptedFormats.includes(image4.url.split(".")[1])) {
+      err.image4 = "Image URL must end in .png, .jpg, or .jpeg";
+    }
+
     if (!!Object.values(err).length) {
       setErrors(err);
     } else {
       const newSpot = await dispatch(createSpotThunk(spot));
-      console.log("newSpot id👉", newSpot.id);
       const images = [previewImage, image1, image2, image3, image4];
-      for(let i = 0; i <= images.length; i++){
-        const image = images[i]
-        if(image.url){
-          dispatch(addImageThunk(newSpot.id, image))
+      for (let i = 0; i <= images.length; i++) {
+        const image = images[i];
+        if (image.url) {
+          dispatch(addImageThunk(newSpot.id, image));
         }
       }
-      history.push(`/spots/${newSpot.id}`)
+      history.push(`/spots/${newSpot.id}`);
     }
   };
 
@@ -103,8 +90,8 @@ function NewSpotPage() {
             placeholder="Country"
             onChange={(e) => setCountry(e.target.value)}
           />
-        </label>
         <p className="errors">{errors.country}</p>
+        </label>
         <label>
           Street Address
           <input
@@ -115,8 +102,8 @@ function NewSpotPage() {
             placeholder="Address"
             onChange={(e) => setAddress(e.target.value)}
           />
-        </label>
         <p className="errors">{errors.address}</p>
+        </label>
         <div className="flexedInputs">
           <label>
             City
@@ -127,8 +114,8 @@ function NewSpotPage() {
               placeholder="City"
               onChange={(e) => setCity(e.target.value)}
             />
-          </label>
           <p className="errors">{errors.city}</p>
+          </label>
           <label>
             State
             <input
@@ -138,8 +125,8 @@ function NewSpotPage() {
               placeholder="State"
               onChange={(e) => setState(e.target.value)}
             />
-          </label>
           <p className="errors">{errors.state}</p>
+          </label>
         </div>
         <div className="flexedInputs">
           <label>
@@ -151,8 +138,8 @@ function NewSpotPage() {
               placeholder="Latitude"
               onChange={(e) => setLat(e.target.value)}
             />
-          </label>
           <p className="errors">{errors.lat}</p>
+          </label>
           <label>
             Longitude
             <input
@@ -162,8 +149,8 @@ function NewSpotPage() {
               placeholder="Longitude"
               onChange={(e) => setLng(e.target.value)}
             />
-          </label>
           <p className="errors">{errors.lng}</p>
+          </label>
         </div>
         <hr />
         <h1>Describe your place to guests</h1>
@@ -192,8 +179,8 @@ function NewSpotPage() {
             placeholder="Name of your spot"
             onChange={(e) => setName(e.target.value)}
           />
-        </label>
         <p className="errors">{errors.name}</p>
+        </label>
         <hr />
         <h1>Set a base price for your spot</h1>
         <p>
@@ -209,54 +196,68 @@ function NewSpotPage() {
             placeholder="Price per night (USD)"
             onChange={(e) => setPrice(e.target.value)}
           />
-          <p className="errors">{errors.price}</p>
         </label>
+          <p className="errors">{errors.price}</p>
         <hr />
         <h1>Liven up your spot with photos</h1>
         <p>Submit a link to at least one photo to publish your spot.</p>
-        <label className="images">
-          <input
-            name="previewImage"
-            value={previewImage.url}
-            className="oneLiner"
-            id="previewImage"
-            placeholder="Preview Image URL"
-            onChange={(e) => setPreviewImage({ url: e.target.value, preview: 1 })}
-          />
-          <p className="errors">{errors.previewImage}</p>
-          <input
-            name="image1"
-            value={image1.url}
-            className="oneLiner"
-            id="image"
-            placeholder="Image URL"
-            onChange={(e) => setImage1({ url: e.target.value, preview: 0 })}
-          />
-          <input
-            name="image2"
-            value={image2.url}
-            className="oneLiner"
-            id="image"
-            placeholder="Image URL"
-            onChange={(e) => setImage2({ url: e.target.value, preview: 0 })}
-          />
-          <input
-            name="unage3"
-            value={image3.url}
-            className="oneLiner"
-            id="image"
-            placeholder="Image URL"
-            onChange={(e) => setImage3({ url: e.target.value, preview: 0 })}
-          />
-          <input
-            name="image4"
-            value={image4.url}
-            className="oneLiner"
-            id="image"
-            placeholder="Image URL"
-            onChange={(e) => setImage4({ url: e.target.value, preview: 0 })}
-          />
-        </label>
+        <div className="images">
+          <label>
+            <input
+              name="previewImage"
+              value={previewImage.url}
+              className="oneLiner"
+              id="previewImage"
+              placeholder="Preview Image URL"
+              onChange={(e) => setPreviewImage({ url: e.target.value, preview: 1 })}
+            />
+            <p className="errors">{errors.previewImage}</p>
+          </label>
+          <label>
+            <input
+              name="image1"
+              value={image1.url}
+              className="oneLiner"
+              id="image"
+              placeholder="Image URL"
+              onChange={(e) => setImage1({ url: e.target.value, preview: 0 })}
+            />
+            <p className="errors">{errors.image1}</p>
+          </label>
+          <label>
+            <input
+              name="image2"
+              value={image2.url}
+              className="oneLiner"
+              id="image"
+              placeholder="Image URL"
+              onChange={(e) => setImage2({ url: e.target.value, preview: 0 })}
+            />
+            <p className="errors">{errors.image2}</p>
+          </label>
+          <label>
+            <input
+              name="unage3"
+              value={image3.url}
+              className="oneLiner"
+              id="image"
+              placeholder="Image URL"
+              onChange={(e) => setImage3({ url: e.target.value, preview: 0 })}
+            />
+            <p className="errors">{errors.image3}</p>
+          </label>
+          <label>
+            <input
+              name="image4"
+              value={image4.url}
+              className="oneLiner"
+              id="image"
+              placeholder="Image URL"
+              onChange={(e) => setImage4({ url: e.target.value, preview: 0 })}
+            />
+            <p className="errors">{errors.image4}</p>
+          </label>
+        </div>
         <hr />
         <div id="buttonContainer">
           <button id="createButton">Create Spot</button>
