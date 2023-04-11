@@ -74,18 +74,21 @@ export const createSpotThunk = (spot) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     console.log("data 👉", data)
-    dispatch(addImageThunk(data.id));
+    return data;
+    // dispatch(previewSpotAction(data));
   }
 };
 
-export const addImageThunk = async (spotId, image) => {
+export const addImageThunk= (spotId, imageObj) => async (dispatch) => {
+  console.log("spotId from thunk 👉", spotId)
+  console.log("imageObj from thunk 👉", imageObj)
   console.log("in add image before fetch")
   const res = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(spot),
+    body: JSON.stringify(imageObj),
   });
   console.log("after fetch")
   if (res.ok) {

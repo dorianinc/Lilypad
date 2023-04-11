@@ -48,7 +48,8 @@ function SpotPage() {
             </p>
             <p id="spotRating">
               <i class="fa-solid fa-star" />
-              {`${spot.avgStarRating.toFixed(2)} ${spot.numReviews} reviews`}
+              {spot.avgStarRating ? spot.avgStarRating : "New!"}
+              {` ${spot.numReviews} reviews`}
             </p>
           </div>
           <button 

@@ -2,7 +2,7 @@ import "./NewSpotPage.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createSpotThunk } from "../../store/spots";
+import { createSpotThunk, addImageThunk } from "../../store/spots";
 
 function NewSpotPage() {
   const [country, setCountry] = useState("");
@@ -14,17 +14,43 @@ function NewSpotPage() {
   const [description, setDescription] = useState("");
   const [name, setName] = useState(""); // this is for Title
   const [price, setPrice] = useState("");
-  const [previewImage, setPreviewImage] = useState("");
-  const [url, setUrl] = useState("");
+  const [previewImage, setPreviewImage] = useState({ url: "", preview: 1 });
+  const [image1, setImage1] = useState({ url: "", preview: 0 });
+  const [image2, setImage2] = useState({ url: "", preview: 0 });
+  const [image3, setImage3] = useState({ url: "", preview: 0 });
+  const [image4, setImage4] = useState({ url: "", preview: 0 });
   const [errors, setErrors] = useState({});
-
+  
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const handleImages = (value, bool) => {
-    console.log("value 👉", value);
-    console.log("bool 👉", bool);
-  };
+  
+  // const newArray = new Array(5).fill(null);
+  // const handleImages = (value, position) => {
+  //   console.log("value 👉", value)
+    
+  //   if (position === 0) {
+  //     setPreviewImage({ url: value, preview: 1 });
+  //     newArray[0] = previewImage;
+  //   }
+  //   if (position === 1) {
+  //     setImage1({ url: value, preview: 0 });
+  //     newArray[1] = image1;
+  //   }
+  //   if (position === 2) {
+  //     setImage2({ url: value, preview: 0 });
+  //     newArray[2] = image2;
+  //   }
+  //   if (position === 3) {
+  //     setImage3({ url: value, preview: 0 });
+  //     newArray[3] = image3;
+  //   }
+  //   if (position === 4) {
+  //     setImage4({ url: value, preview: 0 });
+  //     newArray[4] = image4;
+  //   }
+  //   console.log("newArray 👉", newArray);
+  //   // setImages(newArray);
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,12 +69,19 @@ function NewSpotPage() {
     if (previewImage === null || previewImage === "") {
       err.previewImage = "Preview image is required";
     }
-    if(!!Object.values(err).length){
-        setErrors(err);
-    }else{
-        const newSpot = await dispatch(createSpotThunk(spot))
-        console.log("newSpot 👉", newSpot)
-        history.push(`/spots/${newSpot.id}`)
+    if (!!Object.values(err).length) {
+      setErrors(err);
+    } else {
+      const newSpot = await dispatch(createSpotThunk(spot));
+      console.log("newSpot id👉", newSpot.id);
+      const images = [previewImage, image1, image2, image3, image4];
+      for(let i = 0; i <= images.length; i++){
+        const image = images[i]
+        if(image.url){
+          dispatch(addImageThunk(newSpot.id, image))
+        }
+      }
+      history.push(`/spots/${newSpot.id}`)
     }
   };
 
@@ -184,51 +217,49 @@ function NewSpotPage() {
         <label className="images">
           <input
             name="previewImage"
-            value={previewImage}
+            value={previewImage.url}
             className="oneLiner"
             id="previewImage"
             placeholder="Preview Image URL"
-            onChange={(e) => setPreviewImage(e.target.value)}
+            onChange={(e) => setPreviewImage({ url: e.target.value, preview: 1 })}
           />
           <p className="errors">{errors.previewImage}</p>
           <input
-            name="url"
-            value={url}
+            name="image1"
+            value={image1.url}
             className="oneLiner"
             id="image"
             placeholder="Image URL"
-            onChange={handleImages}
+            onChange={(e) => setImage1({ url: e.target.value, preview: 0 })}
           />
           <input
-            name="url"
-            value={url}
+            name="image2"
+            value={image2.url}
             className="oneLiner"
             id="image"
             placeholder="Image URL"
-            onChange={handleImages}
+            onChange={(e) => setImage2({ url: e.target.value, preview: 0 })}
           />
           <input
-            name="url"
-            value={url}
+            name="unage3"
+            value={image3.url}
             className="oneLiner"
             id="image"
             placeholder="Image URL"
-            onChange={handleImages}
+            onChange={(e) => setImage3({ url: e.target.value, preview: 0 })}
           />
           <input
-            name="url"
-            value={url}
+            name="image4"
+            value={image4.url}
             className="oneLiner"
             id="image"
             placeholder="Image URL"
-            onChange={handleImages}
+            onChange={(e) => setImage4({ url: e.target.value, preview: 0 })}
           />
         </label>
         <hr />
         <div id="buttonContainer">
-          <button id="createButton">
-            Create Spot
-          </button>
+          <button id="createButton">Create Spot</button>
         </div>
       </form>
     </div>
@@ -236,3 +267,5 @@ function NewSpotPage() {
 }
 
 export default NewSpotPage;
+
+// setPreviewImage({ url: e.target.value, preview: 1 })
