@@ -1,0 +1,95 @@
+.mainContainer.spots {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+#imagesContainer {
+  display: grid;
+  gap: 5px;
+  grid-auto-columns: 2fr;
+  grid-template-areas:
+    "one one two three"
+    "one one four five";
+}
+
+.boxes {
+  border-radius: 15px;
+}
+.boxes > img {
+  width: 100%;
+  height: 100%;
+}
+
+#box-1 {
+  grid-area: one;
+  height: 500px;
+}
+
+#box-2 {
+  grid-area: two;
+}
+
+#box-3 {
+  grid-area: three;
+}
+
+#box-4 {
+  grid-area: four;
+}
+
+#box-5 {
+  grid-area: five;
+}
+
+#spotMenu {
+  display: flex;
+  gap: 10px;
+}
+#spotMenu > h2 {
+  margin-top: 0px;
+}
+#spotDescription {
+  text-align: left;
+}
+#reserveSection {
+  border: 3px solid black;
+  border-radius: 10px;
+  margin-top: 25px;
+  height: 125px;
+  width: 400px;
+}
+
+#priceAndRating {
+  display: flex;
+  justify-content: space-between;
+}
+
+#spotPrice > span {
+  font-size: 20px;
+}
+
+#reserveButton {
+  width: 325px;
+  height: 40px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: #ff5d63;
+}
+
+/* @media (min-width: 800px) and (max-width: 1024px) {
+  .container {
+    grid-template-areas:
+      "one one one"
+      "two three four"
+      "five five five";
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    grid-template-areas:
+      "one one two three"
+      "four five five three";
+  }
+} */

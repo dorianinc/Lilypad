@@ -1,0 +1,35 @@
+.cardContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  width: 350px;
+}
+
+#cardImage {
+  height: 250px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.cardTitle {
+  font-weight: 600;
+}
+
+.cardInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cardPrice > span {
+  font-weight: 600;
+}
+
+.cardContainer:hover::before{
+  position: absolute;
+  content: attr(data-tooltip);
+  height: 25px;
+  padding: 5px;
+  background-color: white;
+  border: 2px solid black;
+}
