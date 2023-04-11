@@ -22,7 +22,7 @@ function SpotPage() {
     <div class="mainContainer spots">
       <h1>{spot.name}</h1>
       <h2>
-        {spot.city}, {spot.state}
+        {spot.city}, {spot.state} {" - "} {spot.country}
       </h2>
       <div id="imagesContainer">
         <div class="boxes" id="box-1">
@@ -51,7 +51,10 @@ function SpotPage() {
               {`${spot.avgStarRating.toFixed(2)} ${spot.numReviews} reviews`}
             </p>
           </div>
-          <button id="reserveButton">Reserve</button>
+          <button 
+          id="reserveButton"
+          onClick={() => alert("Feature Coming Soon!")}
+          >Reserve</button>
         </div>
       </div>
     </div>
