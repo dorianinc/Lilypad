@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
@@ -13,6 +13,7 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [buttonClass, setButtonClass] = useState("submitButton disabled");
   const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
@@ -41,6 +42,21 @@ function SignupFormModal() {
     });
   };
 
+  useEffect(() => {
+    if (
+      email.length >= 1 &&
+      firstName.length >= 1 &&
+      lastName.length >= 1 &&
+      username.length >= 4 &&
+      password.length >= 6 &&
+      password === confirmPassword
+    ) {
+      setButtonClass("submitButton");
+    } else {
+      setButtonClass("submitButton disabled");
+    }
+  }, [username, password, confirmPassword]);
+
   return (
     <>
       <h1 className="header">Sign Up</h1>
@@ -54,7 +70,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className="errors">{errors.email}</p>}
         <label>
           <input
             type="text"
@@ -64,7 +80,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <p className="errors">{errors.username}</p>}
         <label>
           <input
             type="text"
@@ -74,7 +90,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
+        {errors.firstName && <p className="errors">{errors.firstName}</p>}
         <label>
           <input
             type="text"
@@ -84,7 +100,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
+        {errors.lastName && <p className="errors">{errors.lastName}</p>}
         <label>
           <input
             type="password"
@@ -94,7 +110,7 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className="errors">{errors.password}</p>}
         <label>
           <input
             type="password"
@@ -104,8 +120,14 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button className="submitButton" type="submit">Sign Up</button>
+        {errors.confirmPassword && <p className="errors">{errors.confirmPassword}</p>}
+        <button
+          className={buttonClass}
+          disabled={buttonClass === "submitButton disabled"}
+          type="submit"
+        >
+          Sign Up
+        </button>
       </form>
     </>
   );

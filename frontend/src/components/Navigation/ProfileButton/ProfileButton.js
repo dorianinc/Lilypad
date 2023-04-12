@@ -68,7 +68,6 @@ function ProfileButton({ user }) {
         <div className={dropdown} ref={ulRef}>
           {user ? (
             <>
-              {/* <div>{user.username}</div> */}
               <div>Hello, {user.firstName}</div>
               <div>{user.email}</div>
               <div>
@@ -87,17 +86,17 @@ function ProfileButton({ user }) {
               <div>
                 <OpenModalButton
                   className="modalButtons auth"
-                  buttonText="Sign Up"
+                  buttonText="Log In"
                   onButtonClick={closeMenu}
-                  modalComponent={<SignupFormModal />}
+                  modalComponent={<LoginFormModal />}
                 />
               </div>
               <div>
                 <OpenModalButton
                   className="modalButtons auth"
-                  buttonText="Log In"
+                  buttonText="Sign Up"
                   onButtonClick={closeMenu}
-                  modalComponent={<LoginFormModal />}
+                  modalComponent={<SignupFormModal />}
                 />
               </div>
             </>
