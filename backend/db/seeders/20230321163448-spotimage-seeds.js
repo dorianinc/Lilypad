@@ -68,6 +68,21 @@ module.exports = {
           spotId: 4,
         },
         {
+          url: "https://a0.muscache.com/im/pictures/miso/Hosting-49064078/original/a5ca399e-15ab-43a1-bc9d-c349a10282be.jpeg",
+          preview: true,
+          spotId: 4,
+        },
+        {
+          url: "https://a0.muscache.com/im/pictures/miso/Hosting-49064078/original/14df687b-d0bc-4eb8-ac6c-6b74d4f075ce.jpeg",
+          preview: false,
+          spotId: 4,
+        },
+        {
+          url: "https://a0.muscache.com/im/pictures/miso/Hosting-49064078/original/e0a55c74-5a4c-4f29-b501-c919e5c10e9f.jpeg",
+          preview: false,
+          spotId: 4,
+        },
+        {
           url: "https://a0.muscache.com/im/pictures/81564d9e-cc1f-4033-9791-ef751569e40a.jpg",
           preview: true,
           spotId: 5,
