@@ -1,10 +1,16 @@
+.loginModal {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .loginForm {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-#demoUser{
+#demoUser {
   cursor: pointer;
   text-align: center;
   align-self: center;
@@ -12,11 +18,11 @@
   font-weight: bold;
   width: 55%;
   height: 50px;
-  color:#65e2a4;
+  color: #65e2a4;
   background-color: white;
 }
 
-#demoUser:hover{
+#demoUser:hover {
   box-shadow: 5px 5px 5px #65e2a4;
 }
 

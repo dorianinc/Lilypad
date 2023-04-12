@@ -27,20 +27,18 @@ function LoginFormModal() {
 
   const signInDemo = (e) => {
     e.preventDefault();
-    setCredential("demoUser")
-    setPassword("demoPassword")
-    setButtonClass("")
-    console.log("credentials =>", credential)
-    console.log("password =>", password )
-    return dispatch(sessionActions.login({ credential, password }))
-    .then(closeModal)
-    .catch(async (res) => {
-      const data = await res.json();
-      if (data && data.errors) {
-        setErrors(data.errors);
-      }
-    });
-  }
+    setButtonClass("");
+    console.log("credentials =>", credential);
+    console.log("password =>", password);
+    return dispatch(sessionActions.login({ credential: "demoUser", password: "demoPassword" }))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
+  };
 
   useEffect(() => {
     if (credential.length >= 4 && password.length >= 6) {
@@ -51,7 +49,7 @@ function LoginFormModal() {
   }, [credential, password]);
 
   return (
-    <>
+    <div className="loginModal">
       <h1 className="header">Log In</h1>
       <form className="loginForm" onSubmit={handleSubmit}>
         <label>
@@ -72,13 +70,19 @@ function LoginFormModal() {
             required
           />
         </label>
-        <button id="demoUser">Log in as Demo User</button>
         {errors.credential && <p className="errors">{errors.credential}</p>}
-        <button className={buttonClass} disabled={buttonClass === "submitButton disabled"} type="submit">
+        <button
+          className={buttonClass}
+          disabled={buttonClass === "submitButton disabled"}
+          type="submit"
+        >
           Log In
         </button>
       </form>
-    </>
+      <button id="demoUser" onClick={(e) => signInDemo(e)}>
+        Log in as Demo User
+      </button>
+    </div>
   );
 }
 
