@@ -49,7 +49,6 @@ export const loadSpotsThunk = () => async (dispatch) => {
 
 // get user's spots
 export const loadUserSpotsThunk = (userId) => async (dispatch) => {
-  console.log("dispatching thunk");
   const res = await fetch("/api/spots/current");
   if (res.ok) {
     const data = await res.json();
@@ -58,7 +57,6 @@ export const loadUserSpotsThunk = (userId) => async (dispatch) => {
 };
 // delete a spot
 export const deleteSpotThunk = (spotId) => async (dispatch) => {
-  console.log("before the fetch");
   const res = await csrfFetch(`/api/spots/${spotId}`, {
     method: "DELETE",
   });
@@ -109,7 +107,6 @@ export const addImageThunk = (spotId, imageObj) => async (dispatch) => {
 
 // update a spot
 export const updateSpotThunk = (spot, spotEdits) => async (dispatch) => {
-  console.log("in updated spot thunk")
   const res = await csrfFetch(`/api/spots/${spot.id}`, {
     method: "PUT",
     headers: {
@@ -118,11 +115,8 @@ export const updateSpotThunk = (spot, spotEdits) => async (dispatch) => {
     body: JSON.stringify(spotEdits),
   });
 
-  console.log("exiting ")
-
   if (res.ok) {
     const data = await res.json();
-    console.log("data 👉", data)
     dispatch(updateSpotAction(data));
     return data;
   } else {

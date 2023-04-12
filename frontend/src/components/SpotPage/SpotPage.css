@@ -6,6 +6,7 @@
 #imagesContainer {
   display: grid;
   gap: 5px;
+  margin-bottom: 25px;
   grid-auto-columns: 2fr;
   grid-template-areas:
     "one one two three"
@@ -45,18 +46,18 @@
   display: flex;
   gap: 10px;
 }
-#spotMenu > h2 {
-  margin-top: 0px;
-}
+
 #spotDescription {
   text-align: left;
 }
 #reserveSection {
+  display: flex;
+  flex-direction: column;
   border: 3px solid black;
   border-radius: 10px;
-  margin-top: 25px;
-  height: 125px;
-  width: 400px;
+  height: 110px;
+  width: 1000px;
+  padding: 8px;
 }
 
 #priceAndRating {
@@ -69,7 +70,8 @@
 }
 
 #reserveButton {
-  width: 325px;
+  align-self: center;
+  width: 80%;
   height: 40px;
   color: #fff;
   font-size: 20px;
@@ -77,19 +79,6 @@
   background-color: #ff5d63;
 }
 
-/* @media (min-width: 800px) and (max-width: 1024px) {
-  .container {
-    grid-template-areas:
-      "one one one"
-      "two three four"
-      "five five five";
-  }
+.reviewsContainer > h2{
+    margin-bottom: 30px;
 }
-
-@media (min-width: 1024px) {
-  .container {
-    grid-template-areas:
-      "one one two three"
-      "four five five three";
-  }
-} */
