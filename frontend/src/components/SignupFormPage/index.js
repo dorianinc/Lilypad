@@ -13,6 +13,7 @@ function SignupFormPage() {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [buttonClass, setButtonClass] = useState("submitButton disabled");
   const [errors, setErrors] = useState({});
 
   if (sessionUser) return <Redirect to="/" />;
@@ -37,7 +38,7 @@ function SignupFormPage() {
       });
     }
     return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
+      confirmPassword: "Confirm Password field must be the same as the Password field",
     });
   };
 
@@ -47,12 +48,7 @@ function SignupFormPage() {
       <form onSubmit={handleSubmit}>
         <label>
           Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} required />
         </label>
         {errors.email && <p>{errors.email}</p>}
         <label>
@@ -105,7 +101,13 @@ function SignupFormPage() {
           />
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        <button
+          className="butter"
+          disabled={buttonClass === "submitButton disabled"}
+          type="submit"
+        >
+          Sign Upp
+        </button>
       </form>
     </>
   );

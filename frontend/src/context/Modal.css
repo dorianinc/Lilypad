@@ -1,53 +1,54 @@
 #modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  #modal-background {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-  
-  #modal-content {
-    position: absolute;
-    border-radius: 20px;
-    padding: 20px;
-    background-color: white;
-  }
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .header {
-    text-align: center;
-  }
-  
-  .submitButton {
-    color: white;
-    background-color: #ff5d63;
-    height: 45px;
-    font-weight: bold;
-    font-size: 18px;
-  }
+#modal-background {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
 
-  .submitButton.disabled {
-    color: white;
-    background-color: #a6a6aa;
-    height: 45px;
-    border: 3px solid #80808b;
-    box-shadow: 5px 5px 5px #80808b;
-  }
+#modal-content {
+  position: absolute;
+  border-radius: 20px;
+  padding: 20px;
+  background-color: white;
+}
 
-  input {
-    height: 30px;
-    width: 350px;
-  }
-  
+.header {
+  text-align: center;
+}
 
+.submitButton {
+  cursor: pointer;
+  color: white;
+  background-color: #ff5d63;
+  height: 45px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.submitButton.disabled {
+  cursor: default;
+  color: white;
+  background-color: #a6a6aa;
+  height: 45px;
+  border: 3px solid #80808b;
+  box-shadow: 5px 5px 5px #80808b;
+}
+
+input {
+  height: 30px;
+  width: 350px;
+}
