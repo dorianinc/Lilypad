@@ -27,9 +27,10 @@
 
 .cardContainer:hover::before{
   position: absolute;
-  content: attr(data-tooltip);
-  height: 25px;
+  top:0;
+  height: 20px;
   padding: 5px;
-  background-color: white;
+  content: attr(data-tooltip);
   border: 2px solid black;
+  background-color: white;
 }

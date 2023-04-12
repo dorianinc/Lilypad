@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { previewSpotThunk } from "../../store/spots";
 import { useSelector, useDispatch } from "react-redux";
+import { previewSpotThunk, clearSpotsAction } from "../../store/spots";
 import "./SpotPage.css";
 
 function SpotPage() {
@@ -10,6 +10,10 @@ function SpotPage() {
 
   useEffect(() => {
     dispatch(previewSpotThunk(spotId));
+    
+    return () => {
+      dispatch(clearSpotsAction());
+    };
   }, []);
 
   const spot = useSelector((state) => state.spots)[spotId];
