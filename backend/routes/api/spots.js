@@ -90,7 +90,7 @@ router.get("/", validateQueries, async (req, res) => {
     const previewImage = await SpotImage.findOne({
       where: {
         spotId: spot.id,
-        preview: true
+        preview: true,
       },
     });
     if (previewImage) spot.previewImage = previewImage.url;
@@ -128,14 +128,14 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
     const previewImage = await SpotImage.findOne({
       where: {
         spotId: spot.id,
-        preview: true
+        preview: true,
       },
     });
     if (previewImage) spot.previewImage = previewImage.url;
     else spot.previewImage = "image url";
   }
 
-  res.status(200).json({ Spots: spots });
+  res.status(200).json(spots);
 });
 
 // Get Details of Specific Spot
