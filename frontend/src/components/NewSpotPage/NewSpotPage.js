@@ -26,7 +26,6 @@ function NewSpotPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("handling");
     const err = {};
     const spot = { address, city, state, country, lat, lng, name, description, price };
     if (address === null || address === "") err.address = "Address is required";
@@ -39,21 +38,23 @@ function NewSpotPage() {
       err.price = "Price is required";
     }
     /// images ///
-    const acceptedFormats = ["png", "jpg", "jpeg"];
-    console.log(image3.url.split(".")[1]);
+    const imageExtensionRegex = /\.(gif|jpe?g|png|bmp|svg)$/i;
     if (previewImage.url === null || previewImage.url === "") {
       err.previewImage = "Preview image is required";
     }
-    if (image1.url.length > 0 && !acceptedFormats.includes(image1.url.split(".")[1])) {
+    if (previewImage.url.length > 0 && !imageExtensionRegex.test(previewImage.url)) {
+      err.previewImage = "Image URL must end in .png, .jpg, or .jpeg";
+    }
+    if (image1.url.length > 0 && !imageExtensionRegex.test(image1.url)) {
       err.image1 = "Image URL must end in .png, .jpg, or .jpeg";
     }
-    if (image2.url.length > 0 && !acceptedFormats.includes(image2.url.split(".")[1])) {
+    if (image2.url.length > 0 && !imageExtensionRegex.test(image2.url)) {
       err.image2 = "Image URL must end in .png, .jpg, or .jpeg";
     }
-    if (image3.url.length > 0 && !acceptedFormats.includes(image3.url.split(".")[1])) {
+    if (image3.url.length > 0 && !imageExtensionRegex.test(image3.url)) {
       err.image3 = "Image URL must end in .png, .jpg, or .jpeg";
     }
-    if (image4.url.length > 0 && !acceptedFormats.includes(image4.url.split(".")[1])) {
+    if (image4.url.length > 0 && !imageExtensionRegex.test(image4.url)) {
       err.image4 = "Image URL must end in .png, .jpg, or .jpeg";
     }
 
@@ -62,7 +63,7 @@ function NewSpotPage() {
     } else {
       const newSpot = await dispatch(createSpotThunk(spot));
       const images = [previewImage, image1, image2, image3, image4];
-      for (let i = 0; i <= images.length; i++) {
+      for (let i = 0; i < images.length; i++) {
         const image = images[i];
         if (image.url) {
           dispatch(addImageThunk(newSpot.id, image));
@@ -90,7 +91,7 @@ function NewSpotPage() {
             placeholder="Country"
             onChange={(e) => setCountry(e.target.value)}
           />
-        <p className="errors">{errors.country}</p>
+          <p className="errors">{errors.country}</p>
         </label>
         <label>
           Street Address
@@ -102,7 +103,7 @@ function NewSpotPage() {
             placeholder="Address"
             onChange={(e) => setAddress(e.target.value)}
           />
-        <p className="errors">{errors.address}</p>
+          <p className="errors">{errors.address}</p>
         </label>
         <div className="flexedInputs">
           <label>
@@ -114,7 +115,7 @@ function NewSpotPage() {
               placeholder="City"
               onChange={(e) => setCity(e.target.value)}
             />
-          <p className="errors">{errors.city}</p>
+            <p className="errors">{errors.city}</p>
           </label>
           <label>
             State
@@ -125,10 +126,10 @@ function NewSpotPage() {
               placeholder="State"
               onChange={(e) => setState(e.target.value)}
             />
-          <p className="errors">{errors.state}</p>
+            <p className="errors">{errors.state}</p>
           </label>
         </div>
-        <div className="flexedInputs">
+        {/* <div className="flexedInputs">
           <label>
             Latitude
             <input
@@ -138,7 +139,7 @@ function NewSpotPage() {
               placeholder="Latitude"
               onChange={(e) => setLat(e.target.value)}
             />
-          <p className="errors">{errors.lat}</p>
+            <p className="errors">{errors.lat}</p>
           </label>
           <label>
             Longitude
@@ -149,9 +150,9 @@ function NewSpotPage() {
               placeholder="Longitude"
               onChange={(e) => setLng(e.target.value)}
             />
-          <p className="errors">{errors.lng}</p>
+            <p className="errors">{errors.lng}</p>
           </label>
-        </div>
+        </div> */}
         <hr />
         <h1>Describe your place to guests</h1>
         <p>
@@ -179,7 +180,7 @@ function NewSpotPage() {
             placeholder="Name of your spot"
             onChange={(e) => setName(e.target.value)}
           />
-        <p className="errors">{errors.name}</p>
+          <p className="errors">{errors.name}</p>
         </label>
         <hr />
         <h1>Set a base price for your spot</h1>
@@ -197,7 +198,7 @@ function NewSpotPage() {
             onChange={(e) => setPrice(e.target.value)}
           />
         </label>
-          <p className="errors">{errors.price}</p>
+        <p className="errors">{errors.price}</p>
         <hr />
         <h1>Liven up your spot with photos</h1>
         <p>Submit a link to at least one photo to publish your spot.</p>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../../store/session";
 import OpenModalButton from "../../OpenModalButton";
@@ -11,6 +11,8 @@ function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+
+  const history = useHistory();
 
   const openMenu = () => {
     if (showMenu) return;
@@ -37,6 +39,12 @@ function ProfileButton({ user }) {
     e.preventDefault();
     dispatch(sessionActions.logout());
     closeMenu();
+    history.push("/");
+  };
+
+  const manageSpots = (e) => {
+    e.preventDefault();
+    history.push("/spots/current");
   };
 
   const dropdown = "profile-dropdown" + (showMenu ? "" : " hidden");
@@ -60,13 +68,16 @@ function ProfileButton({ user }) {
         <div className={dropdown} ref={ulRef}>
           {user ? (
             <>
-              <div>{user.username}</div>
-              <div>
-                {user.firstName} {user.lastName}
-              </div>
+              {/* <div>{user.username}</div> */}
+              <div>Hello, {user.firstName}</div>
               <div>{user.email}</div>
               <div>
-                <button className="modalButtons" onClick={logout}>
+                <button className="modalButtons auth" onClick={manageSpots}>
+                  Manage Spots
+                </button>
+              </div>
+              <div>
+                <button className="modalButtons auth" onClick={logout}>
                   Log Out
                 </button>
               </div>
@@ -75,6 +86,7 @@ function ProfileButton({ user }) {
             <>
               <div>
                 <OpenModalButton
+                  className="modalButtons auth"
                   buttonText="Sign Up"
                   onButtonClick={closeMenu}
                   modalComponent={<SignupFormModal />}
@@ -82,6 +94,7 @@ function ProfileButton({ user }) {
               </div>
               <div>
                 <OpenModalButton
+                  className="modalButtons auth"
                   buttonText="Log In"
                   onButtonClick={closeMenu}
                   modalComponent={<LoginFormModal />}

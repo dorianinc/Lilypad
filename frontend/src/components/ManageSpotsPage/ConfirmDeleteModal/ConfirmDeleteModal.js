@@ -1,0 +1,31 @@
+import { useModal } from "../../../context/Modal";
+import { useDispatch } from "react-redux";
+import { deleteSpotThunk } from "../../../store/spots";
+
+function ConfirmDeleteModal({ spotId }) {
+  const { closeModal } = useModal();
+  const dispatch = useDispatch();
+
+  const handleClick = (e, id) => {
+    e.preventDefault();
+    if (id) dispatch(deleteSpotThunk(id));
+    closeModal();
+  };
+
+  return (
+    <>
+      <h1>Confirm Delete</h1>
+      <p>Are you sure you want to remove this spot from the listings?</p>
+      <form className="loginForm">
+        <button className="confirmButton" onClick={(e) => handleClick(e, spotId)}>
+          Yes (Delete Spot)
+        </button>
+        <button className="rejectButton" onClick={(e) => handleClick(e)}>
+          No (Keep Spot)
+        </button>
+      </form>
+    </>
+  );
+}
+
+export default ConfirmDeleteModal;

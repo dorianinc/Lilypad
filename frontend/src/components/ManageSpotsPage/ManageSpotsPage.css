@@ -1,0 +1,50 @@
+.mainContainer.userSpots {
+  display: grid;
+  grid-gap: 2.25em;
+  grid-template-columns: repeat(auto-fit, minmax(25em, 8fr));
+  margin-top: 25px;
+}
+
+.spotsContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+  width: 350px;
+}
+
+#buttonsContainer {
+  margin-top: 25px;
+  display: flex;
+  gap: 15px;
+}
+
+.manageSpotButtons,
+.modalButtons.delete {
+  color: white;
+  background-color: #666666;
+  font-weight: bold;
+  height: auto;
+  width: 110px;
+  padding: 10px;
+}
+
+.confirmButton {
+    color: white;
+    background-color: #ff5d63;
+    font-weight: bold;
+    height: auto;
+    width: 100%;
+    padding: 10px;
+}
+
+.rejectButton {
+    color: white;
+    background-color: #666666;
+    font-weight: bold;
+    height: auto;
+    width: 100%;
+    padding: 10px;
+}
+
+

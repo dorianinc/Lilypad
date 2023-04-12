@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { loadSpotsThunk, clearSpots } from "../../../store/spots";
+import { loadSpotsThunk, clearSpotsAction } from "../../../store/spots";
 import "./SpotCards.css";
 
 function SpotCards() {
@@ -14,7 +14,7 @@ function SpotCards() {
     dispatch(loadSpotsThunk());
 
     return () => {
-      dispatch(clearSpots());
+      dispatch(clearSpotsAction());
     };
   }, []);
 

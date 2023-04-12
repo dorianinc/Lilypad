@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { previewSpotThunk, clearSpots } from "../../store/spots";
+import { previewSpotThunk } from "../../store/spots";
 import { useSelector, useDispatch } from "react-redux";
 import "./SpotPage.css";
 
@@ -13,6 +13,7 @@ function SpotPage() {
   }, []);
 
   const spotsObj = useSelector((state) => state.spots);
+  console.log("spotsObj 👉👉👉", spotsObj)
   const spot = Object.values(spotsObj)[0];
   if (!spot || !spot.Owner) return null;
   const previewImage = spot.SpotImages.find((image) => image.preview === 1);
@@ -52,10 +53,9 @@ function SpotPage() {
               {` ${spot.numReviews} reviews`}
             </p>
           </div>
-          <button 
-          id="reserveButton"
-          onClick={() => alert("Feature Coming Soon!")}
-          >Reserve</button>
+          <button id="reserveButton" onClick={() => alert("Feature Coming Soon!")}>
+            Reserve
+          </button>
         </div>
       </div>
     </div>
