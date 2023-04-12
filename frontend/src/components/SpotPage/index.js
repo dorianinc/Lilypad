@@ -12,10 +12,9 @@ function SpotPage() {
     dispatch(previewSpotThunk(spotId));
   }, []);
 
-  const spotsObj = useSelector((state) => state.spots);
-  console.log("spotsObj 👉👉👉", spotsObj)
-  const spot = Object.values(spotsObj)[0];
+  const spot = useSelector((state) => state.spots)[spotId];
   if (!spot || !spot.Owner) return null;
+  
   const previewImage = spot.SpotImages.find((image) => image.preview === 1);
   const images = spot.SpotImages.filter((image) => image.id !== previewImage.id);
 

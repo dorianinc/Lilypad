@@ -8,8 +8,6 @@ function EditSpotPage() {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  const [lng, setLng] = useState(null);
-  const [lat, setLat] = useState(null);
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -20,32 +18,24 @@ function EditSpotPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(previewSpotThunk(spotId));
-  }, []);
-  
-  const spotsObj = useSelector((state) => state.spots);
-  console.log("spotsObj 👉👉👉", spotsObj)
-  const spot = Object.values(spotsObj)[0];
-  // const spots = Object.values(spotsObj);
-  // const spot = spots.find((spot) => spot.id === Number(spotId));
-  console.log("spot ======>>>>>>", spot);
-  
-  useEffect(() => {
-    setCountry(spot.country);
-    setAddress(spot.address);
-    setCity(spot.city);
-    setState(spot.state);
-    setDescription(spot.description);
-    setName(spot.name);
-    setPrice(spot.price);
+    dispatch(previewSpotThunk(spotId)).then((spot) => {
+      setCountry(spot.country);
+      setAddress(spot.address);
+      setCity(spot.city);
+      setState(spot.state);
+      setDescription(spot.description);
+      setName(spot.name);
+      setPrice(spot.price);
+    });
   }, []);
 
-  if (!spot || !spot.Owner) return null;
+  const spot = useSelector((state) => state.spots)[spotId];
+  if (!spot || !spot.id) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const err = {};
-    const spotEdits = { address, city, state, country, lat, lng, name, description, price };
+    const spotEdits = { address, city, state, country, name, description, price };
     console.log("spot 👉", spot);
     if (address === null || address === "") err.address = "Address is required";
     if (city === null || city === "") err.city = "City is required";
