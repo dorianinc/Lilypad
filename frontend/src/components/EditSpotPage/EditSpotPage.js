@@ -36,7 +36,6 @@ function EditSpotPage() {
     e.preventDefault();
     const err = {};
     const spotEdits = { address, city, state, country, name, description, price };
-    console.log("spot 👉", spot);
     if (address === null || address === "") err.address = "Address is required";
     if (city === null || city === "") err.city = "City is required";
     if (state === null || state === "") err.state = "State is required";
@@ -50,9 +49,7 @@ function EditSpotPage() {
     if (!!Object.values(err).length) {
       setErrors(err);
     } else {
-      console.log("dispatching");
       const updatedSpot = await dispatch(updateSpotThunk(spot, spotEdits));
-      console.log("updatedSpot 👉", updatedSpot);
       history.push(`/spots/${updatedSpot.id}`);
     }
   };

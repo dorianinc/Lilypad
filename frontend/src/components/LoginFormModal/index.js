@@ -28,8 +28,6 @@ function LoginFormModal() {
   const signInDemo = (e) => {
     e.preventDefault();
     setButtonClass("");
-    console.log("credentials =>", credential);
-    console.log("password =>", password);
     return dispatch(sessionActions.login({ credential: "demoUser", password: "demoPassword" }))
       .then(closeModal)
       .catch(async (res) => {
