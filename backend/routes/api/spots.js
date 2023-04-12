@@ -16,8 +16,6 @@ router.get("/", validateQueries, async (req, res) => {
   //  start of querying settings //
   ////////// start of page and size logic /////////////
   let { page, size } = req.query;
-  console.log("input page =>", page);
-  console.log("input size =>", size);
 
   // set defaults for page and sizes
   if (!page) page = 1;
@@ -288,7 +286,7 @@ router.get("/:spotId/reviews", async (req, res) => {
   });
 
   if (!reviews.length) res.status(404).json(doesNotExist("Spot"));
-  else res.status(200).json({ Reviews: reviews });
+  else res.status(200).json(reviews);
 });
 
 // Create New Booking for Specific Spot

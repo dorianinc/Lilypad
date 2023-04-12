@@ -81,7 +81,6 @@ router.put("/:bookingId", [restoreUser, requireAuth, validateBooking], async (re
 
 // Delete a Booking
 router.delete("/:bookingId", [restoreUser, requireAuth], async (req, res) => {
-  console.log(req.body);
   const { user } = req;
   const booking = await Booking.unscoped().findByPk(req.params.bookingId);
   if (!booking) res.status(404).json(doesNotExist("Booking"));

@@ -20,7 +20,6 @@ router.post("/", validateLogin, async (req, res, next) => {
   });
 
   if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
-    console.log("user =>", user);
     const err = new Error("Login failed");
     err.status = 401;
     err.title = "Login failed";
@@ -45,7 +44,6 @@ router.post("/", validateLogin, async (req, res, next) => {
 
 // Restore session user
 router.get("/", restoreUser, (req, res) => {
-  console.log("getting user...");
   const { user } = req;
   if (user) {
     const safeUser = {

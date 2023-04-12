@@ -36,7 +36,6 @@ const doesNotExist = (object) => {
 const hasPassed = (startDate, endDate, res) => {
   if(startDate){
     if (new Date(startDate).getTime() <= new Date().getTime()) {
-      console.log("we in it now")
       res.status(400).json({
         message: "Bookings that have been started can't be deleted",
       });
