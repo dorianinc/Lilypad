@@ -16,7 +16,9 @@ function SpotPage() {
 
   useEffect(() => {
     dispatch(previewSpotThunk(spotId)).then((spot) => {
-      const prevImage = spot.SpotImages.find((image) => image.preview === true);
+      const prevImage = spot.SpotImages.find(
+        (image) => image.preview === true || image.preview === 1
+      );
       const imageArray = spot.SpotImages.filter((image) => image.id !== prevImage.id);
       setPreviewImage(prevImage);
       setImages(imageArray);
@@ -31,7 +33,9 @@ function SpotPage() {
   const userId = useSelector((state) => state.session.user?.id);
   const spot = useSelector((state) => state.spots[spotId]);
   const reviewsObj = useSelector((state) => state.reviews);
+  console.log("reviewsObj 👉", reviewsObj)
   const reviews = Object.values(reviewsObj).reverse();
+  console.log("reviews 👉👉👉👉👉👉", reviews)
   const hasReview = reviews.find((review) => review.userId === 1);
   const dates = reviews.map((review) =>
     new Date(review.createdAt).toLocaleString("en-US", {
@@ -39,6 +43,7 @@ function SpotPage() {
       month: "long",
     })
   );
+
 
   if (!spot || !spot.Owner) return null;
 
