@@ -84,3 +84,14 @@
 .reviewsContainer > h2 {
   margin-bottom: 30px;
 }
+
+.ratingInput {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  gap: 5px;
+}
+
+.goldStars{
+  color: gold;
+}

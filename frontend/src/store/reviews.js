@@ -3,13 +3,20 @@ import { csrfFetch } from "./csrf";
 //////////// Action Types //////////////////
 
 export const LOAD_REVIEWS = "reviews/LOAD_REVIEWS";
-export const CLEAR_REVIEWS = "spots/CLEAR_REVIEWS";
+export const POST_REVIEW = "reviews/POST_REVIEW"
+export const CLEAR_REVIEWS = "reviews/CLEAR_REVIEWS";
 //////////// Action Creators ///////////////
 
+// get reviews
 export const loadReviewsAction = (reviews) => ({
   type: LOAD_REVIEWS,
   reviews,
 });
+
+// post review
+// export const postReviewAction = (reviews) => ({
+//   type: POS
+// })
 
 // clear reviews state
 export const clearReviewsAction = () => ({

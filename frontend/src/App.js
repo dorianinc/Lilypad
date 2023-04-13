@@ -3,10 +3,10 @@ import { useDispatch } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import LandingPage from "./components/LandingPage";
+import HomePage from "./components/HomePage";
 import SpotPage from "./components/SpotPage";
-import ManageSpotsPage from "./components/ManageSpotsPage";
-import NewSpotPage from "./components/NewSpotPage/NewSpotPage";
+import ManageSpotsPage from "./components/ManageSpots/ManageSpots";
+import NewSpotPage from "./components/NewSpot/NewSpot";
 import EditSpotPage from "./components/EditSpotPage/EditSpotPage";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path="/">
-            <LandingPage />
+            <HomePage />
           </Route>
           <Route path="/spots/new">
             <NewSpotPage />
