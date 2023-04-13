@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { loadUserSpotsThunk, clearSpotsAction  } from "../../store/spots";
 import OpenModalButton from "../OpenModalButton";
 import ConfirmDeleteModal from "./ConfirmDeleteModal/ConfirmDeleteModal";
-import "./ManageSpotsPage.css";
+import "./ManageSpots.css";
 
 function ManageSpotsPage() {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ function ManageSpotsPage() {
     return () => {
       dispatch(clearSpotsAction());
     };
-  }, []);
+  }, [dispatch]);
 
   const handleCreate = () => {
     history.push("/spots/new");
@@ -72,7 +72,7 @@ function ManageSpotsPage() {
         </div>
       ) : (
         <div>
-          <button className="manageSpotButtons" onClick={handleCreate}>
+          <button className="greyButton create" onClick={handleCreate}>
             Create a Spot
           </button>
         </div>

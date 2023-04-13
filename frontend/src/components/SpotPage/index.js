@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { previewSpotThunk, clearSpotsAction } from "../../store/spots";
 import { loadReviewsThunk, clearReviewsAction } from "../../store/reviews";
+import OpenModalButton from "../OpenModalButton";
+import CreateReviewModal from "./CreateReviewModal";
 import "./SpotPage.css";
 
 function SpotPage() {
@@ -10,11 +12,20 @@ function SpotPage() {
   const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
   const [images, setImages] = useState([]);
+  let closeMenu;
   
   useEffect(() => {
     dispatch(previewSpotThunk(spotId)).then((spot) => {
+      console.log("spot 👉", spot)
       const prevImage = spot.SpotImages.find((image) => image.preview === 1);
-      const imageArray = spot.SpotImages.filter((image) => image.id !== prevImage.id);
+      console.log("prevImage 👉", prevImage)
+      console.log("spot images 👉", spot.SpotImages)
+      const imageArray = spot.SpotImages.filter((image) => {
+        console.log('images from filter =>', image)
+        console.log('preview image from filter =>', prevImage)
+        image.id !== prevImage.id
+      });
+      console.log("imageArray 👉", imageArray)
       setPreviewImage(prevImage);
       setImages(imageArray);
     });
@@ -23,22 +34,18 @@ function SpotPage() {
       dispatch(clearSpotsAction());
       dispatch(clearReviewsAction());
     };
-  }, [dispatch]);
-  
-  const userId = useSelector((state) => state.session.user.id);
+  }, [dispatch, spotId]);
+
+  const userId = useSelector((state) => state.session.user?.id);
   const spot = useSelector((state) => state.spots[spotId]);
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj).reverse();
-  
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-
+ const hasReview = reviews.find(review => review.userId === 1);
   const dates = reviews.map((review) =>
-    new Date(review.createdAt).toLocaleString("en-US", options).split(" ")
+    new Date(review.createdAt).toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+    })
   );
 
   if (!spot || !spot.Owner) return null;
@@ -93,8 +100,13 @@ function SpotPage() {
             ? null
             : ` · ${spot.numReviews} reviews`}
         </h2>
-        {userId !== spot.Owner.id ? (
-          <button className="greyButton review">Post your Review</button>
+        {userId && userId !== spot.Owner.id && !hasReview ? (
+                          <OpenModalButton
+                          className="greyButton review"
+                          buttonText="Post your Review"
+                          onButtonClick={closeMenu}
+                          modalComponent={<CreateReviewModal spotId={spotId}/>}
+                        />
         ) : null}
         {!!reviews.length ? (
           reviews.map((review, i) => (
@@ -102,9 +114,7 @@ function SpotPage() {
               <h3>
                 {review.User.firstName} {review.User.lastName}
               </h3>
-              <h3 style={{ color: "lightgray" }}>
-                {dates[i][1]} {dates[i][3]}
-              </h3>
+              <h3 style={{ color: "lightgray" }}>{dates[i]}</h3>
               <p>{review.review}</p>
             </div>
           ))

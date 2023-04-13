@@ -1,4 +1,4 @@
-import "./NewSpotPage.css";
+import "./NewSpot.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -9,8 +9,8 @@ function NewSpotPage() {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
-  const [lng, setLng] = useState(null);
-  const [lat, setLat] = useState(null);
+  const [lng] = useState(null);
+  const [lat] = useState(null);
   const [description, setDescription] = useState("");
   const [name, setName] = useState(""); // this is for Title
   const [price, setPrice] = useState("");
@@ -161,6 +161,7 @@ function NewSpotPage() {
         </p>
         <textarea
           name="description"
+          className="textArea newSpot"
           value={description}
           placeholder="Please write at least 30 characters"
           onChange={(e) => setDescription(e.target.value)}

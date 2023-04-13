@@ -8,6 +8,8 @@ function EditSpotPage() {
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
+  const [lng] = useState(null);
+  const [lat] = useState(null);
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -27,7 +29,7 @@ function EditSpotPage() {
       setName(spot.name);
       setPrice(spot.price);
     });
-  }, []);
+  }, [dispatch, spotId]);
 
   const spot = useSelector((state) => state.spots)[spotId];
   if (!spot || !spot.id) return null;
@@ -35,7 +37,7 @@ function EditSpotPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const err = {};
-    const spotEdits = { address, city, state, country, name, description, price };
+    const spotEdits = { address, city, state, country, lat, lng, name, description, price };
     if (address === null || address === "") err.address = "Address is required";
     if (city === null || city === "") err.city = "City is required";
     if (state === null || state === "") err.state = "State is required";
@@ -142,6 +144,7 @@ function EditSpotPage() {
         </p>
         <textarea
           name="description"
+          className="textArea editSpot"
           value={description}
           placeholder="Please write at least 30 characters"
           onChange={(e) => setDescription(e.target.value)}
