@@ -9,7 +9,7 @@ function LoginFormModal() {
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [buttonClass, setButtonClass] = useState("submitButton disabled");
+  const [buttonClass, setButtonClass] = useState("pinkButton disabled");
   const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
@@ -40,9 +40,9 @@ function LoginFormModal() {
 
   useEffect(() => {
     if (credential.length >= 4 && password.length >= 6) {
-      setButtonClass("submitButton");
+      setButtonClass("pinkButton");
     } else {
-      setButtonClass("submitButton disabled");
+      setButtonClass("pinkButton disabled");
     }
   }, [credential, password]);
 
@@ -71,7 +71,7 @@ function LoginFormModal() {
         {errors.credential && <p className="errors">{errors.credential}</p>}
         <button
           className={buttonClass}
-          disabled={buttonClass === "submitButton disabled"}
+          disabled={buttonClass === "pinkButton disabled"}
           type="submit"
         >
           Log In
