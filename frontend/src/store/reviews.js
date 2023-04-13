@@ -69,17 +69,12 @@ const reviewsReducer = (state = {}, action) => {
   switch (action.type) {
     case LOAD_REVIEWS:
       newState = { ...state };
-      console.log("newState #1 👉👉👉👉👉👉", newState)
-      console.log("action.reviews 👉", action.reviews)
       action.reviews.forEach((review) => {
-        // console.log("test arino", review)
         newState[review.id] = review;
       });
       return newState;
     case POST_REVIEW:
-      console.log("potato! =>", {...state})
       newState = { ...state, [action.review.id]: action.review };
-      console.log("newState #2 👉", newState)
       return newState;
     case CLEAR_REVIEWS:
       return {};

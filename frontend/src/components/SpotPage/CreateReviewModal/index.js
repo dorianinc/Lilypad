@@ -21,7 +21,6 @@ function CreateReviewModal({ spotId }) {
   const handleClick = async (e) => {
     e.preventDefault();
     const newReview = { review, stars };
-    console.log("newReview 👉", newReview);
     const successfulDispatch = await dispatch(postReviewThunk(spotId, newReview));
     if (successfulDispatch) closeModal();
   };

@@ -33,9 +33,7 @@ function SpotPage() {
   const userId = useSelector((state) => state.session.user?.id);
   const spot = useSelector((state) => state.spots[spotId]);
   const reviewsObj = useSelector((state) => state.reviews);
-  console.log("reviewsObj 👉", reviewsObj)
   const reviews = Object.values(reviewsObj).reverse();
-  console.log("reviews 👉👉👉👉👉👉", reviews)
   const hasReview = reviews.find((review) => review.userId === 1);
   const dates = reviews.map((review) =>
     new Date(review.createdAt).toLocaleString("en-US", {
