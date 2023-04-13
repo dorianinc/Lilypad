@@ -25,7 +25,7 @@ function SpotPage() {
 
   const previewImage = spot.SpotImages.find((image) => image.preview === 1);
   const images = spot.SpotImages.filter((image) => image.id !== previewImage.id);
-  images.forEach(image => {
+  spot.SpotImages.forEach(image => {
     console.log("image =>", image)
     console.log("image id =>", image.id)
   });
