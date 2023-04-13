@@ -25,6 +25,11 @@ function SpotPage() {
 
   const previewImage = spot.SpotImages.find((image) => image.preview === 1);
   const images = spot.SpotImages.filter((image) => image.id !== previewImage.id);
+  images.forEach(image => {
+    console.log("image =>", image)
+    console.log("image id =>", image.id)
+  });
+  console.log("previewImage.id 👉", previewImage.id)
 
   return (
     <div class="mainContainer spots">
@@ -71,7 +76,6 @@ function SpotPage() {
           <i class="fa-solid fa-star" />
           {spot.avgStarRating ? " " + spot.avgStarRating.toFixed(2) : "New"}
           {" | "}{spot.numReviews === 1 ? `${spot.numReviews} reviews` : `${spot.numReviews} review`}
-          {/* {` | ${spot.numReviews} reviews`} */}
         </h2>
         {reviews.map(review => (
         <div className="reviewStatement">
