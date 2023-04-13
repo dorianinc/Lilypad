@@ -18,6 +18,7 @@ function SpotPage() {
   }, []);
 
   const spot = useSelector((state) => state.spots)[spotId];
+  console.log("spot 👉", spot)
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj);
   console.log("reviews 👉", reviews)
