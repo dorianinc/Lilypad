@@ -3,12 +3,17 @@ import { csrfFetch } from "./csrf";
 //////////// Action Types //////////////////
 
 export const LOAD_REVIEWS = "reviews/LOAD_REVIEWS";
-
+export const CLEAR_REVIEWS = "spots/CLEAR_REVIEWS";
 //////////// Action Creators ///////////////
 
 export const loadReviewsAction = (reviews) => ({
   type: LOAD_REVIEWS,
   reviews,
+});
+
+// clear reviews state
+export const clearReviewsAction = () => ({
+  type: CLEAR_REVIEWS,
 });
 
 //////////// Thunks //////////////////
@@ -30,6 +35,8 @@ const reviewsReducer = (state = {}, action) => {
         newState[review.id] = review;
       });
       return newState;
+    case CLEAR_REVIEWS:
+      return {};
     default:
       return state;
   }

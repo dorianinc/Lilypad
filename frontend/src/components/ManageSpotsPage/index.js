@@ -48,7 +48,7 @@ function ManageSpotsPage() {
                 <div className="cardInfo">
                   <div className="city-stateCard">{`${spot.city}, ${spot.state}`}</div>
                   <div className="cardRating">
-                    <i class="fa-solid fa-star" />{" "}
+                    <i className="fa-solid fa-star" />{" "}
                     {spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New!"}
                   </div>
                 </div>
@@ -57,11 +57,11 @@ function ManageSpotsPage() {
                 </div>
               </div>
               <div id="buttonsContainer">
-                <button className="manageSpotButtons" onClick={() => handleUpdate(spot.id)}>
+                <button className="greyButton update" onClick={() => handleUpdate(spot.id)}>
                   Update
                 </button>
                 <OpenModalButton
-                  className="modalButtons delete"
+                  className="greyButton delete"
                   buttonText="Delete"
                   onButtonClick={closeMenu}
                   modalComponent={<ConfirmDeleteModal spotId={spot.id} />}

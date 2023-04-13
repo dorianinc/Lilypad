@@ -1,3 +1,5 @@
+/* Global CSS Styles */
+
 body {
   font-family: "Poppins", sans-serif;
 }
@@ -7,4 +9,22 @@ h2,
 h3,
 h4 {
   margin: 0px;
+}
+
+.pinkButton {
+  cursor: pointer;
+  color: white;
+  background-color: #ff5d63;
+  height: 45px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.greyButton {
+  cursor: pointer;
+  color: white;
+  background-color: #80808b;
+  height: 45px;
+  font-weight: bold;
+  font-size: 18px;
 }

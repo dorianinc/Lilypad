@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { previewSpotThunk, clearSpotsAction } from "../../store/spots";
-import { loadReviewsThunk } from "../../store/reviews";
+import { loadReviewsThunk, clearReviewsAction } from "../../store/reviews";
 import "./SpotPage.css";
 
 function SpotPage() {
@@ -21,26 +21,40 @@ function SpotPage() {
     dispatch(loadReviewsThunk(spotId));
     return () => {
       dispatch(clearSpotsAction());
+      dispatch(clearReviewsAction());
     };
   }, [dispatch, spotId]);
-
-  const spot = useSelector((state) => state.spots)[spotId];
+  const userId = useSelector((state) => state.session.user.id);
+  const spot = useSelector((state) => state.spots[spotId]);
   const reviewsObj = useSelector((state) => state.reviews);
-  const reviews = Object.values(reviewsObj);
+  const reviews = Object.values(reviewsObj).reverse();
+  console.log("reviews 👉", !reviews.length);
+
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  const dates = reviews.map((review) =>
+    new Date(review.createdAt).toLocaleString("en-US", options).split(" ")
+  );
+
   if (!spot || !spot.Owner) return null;
 
   return (
-    <div class="mainContainer spots">
+    <div className="mainContainer spots">
       <h1>{spot.name}</h1>
       <h2>
         {spot.city}, {spot.state} {" - "} {spot.country}
       </h2>
       <div id="imagesContainer">
-        <div class="boxes" id="box-1">
+        <div className="boxes" id="box-1">
           <img id="previewImage" alt="preview" src={previewImage.url} />
         </div>
         {images.map((image) => (
-          <div class="boxes" id={`box-${image.id}`}>
+          <div className="boxes" key={`box-${image.id}`}>
             <img alt={image.id} src={image.url} />
           </div>
         ))}
@@ -58,12 +72,12 @@ function SpotPage() {
               <span>${Number(spot.price).toFixed(2)}</span> night
             </p>
             <p id="spotRating">
-              <i class="fa-solid fa-star" />
+              <i className="fa-solid fa-star" />
               {spot.avgStarRating ? " " + Number(spot.avgStarRating).toFixed(2) : " New"}
               {spot.numReviews ? ` · ${spot.numReviews} reviews` : null}
             </p>
           </div>
-          <button id="reserveButton" onClick={() => alert("Feature Coming Soon!")}>
+          <button className="pinkButton reserve" onClick={() => alert("Feature Coming Soon!")}>
             Reserve
           </button>
         </div>
@@ -71,7 +85,7 @@ function SpotPage() {
       <hr />
       <div className="reviewsContainer">
         <h2>
-          <i class="fa-solid fa-star" />
+          <i className="fa-solid fa-star" />
           {Number(spot.avgStarRating) ? " " + Number(spot.avgStarRating).toFixed(2) : " New"}
           {Number(spot.numReviews) === 1
             ? ` · ${spot.numReviews} review`
@@ -79,16 +93,24 @@ function SpotPage() {
             ? null
             : ` · ${spot.numReviews} reviews`}
         </h2>
-
-        {reviews.map((review) => (
-          <div className="reviewStatement">
-            <h3>
-              {review.User.firstName} {review.User.lastName}
-            </h3>
-            <h3 style={{ color: "lightgray" }}>Jan 2023</h3>
-            <p>{review.review}</p>
-          </div>
-        ))}
+        {userId !== spot.Owner.id ? (
+          <button className="greyButton review">Post your Review</button>
+        ) : null}
+        {!!reviews.length ? (
+          reviews.map((review, i) => (
+            <div className="reviewStatement" key={review.id}>
+              <h3>
+                {review.User.firstName} {review.User.lastName}
+              </h3>
+              <h3 style={{ color: "lightgray" }}>
+                {dates[i][1]} {dates[i][3]}
+              </h3>
+              <p>{review.review}</p>
+            </div>
+          ))
+        ) : userId !== spot.Owner.id ? (
+          <div>Be the First to Review!</div>
+        ) : null}
       </div>
     </div>
   );

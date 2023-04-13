@@ -50,7 +50,7 @@ function ProfileButton({ user }) {
   const dropdown = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
-    <div class="userMenu">
+    <div className="userMenu">
       {user ? (
         <Link to="/spots/new">
           <p>Create a New Spot</p>
