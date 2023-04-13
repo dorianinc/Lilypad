@@ -22,15 +22,15 @@ function SpotPage() {
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj);
   console.log("reviews 👉", reviews)
-  if (!spot || !spot.Owner) return null;
+  if (!spot || !spot.Owner) return <>Hello World</>;
 
-  const previewImage = spot.SpotImages.find((image) => image.preview === 1);
-  const images = spot.SpotImages.filter((image) => image.id !== previewImage.id);
-  spot.SpotImages.forEach(image => {
-    console.log("image =>", image)
-    console.log("image id =>", image.id)
-  });
-  console.log("previewImage.id 👉", previewImage.id)
+  // const previewImage = spot.SpotImages.find((image) => image.preview === 1);
+  // const images = spot.SpotImages.filter((image) => image.id !== previewImage.id);
+  // spot.SpotImages.forEach(image => {
+  //   console.log("image =>", image)
+  //   console.log("image id =>", image.id)
+  // });
+  // console.log("previewImage.id 👉", previewImage.id)
 
   return (
     <div class="mainContainer spots">
@@ -40,13 +40,13 @@ function SpotPage() {
       </h2>
       <div id="imagesContainer">
         <div class="boxes" id="box-1">
-          <img id="previewImage" alt="preview" src={previewImage.url} />
+          {/* <img id="previewImage" alt="preview" src={previewImage.url} /> */}
         </div>
-        {images.map((image) => (
+        {/* {images.map((image) => (
           <div class="boxes" id={`box-${image.id}`}>
             <img src={image.url} />
           </div>
-        ))}
+        ))} */}
       </div>
       <div id="spotMenu">
         <div id="spotInfo">
