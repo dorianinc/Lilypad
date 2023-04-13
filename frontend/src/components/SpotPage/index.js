@@ -16,7 +16,7 @@ function SpotPage() {
       const prevImage = spot.SpotImages.find((image) => image.preview === 1);
       const imageArray = spot.SpotImages.filter((image) => image.id !== prevImage.id);
       setPreviewImage(prevImage);
-      setImages(imageArray)
+      setImages(imageArray);
     });
     dispatch(loadReviewsThunk(spotId));
     return () => {
@@ -59,8 +59,8 @@ function SpotPage() {
             </p>
             <p id="spotRating">
               <i class="fa-solid fa-star" />
-              {spot.avgStarRating ? " " + Number(spot.avgStarRating).toFixed(2) : "New"}
-              {` | ${spot.numReviews} reviews`}
+              {spot.avgStarRating ? " " + Number(spot.avgStarRating).toFixed(2) : " New"}
+              {spot.numReviews ? ` · ${spot.numReviews} reviews` : null}
             </p>
           </div>
           <button id="reserveButton" onClick={() => alert("Feature Coming Soon!")}>
@@ -72,10 +72,14 @@ function SpotPage() {
       <div className="reviewsContainer">
         <h2>
           <i class="fa-solid fa-star" />
-          {spot.avgStarRating ? " " + Number(spot.avgStarRating).toFixed(2) : "New"}
-          {" | "}
-          {spot.numReviews === 1 ? `${spot.numReviews} reviews` : `${spot.numReviews} review`}
+          {Number(spot.avgStarRating) ? " " + Number(spot.avgStarRating).toFixed(2) : " New"}
+          {Number(spot.numReviews) === 1
+            ? ` · ${spot.numReviews} review`
+            : spot.numReviews < 1
+            ? null
+            : ` · ${spot.numReviews} reviews`}
         </h2>
+
         {reviews.map((review) => (
           <div className="reviewStatement">
             <h3>

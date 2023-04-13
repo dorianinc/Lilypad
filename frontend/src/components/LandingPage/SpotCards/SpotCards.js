@@ -39,7 +39,7 @@ function SpotCards() {
           <div className="cardInfo">
             <div className="city-stateCard">{`${spot.city}, ${spot.state}`}</div>
             <div className="cardRating">
-              <i class="fa-solid fa-star" /> {spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New!"}
+              <i class="fa-solid fa-star" />{" · "} {spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New!"}
             </div>
           </div>
           <div className="cardPrice">
