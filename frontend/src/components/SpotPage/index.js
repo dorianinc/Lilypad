@@ -12,9 +12,9 @@ function SpotPage() {
   useEffect(() => {
     dispatch(previewSpotThunk(spotId));
     dispatch(loadReviewsThunk(spotId))
-    return () => {
-      dispatch(clearSpotsAction());
-    };
+    // return () => {
+    //   dispatch(clearSpotsAction());
+    // };
   }, []);
 
   const spot = useSelector((state) => state.spots)[spotId];
