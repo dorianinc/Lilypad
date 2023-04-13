@@ -16,16 +16,8 @@ function SpotPage() {
 
   useEffect(() => {
     dispatch(previewSpotThunk(spotId)).then((spot) => {
-      console.log("spot 👉", spot);
       const prevImage = spot.SpotImages.find((image) => image.preview === true);
-      console.log("prevImage 👉", prevImage);
-      console.log("spot images 👉", spot.SpotImages);
-      const imageArray = spot.SpotImages.filter((image) => {
-        console.log("images from filter =>", image);
-        console.log("preview image from filter =>", prevImage);
-        return image.id !== prevImage.id;
-      });
-      console.log("imageArray 👉", imageArray);
+      const imageArray = spot.SpotImages.filter((image) => image.id !== prevImage.id);
       setPreviewImage(prevImage);
       setImages(imageArray);
     });
