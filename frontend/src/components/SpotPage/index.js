@@ -23,7 +23,7 @@ function SpotPage() {
       const imageArray = spot.SpotImages.filter((image) => {
         console.log('images from filter =>', image)
         console.log('preview image from filter =>', prevImage)
-        image.id !== prevImage.id
+        return image.id !== prevImage.id
       });
       console.log("imageArray 👉", imageArray)
       setPreviewImage(prevImage);
