@@ -10,11 +10,7 @@ function SpotPage() {
   const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
   const [images, setImages] = useState([]);
-  const userId = useSelector((state) => state.session.user.id);
-  const spot = useSelector((state) => state.spots[spotId]);
-  const reviewsObj = useSelector((state) => state.reviews);
-  const reviews = Object.values(reviewsObj).reverse();
-
+  
   useEffect(() => {
     dispatch(previewSpotThunk(spotId)).then((spot) => {
       const prevImage = spot.SpotImages.find((image) => image.preview === 1);
@@ -28,7 +24,12 @@ function SpotPage() {
       dispatch(clearReviewsAction());
     };
   }, [dispatch]);
-
+  
+  const userId = useSelector((state) => state.session.user.id);
+  const spot = useSelector((state) => state.spots[spotId]);
+  const reviewsObj = useSelector((state) => state.reviews);
+  const reviews = Object.values(reviewsObj).reverse();
+  
   const options = {
     weekday: "long",
     year: "numeric",
