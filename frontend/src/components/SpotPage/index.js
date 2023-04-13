@@ -6,10 +6,14 @@ import { loadReviewsThunk, clearReviewsAction } from "../../store/reviews";
 import "./SpotPage.css";
 
 function SpotPage() {
-  const [previewImage, setPreviewImage] = useState("");
-  const [images, setImages] = useState([]);
   const { spotId } = useParams();
   const dispatch = useDispatch();
+  const [previewImage, setPreviewImage] = useState("");
+  const [images, setImages] = useState([]);
+  const userId = useSelector((state) => state.session.user.id);
+  const spot = useSelector((state) => state.spots[spotId]);
+  const reviewsObj = useSelector((state) => state.reviews);
+  const reviews = Object.values(reviewsObj).reverse();
 
   useEffect(() => {
     dispatch(previewSpotThunk(spotId)).then((spot) => {
@@ -23,12 +27,7 @@ function SpotPage() {
       dispatch(clearSpotsAction());
       dispatch(clearReviewsAction());
     };
-  }, [dispatch, spotId]);
-  const userId = useSelector((state) => state.session.user.id);
-  const spot = useSelector((state) => state.spots[spotId]);
-  const reviewsObj = useSelector((state) => state.reviews);
-  const reviews = Object.values(reviewsObj).reverse();
-  console.log("reviews 👉", !reviews.length);
+  }, [dispatch]);
 
   const options = {
     weekday: "long",
