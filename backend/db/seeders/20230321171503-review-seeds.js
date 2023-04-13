@@ -20,14 +20,14 @@ module.exports = {
           spotId: 1,
           userId: 1,
         },
-        // {
-        //   // 2
-        //   review:
-        //     "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-        //   stars: 4,
-        //   spotId: 2,
-        //   userId: 1,
-        // },
+        {
+          // 2
+          review:
+            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+          stars: 4,
+          spotId: 2,
+          userId: 1,
+        },
         {
           // 3
           review:

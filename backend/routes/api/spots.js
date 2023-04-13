@@ -268,7 +268,9 @@ router.post("/:spotId/reviews", [restoreUser, requireAuth, validateReview], asyn
         review,
         stars,
       });
-      res.status(200).json(newReview);
+      const reviewJSON = newReview.toJSON();
+      reviewJSON.User = user;
+      res.status(200).json(reviewJSON);
     }
   }
 });
@@ -283,9 +285,7 @@ router.get("/:spotId/reviews", async (req, res) => {
       { model: User, attributes: ["id", "firstName", "lastName"] },
       { model: ReviewImage, attributes: ["id", "url"] },
     ],
-    order: [
-      ['createdAt', 'DESC'],
-    ]
+    order: [["createdAt", "DESC"]],
   });
 
   if (!reviews.length) res.status(404).json(doesNotExist("Spot"));
