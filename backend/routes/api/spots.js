@@ -283,6 +283,9 @@ router.get("/:spotId/reviews", async (req, res) => {
       { model: User, attributes: ["id", "firstName", "lastName"] },
       { model: ReviewImage, attributes: ["id", "url"] },
     ],
+    order: [
+      ['createdAt', 'DESC'],
+    ]
   });
 
   if (!reviews.length) res.status(404).json(doesNotExist("Spot"));
