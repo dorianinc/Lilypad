@@ -49,7 +49,7 @@ function ManageSpotsPage() {
                   <div className="city-stateCard">{`${spot.city}, ${spot.state}`}</div>
                   <div className="cardRating">
                     <i class="fa-solid fa-star" />{" "}
-                    {spot.avgRating ? spot.avgRating.toFixed(2) : "New!"}
+                    {spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New!"}
                   </div>
                 </div>
                 <div className="cardPrice">

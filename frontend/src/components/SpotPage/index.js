@@ -55,11 +55,11 @@ function SpotPage() {
         <div id="reserveSection">
           <div id="priceAndRating">
             <p id="spotPrice">
-              {/* <span>${spot.price.toFixed(2)}</span> night */}
+              <span>${Number(spot.price).toFixed(2)}</span> night
             </p>
             <p id="spotRating">
               <i class="fa-solid fa-star" />
-              {/* {spot.avgStarRating ? " " + spot.avgStarRating.toFixed(2) : "New"} */}
+              {spot.avgStarRating ? " " + Number(spot.avgStarRating).toFixed(2) : "New"}
               {` | ${spot.numReviews} reviews`}
             </p>
           </div>
@@ -72,7 +72,7 @@ function SpotPage() {
       <div className="reviewsContainer">
         <h2>
           <i class="fa-solid fa-star" />
-          {/* {spot.avgStarRating ? " " + spot.avgStarRating.toFixed(2) : "New"} */}
+          {spot.avgStarRating ? " " + Number(spot.avgStarRating).toFixed(2) : "New"}
           {" | "}
           {spot.numReviews === 1 ? `${spot.numReviews} reviews` : `${spot.numReviews} review`}
         </h2>
