@@ -30,20 +30,24 @@ function SpotPage() {
     };
   }, [dispatch, spotId]);
 
-  const userId = useSelector((state) => state.session.user?.id);
+  const user = useSelector((state) => state.session.user);
   const spot = useSelector((state) => state.spots[spotId]);
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj).reverse();
-  const hasReview = reviews.find((review) => review.userId === 1);
+  const hasReviewed = reviews.find((review) => review.userId === user.id);
   const dates = reviews.map((review) =>
-    new Date(review.createdAt).toLocaleString("en-US", {
-      year: "numeric",
-      month: "long",
-    })
+  new Date(review.createdAt).toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",
+  })
   );
-
-
+  
+  
   if (!spot || !spot.Owner) return null;
+  console.log(" user.id 👉", user.id)
+  console.log("spot.Owner.id 👉", spot.Owner.id)
+  console.log("hasReview 👉", !!hasReviewed)
+  console.log("is Owner? 👉", user.id === spot.Owner.id)
 
   return (
     <div className="mainContainer spots">
@@ -95,7 +99,7 @@ function SpotPage() {
             ? null
             : ` · ${spot.numReviews} reviews`}
         </h2>
-        {userId && userId !== spot.Owner.id && !hasReview ? (
+        {user.id && user.id !== spot.Owner.id && !hasReviewed ? (
           <OpenModalButton
             className="greyButton review"
             buttonText="Post your Review"
@@ -113,7 +117,7 @@ function SpotPage() {
               <p>{review.review}</p>
             </div>
           ))
-        ) : userId !== spot.Owner.id ? (
+        ) : user.id !== spot.Owner.id ? (
           <div>Be the First to Review!</div>
         ) : null}
       </div>

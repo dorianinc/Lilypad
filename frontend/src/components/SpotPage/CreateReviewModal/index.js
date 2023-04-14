@@ -18,11 +18,11 @@ function CreateReviewModal({ spotId }) {
     }
   }, [review, stars]);
 
-  const handleClick = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newReview = { review, stars };
     const successfulDispatch = await dispatch(postReviewThunk(spotId, newReview));
-    if (successfulDispatch) closeModal();
+    // if (successfulDispatch) closeModal();
   };
 
   const onChange = (number) => {
@@ -33,7 +33,7 @@ function CreateReviewModal({ spotId }) {
     <>
       <h1>How was your stay?</h1>
       <p className="error"></p>
-      <form className="loginForm" onSubmit={(e) => handleClick(e)}>
+      <form className="loginForm" onSubmit={(e) => handleSubmit(e)}>
         <textarea
           name="description"
           className="textArea review"
