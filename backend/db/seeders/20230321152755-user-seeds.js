@@ -13,38 +13,38 @@ module.exports = {
       options,
       [
         {
-          email: "potato1@gmail.com", // 1
-          username: "user123",
-          firstName: "Random",
-          lastName: "Name",
-          hashedPassword: bcrypt.hashSync("password123"),
+          email: "drowrogue@waterdeep.com", // 1
+          username: "sirUser123",
+          firstName: "Sir",
+          lastName: "Basic",
+          hashedPassword: bcrypt.hashSync("password1"),
         },
         {
-          email: "potato2@gmail.com", // 2
-          username: "hCross123",
-          firstName: "Hannah",
-          lastName: "Cross",
+          email: "sorceress@thundertree.com", // 2
+          username: "stormcaller",
+          firstName: "Aurora",
+          lastName: "Firestorm",
           hashedPassword: bcrypt.hashSync("password2"),
         },
         {
-          email: "potato3@gmail.com", // 3
-          username: "oTurn123",
-          firstName: "Olive",
-          lastName: "Turner",
+          email: "paladin@neverwinter.com", // 3
+          username: "holyavenger",
+          firstName: "Cedric",
+          lastName: "Lightbringer",
           hashedPassword: bcrypt.hashSync("password3"),
         },
         {
-          email: "potato4@gmail.com", // 4
-          username: "tFord123",
-          firstName: "Terrance",
-          lastName: "Ford",
+          email: "bard@baldursgate.com", // 4
+          username: "songweaver",
+          firstName: "Elaith",
+          lastName: "Craulnober",
           hashedPassword: bcrypt.hashSync("password4"),
         },
         {
-          email: "potato5@gmail.com", // 5
-          username: "kWolf123",
-          firstName: "Kristine",
-          lastName: "Wolfe",
+          email: "cleric@waterdeep.com", // 5
+          username: "divinehammer",
+          firstName: "Lathander",
+          lastName: "Morninglord",
           hashedPassword: bcrypt.hashSync("password5"),
         },
         {
