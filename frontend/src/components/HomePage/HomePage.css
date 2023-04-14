@@ -7,10 +7,11 @@
 
 .cardContainer {
     display: flex;
+    width: 350px;
+    cursor: pointer;
     justify-content: center;
     flex-direction: column;
     position: relative;
-    width: 350px;
   }
   
   #cardImage {
