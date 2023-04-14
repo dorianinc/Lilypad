@@ -7,7 +7,7 @@ import StarsRatingInput from "./StarsRatingInput/StarsRatingInput";
 function CreateReviewModal({ spotId }) {
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
-  const [errors, setErrors] = useState({});
+  const [errorsObj, setErrorsObj] = useState({});
   const [buttonClass, setButtonClass] = useState("pinkButton disabled");
   const { closeModal } = useModal();
   const dispatch = useDispatch();
@@ -18,13 +18,20 @@ function CreateReviewModal({ spotId }) {
     }
   }, [review, stars]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const newReview = { review, stars };
-    const successfulDispatch = await dispatch(postReviewThunk(spotId, newReview));
-    // if (successfulDispatch) closeModal();
+    return dispatch(postReviewThunk(spotId, newReview))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrorsObj(data.errors);
+        }
+      });
   };
 
+  const errors = Object.values(errorsObj);
   const onChange = (number) => {
     setStars(parseInt(number));
   };
@@ -32,7 +39,11 @@ function CreateReviewModal({ spotId }) {
   return (
     <>
       <h1>How was your stay?</h1>
-      <p className="error"></p>
+      {errors.map((error, i) => (
+        <p key={i} className="errors">
+          {error}
+        </p>
+      ))}
       <form className="loginForm" onSubmit={(e) => handleSubmit(e)}>
         <textarea
           name="description"

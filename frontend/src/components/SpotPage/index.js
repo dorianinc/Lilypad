@@ -36,18 +36,17 @@ function SpotPage() {
   const reviews = Object.values(reviewsObj).reverse();
   const hasReviewed = reviews.find((review) => review.userId === user.id);
   const dates = reviews.map((review) =>
-  new Date(review.createdAt).toLocaleString("en-US", {
-    year: "numeric",
-    month: "long",
-  })
+    new Date(review.createdAt).toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+    })
   );
-  
-  
+
   if (!spot || !spot.Owner) return null;
-  console.log(" user.id 👉", user.id)
-  console.log("spot.Owner.id 👉", spot.Owner.id)
-  console.log("hasReview 👉", !!hasReviewed)
-  console.log("is Owner? 👉", user.id === spot.Owner.id)
+  console.log(" user.id 👉", user.id);
+  console.log("spot.Owner.id 👉", spot.Owner.id);
+  console.log("hasReview 👉", !!hasReviewed);
+  console.log("is Owner? 👉", user.id === spot.Owner.id);
 
   return (
     <div className="mainContainer spots">
