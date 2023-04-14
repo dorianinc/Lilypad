@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 
-const StarsRatingInput = ({ rating, onChange }) => {
-  const [activeRating, setActiveRating] = useState(rating);
+const StarsRatingInput = ({ stars, onChange }) => {
+  const [activeRating, setActiveRating] = useState(stars);
 
   useEffect(() => {
-    setActiveRating(rating);
-  }, [rating]);
+    setActiveRating(stars);
+  }, [stars]);
   // NOTE: This useEffect isn't necessary to have for this scenario anymore
   // because the number input has been removed, but if you have a scenario which
-  // requires this input to be re-rendered with an updated rating prop instead
-  // of unmounted and remounted with an updated rating, then this useEffect is
+  // requires this input to be re-rendered with an updated stars prop instead
+  // of unmounted and remounted with an updated stars, then this useEffect is
   // necessary.
 
   return (
@@ -20,7 +20,7 @@ const StarsRatingInput = ({ rating, onChange }) => {
           setActiveRating(1);
         }}
         onMouseLeave={() => {
-          setActiveRating(rating);
+          setActiveRating(stars);
         }}
         onClick={() => {
           onChange(1);
@@ -36,7 +36,7 @@ const StarsRatingInput = ({ rating, onChange }) => {
           setActiveRating(2);
         }}
         onMouseLeave={() => {
-          setActiveRating(rating);
+          setActiveRating(stars);
         }}
         onClick={() => {
           onChange(2);
@@ -52,7 +52,7 @@ const StarsRatingInput = ({ rating, onChange }) => {
           setActiveRating(3);
         }}
         onMouseLeave={() => {
-          setActiveRating(rating);
+          setActiveRating(stars);
         }}
         onClick={() => {
           onChange(3);
@@ -70,7 +70,7 @@ const StarsRatingInput = ({ rating, onChange }) => {
           setActiveRating(4);
         }}
         onMouseLeave={() => {
-          setActiveRating(rating);
+          setActiveRating(stars);
         }}
         onClick={() => {
           onChange(4);
@@ -86,7 +86,7 @@ const StarsRatingInput = ({ rating, onChange }) => {
           setActiveRating(5);
         }}
         onMouseLeave={() => {
-          setActiveRating(rating);
+          setActiveRating(stars);
         }}
         onClick={() => {
           onChange(5);

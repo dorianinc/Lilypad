@@ -44,6 +44,9 @@ export const loadSpotsThunk = () => async (dispatch) => {
     const allSpots = data.Spots;
     dispatch(loadSpotsAction(allSpots));
     return data;
+  } else {
+    const errors = await res.json();
+    return errors;
   }
 };
 
@@ -53,6 +56,9 @@ export const loadUserSpotsThunk = (userId) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     dispatch(loadSpotsAction(data));
+  } else {
+    const errors = await res.json();
+    return errors;
   }
 };
 // delete a spot
@@ -62,6 +68,9 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
   });
   if (res.ok) {
     dispatch(deleteSpotAction(spotId));
+  } else {
+    const errors = await res.json();
+    return errors;
   }
 };
 
@@ -73,6 +82,9 @@ export const previewSpotThunk = (spotId) => async (dispatch) => {
     const data = await res.json();
     dispatch(previewSpotAction(data));
     return data;
+  } else {
+    const errors = await res.json();
+    return errors;
   }
 };
 // post a spot
@@ -87,6 +99,9 @@ export const createSpotThunk = (spot) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     return data;
+  } else {
+    const errors = await res.json();
+    return errors;
   }
 };
 
@@ -102,6 +117,9 @@ export const addImageThunk = (spotId, imageObj) => async (dispatch) => {
   if (res.ok) {
     const data = await res.json();
     return data;
+  } else {
+    const errors = await res.json();
+    return errors;
   }
 };
 
