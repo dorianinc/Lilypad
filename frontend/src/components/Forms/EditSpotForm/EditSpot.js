@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { previewSpotThunk, updateSpotThunk } from "../../store/spots";
+import { getSingleSpotThunk, updateSpotThunk } from "../../../store/spotsReducer";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import '../../Forms/Forms.css'
 
 function EditSpotPage() {
   const [country, setCountry] = useState("");
@@ -20,7 +21,7 @@ function EditSpotPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(previewSpotThunk(spotId)).then((spot) => {
+    dispatch(getSingleSpotThunk(spotId)).then((spot) => {
       setCountry(spot.country);
       setAddress(spot.address);
       setCity(spot.city);

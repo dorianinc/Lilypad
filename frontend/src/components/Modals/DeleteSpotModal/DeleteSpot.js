@@ -1,6 +1,6 @@
 import { useModal } from "../../../context/Modal";
 import { useDispatch } from "react-redux";
-import { deleteSpotThunk } from "../../../store/spots";
+import { deleteSpotThunk } from "../../../store/spotsReducer";
 
 function DeleteSpotModal({ spotId }) {
   const { closeModal } = useModal();

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { previewSpotThunk, clearSpotsAction } from "../../store/spots";
-import { loadReviewsThunk, clearReviewsAction } from "../../store/reviews";
-import OpenModalButton from "../OpenModalButton";
-import CreateReviewModal from "./CreateReviewModal";
-import DeleteReviewModal from "./DeleteReviewModal/DeleteReviewModal";
-import "./SpotPage.css";
+import { getSingleSpotThunk, clearSpots } from "../../store/spotsReducer";
+import { getReviewsThunk, clearReviews } from "../../store/reviewsReducer";
+import OpenModalButton from "../Modals/OpenModalButton/OpenModal";
+import CreateReviewModal from "../Modals/CreateReviewModal/CreateReview";
+import DeleteReviewModal from "../Modals/DeleteReviewModal/DeleteReviewModal";
+import "./SpotDetails.css";
 
 function SpotPage() {
   const { spotId } = useParams();
@@ -16,7 +16,7 @@ function SpotPage() {
   let closeMenu;
 
   useEffect(() => {
-    dispatch(previewSpotThunk(spotId)).then((spot) => {
+    dispatch(getSingleSpotThunk(spotId)).then((spot) => {
       const prevImage = spot.SpotImages.find(
         (image) => image.preview === true || image.preview === 1
       );
@@ -24,14 +24,15 @@ function SpotPage() {
       setPreviewImage(prevImage);
       setImages(imageArray);
     });
-    dispatch(loadReviewsThunk(spotId));
+    dispatch(getReviewsThunk(spotId));
     return () => {
-      dispatch(clearSpotsAction());
-      dispatch(clearReviewsAction());
+      dispatch(clearSpots());
+      dispatch(clearReviews());
     };
   }, [dispatch, spotId]);
 
   const user = useSelector((state) => state.session.user);
+  // console.log("user 👉", user)
   const spot = useSelector((state) => state.spots[spotId]);
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj).reverse();
@@ -44,10 +45,10 @@ function SpotPage() {
   );
 
   if (!spot || !spot.Owner) return null;
-  console.log(" user.id 👉", user.id);
-  console.log("spot.Owner.id 👉", spot.Owner.id);
-  console.log("hasReview 👉", !!hasReviewed);
-  console.log("is Owner? 👉", user.id === spot.Owner.id);
+  // console.log(" user.id 👉", user.id);
+  // console.log("spot.Owner.id 👉", spot.Owner.id);
+  // console.log("hasReview 👉", !!hasReviewed);
+  // console.log("is Owner? 👉", user.id === spot.Owner.id);
 
   return (
     <div className="mainContainer spots">
@@ -55,13 +56,13 @@ function SpotPage() {
       <h2>
         {spot.city}, {spot.state} {" - "} {spot.country}
       </h2>
-      <div id="imagesContainer">
-        <div className="boxes" id="box-1">
-          <img id="previewImage" alt="preview" src={previewImage.url} />
+      <div className="imagesContainer">
+        <div className="previewImage" id="box-1">
+          <img alt="preview" src={previewImage.url} />
         </div>
         {images.map((image) => (
-          <div className="boxes" key={`box-${image.id}`}>
-            <img alt={image.id} src={image.url} />
+          <div className="supportImages" key={`box-${image.id}`}>
+            <img className="supportingImages" alt={image.id} src={image.url} />
           </div>
         ))}
       </div>

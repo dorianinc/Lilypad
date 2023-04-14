@@ -2,54 +2,44 @@ import { csrfFetch } from "./csrf";
 
 ////////////// Action Creators ////////////////
 
-export const LOAD_REVIEWS = "reviews/LOAD_REVIEWS";
-export const LOAD_SINGLE_REVIEW = "reviews/LOAD_SINGLE_REVIEW";
+export const GET_REVIEWS = "reviews/GET_REVIEWS";
 export const POST_REVIEW = "reviews/POST_REVIEW";
 export const DELETE_REVIEW = "spots/DELETE_REVIEW";
 export const CLEAR_REVIEWS = "reviews/CLEAR_REVIEWS";
 
 ///////////// Action Creators ///////////////
 
-// get all reviews on render
-export const loadReviewsAction = (reviews) => ({
-  type: LOAD_REVIEWS,
+// get all reviews
+export const getReviews = (reviews) => ({
+  type: GET_REVIEWS,
   reviews,
 });
 
-// get single review and add to list
-export const loadReview = (review) => ({
-  type: LOAD_SINGLE_REVIEW,
-  review,
-});
-
 // post review
-export const postReviewAction = (review) => ({
+export const postReview = (review) => ({
   type: POST_REVIEW,
   review,
 });
 
 //// delete single spot
-export const deleteReviewAction = (reviewId) => ({
+export const deleteReview = (reviewId) => ({
   type: DELETE_REVIEW,
   reviewId,
 });
 
 // clear reviews state
-export const clearReviewsAction = () => ({
+export const clearReviews = () => ({
   type: CLEAR_REVIEWS,
 });
 
 /////////////////// Thunks ///////////////////
 
-// get reviews
-export const loadReviewsThunk = (spotId) => async (dispatch) => {
+// get all reviews
+export const getReviewsThunk = (spotId) => async (dispatch) => {
   const res = await fetch(`/api/spots/${spotId}/reviews`);
   if (res.ok) {
     const data = await res.json();
-    dispatch(loadReviewsAction(data));
-  } else {
-    const errors = await res.json();
-    return errors;
+    dispatch(getReviews(data));
   }
 };
 
@@ -64,7 +54,7 @@ export const postReviewThunk = (spotId, review) => async (dispatch) => {
   });
   if (res.ok) {
     const data = await res.json();
-    dispatch(postReviewAction(data));
+    dispatch(postReview(data));
     return res;
   }
 };
@@ -75,17 +65,14 @@ export const deleteReviewThunk = (reviewId) => async (dispatch) => {
     method: "DELETE",
   });
   if (res.ok) {
-    dispatch(deleteReviewAction(reviewId));
-  } else {
-    const errors = await res.json();
-    return errors;
+    dispatch(deleteReview(reviewId));
   }
 };
 
 const reviewsReducer = (state = {}, action) => {
   let newState;
   switch (action.type) {
-    case LOAD_REVIEWS:
+    case GET_REVIEWS:
       newState = { ...state };
       action.reviews.forEach((review) => {
         newState[review.id] = review;
@@ -106,14 +93,3 @@ const reviewsReducer = (state = {}, action) => {
 };
 
 export default reviewsReducer;
-
-// case CLEAR_REVIEWS:
-// return {};
-//   case PREVIEW_SPOT:
-//     return { ...state, [action.spot.id]: action.spot };
-//   case UPDATE_SPOT:
-//     return { ...state, [action.spot.id]: action.spot };
-//   case DELETE_SPOT:
-//     newState = { ...state };
-//     delete newState[action.spotId];
-//     return newState;
