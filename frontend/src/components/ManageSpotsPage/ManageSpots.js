@@ -35,7 +35,7 @@ function ManageSpotsPage() {
   };
 
   return (
-    <div>
+    <div className="outerMostContainer">
       <h1>Manage Your Spots</h1>
       {spots.length ? (
         <div className="mainContainer userSpots">

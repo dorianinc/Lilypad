@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useModal } from "../../../context/Modal";
 import { useDispatch } from "react-redux";
-import { postReviewThunk } from "../../../store/reviewsReducer";
+import { postReviewThunk, getReviewsThunk } from "../../../store/reviewsReducer";
 import StarsRatingInput from "./StarsRatingInput/StarsRatingInput";
 
 function CreateReviewModal({ spotId }) {
@@ -18,10 +18,10 @@ function CreateReviewModal({ spotId }) {
     }
   }, [review, stars]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newReview = { review, stars };
-    return dispatch(postReviewThunk(spotId, newReview))
+    await dispatch(postReviewThunk(spotId, newReview))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
@@ -29,7 +29,8 @@ function CreateReviewModal({ spotId }) {
           setErrorsObj(data.errors);
         }
       });
-  };
+    };
+    dispatch(getReviewsThunk(spotId))
 
   const errors = Object.values(errorsObj);
   const onChange = (number) => {

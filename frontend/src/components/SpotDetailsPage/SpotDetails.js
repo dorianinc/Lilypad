@@ -13,8 +13,12 @@ function SpotPage() {
   const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
   const [images, setImages] = useState([]);
-  let closeMenu;
+  let hasReviewed = false;
+  
+  const user = useSelector((state) => state.session.user);
+  const spot = useSelector((state) => state.spots[spotId]);
 
+  
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId)).then((spot) => {
       const prevImage = spot.SpotImages.find(
@@ -30,13 +34,20 @@ function SpotPage() {
       dispatch(clearReviews());
     };
   }, [dispatch, spotId]);
-
-  const user = useSelector((state) => state.session.user);
-  // console.log("user 👉", user)
-  const spot = useSelector((state) => state.spots[spotId]);
+  
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj).reverse();
-  const hasReviewed = reviews.find((review) => review.userId === user.id);
+
+  useEffect(() => {
+    dispatch(getSingleSpotThunk(spotId));
+  }, [dispatch, spotId, reviewsObj]);
+
+  if (user) {
+    if (reviews.find((review) => review.userId === user.id)) {
+      hasReviewed = true;
+    }
+  }
+
   const dates = reviews.map((review) =>
     new Date(review.createdAt).toLocaleString("en-US", {
       year: "numeric",
@@ -45,10 +56,6 @@ function SpotPage() {
   );
 
   if (!spot || !spot.Owner) return null;
-  // console.log(" user.id 👉", user.id);
-  // console.log("spot.Owner.id 👉", spot.Owner.id);
-  // console.log("hasReview 👉", !!hasReviewed);
-  // console.log("is Owner? 👉", user.id === spot.Owner.id);
 
   return (
     <div className="mainContainer spots">
@@ -100,11 +107,10 @@ function SpotPage() {
             ? null
             : ` · ${spot.numReviews} reviews`}
         </h2>
-        {user.id && user.id !== spot.Owner.id && !hasReviewed ? (
+        {!user ? null : user.id && user.id !== spot.Owner.id && !hasReviewed ? (
           <OpenModalButton
             className="greyButton review"
             buttonText="Post your Review"
-            onButtonClick={closeMenu}
             modalComponent={<CreateReviewModal spotId={spotId} />}
           />
         ) : null}
@@ -116,16 +122,17 @@ function SpotPage() {
               </h3>
               <h3 style={{ color: "lightgray" }}>{dates[i]}</h3>
               <p>{review.review}</p>
-              {user.id === review.userId ? (
+              {!user ? null : user.id === review.userId ? (
                 <OpenModalButton
                   className="greyButton delete"
                   buttonText="Delete"
-                  onButtonClick={closeMenu}
                   modalComponent={<DeleteReviewModal reviewId={review.id} />}
                 />
               ) : null}
             </div>
           ))
+        ) : !user ? (
+          <div>Be the First to Review!</div>
         ) : user.id !== spot.Owner.id ? (
           <div>Be the First to Review!</div>
         ) : null}
