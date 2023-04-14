@@ -43,7 +43,22 @@ module.exports = {
           spotId: 2,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/0b7dcdb1-a123-426a-b0e2-b85987c00d74.jpg",
+          url: "https://a0.muscache.com/im/pictures/miso/Hosting-715990626223541790/original/9eb2157b-a8c7-41ba-9793-599c83aaee1f.jpeg",
+          preview: false,
+          spotId: 2,
+        },
+        {
+          url: "https://a0.muscache.com/im/pictures/miso/Hosting-715990626223541790/original/0a7b161f-e62c-479c-a22c-01adc4850006.jpeg",
+          preview: false,
+          spotId: 2,
+        },
+        {
+          url: "https://a0.muscache.com/im/pictures/miso/Hosting-715990626223541790/original/d4fac495-668d-43fd-9055-78631c1b33fd.jpeg",
+          preview: false,
+          spotId: 2,
+        },
+        {
+          url: "https://a0.muscache.com/im/pictures/miso/Hosting-715990626223541790/original/a4866218-2e4e-4fc0-b412-f42f158ef1d0.jpeg",
           preview: false,
           spotId: 2,
         },
