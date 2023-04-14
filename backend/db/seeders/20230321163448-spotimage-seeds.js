@@ -13,150 +13,321 @@ module.exports = {
       options,
       [
         {
-          url: "https://a0.muscache.com/im/pictures/6be38c62-1b2a-47c3-8cd7-3cb4da749509.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511307/Airdnd/05-spot/spot5-01.png",
           preview: true,
           spotId: 1,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/c70a89f6-b329-40b6-b879-c00986e85a17.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511307/Airdnd/05-spot/spot5-02.png",
           preview: false,
           spotId: 1,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/8f3c3488-db61-4429-ab99-6f777729ca88.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511306/Airdnd/05-spot/spot5-03.png",
           preview: false,
           spotId: 1,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/02141710-4ad3-42eb-86cd-22ee91502f0a.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511318/Airdnd/05-spot/spot5-04.png",
           preview: false,
           spotId: 1,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/fc93312d-01dc-491c-b92d-16e5a9ca170f.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511318/Airdnd/05-spot/spot5-05.png",
           preview: false,
           spotId: 1,
         },
+
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-715990626223541790/original/694ee517-4dd7-4ace-92d6-c96ec635bdf0.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511280/Airdnd/01-spot/spot1-05.png",
+          preview: false,
+          spotId: 5,
+        },
+
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511302/Airdnd/02-spot/spot2-01.png",
           preview: true,
           spotId: 2,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-715990626223541790/original/9eb2157b-a8c7-41ba-9793-599c83aaee1f.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511302/Airdnd/02-spot/spot2-02.png",
           preview: false,
           spotId: 2,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-715990626223541790/original/0a7b161f-e62c-479c-a22c-01adc4850006.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511302/Airdnd/02-spot/spot2-03.png",
           preview: false,
           spotId: 2,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-715990626223541790/original/d4fac495-668d-43fd-9055-78631c1b33fd.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511302/Airdnd/02-spot/spot2-04.png",
           preview: false,
           spotId: 2,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-715990626223541790/original/a4866218-2e4e-4fc0-b412-f42f158ef1d0.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511302/Airdnd/02-spot/spot2-05.png",
           preview: false,
           spotId: 2,
         },
+
         {
-          url: "https://a0.muscache.com/im/pictures/81edf38e-921c-41b5-b3c1-f8aee7a44f1b.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511304/Airdnd/03-spot/spot3-01.png",
           preview: true,
           spotId: 3,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-45017115/original/cca3c527-9517-4664-921e-fda4b6fc9976.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511304/Airdnd/03-spot/spot3-02.png",
           preview: false,
           spotId: 3,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-49064078/original/d0377911-55ef-4388-b984-8f66bbae4eb4.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511304/Airdnd/03-spot/spot3-03.png",
+          preview: false,
+          spotId: 3,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511304/Airdnd/03-spot/spot3-04.png",
+          preview: false,
+          spotId: 3,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511302/Airdnd/03-spot/spot3-05.png",
+          preview: false,
+          spotId: 3,
+        },
+
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511305/Airdnd/04-spot/spot4-01.png",
           preview: true,
           spotId: 4,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-49064078/original/f159f420-d7d7-4c72-8569-0cfc127b1b9b.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511305/Airdnd/04-spot/spot4-02.png",
           preview: false,
           spotId: 4,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-49064078/original/a5ca399e-15ab-43a1-bc9d-c349a10282be.jpeg",
-          preview: true,
-          spotId: 4,
-        },
-        {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-49064078/original/14df687b-d0bc-4eb8-ac6c-6b74d4f075ce.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511306/Airdnd/04-spot/spot4-03.png",
           preview: false,
           spotId: 4,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-49064078/original/e0a55c74-5a4c-4f29-b501-c919e5c10e9f.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511304/Airdnd/04-spot/spot4-04.png",
           preview: false,
           spotId: 4,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/81564d9e-cc1f-4033-9791-ef751569e40a.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511306/Airdnd/04-spot/spot4-05.png",
+          preview: false,
+          spotId: 4,
+        },
+
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511280/Airdnd/01-spot/spot1-01.png",
           preview: true,
           spotId: 5,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/74dc9b02-3f53-4b8a-b73d-f983eedf0e32.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511280/Airdnd/01-spot/spot1-02.png",
           preview: false,
           spotId: 5,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-43149938/original/79e4ea7c-cde4-42ce-b7b7-16eda56927f0.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511281/Airdnd/01-spot/spot1-03.png",
+          preview: false,
+          spotId: 5,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511281/Airdnd/01-spot/spot1-04.png",
+          preview: false,
+          spotId: 5,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681513280/Airdnd/06-spot/spot6-01.png",
           preview: true,
           spotId: 6,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-50621178/original/788c5c41-daa9-4a67-b88f-d891585720aa.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511318/Airdnd/06-spot/spot6-02.png",
           preview: false,
           spotId: 6,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-29389628/original/db459df4-439c-485c-891a-e370cac880b5.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511308/Airdnd/06-spot/spot6-03.png",
+          preview: false,
+          spotId: 6,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511318/Airdnd/06-spot/spot6-04.png",
+          preview: false,
+          spotId: 6,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511307/Airdnd/06-spot/spot6-05.png",
+          preview: false,
+          spotId: 6,
+        },
+
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511308/Airdnd/07-spot/spot7-01.png",
           preview: true,
           spotId: 7,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/816723e8-e265-4aa1-b1b9-f4748abdf564.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511309/Airdnd/07-spot/spot7-02.png",
           preview: false,
           spotId: 7,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/1f7a3da2-427b-443a-b62d-fab450b70123.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511309/Airdnd/07-spot/spot7-03.png",
+          preview: false,
+          spotId: 7,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511320/Airdnd/07-spot/spot7-04.png",
+          preview: false,
+          spotId: 7,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511318/Airdnd/07-spot/spot7-05.png",
+          preview: false,
+          spotId: 7,
+        },
+
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511311/Airdnd/08-spot/spot8-01.png",
           preview: true,
           spotId: 8,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/2a0a8543-a4e0-4f13-84f5-a01facfe640f.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511309/Airdnd/08-spot/spot8-02.png",
           preview: false,
           spotId: 8,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/58f7249d-32b9-453c-8a8c-7ec509064b1d.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511311/Airdnd/08-spot/spot8-03.png",
+          preview: false,
+          spotId: 8,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511320/Airdnd/08-spot/spot8-04.png",
+          preview: false,
+          spotId: 8,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511310/Airdnd/08-spot/spot8-05.png",
+          preview: false,
+          spotId: 8,
+        },
+
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511311/Airdnd/09-spot/spot9-01.png",
           preview: true,
           spotId: 9,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/9ed97ddc-99f6-4ba2-8100-94abdbcb06e7.jpg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511312/Airdnd/09-spot/spot9-02.png",
           preview: false,
           spotId: 9,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-802793352174858729/original/96199f15-9abc-4d80-b4ae-0b9cc37ecc0d.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511310/Airdnd/09-spot/spot9-03.png",
+          preview: false,
+          spotId: 9,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511311/Airdnd/09-spot/spot9-04.png",
+          preview: false,
+          spotId: 9,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511322/Airdnd/09-spot/spot9-05.png",
+          preview: false,
+          spotId: 9,
+        },
+
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511312/Airdnd/10-spot/spot10-01.png",
           preview: true,
           spotId: 10,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-802793352174858729/original/23f011de-2b15-4ae7-a89b-ca1f15e2b9fd.jpeg",
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511322/Airdnd/10-spot/spot10-02.png",
           preview: false,
           spotId: 10,
-        }
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511322/Airdnd/10-spot/spot10-03.png",
+          preview: false,
+          spotId: 10,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511321/Airdnd/10-spot/spot10-04.png",
+          preview: false,
+          spotId: 10,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511312/Airdnd/10-spot/spot10-05.png",
+          preview: false,
+          spotId: 10,
+        },
+
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511314/Airdnd/11-spot/spot11-01.png",
+          preview: true,
+          spotId: 11,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511313/Airdnd/11-spot/spot11-02.png",
+          preview: false,
+          spotId: 11,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511314/Airdnd/11-spot/spot11-03.png",
+          preview: false,
+          spotId: 11,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511312/Airdnd/11-spot/spot11-04.png",
+          preview: false,
+          spotId: 11,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511313/Airdnd/11-spot/spot11-05.png",
+          preview: false,
+          spotId: 11,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511313/Airdnd/11-spot/spot11-05.png",
+          preview: false,
+          spotId: 12,
+        },
+
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511315/Airdnd/12-spot/spot12-01.png",
+          preview: true,
+          spotId: 12,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511314/Airdnd/12-spot/spot12-02.png",
+          preview: false,
+          spotId: 12,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511316/Airdnd/12-spot/spot12-03.png",
+          preview: false,
+          spotId: 12,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511314/Airdnd/12-spot/spot12-04.png",
+          preview: false,
+          spotId: 12,
+        },
+        {
+          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511315/Airdnd/12-spot/spot12-05.png",
+          preview: false,
+          spotId: 12,
+        },
       ],
       {}
     );

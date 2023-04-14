@@ -166,102 +166,102 @@ module.exports = {
           price: 87,
           ownerId: 1,
         },
-        {
-          address: "The Rusty Anvil", // 13
-          city: "Waterdeep",
-          state: "Faerun",
-          country: "Evermeet",
-          lat: 38.9072,
-          lng: -77.0369,
-          name: "The Rusty Anvil Inn",
-          description: "Nestled in the heart of Waterdeep, The Rusty Anvil is the perfect place for weary adventurers to rest and recuperate. With comfortable rooms, a cozy fireplace, and a well-stocked bar, you'll feel right at home in this charming inn.",
-          price: 150,
-          ownerId: 3
-        },
-        {
-          address: "Dragon's Lair", // 14
-          city: "Baldur's Gate",
-          state: "Amn",
-          country: "Damara",
-          lat: 37.7749,
-          lng: -122.4194,
-          name: "Dragon's Lair Armory",
-          description: "Looking for the finest arms and armor in all of Baldur's Gate? Look no further than Dragon's Lair Armory. Our expert craftsmen use only the finest materials to create weapons and armor that are both beautiful and deadly.",
-          price: 75,
-          ownerId: 1
-        },
-        {
-          address: "The Sleeping Dragon", // 15
-          city: "Neverwinter",
-          state: "Sword Coast",
-          country: "Aglarond",
-          lat: 40.7128,
-          lng: -74.0060,
-          name: "The Sleeping Dragon Tavern",
-          description: "If you're looking for a place to drink, gamble, and carouse in Neverwinter, look no further than The Sleeping Dragon Tavern. Our selection of ale is unmatched, and our dice games are always lively.",
-          price: 100,
-          ownerId: 5
-        },
-        {
-          address: "The Crystal Caverns", // 16
-          city: "Mithral Hall",
-          state: "The North",
-          country: "Murghôm",
-          lat: 51.5074,
-          lng: -0.1278,
-          name: "The Crystal Caverns Spa",
-          description: "Escape the hustle and bustle of Mithral Hall and indulge in some well-deserved pampering at The Crystal Caverns Spa. Our hot springs, massages, and herbal teas will leave you feeling rejuvenated and refreshed.",
-          price: 200,
-          ownerId: 2
-        },
-        {
-          address: "The Tower of Sorcery", // 17
-          city: "Cormyr",
-          state: "Cormyr",
-          country: "Aglarond",
-          lat: 51.5074,
-          lng: -0.1278,
-          name: "The Tower of Sorcery",
-          description: "For wizards and sorcerers seeking a place to hone their craft, look no further than The Tower of Sorcery. Our library is stocked with tomes on every arcane subject, and our laboratories are fully equipped for all manner of experiments.",
-          price: 175,
-          ownerId: 4
-        },
-        {
-          address: "Raven's Roost", // 18
-          city: "Winterhold",
-          state: "Skyrim",
-          country: "Evermeet",
-          lat: 43.6532,
-          lng: -79.3832,
-          name: "The Frozen Fang Inn",
-          description: "Nestled in the heart of the ancient city of Winterhold, The Frozen Fang Inn offers adventurers a cozy and comfortable place to rest and recuperate. Our warm hearth, hearty meals, and friendly staff will make you feel right at home.",
-          price: 150,
-          ownerId: 4
-        },
-        {
-          address: "Serpent's Lair", // 19
-          city: "Waterdeep",
-          state: "Sword Coast",
-          country: "Aglarond",
-          lat: 33.2148,
-          lng: -97.1331,
-          name: "The Enchanted Grove",
-          description: "Tucked away in a peaceful grove just outside the bustling city of Waterdeep, The Enchanted Grove is the perfect place to escape the hustle and bustle of city life. Our luxurious suites, tranquil gardens, and magical atmosphere will leave you feeling refreshed and renewed.",
-          price: 175,
-          ownerId: 2
-        },
-        {
-          address: "Dragon's Den", // 20
-          city: "Baldur's Gate",
-          state: "Amn",
-          country: "Murghôm",
-          lat: 41.8781,
-          lng: -87.6298,
-          name: "The Golden Dragon Inn",
-          description: "Located in the heart of Baldur's Gate, The Golden Dragon Inn is the perfect place to experience the rich culture and history of Amn. Our comfortable rooms, delicious food, and friendly staff will make your stay unforgettable.",
-          price: 100,
-          ownerId: 6
-        }
+        // {
+        //   address: "The Rusty Anvil", // 13
+        //   city: "Waterdeep",
+        //   state: "Faerun",
+        //   country: "Evermeet",
+        //   lat: 38.9072,
+        //   lng: -77.0369,
+        //   name: "The Rusty Anvil Inn",
+        //   description: "Nestled in the heart of Waterdeep, The Rusty Anvil is the perfect place for weary adventurers to rest and recuperate. With comfortable rooms, a cozy fireplace, and a well-stocked bar, you'll feel right at home in this charming inn.",
+        //   price: 150,
+        //   ownerId: 3
+        // },
+        // {
+        //   address: "Dragon's Lair", // 14
+        //   city: "Baldur's Gate",
+        //   state: "Amn",
+        //   country: "Damara",
+        //   lat: 37.7749,
+        //   lng: -122.4194,
+        //   name: "Dragon's Lair Armory",
+        //   description: "Looking for the finest arms and armor in all of Baldur's Gate? Look no further than Dragon's Lair Armory. Our expert craftsmen use only the finest materials to create weapons and armor that are both beautiful and deadly.",
+        //   price: 75,
+        //   ownerId: 1
+        // },
+        // {
+        //   address: "The Sleeping Dragon", // 15
+        //   city: "Neverwinter",
+        //   state: "Sword Coast",
+        //   country: "Aglarond",
+        //   lat: 40.7128,
+        //   lng: -74.0060,
+        //   name: "The Sleeping Dragon Tavern",
+        //   description: "If you're looking for a place to drink, gamble, and carouse in Neverwinter, look no further than The Sleeping Dragon Tavern. Our selection of ale is unmatched, and our dice games are always lively.",
+        //   price: 100,
+        //   ownerId: 5
+        // },
+        // {
+        //   address: "The Crystal Caverns", // 16
+        //   city: "Mithral Hall",
+        //   state: "The North",
+        //   country: "Murghôm",
+        //   lat: 51.5074,
+        //   lng: -0.1278,
+        //   name: "The Crystal Caverns Spa",
+        //   description: "Escape the hustle and bustle of Mithral Hall and indulge in some well-deserved pampering at The Crystal Caverns Spa. Our hot springs, massages, and herbal teas will leave you feeling rejuvenated and refreshed.",
+        //   price: 200,
+        //   ownerId: 2
+        // },
+        // {
+        //   address: "The Tower of Sorcery", // 17
+        //   city: "Cormyr",
+        //   state: "Cormyr",
+        //   country: "Aglarond",
+        //   lat: 51.5074,
+        //   lng: -0.1278,
+        //   name: "The Tower of Sorcery",
+        //   description: "For wizards and sorcerers seeking a place to hone their craft, look no further than The Tower of Sorcery. Our library is stocked with tomes on every arcane subject, and our laboratories are fully equipped for all manner of experiments.",
+        //   price: 175,
+        //   ownerId: 4
+        // },
+        // {
+        //   address: "Raven's Roost", // 18
+        //   city: "Winterhold",
+        //   state: "Skyrim",
+        //   country: "Evermeet",
+        //   lat: 43.6532,
+        //   lng: -79.3832,
+        //   name: "The Frozen Fang Inn",
+        //   description: "Nestled in the heart of the ancient city of Winterhold, The Frozen Fang Inn offers adventurers a cozy and comfortable place to rest and recuperate. Our warm hearth, hearty meals, and friendly staff will make you feel right at home.",
+        //   price: 150,
+        //   ownerId: 4
+        // },
+        // {
+        //   address: "Serpent's Lair", // 19
+        //   city: "Waterdeep",
+        //   state: "Sword Coast",
+        //   country: "Aglarond",
+        //   lat: 33.2148,
+        //   lng: -97.1331,
+        //   name: "The Enchanted Grove",
+        //   description: "Tucked away in a peaceful grove just outside the bustling city of Waterdeep, The Enchanted Grove is the perfect place to escape the hustle and bustle of city life. Our luxurious suites, tranquil gardens, and magical atmosphere will leave you feeling refreshed and renewed.",
+        //   price: 175,
+        //   ownerId: 2
+        // },
+        // {
+        //   address: "Dragon's Den", // 20
+        //   city: "Baldur's Gate",
+        //   state: "Amn",
+        //   country: "Murghôm",
+        //   lat: 41.8781,
+        //   lng: -87.6298,
+        //   name: "The Golden Dragon Inn",
+        //   description: "Located in the heart of Baldur's Gate, The Golden Dragon Inn is the perfect place to experience the rich culture and history of Amn. Our comfortable rooms, delicious food, and friendly staff will make your stay unforgettable.",
+        //   price: 100,
+        //   ownerId: 6
+        // }
       ],
       {}
     );
