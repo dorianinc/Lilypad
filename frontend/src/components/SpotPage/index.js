@@ -5,6 +5,7 @@ import { previewSpotThunk, clearSpotsAction } from "../../store/spots";
 import { loadReviewsThunk, clearReviewsAction } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton";
 import CreateReviewModal from "./CreateReviewModal";
+import DeleteReviewModal from "./DeleteReviewModal/DeleteReviewModal";
 import "./SpotPage.css";
 
 function SpotPage() {
@@ -114,6 +115,14 @@ function SpotPage() {
               </h3>
               <h3 style={{ color: "lightgray" }}>{dates[i]}</h3>
               <p>{review.review}</p>
+              {user.id === review.userId ? (
+                <OpenModalButton
+                  className="greyButton delete"
+                  buttonText="Delete"
+                  onButtonClick={closeMenu}
+                  modalComponent={<DeleteReviewModal reviewId={review.id} />}
+                />
+              ) : null}
             </div>
           ))
         ) : user.id !== spot.Owner.id ? (

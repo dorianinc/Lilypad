@@ -1,40 +1,44 @@
 import { csrfFetch } from "./csrf";
 
-//////////// Action Types //////////////////
+////////////// Action Creators ///////////////
 
 export const LOAD_SPOTS = "spots/LOAD_SPOTS";
 export const PREVIEW_SPOT = "spots/PREVIEW_SPOT";
-export const CLEAR_SPOTS = "spots/CLEAR_SPOTS";
 export const UPDATE_SPOT = "spots/UPDATE_SPOT";
 export const DELETE_SPOT = "spots/DELETE_SPOT";
+export const CLEAR_SPOTS = "spots/CLEAR_SPOTS";
 
-//////////// Action Creators ///////////////
+///////////// Action Creators ///////////////
 
+// get all spots
 export const loadSpotsAction = (spots) => ({
   type: LOAD_SPOTS,
   spots,
 });
-
+// get single spot
 export const previewSpotAction = (spot) => ({
   type: PREVIEW_SPOT,
   spot,
 });
 
+// update single spot
 export const updateSpotAction = (spot) => ({
   type: UPDATE_SPOT,
   spot,
 });
 
+//// delete single spot
 export const deleteSpotAction = (spotId) => ({
   type: DELETE_SPOT,
   spotId,
 });
 
+// clear all spots 
 export const clearSpotsAction = () => ({
   type: CLEAR_SPOTS,
 });
 
-//////////// Thunks //////////////////
+/////////////////// Thunks ///////////////////
 
 // get all spots
 export const loadSpotsThunk = () => async (dispatch) => {

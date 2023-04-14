@@ -1,12 +1,14 @@
 import { csrfFetch } from "./csrf";
 
-//////////// Action Types //////////////////
+////////////// Action Creators ////////////////
 
 export const LOAD_REVIEWS = "reviews/LOAD_REVIEWS";
 export const LOAD_SINGLE_REVIEW = "reviews/LOAD_SINGLE_REVIEW";
 export const POST_REVIEW = "reviews/POST_REVIEW";
+export const DELETE_REVIEW = "spots/DELETE_REVIEW";
 export const CLEAR_REVIEWS = "reviews/CLEAR_REVIEWS";
-//////////// Action Creators ///////////////
+
+///////////// Action Creators ///////////////
 
 // get all reviews on render
 export const loadReviewsAction = (reviews) => ({
@@ -26,12 +28,18 @@ export const postReviewAction = (review) => ({
   review,
 });
 
+//// delete single spot
+export const deleteReviewAction = (reviewId) => ({
+  type: DELETE_REVIEW,
+  reviewId,
+});
+
 // clear reviews state
 export const clearReviewsAction = () => ({
   type: CLEAR_REVIEWS,
 });
 
-//////////// Thunks //////////////////
+/////////////////// Thunks ///////////////////
 
 // get reviews
 export const loadReviewsThunk = (spotId) => async (dispatch) => {
@@ -61,6 +69,19 @@ export const postReviewThunk = (spotId, review) => async (dispatch) => {
   }
 };
 
+// delete a review
+export const deleteReviewThunk = (reviewId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/reviews/${reviewId}`, {
+    method: "DELETE",
+  });
+  if (res.ok) {
+    dispatch(deleteReviewAction(reviewId));
+  } else {
+    const errors = await res.json();
+    return errors;
+  }
+};
+
 const reviewsReducer = (state = {}, action) => {
   let newState;
   switch (action.type) {
@@ -72,6 +93,10 @@ const reviewsReducer = (state = {}, action) => {
       return newState;
     case POST_REVIEW:
       newState = { ...state, [action.review.id]: action.review };
+      return newState;
+    case DELETE_REVIEW:
+      newState = { ...state };
+      delete newState[action.reviewId];
       return newState;
     case CLEAR_REVIEWS:
       return {};

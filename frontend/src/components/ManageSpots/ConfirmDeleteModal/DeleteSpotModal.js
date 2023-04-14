@@ -2,7 +2,7 @@ import { useModal } from "../../../context/Modal";
 import { useDispatch } from "react-redux";
 import { deleteSpotThunk } from "../../../store/spots";
 
-function ConfirmDeleteModal({ spotId }) {
+function DeleteSpotModal({ spotId }) {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 
@@ -28,4 +28,4 @@ function ConfirmDeleteModal({ spotId }) {
   );
 }
 
-export default ConfirmDeleteModal;
+export default DeleteSpotModal;

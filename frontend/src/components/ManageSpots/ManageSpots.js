@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUserSpotsThunk, clearSpotsAction  } from "../../store/spots";
 import OpenModalButton from "../OpenModalButton";
-import ConfirmDeleteModal from "./ConfirmDeleteModal/ConfirmDeleteModal";
+import DeleteSpotModal from "./ConfirmDeleteModal/DeleteSpotModal";
 import "./ManageSpots.css";
 
 function ManageSpotsPage() {
@@ -35,7 +35,7 @@ function ManageSpotsPage() {
   };
 
   return (
-    <>
+    <div>
       <h1>Manage Your Spots</h1>
       {spots.length ? (
         <div className="mainContainer userSpots">
@@ -64,7 +64,7 @@ function ManageSpotsPage() {
                   className="greyButton delete"
                   buttonText="Delete"
                   onButtonClick={closeMenu}
-                  modalComponent={<ConfirmDeleteModal spotId={spot.id} />}
+                  modalComponent={<DeleteSpotModal spotId={spot.id} />}
                 />
               </div>
             </div>
@@ -77,7 +77,7 @@ function ManageSpotsPage() {
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
