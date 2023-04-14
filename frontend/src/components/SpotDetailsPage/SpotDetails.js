@@ -13,8 +13,11 @@ function SpotPage() {
   const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
   const [images, setImages] = useState([]);
-  // const [hasReviewed, setHasReviewed] = useState(false);
   let hasReviewed = false;
+  
+  const user = useSelector((state) => state.session.user);
+  const spot = useSelector((state) => state.spots[spotId]);
+
   
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId)).then((spot) => {
@@ -31,19 +34,17 @@ function SpotPage() {
       dispatch(clearReviews());
     };
   }, [dispatch, spotId]);
-
-  const user = useSelector((state) => state.session.user);
-  const spot = useSelector((state) => state.spots[spotId]);
-
+  
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj).reverse();
-  console.log("reviews 👉", !!reviews.length);
+
+  useEffect(() => {
+    dispatch(getSingleSpotThunk(spotId));
+  }, [dispatch, spotId, reviewsObj]);
 
   if (user) {
-    console.log("user 👉", user);
     if (reviews.find((review) => review.userId === user.id)) {
       hasReviewed = true;
-      // setHasReviewed((prev) => (!prev));
     }
   }
 
