@@ -25,6 +25,13 @@
   font-size: 30px;
 }
 
+.userInfo{
+  display:flex;
+  font-size: 18px;
+  gap: 8px;
+  flex-direction: column;
+}
+
 .menuIcon {
   color: #717171;
   font-size: 15px;
@@ -37,7 +44,7 @@
     right: 0;
     width: 220px;
     height: auto;
-    padding: 10px;
+    padding: 25px;
     background-color: white;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.2);
     border-radius: 24px 24px 24px 24px;
@@ -50,7 +57,7 @@
   width: 100%;
   border: none;
   font-size: 16px;
-  line-height: 3;
+  line-height: 2;
   font-weight: 600;
 }
 

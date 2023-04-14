@@ -1,30 +1,29 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { loadSpotsThunk, clearSpotsAction } from "../../../store/spots";
-import "./SpotCards.css";
+import { getSpotsThunk, clearSpots } from "../../store/spotsReducer";
+import "./HomePage.css";
 
-function SpotCards() {
+function HomePage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const spotsObj = useSelector((state) => state.spots);
   const spots = Object.values(spotsObj);
 
   useEffect(() => {
-    dispatch(loadSpotsThunk());
-
+    dispatch(getSpotsThunk());
     return () => {
-      dispatch(clearSpotsAction());
+      dispatch(clearSpots());
     };
-  }, []);
+  }, [dispatch]);
 
   const handleClick = (spotId) => {
-    history.push(`/spots/${spotId}`)
+    history.push(`/spots/${spotId}`);
   };
 
   if (!spots) return null;
   return (
-    <>
+    <div className="mainContainer homepage">
       {spots.map((spot) => (
         <div
           key={spot.id}
@@ -35,11 +34,11 @@ function SpotCards() {
           <div className="imageContainer">
             <img id="cardImage" alt="airBnB" src={spot.previewImage} />
           </div>
-          {/* <div className="titleCard">{spot.name}</div> */}
           <div className="cardInfo">
             <div className="city-stateCard">{`${spot.city}, ${spot.state}`}</div>
             <div className="cardRating">
-              <i className="fa-solid fa-star" />{" · "} {spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New!"}
+              <i className="fa-solid fa-star" />
+              {" · "} {spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New!"}
             </div>
           </div>
           <div className="cardPrice">
@@ -47,8 +46,8 @@ function SpotCards() {
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 
-export default SpotCards;
+export default HomePage;

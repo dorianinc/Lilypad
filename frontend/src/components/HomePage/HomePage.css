@@ -1,0 +1,43 @@
+.mainContainer.homepage{
+    display: grid;
+    grid-gap: 2.25em;
+    justify-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(25em, 8fr));
+}
+
+.cardContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    width: 350px;
+  }
+  
+  #cardImage {
+    height: 250px;
+    width: 100%;
+    border-radius: 10px;
+  }
+  
+  .cardTitle {
+    font-weight: 600;
+  }
+  
+  .cardInfo {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .cardPrice > span {
+    font-weight: 600;
+  }
+  
+  .cardContainer:hover::before{
+    position: absolute;
+    top:0;
+    height: 20px;
+    padding: 5px;
+    content: attr(data-tooltip);
+    border: 2px solid black;
+    background-color: white;
+  }

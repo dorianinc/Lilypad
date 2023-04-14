@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import * as sessionActions from "../../../store/session";
-import OpenModalButton from "../../OpenModalButton";
-import LoginFormModal from "../../LoginFormModal";
-import SignupFormModal from "../../SignupFormModal";
+import * as sessionActions from "../../../store/sessionReducer";
+import OpenModalButton from "../../Modals/OpenModalButton/OpenModal";
+import LoginFormModal from "../../Modals/LoginFormModal/LoginForm";
+import SignupFormModal from "../../Modals/SignupFormModal/SignupForm";
 import "./ProfileButton.css";
 
 function ProfileButton({ user }) {
@@ -67,10 +67,11 @@ function ProfileButton({ user }) {
         </button>
         <div className={dropdown} ref={ulRef}>
           {user ? (
-            <>
+            <div className="userInfo">
               <div>Hello, {user.firstName}</div>
               <div>{user.email}</div>
               <div>
+                <hr />
                 <button className="modalButtons auth" onClick={manageSpots}>
                   Manage Spots
                 </button>
@@ -80,9 +81,9 @@ function ProfileButton({ user }) {
                   Log Out
                 </button>
               </div>
-            </>
+            </div>
           ) : (
-            <>
+            <div>
               <div>
                 <OpenModalButton
                   className="modalButtons auth"
@@ -99,7 +100,7 @@ function ProfileButton({ user }) {
                   modalComponent={<SignupFormModal />}
                 />
               </div>
-            </>
+            </div>
           )}
         </div>
       </div>

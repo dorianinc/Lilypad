@@ -5,27 +5,26 @@
   margin: 0 auto;
 }
 
-#imagesContainer {
+.imagesContainer {
   display: grid;
+  grid-template-areas:
+  "one one two three"
+  "one one four five";
   gap: 5px;
   margin-bottom: 25px;
-  grid-auto-columns: 2fr;
-  grid-template-areas:
-    "one one two three"
-    "one one four five";
 }
 
-.boxes {
-  border-radius: 15px;
-}
-.boxes > img {
+.previewImage > img {
   width: 100%;
-  height: 100%;
+  height: 500px;
+}
+.supportImages > img {
+  width: 100%;
+  height: 250px;
 }
 
 #box-1 {
   grid-area: one;
-  height: 500px;
 }
 
 #box-2 {

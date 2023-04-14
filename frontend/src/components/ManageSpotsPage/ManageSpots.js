@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { loadUserSpotsThunk, clearSpotsAction  } from "../../store/spots";
-import OpenModalButton from "../OpenModalButton";
-import DeleteSpotModal from "./ConfirmDeleteModal/DeleteSpotModal";
+import { getUserSpotsThunk, clearSpots  } from "../../store/spotsReducer";
+import OpenModalButton from "../Modals/OpenModalButton/OpenModal";
+import DeleteSpotModal from "../Modals/DeleteSpotModal/DeleteSpot";
 import "./ManageSpots.css";
 
 function ManageSpotsPage() {
@@ -15,10 +15,10 @@ function ManageSpotsPage() {
   const spots = Object.values(spotsObj);
 
   useEffect(() => {
-    dispatch(loadUserSpotsThunk());
+    dispatch(getUserSpotsThunk());
 
     return () => {
-      dispatch(clearSpotsAction());
+      dispatch(clearSpots());
     };
   }, [dispatch]);
 
