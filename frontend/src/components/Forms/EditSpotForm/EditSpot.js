@@ -91,7 +91,7 @@ function EditSpotPage() {
         </label>
         <div className="flexedInputs">
           <label>
-            City
+            City{" "}
             <input
               name="city"
               value={city}
@@ -102,7 +102,7 @@ function EditSpotPage() {
             <p className="errors">{errors.city}</p>
           </label>
           <label>
-            State
+            State{" "}
             <input
               name="state"
               value={state}

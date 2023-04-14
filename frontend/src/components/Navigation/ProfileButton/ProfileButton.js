@@ -68,8 +68,8 @@ function ProfileButton({ user }) {
         <div className={dropdown} ref={ulRef}>
           {user ? (
             <div className="userInfo">
-              <div>Hello, {user.firstName}</div>
-              <div>{user.email}</div>
+              <div><p id="firstName">Hello, {user.firstName}</p></div>
+              <div><p id="email">{user.email}</p></div>
               <div>
                 <hr />
                 <button className="modalButtons auth" onClick={manageSpots}>

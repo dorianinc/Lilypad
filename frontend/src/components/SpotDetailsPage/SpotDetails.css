@@ -8,19 +8,26 @@
 .imagesContainer {
   display: grid;
   grid-template-areas:
-  "one one two three"
-  "one one four five";
+    "one one two three"
+    "one one four five";
   gap: 5px;
   margin-bottom: 25px;
+}
+
+.previewImage {
+  height: 500px;
 }
 
 .previewImage > img {
   width: 100%;
   height: 500px;
 }
+.supportImages {
+  height: 245px;
+}
 .supportImages > img {
   width: 100%;
-  height: 250px;
+  height: 247px;
 }
 
 #box-1 {
@@ -91,6 +98,6 @@
   gap: 5px;
 }
 
-.goldStars{
+.goldStars {
   color: gold;
 }
