@@ -4,16 +4,15 @@
     gap: 4px;
   }
   .logo {
-    /* transform: rotate(180deg); */
-    height: 50px;
-    width: 65px;
+    height: 45px;
+    width: 50px;
     filter:opacity(70%)
   }
   
   .title {
     color: #ff5c6c;
     font-weight: 600;
-    font-size: 25px;
+    font-size: 20px;
     margin: 0;
     text-decoration: none;
   }

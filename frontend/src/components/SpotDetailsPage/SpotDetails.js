@@ -13,12 +13,18 @@ function SpotPage() {
   const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
   const [images, setImages] = useState([]);
-  let hasReviewed = false;
-  
-  const user = useSelector((state) => state.session.user);
-  const spot = useSelector((state) => state.spots[spotId]);
 
-  
+  const reviewsObj = useSelector((state) => state.reviews);
+  const reviews = Object.values(reviewsObj).reverse();
+  useEffect(() => {
+    dispatch(getReviewsThunk(spotId));
+    return () => {
+      dispatch(clearSpots());
+      dispatch(clearReviews());
+    };
+  }, [dispatch, spotId]);
+
+  const spot = useSelector((state) => state.spots[spotId]);
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId)).then((spot) => {
       const prevImage = spot.SpotImages.find(
@@ -28,20 +34,10 @@ function SpotPage() {
       setPreviewImage(prevImage);
       setImages(imageArray);
     });
-    dispatch(getReviewsThunk(spotId));
-    return () => {
-      dispatch(clearSpots());
-      dispatch(clearReviews());
-    };
-  }, [dispatch, spotId]);
-  
-  const reviewsObj = useSelector((state) => state.reviews);
-  const reviews = Object.values(reviewsObj).reverse();
-
-  useEffect(() => {
-    dispatch(getSingleSpotThunk(spotId));
   }, [dispatch, spotId, reviewsObj]);
 
+  let hasReviewed = false;
+  const user = useSelector((state) => state.session.user);
   if (user) {
     if (reviews.find((review) => review.userId === user.id)) {
       hasReviewed = true;
