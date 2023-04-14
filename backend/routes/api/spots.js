@@ -257,9 +257,9 @@ router.post("/:spotId/reviews", [restoreUser, requireAuth, validateReview], asyn
   if (!spot) res.status(404).json(doesNotExist("Spot"));
   else {
     if (await Review.findOne({ where: { userId: user.id, spotId: spot.id } })) {
-      return res.status(403).json({
-        message: "User already has a review for this spot",
-        statusCode: 403,
+      return res.status(500).json({
+        errors: { review: "User already has a review for this spot" },
+        statusCode: 500,
       });
     } else {
       const newReview = await Review.create({

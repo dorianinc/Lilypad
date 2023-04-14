@@ -92,6 +92,7 @@ const validateReview = [
     .withMessage("Stars must be an integer from 1 to 5"),
   handleValidationErrors,
 ];
+
 const validateBooking = [
   check("endDate")
     .custom((value, { req }) => new Date(req.body.startDate) < new Date(value))
