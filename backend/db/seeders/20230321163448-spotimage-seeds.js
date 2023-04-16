@@ -298,12 +298,6 @@ module.exports = {
           spotId: 11,
         },
         {
-          url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511313/Airdnd/11-spot/spot11-05.png",
-          preview: false,
-          spotId: 12,
-        },
-
-        {
           url: "https://res.cloudinary.com/dkuhmdf7w/image/upload/v1681511315/Airdnd/12-spot/spot12-01.png",
           preview: true,
           spotId: 12,

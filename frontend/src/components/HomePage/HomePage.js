@@ -42,7 +42,7 @@ function HomePage() {
             </div>
           </div>
           <div className="cardPrice">
-            <span>{`$${150}`}</span> night
+            <span>${spot.price}</span> night
           </div>
         </div>
       ))}
