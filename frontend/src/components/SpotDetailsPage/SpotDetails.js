@@ -13,10 +13,23 @@ function SpotPage() {
   const dispatch = useDispatch();
   const [previewImage, setPreviewImage] = useState("");
   const [images, setImages] = useState([]);
+  let hasReviewed = false;
 
-  const reviewsObj = useSelector((state) => state.reviews);
-  const reviews = Object.values(reviewsObj).reverse();
+  const user = useSelector((state) => state.session.user);
+  const spot = useSelector((state) => state.spots[spotId]);
+
   useEffect(() => {
+    dispatch(getSingleSpotThunk(spotId)).then((spot) => {
+      const prevImage = spot.SpotImages.find(
+        (image) => image.preview === true || image.preview === 1
+      );
+      console.log("prevImage 👉", prevImage);
+      const imageArray = spot.SpotImages.filter((image) => image.id !== prevImage.id);
+      console.log("imageArray 👉", imageArray);
+      setPreviewImage(prevImage);
+      setImages(imageArray);
+      console.log("images =>", images);
+    });
     dispatch(getReviewsThunk(spotId));
     return () => {
       dispatch(clearSpots());
@@ -24,22 +37,13 @@ function SpotPage() {
     };
   }, [dispatch, spotId]);
 
-  const spot = useSelector((state) => state.spots[spotId]);
+  const reviewsObj = useSelector((state) => state.reviews);
+  const reviews = Object.values(reviewsObj).reverse();
+
   useEffect(() => {
-    dispatch(getSingleSpotThunk(spotId)).then((spot) => {
-      const prevImage = spot.SpotImages.find(
-        (image) => image.preview === true || image.preview === 1
-      );
-      console.log("prevImage 👉", prevImage)
-      const imageArray = spot.SpotImages.filter((image) => image.id !== prevImage.id);
-      console.log("imageArray 👉", imageArray)
-      setPreviewImage(prevImage);
-      setImages(imageArray);
-    });
+    dispatch(getSingleSpotThunk(spotId));
   }, [dispatch, spotId, reviewsObj]);
 
-  let hasReviewed = false;
-  const user = useSelector((state) => state.session.user);
   if (user) {
     if (reviews.find((review) => review.userId === user.id)) {
       hasReviewed = true;
