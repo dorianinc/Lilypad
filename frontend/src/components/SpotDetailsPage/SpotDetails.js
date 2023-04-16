@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getSingleSpotThunk, clearSpots } from "../../store/spotsReducer";
@@ -11,29 +11,20 @@ import "./SpotDetails.css";
 function SpotPage() {
   const { spotId } = useParams();
   const dispatch = useDispatch();
-  const [previewImage, setPreviewImage] = useState("");
-  const [images, setImages] = useState([]);
   let hasReviewed = false;
 
   const user = useSelector((state) => state.session.user);
   const spot = useSelector((state) => state.spots[spotId]);
 
   useEffect(() => {
-    dispatch(getSingleSpotThunk(spotId)).then((spot) => {
-      const prevImage = spot.SpotImages.find(
-        (image) => image.preview === true || image.preview === 1
-      );
-
-      const imageArray = spot.SpotImages.filter((image) => image.id !== prevImage.id);
-      setPreviewImage(prevImage);
-      setImages(imageArray);
-    });
+    dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
     return () => {
       dispatch(clearSpots());
       dispatch(clearReviews());
     };
   }, [dispatch, spotId]);
+
 
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj).reverse();
@@ -57,6 +48,17 @@ function SpotPage() {
 
   if (!spot || !spot.Owner) return null;
 
+  const previewImage = spot.SpotImages.find((image) => image.preview === true || image.preview === 1);
+  console.log("previewImage 👉", previewImage)
+  const imageArray = spot.SpotImages.filter((image) => {
+    
+    console.log("image 👉", image)
+    console.log("preview id", previewImage.id)
+    console.log("images id", image.id)
+    return image.id !== previewImage.id
+  });
+  console.log("imageArray 👉", imageArray)
+
   return (
     <div className="mainContainer spots">
       <h1>{spot.name}</h1>
@@ -67,7 +69,7 @@ function SpotPage() {
         <div className="previewImage" id="box-1">
           <img alt="preview" src={previewImage.url} />
         </div>
-        {images.map((image) => (
+        {imageArray.map((image) => (
           <div className="supportImages" key={`box-${image.id}`}>
             <img className="supportingImages" alt={image.id} src={image.url} />
           </div>
