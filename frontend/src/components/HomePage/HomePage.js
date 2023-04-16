@@ -35,8 +35,8 @@ function HomePage() {
             <img id="cardImage" alt="airBnB" src={spot.previewImage} />
           </div>
           <div className="cardInfo">
-            <div className="city-stateCard">{`${spot.city}, ${spot.state}`}</div>
-            <div className="cardRating">
+            <div className="cityState"><p>{`${spot.city}, ${spot.state}`}</p></div>
+            <div className="rating">
               <i className="fa-solid fa-star" />
               {" · "} {spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New!"}
             </div>

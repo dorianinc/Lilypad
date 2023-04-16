@@ -65,7 +65,7 @@ function EditSpotPage() {
           <h2>Where's your place located?</h2>
           <p>Guests will only get your exact addres once they booked a reservation.</p>
         </div>
-        <label>
+        <label className="countryLabel">
           Country
           <input
             name="country"
@@ -77,7 +77,7 @@ function EditSpotPage() {
           />
           <p className="errors">{errors.country}</p>
         </label>
-        <label>
+        <label className="streetLabel">
           Street Address
           <input
             name="address"
@@ -90,8 +90,8 @@ function EditSpotPage() {
           <p className="errors">{errors.address}</p>
         </label>
         <div className="flexedInputs">
-          <label>
-            City{" "}
+          <label className="cityLabel">
+            City
             <input
               name="city"
               value={city}
@@ -101,8 +101,8 @@ function EditSpotPage() {
             />
             <p className="errors">{errors.city}</p>
           </label>
-          <label>
-            State{" "}
+          <label className="stateLabel">
+            State
             <input
               name="state"
               value={state}
@@ -113,30 +113,6 @@ function EditSpotPage() {
             <p className="errors">{errors.state}</p>
           </label>
         </div>
-        {/* <div className="flexedInputs">
-          <label>
-            Latitude
-            <input
-              name="lat"
-              value={lat}
-              id="latitude"
-              placeholder="Latitude"
-              onChange={(e) => setLat(e.target.value)}
-            />
-            <p className="errors">{errors.lat}</p>
-          </label>
-          <label>
-            Longitude
-            <input
-              name="lng"
-              value={lng}
-              id="longitude"
-              placeholder="Longitude"
-              onChange={(e) => setLng(e.target.value)}
-            />
-            <p className="errors">{errors.lng}</p>
-          </label>
-        </div> */}
         <hr />
         <h1>Describe your place to guests</h1>
         <p>
@@ -145,7 +121,7 @@ function EditSpotPage() {
         </p>
         <textarea
           name="description"
-          className="textArea editSpot"
+          className="textArea newSpot"
           value={description}
           placeholder="Please write at least 30 characters"
           onChange={(e) => setDescription(e.target.value)}
@@ -156,7 +132,7 @@ function EditSpotPage() {
         <p>
           Catch guests' attention with a spot title that highlights what makes your place special.
         </p>
-        <label>
+        <label className="nameLabel">
           <input
             name="name"
             value={name}
@@ -172,7 +148,7 @@ function EditSpotPage() {
         <p>
           Competitive pricing can help your listing stand out and rank higher in search results.
         </p>
-        <label className="flexLabel">
+        <label className="priceLabel">
           ${" "}
           <input
             name="price"
@@ -185,8 +161,8 @@ function EditSpotPage() {
         </label>
         <p className="errors">{errors.price}</p>
         <hr />
-        <div id="buttonContainer">
-          <button id="createButton">Update your Spot</button>
+        <div className="buttonContainer">
+          <button className="pinkButton edit">Update your Spot</button>
         </div>
       </form>
     </div>

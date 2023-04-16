@@ -32,13 +32,12 @@
   text-align: center;
 }
 
-
 .pinkButton.disabled {
   cursor: default;
   color: white;
   background-color: #a6a6aa;
   height: 45px;
-  border: 3px solid #80808b;
+  border: 1px solid #80808b;
   box-shadow: 5px 5px 5px #80808b;
 }
 

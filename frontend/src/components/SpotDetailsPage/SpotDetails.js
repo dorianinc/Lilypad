@@ -70,14 +70,14 @@ function SpotPage() {
           </div>
         ))}
       </div>
-      <div id="spotMenu">
-        <div id="spotInfo">
+      <div className="spotMenu">
+        <div className="spotInfo">
           <h2>
             Hosted By: {spot.Owner.firstName} {spot.Owner.lastName}
           </h2>
           <p id="spotDescription">{spot.description}</p>
         </div>
-        <div id="reserveSection">
+        <div className="reserveSection">
           <div id="priceAndRating">
             <p id="spotPrice">
               <span>${Number(spot.price).toFixed(2)}</span> night
