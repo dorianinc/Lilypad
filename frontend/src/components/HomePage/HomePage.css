@@ -7,16 +7,16 @@
 
 .cardContainer {
     display: flex;
-    width: 350px;
     cursor: pointer;
     justify-content: center;
     flex-direction: column;
     position: relative;
+    width: 450px;
   }
   
   #cardImage {
     height: 350px;
-    width: 440px;
+    width: 100%;
     border-radius: 10px;
   }
   
@@ -28,6 +28,11 @@
     display: flex;
     justify-content: space-between;
   }
+
+  .cityState{
+    flex-basis: 70%;
+  }
+
   
   .cardPrice > span {
     font-weight: 600;

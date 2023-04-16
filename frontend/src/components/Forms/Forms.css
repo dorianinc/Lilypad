@@ -1,70 +1,65 @@
 .mainContainer.newSpot {
-    width: 50%;
-    margin: 0 auto;
-  }
-  
-  .oneLiner {
-    min-width: 0;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.oneLiner {
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.flexedInputs {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.cityLabel {
+    flex-basis: 60%;
+}
+
+.cityLabel > input {
     width: 100%;
-    overflow: hidden;
-  }
-  
-  .flexedInputs {
-    display: flex;
-    gap: 15px;
-    margin-top:15px;
+}
+
+.stateLabel {
+    flex-basis: 40%;
+}
+
+.stateLabel > input {
     width: 100%;
-  }
-  
-  #state {
-      width: 100%;
-  }
-  
-  #city {
-      width: 100%;
-  
-  }
-  
-  #longitude {
-      width: 280px;
-  }
-  
-  #latitude {
-      width: 280px;
-  
-  }
-  
-  .flexLabel{
-      display: flex;
-      align-items: center;
-      gap: 10px;
-  }
-  
-  .images{
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-  }
-  
-  hr {
-      margin-top: 20px;
-      margin-bottom: 10px;
-  }
-  #buttonContainer{
-      display: flex;
-      justify-content: center;
-  }
-  #createButton{
-      margin: 20px;
-      width: 325px;
-      height: 40px;
-      color: white;
-      font-size: 15px;
-      font-weight: 600;
-      background-color: #ff5d63;
-  }
-  
-  .errors{
-      color: red;
-      font-weight: bold;
-  }
+}
+
+.priceLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width:100%;
+}
+
+.images {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+.pinkButton.create, .pinkButton.edit {
+  margin: 10px;
+  width: 200px;
+}
+
+.errors {
+  color: red;
+  font-weight: bold;
+}

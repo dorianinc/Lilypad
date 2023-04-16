@@ -82,7 +82,7 @@ function NewSpotPage() {
           <h2>Where's your place located?</h2>
           <p>Guests will only get your exact addres once they booked a reservation.</p>
         </div>
-        <label>
+        <label className="countryLabel">
           Country
           <input
             name="country"
@@ -94,7 +94,7 @@ function NewSpotPage() {
           />
           <p className="errors">{errors.country}</p>
         </label>
-        <label>
+        <label className="streetLabel">
           Street Address
           <input
             name="address"
@@ -107,7 +107,7 @@ function NewSpotPage() {
           <p className="errors">{errors.address}</p>
         </label>
         <div className="flexedInputs">
-          <label>
+          <label className="cityLabel">
             City
             <input
               name="city"
@@ -118,7 +118,7 @@ function NewSpotPage() {
             />
             <p className="errors">{errors.city}</p>
           </label>
-          <label>
+          <label className="stateLabel">
             State
             <input
               name="state"
@@ -130,30 +130,6 @@ function NewSpotPage() {
             <p className="errors">{errors.state}</p>
           </label>
         </div>
-        {/* <div className="flexedInputs">
-          <label>
-            Latitude
-            <input
-              name="lat"
-              value={lat}
-              id="latitude"
-              placeholder="Latitude"
-              onChange={(e) => setLat(e.target.value)}
-            />
-            <p className="errors">{errors.lat}</p>
-          </label>
-          <label>
-            Longitude
-            <input
-              name="lng"
-              value={lng}
-              id="longitude"
-              placeholder="Longitude"
-              onChange={(e) => setLng(e.target.value)}
-            />
-            <p className="errors">{errors.lng}</p>
-          </label>
-        </div> */}
         <hr />
         <h1>Describe your place to guests</h1>
         <p>
@@ -173,7 +149,7 @@ function NewSpotPage() {
         <p>
           Catch guests' attention with a spot title that highlights what makes your place special.
         </p>
-        <label>
+        <label className="nameLabel">
           <input
             name="name"
             value={name}
@@ -189,7 +165,7 @@ function NewSpotPage() {
         <p>
           Competitive pricing can help your listing stand out and rank higher in search results.
         </p>
-        <label className="flexLabel">
+        <label className="priceLabel">
           ${" "}
           <input
             name="price"
@@ -205,7 +181,7 @@ function NewSpotPage() {
         <h1>Liven up your spot with photos</h1>
         <p>Submit a link to at least one photo to publish your spot.</p>
         <div className="images">
-          <label>
+          <label className="imagesLabel">
             <input
               name="previewImage"
               value={previewImage.url}
@@ -216,7 +192,7 @@ function NewSpotPage() {
             />
             <p className="errors">{errors.previewImage}</p>
           </label>
-          <label>
+          <label className="imagesLabel">
             <input
               name="image1"
               value={image1.url}
@@ -227,7 +203,7 @@ function NewSpotPage() {
             />
             <p className="errors">{errors.image1}</p>
           </label>
-          <label>
+          <label className="imagesLabel">
             <input
               name="image2"
               value={image2.url}
@@ -238,9 +214,9 @@ function NewSpotPage() {
             />
             <p className="errors">{errors.image2}</p>
           </label>
-          <label>
+          <label className="imagesLabel">
             <input
-              name="unage3"
+              name="image3"
               value={image3.url}
               className="oneLiner"
               id="image"
@@ -249,7 +225,7 @@ function NewSpotPage() {
             />
             <p className="errors">{errors.image3}</p>
           </label>
-          <label>
+          <label className="imagesLabel">
             <input
               name="image4"
               value={image4.url}
@@ -262,8 +238,8 @@ function NewSpotPage() {
           </label>
         </div>
         <hr />
-        <div id="buttonContainer">
-          <button id="createButton">Create Spot</button>
+        <div className="buttonContainer">
+          <button className="pinkButton create">Create Spot</button>
         </div>
       </form>
     </div>

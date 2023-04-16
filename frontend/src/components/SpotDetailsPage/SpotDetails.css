@@ -50,22 +50,28 @@
   grid-area: five;
 }
 
-#spotMenu {
+.spotMenu {
   display: flex;
   gap: 10px;
+}
+
+.spotInfo{
+  flex-basis: 70%;
 }
 
 #spotDescription {
   text-align: left;
 }
-#reserveSection {
+.reserveSection {
   display: flex;
-  flex-direction: column;
-  border: 3px solid black;
-  border-radius: 10px;
   height: 110px;
   width: 1000px;
   padding: 8px;
+  border: 3px solid black;
+  border-radius: 10px;
+  justify-content: center;
+  flex-direction: column;
+  flex-basis: 30%;
 }
 
 #priceAndRating {
