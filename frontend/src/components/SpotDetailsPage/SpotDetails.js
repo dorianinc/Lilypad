@@ -31,6 +31,7 @@ function SpotPage() {
         (image) => image.preview === true || image.preview === 1
       );
       const imageArray = spot.SpotImages.filter((image) => image.id !== prevImage.id);
+      console.log("imageArray 👉", imageArray)
       setPreviewImage(prevImage);
       setImages(imageArray);
     });
