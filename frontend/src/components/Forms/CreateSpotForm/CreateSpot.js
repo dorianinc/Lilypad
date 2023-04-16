@@ -28,6 +28,7 @@ function NewSpotPage() {
     e.preventDefault();
     const err = {};
     const spot = { address, city, state, country, lat, lng, name, description, price };
+    console.log("description 👉", description.length)
     if (address === null || address === "") err.address = "Address is required";
     if (city === null || city === "") err.city = "City is required";
     if (state === null || state === "") err.state = "State is required";
