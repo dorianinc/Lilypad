@@ -9,6 +9,7 @@ const router = express.Router();
 // Log in
 router.post("/", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
+  
   let user;
   if (process.env.NODE_ENV === "production") {
     console.log("---Production---")
