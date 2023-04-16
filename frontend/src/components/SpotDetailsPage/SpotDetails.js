@@ -1,4 +1,4 @@
-import { useEffect} from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getSingleSpotThunk, clearSpots } from "../../store/spotsReducer";
@@ -11,11 +11,8 @@ import "./SpotDetails.css";
 function SpotPage() {
   const { spotId } = useParams();
   const dispatch = useDispatch();
-  let hasReviewed = false;
 
-  const user = useSelector((state) => state.session.user);
   const spot = useSelector((state) => state.spots[spotId]);
-
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
@@ -25,14 +22,17 @@ function SpotPage() {
     };
   }, [dispatch, spotId]);
 
-
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj).reverse();
 
+  // check to see if reviews have been added or deleted
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
   }, [dispatch, spotId, reviewsObj]);
 
+  // find user then check if user has left a review
+  let hasReviewed = false;
+  const user = useSelector((state) => state.session.user);
   if (user) {
     if (reviews.find((review) => review.userId === user.id)) {
       hasReviewed = true;
@@ -48,16 +48,11 @@ function SpotPage() {
 
   if (!spot || !spot.Owner) return null;
 
-  const previewImage = spot.SpotImages.find((image) => image.preview === true || image.preview === 1);
-  console.log("previewImage 👉", previewImage)
-  const imageArray = spot.SpotImages.filter((image) => {
-    
-    console.log("image 👉", image)
-    console.log("preview id", previewImage.id)
-    console.log("images id", image.id)
-    return image.id !== previewImage.id
-  });
-  console.log("imageArray 👉", imageArray)
+  // finds one preview image to set as main image and then add the rest to an array
+  const previewImage = spot.SpotImages.find(
+    (image) => image.preview === true || image.preview === 1
+  );
+  const imageArray = spot.SpotImages.filter((image) => image.id !== previewImage.id);
 
   return (
     <div className="mainContainer spots">
