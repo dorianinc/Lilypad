@@ -9,15 +9,28 @@ const router = express.Router();
 // Log in
 router.post("/", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
-
-  const user = await User.unscoped().findOne({
-    where: {
-      [Op.or]: {
-        username: { [Op.like]: credential },
-        email: { [Op.like]: credential },
+  let user;
+  if (process.env.NODE_ENV === "production") {
+    console.log("---Production---")
+    user = await User.unscoped().findOne({
+      where: {
+        [Op.or]: {
+          username: { [Op.iLike]: credential },
+          email: { [Op.iLike]: credential },
+        },
       },
-    },
-  });
+    });
+  } else {
+    console.log("---Not Production---")
+    user = await User.unscoped().findOne({
+      where: {
+        [Op.or]: {
+          username: { [Op.like]: credential },
+          email: { [Op.like]: credential },
+        },
+      },
+    });
+  }
 
   if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
     const err = new Error("Login failed");
