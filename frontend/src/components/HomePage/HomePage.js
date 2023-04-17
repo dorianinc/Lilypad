@@ -32,7 +32,7 @@ function HomePage() {
           onClick={() => handleClick(spot.id)}
         >
           <div className="imageContainer">
-            <img id="cardImage" alt="airBnB" src={spot.previewImage} />
+            <img className="cardImage" alt="airBnB" src={spot.previewImage} />
           </div>
           <div className="cardInfo">
             <div className="cityState"><p>{`${spot.city}, ${spot.state}`}</p></div>

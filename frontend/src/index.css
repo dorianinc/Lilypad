@@ -42,3 +42,61 @@ input {
 *{
   margin: 0px;
 }
+
+/* CSS for HomePage and ManageSpots */
+
+.cardContainer{
+  display: flex;
+  cursor: pointer;
+  flex-direction: column;
+  position: relative;
+  /* width: 200px;
+  font-size: 14px; */
+}
+
+.cardImage {
+  height: 175px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.mainContainer.homePage,.mainContainer.manageSpots{
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 1em;
+}
+
+.cardInfo {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.cardPrice{
+  font-size: 13px;
+}
+
+
+.cityState {
+  text-align: left;
+  flex-basis: 65%;
+}
+
+.rating {
+  text-align: right;
+  flex-basis: 35%;
+}
+
+.cardPrice > span {
+  font-weight: 600;
+}
+
+.cardContainer:hover::before {
+  position: absolute;
+  top: 0;
+  height: 20px;
+  padding: 5px;
+  content: attr(data-tooltip);
+  border: 2px solid black;
+  background-color: white;
+}

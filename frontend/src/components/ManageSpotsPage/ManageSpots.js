@@ -43,7 +43,7 @@ function ManageSpotsPage() {
             <div key={spot.id} data-tooltip={spot.name} className="cardContainer manageSpots">
               <div onClick={() => handleClick(spot.id)}>
                 <div className="imageContainer">
-                  <img id="cardImage" alt="airBnB" src={spot.previewImage} />
+                  <img className="cardImage" alt="airBnB" src={spot.previewImage} />
                 </div>
                 <div className="cardInfo">
                   <div className="city-stateCard">{`${spot.city}, ${spot.state}`}</div>
@@ -56,7 +56,7 @@ function ManageSpotsPage() {
                   <span>${spot.price}</span> night
                 </div>
               </div>
-              <div id="buttonsContainer">
+              <div className="buttonsContainer">
                 <button className="greyButton update" onClick={() => handleUpdate(spot.id)}>
                   Update
                 </button>
