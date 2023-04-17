@@ -28,7 +28,6 @@ function NewSpotPage() {
     e.preventDefault();
     const err = {};
     const spot = { address, city, state, country, lat, lng, name, description, price };
-    console.log("description 👉", description.length)
     if (address === null || address === "") err.address = "Address is required";
     if (city === null || city === "") err.city = "City is required";
     if (state === null || state === "") err.state = "State is required";
@@ -132,7 +131,7 @@ function NewSpotPage() {
         </div>
         <hr className="lines form"/>
         <h1>Describe your place to guests</h1>
-        <p>
+        <p style={{"fontSize": "15px"}}>
           Mention the best features of your space, any special amentities like fast wifi or parking,
           and what you love about the neighborhood.
         </p>
