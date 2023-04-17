@@ -61,6 +61,13 @@ function SpotPage() {
     return image.id !== previewImage.id;
   });
 
+  const arr = spot.SpotImages.filter((i) => {
+    return !i.id
+  })
+  console.log("arr 👉", arr)
+
+  if(arr.length) return null
+
   return (
     <div className="mainContainer spotDetails">
       <h1>{spot.name}</h1>
