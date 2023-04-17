@@ -200,7 +200,7 @@ function NewSpotPage() {
               className="oneLiner"
               id="image"
               placeholder="Image URL"
-              onChange={(e) => setImage1({ url: e.target.value, preview: 0 })}
+              onChange={(e) => setImage1({ url: e.target.value, preview: 1 })}
             />
             <p className="errors">{errors.image1}</p>
           </label>
@@ -211,7 +211,7 @@ function NewSpotPage() {
               className="oneLiner"
               id="image"
               placeholder="Image URL"
-              onChange={(e) => setImage2({ url: e.target.value, preview: 0 })}
+              onChange={(e) => setImage2({ url: e.target.value, preview: 1 })}
             />
             <p className="errors">{errors.image2}</p>
           </label>
@@ -222,7 +222,7 @@ function NewSpotPage() {
               className="oneLiner"
               id="image"
               placeholder="Image URL"
-              onChange={(e) => setImage3({ url: e.target.value, preview: 0 })}
+              onChange={(e) => setImage3({ url: e.target.value, preview: 1 })}
             />
             <p className="errors">{errors.image3}</p>
           </label>
@@ -233,7 +233,7 @@ function NewSpotPage() {
               className="oneLiner"
               id="image"
               placeholder="Image URL"
-              onChange={(e) => setImage4({ url: e.target.value, preview: 0 })}
+              onChange={(e) => setImage4({ url: e.target.value, preview: 1 })}
             />
             <p className="errors">{errors.image4}</p>
           </label>

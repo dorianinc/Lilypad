@@ -53,8 +53,7 @@ function SpotPage() {
   const previewImage = spot.SpotImages.find((image) => {
     console.log("images =>", image);
     console.log("images preview type =>", typeof image.preview);
-    return image.preview === true;
-    // return image.preview === 1;
+    return image.preview === true || image.preview === 1;
   });
   const imageArray = spot.SpotImages.filter((image) => {
     console.log("preview image =>", previewImage);
