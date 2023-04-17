@@ -8,7 +8,7 @@ Airdnd is a websire cone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd 
 
 #### Please see below links to project Wiki:
 * Feature List (coming soon)
-* [Database Schema](https://github.com/dorianinc/01-AirBnB/wiki/Back-End-Routes)
+* [Database Schema](https://github.com/dorianinc/01-AirBnB/wiki/Database-Schema)
 * Frontend Routes (coming soon)
 * [Backend Routes](https://github.com/dorianinc/01-AirBnB/wiki/Back-End-Routes)
 * [Redux Store State Shape](https://github.com/dorianinc/01-AirBnB/wiki/Redux-Store-Shape)
