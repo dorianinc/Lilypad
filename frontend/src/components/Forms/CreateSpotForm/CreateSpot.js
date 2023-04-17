@@ -69,7 +69,8 @@ function NewSpotPage() {
           dispatch(addImageThunk(newSpot.id, image));
         }
       }
-      const returnedSpot = await dispatch(getSingleSpotThunk(spot.id));
+      const returnedSpot = await dispatch(getSingleSpotThunk(newSpot.id));
+      console.log("returnedSpot 👉", returnedSpot)
       history.push(`/spots/${returnedSpot.id}`);
     }
   };
