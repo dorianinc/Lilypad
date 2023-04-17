@@ -14,11 +14,11 @@ function NewSpotPage() {
   const [description, setDescription] = useState("");
   const [name, setName] = useState(""); // this is for Title
   const [price, setPrice] = useState("");
-  const [previewImage, setPreviewImage] = useState({ url: "", preview: 1 });
-  const [image1, setImage1] = useState({ url: "", preview: 1 });
-  const [image2, setImage2] = useState({ url: "", preview: 1 });
-  const [image3, setImage3] = useState({ url: "", preview: 1 });
-  const [image4, setImage4] = useState({ url: "", preview: 1 });
+  const [previewImage, setPreviewImage] = useState({ url: "", preview: true });
+  const [image1, setImage1] = useState({ url: "", preview: true });
+  const [image2, setImage2] = useState({ url: "", preview: true });
+  const [image3, setImage3] = useState({ url: "", preview: true });
+  const [image4, setImage4] = useState({ url: "", preview: true });
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
