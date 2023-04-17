@@ -19,7 +19,14 @@ Airdnd is a website clone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd
 * Sequelize
 * Express
 * React
-* Reux
+* Redux
+
+#### How to start project locally:
+1. clone the repo into a desired location
+2. cd into frontend folder and npm install all the dependencies
+3. cd into backened folder and npm install all depenedenies
+4. run the the following command in terminal 'sh start-db.sh'
+5. if you want to refresh the database, run the following command 'sh refresh-db.sh'
 
 ## Landing Page
 You can access the Login and Signup Modal here. Also, we have a demo user button for you to check the website.
