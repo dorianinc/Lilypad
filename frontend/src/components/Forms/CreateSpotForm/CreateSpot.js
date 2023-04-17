@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { createSpotThunk, addImageThunk } from "../../../store/spotsReducer";
-import '../../Forms/Forms.css'
+import { createSpotThunk, addImageThunk, getSingleSpotThunk } from "../../../store/spotsReducer";
+import "../../Forms/Forms.css";
 
 function NewSpotPage() {
   const [country, setCountry] = useState("");
@@ -69,7 +69,8 @@ function NewSpotPage() {
           dispatch(addImageThunk(newSpot.id, image));
         }
       }
-      history.push(`/spots/${newSpot.id}`);
+      const returnedSpot = await dispatch(getSingleSpotThunk(spot.id));
+      history.push(`/spots/${returnedSpot.id}`);
     }
   };
 
@@ -129,9 +130,9 @@ function NewSpotPage() {
             <p className="errors">{errors.state}</p>
           </label>
         </div>
-        <hr className="lines form"/>
+        <hr className="lines form" />
         <h1>Describe your place to guests</h1>
-        <p style={{"fontSize": "15px"}}>
+        <p style={{ fontSize: "15px" }}>
           Mention the best features of your space, any special amentities like fast wifi or parking,
           and what you love about the neighborhood.
         </p>
@@ -143,7 +144,7 @@ function NewSpotPage() {
           onChange={(e) => setDescription(e.target.value)}
         />
         <p className="errors">{errors.description}</p>
-        <hr className="lines form"/>
+        <hr className="lines form" />
         <h1>Create a title for your spot</h1>
         <p>
           Catch guests' attention with a spot title that highlights what makes your place special.
@@ -159,7 +160,7 @@ function NewSpotPage() {
           />
           <p className="errors">{errors.name}</p>
         </label>
-        <hr className="lines form"/>
+        <hr className="lines form" />
         <h1>Set a base price for your spot</h1>
         <p>
           Competitive pricing can help your listing stand out and rank higher in search results.
@@ -176,7 +177,7 @@ function NewSpotPage() {
           />
         </label>
         <p className="errors">{errors.price}</p>
-        <hr className="lines form"/>
+        <hr className="lines form" />
         <h1>Liven up your spot with photos</h1>
         <p>Submit a link to at least one photo to publish your spot.</p>
         <div className="images">
@@ -236,7 +237,7 @@ function NewSpotPage() {
             <p className="errors">{errors.image4}</p>
           </label>
         </div>
-        <hr className="lines form"/>
+        <hr className="lines form" />
         <div className="buttonContainer">
           <button className="pinkButton create">Create Spot</button>
         </div>
