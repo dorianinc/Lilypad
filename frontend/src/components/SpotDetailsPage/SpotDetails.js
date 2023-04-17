@@ -55,7 +55,7 @@ function SpotPage() {
   const imageArray = spot.SpotImages.filter((image) => image.id !== previewImage.id);
 
   return (
-    <div className="mainContainer spots">
+    <div className="mainContainer spotDetails">
       <h1>{spot.name}</h1>
       <h2>
         {spot.city}, {spot.state} {" - "} {spot.country}
@@ -84,8 +84,12 @@ function SpotPage() {
             </p>
             <p id="spotRating">
               <i className="fa-solid fa-star" />
-              {spot.avgStarRating ? " " + Number(spot.avgStarRating).toFixed(2) : " New"}
-              {spot.numReviews ? ` · ${spot.numReviews} reviews` : null}
+              {Number(spot.avgStarRating) ? " " + Number(spot.avgStarRating).toFixed(2) : " New"}
+              {Number(spot.numReviews) === 1
+                ? ` · ${spot.numReviews} review`
+                : spot.numReviews < 1
+                ? null
+                : ` · ${spot.numReviews} reviews`}
             </p>
           </div>
           <button className="pinkButton reserve" onClick={() => alert("Feature Coming Soon!")}>
@@ -93,7 +97,7 @@ function SpotPage() {
           </button>
         </div>
       </div>
-      <hr />
+      <hr className="lines spotDetails" />
       <div className="reviewsContainer">
         <h2>
           <i className="fa-solid fa-star" />

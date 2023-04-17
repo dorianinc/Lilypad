@@ -9,10 +9,10 @@ const router = express.Router();
 // Log in
 router.post("/", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
-  
+
   let user;
   if (process.env.NODE_ENV === "production") {
-    console.log("---Production---")
+    console.log("---Production---");
     user = await User.unscoped().findOne({
       where: {
         [Op.or]: {
@@ -22,7 +22,7 @@ router.post("/", validateLogin, async (req, res, next) => {
       },
     });
   } else {
-    console.log("---Not Production---")
+    console.log("---Not Production---");
     user = await User.unscoped().findOne({
       where: {
         [Op.or]: {

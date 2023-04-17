@@ -23,12 +23,12 @@ function HomePage() {
 
   if (!spots) return null;
   return (
-    <div className="mainContainer homepage">
+    <div className="mainContainer homePage">
       {spots.map((spot) => (
         <div
           key={spot.id}
           data-tooltip={spot.name}
-          className="cardContainer"
+          className="cardContainer homePage"
           onClick={() => handleClick(spot.id)}
         >
           <div className="imageContainer">
