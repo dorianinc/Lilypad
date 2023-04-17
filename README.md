@@ -6,18 +6,24 @@ Airdnd is a websire cone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd 
 
 **Live Site [Airdnd](https://air-dnd-la4z.onrender.com/)**
 
-## Wiki Link
-
+#### Please see below links to project Wiki:
 * Feature List
 * Database Schema
 * Frontend Routes
 * [Backend Routes](https://github.com/dorianinc/01-AirBnB/wiki/Back-End-Routes)
 * [Redux Store State Shape](https://github.com/dorianinc/01-AirBnB/wiki/Redux-Store-Shape)
 
-## Tech Stack
-**Frameworks, Platforms and Libraries:**
-**DataBase:**
-**Hosting:**
+#### This project is built with:
+* JavaScript
+* PostgreSQL
+* Sequelize
+* Express
+* React
+* Reux
 
 ## Landing Page
 You can access the Login and Signup Modal here. Also, we have a demo user button for you to check the website.
+
+![homepage] 
+
+[homepage]: /backend/assets/frontend.png
