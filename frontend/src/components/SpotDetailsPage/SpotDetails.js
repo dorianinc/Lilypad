@@ -62,8 +62,6 @@ function SpotPage() {
   });
 
 
-  if(arr.length) return null
-
   return (
     <div className="mainContainer spotDetails">
       <h1>{spot.name}</h1>
