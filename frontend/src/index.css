@@ -62,7 +62,7 @@ input {
 .mainContainer.homePage,.mainContainer.manageSpots{
   display: flex;
   flex-wrap: wrap;
-  grid-gap: 1em;
+  grid-gap: 2.5em;
 }
 
 .cardInfo {
