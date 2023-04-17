@@ -70,7 +70,6 @@ function NewSpotPage() {
         }
       }
       const returnedSpot = await dispatch(getSingleSpotThunk(newSpot.id));
-      console.log("returnedSpot 👉", returnedSpot)
       history.push(`/spots/${returnedSpot.id}`);
     }
   };

@@ -13,7 +13,6 @@ function SpotPage() {
   const dispatch = useDispatch();
 
   const spot = useSelector((state) => state.spots[spotId]);
-  console.log("spot 👉", spot);
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
@@ -51,12 +50,10 @@ function SpotPage() {
 
   // finds one preview image to set as main image and then add the rest to an array
   const previewImage = spot.SpotImages.find((image) => {
-    console.log("images =>", image);
-    console.log("images preview type =>", typeof image.preview);
     return image.preview === true || image.preview === 1;
   });
   const imageArray = spot.SpotImages.filter((image) => {
-    console.log("preview image =>", previewImage);
+
     return image.id !== previewImage.id;
   });
 
