@@ -2,9 +2,9 @@
 
 [airdnd-logo]: /backend/assets/air-dnd-logo.png
 
-Airdnd is a websire cone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd can be used to connect hosts who want to post their homes or rooms for travelers to rent. Users can search for unique accommodations in various locations and leave reviews after their stay.
+Airdnd is a website clone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd can be used to connect hosts who want to post their homes or rooms for travelers to rent. Users can search for unique accommodations in various locations and leave reviews after their stay.
 
-**Live Site [Airdnd](https://air-dnd-la4z.onrender.com/)**
+**Live Site: [Airdnd](https://air-dnd-la4z.onrender.com/)**
 
 #### Please see below links to project Wiki:
 * Feature List (coming soon)
