@@ -168,9 +168,7 @@ router.get("/:spotId", async (req, res) => {
     for(let i = 0; i < spotImages.length; i++){
       spot.SpotImages.push(spotImages[i].toJSON())
     }
-    console.log("spot.SpotImages 👉", spot.SpotImages)
-    // for (image of spotImages) spot.SpotImages.push(image);
-
+    
     const owner = await User.findOne({
       where: {
         id: spot.ownerId,
