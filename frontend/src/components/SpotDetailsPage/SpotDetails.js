@@ -69,7 +69,7 @@ function SpotPage() {
       </h2>
       <div className="imagesContainer">
         <div className="previewImage" id="box-1">
-          <img alt="preview" src={previewImage.url} />
+          <img alt="preview" src={previewImage?.url} />
         </div>
         {imageArray.map((image) => (
           <div className="supportImages" key={`box-${image.id}`}>

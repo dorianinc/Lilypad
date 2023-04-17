@@ -97,6 +97,7 @@ export const addImageThunk = (spotId, imageObj) => async (dispatch) => {
   });
   if (res.ok) {
     const data = await res.json();
+    // dispatch(updateSpot(data));
     return data;
   }
 };
