@@ -23,6 +23,8 @@ function HomePage() {
 
   if (!spots) return null;
   return (
+    <div className="hailMary">
+
     <div className="mainContainer homePage">
       {spots.map((spot) => (
         <div
@@ -46,6 +48,7 @@ function HomePage() {
           </div>
         </div>
       ))}
+    </div>
     </div>
   );
 }

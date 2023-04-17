@@ -47,11 +47,10 @@ input {
 
 .cardContainer{
   display: flex;
+  justify-self: center;
   cursor: pointer;
   flex-direction: column;
   position: relative;
-  /* width: 200px;
-  font-size: 14px; */
 }
 
 .cardImage {
