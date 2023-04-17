@@ -59,7 +59,7 @@ function SignupFormModal() {
 
   return (
     <>
-      <h1 className="header">Sign Up</h1>
+      <h1 className="header" style={{"margin-bottom": "15px"}}>Sign Up</h1>
       <form className="signUpForm" onSubmit={handleSubmit}>
         <label>
           <input

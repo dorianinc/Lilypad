@@ -15,7 +15,7 @@ function DeleteSpotModal({ spotId }) {
   return (
     <>
       <h1>Confirm Delete</h1>
-      <p>Are you sure you want to remove this spot from the listings?</p>
+      <p style={{"margin-bottom": "15px"}}>Are you sure you want to remove this spot from the listings?</p>
       <form className="loginForm">
         <button className="pinkButton confirm" onClick={(e) => handleClick(e, spotId)}>
           Yes (Delete Spot)

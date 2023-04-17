@@ -15,7 +15,7 @@ function DeleteReviewModal({ reviewId }) {
   return (
     <div>
       <h1>Confirm Delete</h1>
-      <p>Are you sure you want to delete this review?</p>
+      <p style={{"margin-bottom": "15px"}}>Are you sure you want to delete this review?</p>
       <form className="loginForm">
         <button className="pinkButton confirm" onClick={(e) => handleClick(e, reviewId)}>
           Yes (Delete Review)
