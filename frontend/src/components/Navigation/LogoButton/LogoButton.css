@@ -20,16 +20,3 @@
   a:link {
     text-decoration: none;
   }
-
-  /*---------- between 550px and 1024px ----------*/
-/* @media (min-width: 550px) and (max-width: 1024px) {
-
-  .logo {
-    height: 40px;
-    width: 40px;
-  }
-  
-  .title {
-    font-size: 18px;
-  }
-} */
