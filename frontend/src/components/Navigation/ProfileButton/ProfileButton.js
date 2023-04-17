@@ -70,12 +70,13 @@ function ProfileButton({ user }) {
             <div className="userInfo">
               <div><p id="firstName">Hello, {user.firstName}</p></div>
               <div><p id="email">{user.email}</p></div>
+              <hr className="line userMenu"/>
               <div>
-                <hr />
                 <button className="modalButtons auth" onClick={manageSpots}>
                   Manage Spots
                 </button>
               </div>
+              <hr className="line userModal"/>
               <div>
                 <button className="modalButtons auth" onClick={logout}>
                   Log Out
@@ -84,7 +85,7 @@ function ProfileButton({ user }) {
             </div>
           ) : (
             <div>
-              <div>
+              <div className="login">
                 <OpenModalButton
                   className="modalButtons auth"
                   buttonText="Log In"
@@ -92,7 +93,7 @@ function ProfileButton({ user }) {
                   modalComponent={<LoginFormModal />}
                 />
               </div>
-              <div>
+              <div children="signup">
                 <OpenModalButton
                   className="modalButtons auth"
                   buttonText="Sign Up"

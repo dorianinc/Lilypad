@@ -15,7 +15,6 @@
   width: 85px;
   background-color: #fff;
   cursor: pointer;
-
 }
 
 .userButton > button:hover {
@@ -27,8 +26,8 @@
   font-size: 30px;
 }
 
-.userInfo{
-  display:flex;
+.userInfo {
+  display: flex;
   font-size: 18px;
   gap: 8px;
   flex-direction: column;
@@ -40,17 +39,17 @@
 }
 
 .profile-dropdown {
-    position: absolute;
-    list-style-type: none;
-    top: 85px;
-    right: 0;
-    width: auto;
-    height: auto;
-    padding: 25px;
-    background-color: white;
-    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 24px 24px 24px 24px;
-    z-index: 2;
+  position: absolute;
+  list-style-type: none;
+  top: 60px;
+  right: 10px;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 24px 24px 24px 24px;
+  z-index: 2;
   cursor: pointer;
 }
 
@@ -69,6 +68,14 @@
   background-color: #f7f7f7;
 }
 
+.link.userMenu {
+  margin: 0px;
+}
+
+.login, .signup {
+  background-color: red;
+  width:150px;
+}
 
 .hidden {
   display: none;

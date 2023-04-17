@@ -113,7 +113,7 @@ function EditSpotPage() {
             <p className="errors">{errors.state}</p>
           </label>
         </div>
-        <hr />
+        <hr className="lines form"/>
         <h1>Describe your place to guests</h1>
         <p>
           Mention the best features of your space, any special amentities like fast wifi or parking,
@@ -127,7 +127,7 @@ function EditSpotPage() {
           onChange={(e) => setDescription(e.target.value)}
         />
         <p className="errors">{errors.description}</p>
-        <hr />
+        <hr className="lines form"/>
         <h1>Create a title for your spot</h1>
         <p>
           Catch guests' attention with a spot title that highlights what makes your place special.
@@ -143,7 +143,7 @@ function EditSpotPage() {
           />
           <p className="errors">{errors.name}</p>
         </label>
-        <hr />
+        <hr className="lines form"/>
         <h1>Set a base price for your spot</h1>
         <p>
           Competitive pricing can help your listing stand out and rank higher in search results.
@@ -160,7 +160,7 @@ function EditSpotPage() {
           />
         </label>
         <p className="errors">{errors.price}</p>
-        <hr />
+        <hr className="lines form"/>
         <div className="buttonContainer">
           <button className="pinkButton edit">Update your Spot</button>
         </div>

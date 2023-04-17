@@ -1,23 +1,14 @@
-
-.outerMostContainer{
-  width: 95%;
-  margin: 0 auto;
-}
-
-.mainContainer.userSpots {
-  display: grid;
-  grid-gap: 2.25em;
-  grid-template-columns: repeat(auto-fit, minmax(25em, 8fr));
-  justify-items: center;
+.mainContainer.manageSpots {
+  display: flex;
+  justify-content: start;
   margin-top: 25px;
 }
 
-.spotsContainer {
+.cardContainer.manageSpots{
   display: flex;
-  justify-content: center;
+  cursor: pointer;
   flex-direction: column;
   position: relative;
-  width: 350px;
 }
 
 #buttonsContainer {
@@ -28,8 +19,44 @@
 
 .greyButton.update,
 .greyButton.delete {
-  width: 110px;
+  width: 75px;
+  height: 35px;
+  font-size: 12px;
   padding: 10px;
   margin-bottom: 15px;
 }
 
+.spotsContainer:hover::before {
+  position: absolute;
+  top: 0;
+  height: 20px;
+  padding: 5px;
+  content: attr(data-tooltip);
+  border: 2px solid black;
+  background-color: white;
+}
+
+/*---------- between 550px and 1024px ----------*/
+@media (min-width: 550px) and (max-width: 2000px) {
+  .mainContainer.manageSpots {
+    grid-gap: 2em;
+  }
+
+  .cardContainer.manageSpots {
+    width: 200px;
+    font-size: 14px;
+  }
+  
+  #cardImage {
+    height: 175px;
+  }
+
+  .cityState {
+    flex-basis: 65%;
+  }
+
+  .rating {
+    flex-basis: 35%;
+  }
+
+}
