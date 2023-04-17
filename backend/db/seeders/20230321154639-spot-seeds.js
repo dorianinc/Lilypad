@@ -91,7 +91,7 @@ module.exports = {
         },
         {
           address: "Elemental Estate", // 7
-          city: "The Elemental Plane of Fire",
+          city: "Plane of Fire",
           state: "Elemental Planes",
           country: "Aglarond",
           lat: 37.7749,
