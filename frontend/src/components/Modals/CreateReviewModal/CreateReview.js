@@ -30,6 +30,7 @@ function CreateReviewModal({ spotId }) {
         }
       });
     };
+    
     dispatch(getReviewsThunk(spotId))
 
   const errors = Object.values(errorsObj);

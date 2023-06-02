@@ -52,7 +52,7 @@ export const getSpotsThunk = () => async (dispatch) => {
 };
 
 // get user's spots
-export const getUserSpotsThunk = (userId) => async (dispatch) => {
+export const getUserSpotsThunk = () => async (dispatch) => {
   const res = await fetch("/api/spots/current");
   if (res.ok) {
     const data = await res.json();

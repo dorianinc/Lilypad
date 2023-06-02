@@ -6,9 +6,9 @@ function DeleteSpotModal({ spotId }) {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 
-  const handleClick = (e, id) => {
+  const handleClick = async (e, id) => {
     e.preventDefault();
-    if (id) dispatch(deleteSpotThunk(id));
+    if (id) await dispatch(deleteSpotThunk(id));
     closeModal();
   };
 
