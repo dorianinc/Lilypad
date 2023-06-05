@@ -1,8 +1,8 @@
-## ![airdnd-logo] Airdnd 
+## ![airdnd-logo] Xenios
 
 [airdnd-logo]: /backend/assets/air-dnd-logo.png
 
-Airdnd is a website clone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd can be used to connect hosts who want to post their homes or rooms for travelers to rent. Users can search for unique accommodations in various locations and leave reviews after their stay.
+Xenios is a website clone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd can be used to connect hosts who want to post their homes or rooms for travelers to rent. Users can search for unique accommodations in various locations and leave reviews after their stay.
 
 **Live Site: [Airdnd](https://air-dnd-la4z.onrender.com/)**
 
