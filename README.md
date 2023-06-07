@@ -9,7 +9,7 @@ Xenios is a website clone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd
 #### Please see below links to project Wiki:
 * [Feature List](https://github.com/dorianinc/Xenios/wiki/Features-List)
 * [Database Schema](https://github.com/dorianinc/01-AirBnB/wiki/Database-Schema)
-* Frontend Routes (coming soon)
+* [Frontend Routes](https://github.com/dorianinc/Xenios/wiki/Front-End-Routes)
 * [Backend Routes](https://github.com/dorianinc/01-AirBnB/wiki/Back-End-Routes)
 * [Redux Store State Shape](https://github.com/dorianinc/01-AirBnB/wiki/Redux-Store-Shape)
 
