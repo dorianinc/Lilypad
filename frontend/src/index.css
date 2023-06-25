@@ -35,6 +35,40 @@ input {
   font-size: 18px;
 }
 
+.buttons-end{
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.black-button{
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  background-color: #000;
+  width: 70px;
+  border: none;
+  border-radius: 10px;
+}
+
+.clear-button{
+  color: #000;
+  font-size: 1rem;
+  font-weight: 400;
+  background-color: transparent;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  text-decoration: underline;
+}
+
+.clear-button:hover{
+  background-color: #f7f7f7;
+}
+
+
 .textArea {
   resize: none;
   width: 100%;
