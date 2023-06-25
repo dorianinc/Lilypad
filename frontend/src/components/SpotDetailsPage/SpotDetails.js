@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getSingleSpotThunk, clearSpots } from "../../store/spotsReducer";
 import { getReviewsThunk, clearReviews } from "../../store/reviewsReducer";
 import OpenModalButton from "../Modals/OpenModalButton/OpenModal";
+import Bookings from "../Bookings";
 import CreateReviewModal from "../Modals/CreateReviewModal/CreateReview";
 import DeleteReviewModal from "../Modals/DeleteReviewModal/DeleteReviewModal";
 import "./SpotDetails.css";
@@ -96,6 +97,7 @@ function SpotPage() {
                 : ` · ${spot.numReviews} reviews`}
             </p>
           </div>
+          <Bookings/>
           <button className="pinkButton reserve" onClick={() => alert("Feature Coming Soon!")}>
             Reserve
           </button>
