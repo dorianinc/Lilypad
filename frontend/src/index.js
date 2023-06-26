@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { ModalProvider, Modal } from "./context/Modal";
+import CalendarProvider from "./context/CalendarContext";
 import App from "./App";
 
 import configureStore from "./store";
@@ -27,7 +28,9 @@ function Root() {
     <ModalProvider>
       <Provider store={store}>
         <BrowserRouter>
-          <App />
+          <CalendarProvider>
+            <App />
+          </CalendarProvider>
           <Modal />
         </BrowserRouter>
       </Provider>

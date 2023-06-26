@@ -23,13 +23,8 @@ function SpotPage() {
     };
   }, [dispatch, spotId]);
 
-  const reviewsObj = useSelector((state) => state.reviews);
-  const reviews = Object.values(reviewsObj).reverse();
+  const reviews = useSelector((state) => Object.values(state.reviews).reverse());
 
-  // check to see if reviews have been added or deleted
-  useEffect(() => {
-    dispatch(getSingleSpotThunk(spotId));
-  }, [dispatch, spotId, reviewsObj]);
 
   // find user then check if user has left a review
   let hasReviewed = false;
@@ -97,7 +92,7 @@ function SpotPage() {
                 : ` · ${spot.numReviews} reviews`}
             </p>
           </div>
-          <Bookings/>
+          <Bookings spotId={spotId}/>
           <button className="pinkButton reserve" onClick={() => alert("Feature Coming Soon!")}>
             Reserve
           </button>

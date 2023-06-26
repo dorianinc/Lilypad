@@ -346,14 +346,14 @@ router.get("/:spotId/bookings", [restoreUser, requireAuth], async (req, res) => 
         const newBooking = { User, id, spotId, userId, startDate, endDate, createdAt, updatedAt };
         bookingsObj.push(newBooking);
       }
-      res.status(200).json({ Booking: bookingsObj });
+      res.status(200).json(bookingsObj);
     } else {
       bookings = await Booking.findAll({
         where: {
           spotId: req.params.spotId,
         },
       });
-      res.status(200).json({ Booking: bookings });
+      res.status(200).json(bookings);
     }
   }
 });

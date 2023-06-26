@@ -146,11 +146,10 @@
   height: 4em;
   text-align: center;
   color: #1d2429;
-  /* border: 2px solid blue; */
 }
 
 .rdrDay:focus {
-  outline: 0;
+  outline: 4;
 }
 
 .rdrDayNumber {
@@ -167,6 +166,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 3; /*--- raised z-index ---*/
 }
 
 .rdrDayToday .rdrDayNumber span {
@@ -217,13 +217,15 @@
 }
 /*----- dates in ranges css -----*/
 .rdrInRange {
-} 
+  background-color: #89eb99;
+}
 
 .rdrStartEdge {
   /*----- start date css -----*/
   border-top-left-radius: 1.042em;
   border-bottom-left-radius: 1.042em;
   left: 2px;
+  z-index: 1; /*--- raised z-index ---*/
 }
 
 .rdrEndEdge {
@@ -231,6 +233,7 @@
   border-top-right-radius: 1.042em;
   border-bottom-right-radius: 1.042em;
   right: 2px;
+  z-index: 1; /*--- raised z-index ---*/
 }
 
 .rdrSelected {
@@ -286,7 +289,8 @@
   bottom: 3px;
   pointer-events: none;
   border: 0px solid currentColor;
-  z-index: 1;
+  z-index: 0;
+  background-color: #89eb99;
 }
 
 .rdrDayStartPreview {
@@ -390,7 +394,7 @@
 .rdrDayPassive {
   pointer-events: none;
 }
-/* ----- days outside current month css ----- */
+/* ----- days outside current month ----- */
 .rdrDayPassive .rdrDayNumber span {
   color: #d5dce0;
   display: none;
@@ -407,7 +411,7 @@
 }
 
 /*----- disabled days -----*/
-.rdrDayDisabled .rdrDayNumber span { 
+.rdrDayDisabled .rdrDayNumber span {
   color: #aeb9bf;
   text-decoration: line-through;
 }

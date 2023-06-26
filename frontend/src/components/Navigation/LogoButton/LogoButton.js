@@ -5,7 +5,7 @@ function LogoButton() {
     return (
       <div className="logoContainer">
           <img className ="logo" alt="airBnB"  src={logo}/>
-          <p className="title">Xenios</p>
+          <p className="title">Lilypad</p>
       </div>
     );
   }

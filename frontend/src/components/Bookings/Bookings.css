@@ -4,12 +4,11 @@
     height: 50px;
     width: 300px;
     border: 2px solid #c0c0c0;
-    border-radius: 15px;
+    border-radius: 8px;
     margin: 10px 0;
 }
 
 .start-date-container,.end-date-container{
-    /* position: relative; */
     height: 100%;
     width: 50%;
     padding-top: 5px;
@@ -17,13 +16,9 @@
     padding-bottom: 8px;
     box-sizing: border-box;
     cursor: pointer;
-    border: 2px solid blue;
-    border-radius: 15px;
+    background-color: #fff;
+    border-radius: 8px;
     z-index: 1;
-}
-
-.to-from-container{
-    /* margin-top: 10px; */
 }
 
 .calendar-container{
@@ -41,24 +36,36 @@
 
 .start-date-container{
     position: absolute;
-    z-index: 1;
-    border-right: 1px solid #c0c0c0;
-    z-index: 1;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-right: 2px solid #c0c0c0;
 }
+
 
 .end-date-container{
     position: absolute;
-    z-index: 1;
     right: 0;
-    border-left: 1px solid #c0c0c0;
+}
+
+.focused{
+    z-index: 2;
+    width: 55%;
+    border-radius: 8px;
+    border:2px solid #5de373;
+}
+
+.unfocused{
+    border:2px solid #c0c0c0;
 }
 
 #checkin-text,#checkout-text{
-    font-size: .65rem;
+    margin-left: 10px;
+    font-size: .8rem;
     font-weight: 600;
 }
 
 #start-date-text,#end-date-text{
+    margin-left: 10px;
     color: #8b8b8b;
     font-size: .9rem;
 }
