@@ -1,28 +1,21 @@
-import { useState, useEffect, useRef, } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useCalendar } from "../../context/CalendarContext";
-import { getSpotBookingsThunk} from "../../store/bookingsReducer";
+import { getSpotBookingsThunk } from "../../store/bookingsReducer";
 import Calendar from "./Calendar";
 import "./Bookings.css";
 
-const Bookings = ({spotId}) => {
+const Bookings = ({ spotId }) => {
   const dispatch = useDispatch();
   const calendarRef = useRef();
   const [focus, setFocus] = useState("");
   const [numOfDays, setNumOfDays] = useState(0);
   const [formattedDate, setFormattedDate] = useState("");
   const [showCalendar, setShowCalendar] = useState(false);
-  const bookings = useSelector((state) => Object.values(state.bookings))
+  const bookings = useSelector((state) => Object.values(state.bookings));
 
-  const {
-    setOnStartDate,
-    booking,
-    setBooking,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-  } = useCalendar();
+  const { setOnStartDate, booking, setBooking, startDate, setStartDate, endDate, setEndDate } =
+    useCalendar();
 
   const openCalendar = () => {
     setOnStartDate(true);
@@ -36,8 +29,8 @@ const Bookings = ({spotId}) => {
   };
 
   useEffect(() => {
-    dispatch(getSpotBookingsThunk(spotId))
-  }, [dispatch, spotId])
+    dispatch(getSpotBookingsThunk(spotId));
+  }, [dispatch, spotId]);
 
   useEffect(() => {
     if (!showCalendar) return;
@@ -64,9 +57,11 @@ const Bookings = ({spotId}) => {
       };
       const formattedStartDate = startDate.toLocaleString("en-US", options);
       const formattedEndDate = endDate.toLocaleString("en-US", options);
-      setFormattedDate(`${formattedStartDate} - ${formattedEndDate}`);
-      setNumOfDays((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
-      closeCalendar();
+      if (new Date(formattedStartDate).getTime() < new Date(formattedEndDate).getTime()) {
+        setFormattedDate(`${formattedStartDate} - ${formattedEndDate}`);
+        setNumOfDays((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+        closeCalendar();
+      }
     }
   }, [startDate, endDate]);
 
@@ -107,10 +102,14 @@ const Bookings = ({spotId}) => {
       <div className={`calendar-container ${!showCalendar ? "hidden" : ""}`}>
         <div className="month-container">
           <div className="booking-summary-review">
-            <h2>{numOfDays ? `${numOfDays} nights` : "Select dates"}</h2>
+            <h2>
+              {numOfDays
+                ? `${Math.round(numOfDays)} ${Math.round(numOfDays) === 1 ? "night" : "nights"}`
+                : "Select dates"}
+            </h2>
             <p>{formattedDate ? `${formattedDate}` : "Add your travel dates for exact pricing"}</p>
           </div>
-          <Calendar bookings={bookings}/>
+          <Calendar bookings={bookings} />
           <div className="buttons-end">
             <button className="clear-button" onClick={clearDates}>
               Clear Dates
