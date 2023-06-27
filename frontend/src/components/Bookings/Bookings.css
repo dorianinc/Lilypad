@@ -32,7 +32,10 @@
         box-shadow: 0 0 10px #999999;
 }
 
-
+.calendar-container:hover #slide.rdrMonth  {
+    transition: 1s;
+    right: 0; /* SET THE SLIDER TO BE 0 */
+}
 
 .start-date-container{
     position: absolute;
@@ -68,4 +71,9 @@
     margin-left: 10px;
     color: #8b8b8b;
     font-size: .9rem;
+}
+
+.booking-button-container{
+    display: flex;
+    justify-content: center;
 }

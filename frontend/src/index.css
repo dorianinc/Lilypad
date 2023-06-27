@@ -15,7 +15,7 @@ input {
   font-size: 18px;
 }
 
-.pinkButton {
+.pink-button {
   cursor: pointer;
   color: white;
   background-color: #ff5c6c;
@@ -26,7 +26,7 @@ input {
   border-radius: 5px;
 }
 
-.greyButton {
+.grey-button {
   cursor: pointer;
   color: white;
   background-color: #80808b;
@@ -138,4 +138,10 @@ input {
   content: attr(data-tooltip);
   background-color: white;
   border-bottom-right-radius: 10px;
+}
+
+
+.item-divider{
+  margin: 15px 0;
+  border: 1px solid #d2d2d2;;
 }

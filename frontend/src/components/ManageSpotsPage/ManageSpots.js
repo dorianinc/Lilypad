@@ -57,11 +57,11 @@ function ManageSpotsPage() {
                 </div>
               </div>
               <div className="buttonsContainer">
-                <button className="greyButton update" onClick={() => handleUpdate(spot.id)}>
+                <button className="grey-button update" onClick={() => handleUpdate(spot.id)}>
                   Update
                 </button>
                 <OpenModalButton
-                  className="greyButton delete"
+                  className="grey-button delete"
                   buttonText="Delete"
                   onButtonClick={closeMenu}
                   modalComponent={<DeleteSpotModal spotId={spot.id} />}
@@ -72,7 +72,7 @@ function ManageSpotsPage() {
         </div>
       ) : (
         <div>
-          <button className="greyButton create" onClick={handleCreate}>
+          <button className="grey-button create" onClick={handleCreate}>
             Create a Spot
           </button>
         </div>

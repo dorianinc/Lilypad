@@ -239,7 +239,7 @@ function NewSpotPage() {
         </div>
         <hr className="lines form" />
         <div className="buttonContainer">
-          <button className="pinkButton create">Create Spot</button>
+          <button className="pink-button create">Create Spot</button>
         </div>
       </form>
     </div>

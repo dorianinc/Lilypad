@@ -432,3 +432,67 @@
   color: #849095;
   padding: 0.833em;
 }
+
+
+/* ------- transitions -------- */
+
+/*
+Overflow the Calendar container 
+.rdrDateRangeWrapper is a class that react-date-range creates internally
+*/
+.rdrDateRangeWrapper {
+  overflow-x: hidden;
+}
+
+/*
+.rdrMonths is the class that react-date-range creates internally for the month container calendar
+
+.fadeRightToLeft classes is related to react-transition-group
+Created for transition from right to left
+*/
+.fadeRightToLeft-enter .rdrMonths {
+  opacity: 0;
+  transform: translateX(100%);
+}
+.fadeRightToLeft-enter-active .rdrMonths {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.fadeRightToLeft-exit .rdrMonths {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.fadeRightToLeft-exit-active .rdrMonths {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.fadeRightToLeft-enter-active .rdrMonths,
+.fadeRightToLeft-exit-active .rdrMonths {
+  transition: opacity 100ms, transform 100ms;
+}
+
+/*
+Same as fadeRightToLeft:
+.fadeLeftToRight classes is related to react-transition-group
+Created for transition from left to right
+*/
+.fadeLeftToRight-enter .rdrMonths {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.fadeLeftToRight-enter-active .rdrMonths {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.fadeLeftToRight-exit .rdrMonths {
+  opacity: 1;
+  transform: translateX(0%);
+}
+.fadeLeftToRight-exit-active .rdrMonths {
+  opacity: 0;
+  transform: translateX(100%);
+}
+.fadeLeftToRight-enter-active .rdrMonths,
+.fadeLeftToRight-exit-active .rdrMonths {
+  transition: opacity 100ms, transform 100ms;
+}

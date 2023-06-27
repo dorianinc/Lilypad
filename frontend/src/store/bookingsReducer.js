@@ -1,3 +1,5 @@
+import { csrfFetch } from "./csrf";
+
 ////////////// Action Creators ///////////////
 export const GET_BOOKINGS = "bookings/GET_BOOKINGS";
 
@@ -26,6 +28,21 @@ export const getUserBookingsThunk = () => async (dispatch) => {
     const data = await res.json();
     dispatch(getBookings(data));
     return data;
+  }
+};
+
+// create a booking
+export const createBookingsThunk = (spotId, booking) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}/bookings`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(booking),
+  });
+  if (res.ok) {
+    const data = await res.json()
+    await dispatch(getSpotBookingsThunk(spotId));
   }
 };
 

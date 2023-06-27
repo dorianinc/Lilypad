@@ -54,8 +54,8 @@
   display: flex;
   justify-content: center;
 }
-.pinkButton.create,
-.pinkButton.edit {
+.pink-button.create,
+.pink-button.edit {
   margin: 10px;
   width: 200px;
 }

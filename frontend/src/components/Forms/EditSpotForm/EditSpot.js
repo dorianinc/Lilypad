@@ -162,7 +162,7 @@ function EditSpotPage() {
         <p className="errors">{errors.price}</p>
         <hr className="lines form"/>
         <div className="buttonContainer">
-          <button className="pinkButton edit">Update your Spot</button>
+          <button className="pink-button edit">Update your Spot</button>
         </div>
       </form>
     </div>

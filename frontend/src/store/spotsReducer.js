@@ -133,13 +133,15 @@ const spotsReducer = (state = {}, action) => {
   let newState;
   switch (action.type) {
     case GET_SPOTS:
-      newState = { ...state };
+      newState = {};
       action.spots.forEach((spot) => {
         newState[spot.id] = spot;
       });
       return newState;
     case GET_SINGLE_SPOT:
-      return { ...state, [action.spot.id]: action.spot };
+      newState = {};
+      newState = { ...action.spot };
+      return newState
     case UPDATE_SPOT:
       return { ...state, [action.spot.id]: action.spot };
     case DELETE_SPOT:

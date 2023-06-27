@@ -7,13 +7,15 @@ import OpenModalButton from "../Modals/OpenModalButton/OpenModal";
 import Bookings from "../Bookings";
 import CreateReviewModal from "../Modals/CreateReviewModal/CreateReview";
 import DeleteReviewModal from "../Modals/DeleteReviewModal/DeleteReviewModal";
+import { useCalendar } from "../../context/CalendarContext";
 import "./SpotDetails.css";
 
 function SpotPage() {
   const { spotId } = useParams();
+  const { startDate, endDate } = useCalendar();
   const dispatch = useDispatch();
 
-  const spot = useSelector((state) => state.spots[spotId]);
+  const spot = useSelector((state) => state.spots);
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
@@ -24,7 +26,6 @@ function SpotPage() {
   }, [dispatch, spotId]);
 
   const reviews = useSelector((state) => Object.values(state.reviews).reverse());
-
 
   // find user then check if user has left a review
   let hasReviewed = false;
@@ -49,10 +50,8 @@ function SpotPage() {
     return image.preview === true || image.preview === 1;
   });
   const imageArray = spot.SpotImages.filter((image) => {
-
     return image.id !== previewImage.id;
   });
-
 
   return (
     <div className="mainContainer spotDetails">
@@ -92,10 +91,7 @@ function SpotPage() {
                 : ` · ${spot.numReviews} reviews`}
             </p>
           </div>
-          <Bookings spotId={spotId}/>
-          <button className="pinkButton reserve" onClick={() => alert("Feature Coming Soon!")}>
-            Reserve
-          </button>
+          <Bookings spotId={spotId} />
         </div>
       </div>
       <hr className="lines spotDetails" />
@@ -111,7 +107,7 @@ function SpotPage() {
         </h2>
         {!user ? null : user.id && user.id !== spot.Owner.id && !hasReviewed ? (
           <OpenModalButton
-            className="greyButton review"
+            className="grey-button review"
             buttonText="Post your Review"
             modalComponent={<CreateReviewModal spotId={spotId} />}
           />
@@ -126,7 +122,7 @@ function SpotPage() {
               <p>{review.review}</p>
               {!user ? null : user.id === review.userId ? (
                 <OpenModalButton
-                  className="greyButton delete"
+                  className="grey-button delete"
                   buttonText="Delete"
                   modalComponent={<DeleteReviewModal reviewId={review.id} />}
                 />

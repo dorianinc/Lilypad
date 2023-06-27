@@ -1,9 +1,16 @@
+import { useState } from "react";
 import { useCalendar } from "../../../context/CalendarContext";
 import { DateRange } from "react-date-range";
+import { SwitchTransition, CSSTransition } from "react-transition-group";
+import { addDays, differenceInDays, format, eachDayOfInterval, isAfter } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "./Calendar.css";
 
 const Calendar = ({ bookings }) => {
+  // // state created to hold the first month that calendar is showing
+  // const [shownDateChangeValue, setShownDateChangeValue] = useState(new Date());
+  // // state created to check if use created next Month ou previous month
+  // const [isNextMonth, setIsNextMonth] = useState(true);
   const { onStartDate, setOnStartDate, booking, setBooking, setStartDate, setEndDate } =
     useCalendar();
 
@@ -46,19 +53,28 @@ const Calendar = ({ bookings }) => {
   };
 
   return (
-    <DateRange
-      months={2} // number of months thats are displayed
-      direction="horizontal" // direction the months flow
-      ranges={booking} // ** collects the start date and end date values **
-      minDate={new Date()} // if less than minDate those days are disables
-      disabledDay={bookedDays} // pushed the days that should be disabled into an array
-      disabledDates={disabledDays} // takes the disables days array and disables the days
-      onChange={handleSelect} // handles on change after every date is selected
-      showDateDisplay={false} // hides the default start date - end date display
-      focusedRange={onStartDate ? [0, 0] : [0, 1]} // [0,0] focuses the start date && [0,1] focuses the end date
-      showMonthAndYearPickers={false} // hides the dropdown option for months
-      fixedHeight={true} // keeps the calender a consistent height
-    />
+    <>
+      <DateRange
+        months={2} // number of months thats are displayed
+        direction="horizontal" // direction the months flow
+        ranges={booking} // ** collects the start date and end date values **
+        minDate={new Date()} // if less than minDate those days are disables
+        disabledDay={bookedDays} // pushed the days that should be disabled into an array
+        disabledDates={disabledDays} // takes the disables days array and disables the days
+        onChange={handleSelect} // handles on change after every date is selected
+        showDateDisplay={false} // hides the default start date - end date display
+        focusedRange={onStartDate ? [0, 0] : [0, 1]} // [0,0] focuses the start date && [0,1] focuses the end date
+        showMonthAndYearPickers={false} // hides the dropdown option for months
+        fixedHeight={true} // keeps the calender a consistent height
+        preventSnapRefocus={true} // keeps the calendar from rendering when you select a date in the 2nd month
+        // onShownDateChange={(month) => {
+        //   // checks if user clicked next or previous month, this is used to trigger transitions
+        //   const isNext = isAfter(month, shownDateChangeValue);
+        //   setIsNextMonth(isNext ? true : false);
+        //   setShownDateChangeValue(month);
+        // }}
+      />
+    </>
   );
 };
 

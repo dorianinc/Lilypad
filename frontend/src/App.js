@@ -8,6 +8,7 @@ import SpotPage from "./components/SpotDetailsPage/SpotDetails";
 import ManageSpotsPage from "./components/ManageSpotsPage/ManageSpots";
 import NewSpotPage from "./components/Forms/CreateSpotForm/CreateSpot";
 import EditSpotPage from "./components/Forms/EditSpotForm/EditSpot";
+import ConfirmBooking from "./components/ConfirmBooking";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,6 +36,9 @@ function App() {
           </Route>
           <Route path="/spots/:spotId/edit">
             <EditSpotPage />
+          </Route>
+          <Route path="/booking/spots/:spotId">
+            <ConfirmBooking />
           </Route>
         </Switch>
       )}
