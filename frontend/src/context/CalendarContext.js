@@ -4,16 +4,16 @@ export const useCalendar = () => useContext(CalendarContext);
 
 export default function CalendarProvider({ children }) {
   const [onStartDate, setOnStartDate] = useState(true);
+  const [startDate, setStartDate] = useState(localStorage.getItem("localStartDate"));
+  const [endDate, setEndDate] = useState(localStorage.getItem("localEndDate"));
   const [booking, setBooking] = useState([
     {
-      startDate: null,
-      endDate: new Date(""),
+      startDate: startDate ? new Date(startDate) : null,
+      endDate: endDate ? new Date(endDate) : new Date(""),
       color: "#5de373",
       key: "selection",
     },
   ]);
-  const [startDate, setStartDate] = useState(localStorage.getItem("localStartDate"));
-  const [endDate, setEndDate] = useState(localStorage.getItem("localEndDate"));
 
   return (
     <CalendarContext.Provider
