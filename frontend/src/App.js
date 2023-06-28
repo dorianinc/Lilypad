@@ -8,6 +8,7 @@ import SpotPage from "./components/SpotDetailsPage/SpotDetails";
 import ManageSpotsPage from "./components/ManageSpotsPage/ManageSpots";
 import NewSpotPage from "./components/Forms/CreateSpotForm/CreateSpot";
 import EditSpotPage from "./components/Forms/EditSpotForm/EditSpot";
+import ManageBookingsPage from "./components/ManageBookingsPage";
 import ConfirmBooking from "./components/ConfirmBooking";
 
 function App() {
@@ -22,23 +23,26 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
           <Route path="/spots/new">
             <NewSpotPage />
-          </Route>
-          <Route path="/spots/current">
-            <ManageSpotsPage />
           </Route>
           <Route exact path="/spots/:spotId">
             <SpotPage />
           </Route>
+          <Route path="/spots">
+            <ManageSpotsPage />
+          </Route>
           <Route path="/spots/:spotId/edit">
             <EditSpotPage />
           </Route>
-          <Route path="/booking/spots/:spotId">
+          <Route path="/bookings/spots/:spotId">
             <ConfirmBooking />
+          </Route>
+          <Route path="/bookings">
+            <ManageBookingsPage />
+          </Route>
+          <Route path="/">
+            <HomePage />
           </Route>
         </Switch>
       )}

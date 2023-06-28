@@ -1,20 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useCalendar } from "../../context/CalendarContext";
+import { useCalendar } from "../../../context/CalendarContext";
 import { useHistory } from "react-router-dom";
-import { getSpotBookingsThunk, createBookingsThunk } from "../../store/bookingsReducer";
+import { getSpotBookingsThunk, createBookingsThunk } from "../../../store/bookingsReducer";
 import { format } from "date-fns";
-import Calendar from "./Calendar";
-import "./Bookings.css";
+import Calendar from "../../Calendar";
+import "./BookingForm.css";
 
-const Bookings = ({ spotId }) => {
+const BookingForm = ({ spotId }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const calendarRef = useRef();
   const [focus, setFocus] = useState("");
-  const [numOfDays, setNumOfDays] = useState(0);
   const [formattedDate, setFormattedDate] = useState("");
   const [showCalendar, setShowCalendar] = useState(false);
+  const [numNights, setNumNights] = useState();
   const bookings = useSelector((state) => Object.values(state.bookings));
 
   const { setOnStartDate, booking, setBooking, startDate, setStartDate, endDate, setEndDate } =
@@ -27,13 +27,9 @@ const Bookings = ({ spotId }) => {
 
   const handleBooking = async (e) => {
     e.preventDefault();
-    history.push(`/booking/spots/${spotId}`);
-    // const formattedStartDate = format(startDate, "Y-MM-dd");
-    // const formattedEndDate = format(endDate, "Y-MM-dd");
-    // const requestedDates = { startDate: formattedStartDate, endDate: formattedEndDate };
-    // await dispatch(createBookingsThunk(spotId, requestedDates));
-    // clearDates(true);
+    history.push(`/bookings/spots/${spotId}`);
   };
+
   ////// calendar logic ///////
   const openCalendar = () => {
     setOnStartDate(true);
@@ -60,20 +56,15 @@ const Bookings = ({ spotId }) => {
   useEffect(() => {
     if (startDate && !endDate) {
       setFocus(2);
-      setNumOfDays(0);
+      setNumNights(0);
       setFormattedDate("");
     }
     if (startDate && endDate) {
-      const options = {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      };
-      const formattedStartDate = startDate.toLocaleString("en-US", options);
-      const formattedEndDate = endDate.toLocaleString("en-US", options);
+      const formattedStartDate = format(new Date(startDate), "MMM dd");
+      const formattedEndDate = format(new Date(endDate), "MMM dd");
       if (new Date(formattedStartDate).getTime() < new Date(formattedEndDate).getTime()) {
         setFormattedDate(`${formattedStartDate} - ${formattedEndDate}`);
-        setNumOfDays((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+        setNumNights(Math.round((new Date(endDate).getTime() -  new Date(startDate).getTime()) / (1000 * 3600 * 24)));
         closeCalendar();
       }
     }
@@ -86,9 +77,11 @@ const Bookings = ({ spotId }) => {
     else setFocus(1);
     dates.startDate = null;
     dates.endDate = new Date("");
+    localStorage.setItem("localStartDate", "");
     setStartDate("");
+    localStorage.setItem("localEndDate", "");
     setEndDate("");
-    setNumOfDays(0);
+    setNumNights(0);
     setFormattedDate("");
     setBooking([dates]);
     setOnStartDate(true);
@@ -105,7 +98,7 @@ const Bookings = ({ spotId }) => {
         >
           <p id="checkin-text">CHECK-IN</p>
           <p id="start-date-text">
-            {startDate ? startDate.toLocaleDateString("en-US") : "Add Date"}
+            {startDate ? format(new Date(startDate), "MM/dd/yyyy") : "Add Date"}
           </p>
         </div>
         <div
@@ -115,14 +108,14 @@ const Bookings = ({ spotId }) => {
           onClick={openCalendar}
         >
           <p id="checkout-text">CHECKOUT</p>
-          <p id="end-date-text">{endDate ? endDate.toLocaleDateString("en-US") : "Add Date"}</p>
+          <p id="end-date-text">{endDate ? format(new Date(endDate), "MM/dd/yyyy") : "Add Date"}</p>
         </div>
         <div className={`calendar-container ${!showCalendar ? "hidden" : ""}`}>
           <div className="month-container">
             <div className="booking-summary-review">
               <h2>
-                {numOfDays
-                  ? `${Math.round(numOfDays)} ${Math.round(numOfDays) === 1 ? "night" : "nights"}`
+                {numNights
+                  ? `${numNights} ${numNights === 1 ? "night" : "nights"}`
                   : "Select dates"}
               </h2>
               <p>
@@ -156,4 +149,4 @@ const Bookings = ({ spotId }) => {
   );
 };
 
-export default Bookings;
+export default BookingForm;

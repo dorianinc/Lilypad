@@ -2,12 +2,12 @@ const express = require("express");
 const { validateBooking } = require("../../utils/validation");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { isAvailable, doesNotExist, hasPassed } = require("../../utils/utilities.js");
-const { Booking, Spot, SpotImage } = require("../../db/models");
+const { Booking, Spot, SpotImage, User } = require("../../db/models");
 
 const router = express.Router();
 
 // Get all Bookings of Current User
-router.get("/current", [restoreUser, requireAuth], async (req, res) => {
+router.get("/", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
 
   const bookings = await Booking.unscoped().findAll({
@@ -33,6 +33,17 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
 
   for (let i = 0; i < bookingsObj.length; i++) {
     const booking = bookingsObj[i];
+    const owner = await User.findOne({
+      where: {
+        id: booking.Spot.ownerId,
+      },
+      attributes: ["id", "firstName", "lastName"],
+      raw: true,
+    });
+    if(owner) booking.Spot.owner = {
+      firstName: owner.firstName,
+      lastName: owner.lastName
+    }
     for (let j = 0; j < booking.Spot.SpotImages.length; j++) {
       const image = booking.Spot.SpotImages[j];
       if (image.preview === true) {
@@ -45,7 +56,7 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
     delete booking.Spot.SpotImages;
   }
 
-  res.status(200).json({ Bookings: bookingsObj });
+  res.status(200).json(bookingsObj);
 });
 
 // Update a Booking

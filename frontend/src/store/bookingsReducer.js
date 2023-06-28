@@ -21,7 +21,7 @@ export const getSpotBookingsThunk = (spotId) => async (dispatch) => {
   }
 };
 
-// get all users bookings
+// get all user's bookings
 export const getUserBookingsThunk = () => async (dispatch) => {
   const res = await fetch("/api/bookings");
   if (res.ok) {

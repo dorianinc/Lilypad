@@ -84,7 +84,6 @@
 
 .confirmation-right {
   width: 60%;
-  /* border: 2px solid red; */
 }
 
 input#insurance-check {
@@ -125,12 +124,31 @@ input#insurance-check {
   width: 200px;
 }
 
-.spot-card{
+.confirmation-spot-card{
   position: sticky;
   top: 50px;
-  height: 500px;
+  height: 425px;
   width: 500px;
   margin-left: auto;
+  padding: 20px;
+  box-sizing: border-box;
   border: 2px solid #d2d2d2;
   border-radius: 10px;
+}
+
+.confirmation-spot-card-top{
+  display: flex;
+  gap: 10px;;
+}
+
+#card-image{
+  height: 125px;
+  width: 150px;
+  border-radius: 15px;
+}
+
+.spot-card-info{
+  display: grid;
+  align-content: space-between;
+  margin-top: 50px;
 }

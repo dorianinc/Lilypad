@@ -66,10 +66,11 @@
 #spotDescription {
   text-align: left;
 }
-.reserveSection {
+.reserve-section {
   display: flex;
   width: 1000px;
-  padding: 8px;
+  padding: 10px;
+  box-sizing: border-box;
   -webkit-box-shadow: 0 0 10px #999999;
   box-shadow: 0 0 10px #999999;
   border-radius: 10px;

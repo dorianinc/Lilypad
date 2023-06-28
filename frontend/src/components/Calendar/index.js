@@ -1,8 +1,7 @@
-import { useState } from "react";
-import { useCalendar } from "../../../context/CalendarContext";
+import { useCalendar } from "../../context/CalendarContext";
 import { DateRange } from "react-date-range";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
-import { addDays, differenceInDays, format, eachDayOfInterval, isAfter } from "date-fns";
+import { format, addDays, getTime } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "./Calendar.css";
 
@@ -16,24 +15,21 @@ const Calendar = ({ bookings }) => {
 
   const disabledDays = [];
   const bookedDays = (day) => {
-    // one days worth of milliseconds
-    const oneDay = 86400000;
-    // convert day into utc form in order to match booked days format
+    // need to convert into utc or else there is a weird offset
     const utcDay = new Date(day.toLocaleDateString("sv-SE"));
-    const formattedDay = utcDay.getTime() + oneDay;
+    const currentDate = format(addDays(new Date(utcDay), 1), "MMM-dd-yyyy");
     if (bookings.length) {
       for (let i = 0; i < bookings.length; i++) {
-        // initally startDate and endDate are off by one day
-        let startDate = new Date(bookings[i].startDate);
-        let endDate = new Date(bookings[i].endDate);
-        // we convert the dates into milliseconds then add one day
-        let formattedStartDate = startDate.getTime() + oneDay;
-        let formattedEndDate = endDate.getTime() + oneDay;
-
-        if (formattedDay >= formattedStartDate && formattedDay <= formattedEndDate) {
-          disabledDays.push(new Date(formattedDay));
+        let startDate = format(addDays(new Date(bookings[i].startDate), 1), "MMM-dd-yyyy");
+        let endDate = format(addDays(new Date(bookings[i].endDate), 1), "MMM-dd-yyyy");
+        if (
+          getTime(new Date(currentDate)) >= getTime(new Date(startDate)) &&
+          getTime(new Date(currentDate)) <= getTime(new Date(endDate))
+        ) {
+          disabledDays.push(new Date(currentDate));
           return true;
         }
+        return false;
       }
     }
   };
@@ -43,10 +39,13 @@ const Calendar = ({ bookings }) => {
     const startDate = selection.startDate;
     const endDate = selection.endDate;
     setBooking([selection]);
+    localStorage.setItem("localStartDate", startDate);
     setStartDate(startDate);
     if (startDate.getTime() < endDate.getTime()) {
+      localStorage.setItem("localEndDate", endDate);
       setEndDate(endDate);
     } else {
+      localStorage.setItem("localEndDate", "");
       setEndDate("");
     }
     setOnStartDate(false);

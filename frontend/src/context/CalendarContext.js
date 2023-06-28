@@ -12,8 +12,8 @@ export default function CalendarProvider({ children }) {
       key: "selection",
     },
   ]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(localStorage.getItem("localStartDate"));
+  const [endDate, setEndDate] = useState(localStorage.getItem("localEndDate"));
 
   return (
     <CalendarContext.Provider

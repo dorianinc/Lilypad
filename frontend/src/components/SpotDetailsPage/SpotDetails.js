@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getSingleSpotThunk, clearSpots } from "../../store/spotsReducer";
 import { getReviewsThunk, clearReviews } from "../../store/reviewsReducer";
 import OpenModalButton from "../Modals/OpenModalButton/OpenModal";
-import Bookings from "../Bookings";
+import Bookings from "../Forms/BookingForm";
 import CreateReviewModal from "../Modals/CreateReviewModal/CreateReview";
 import DeleteReviewModal from "../Modals/DeleteReviewModal/DeleteReviewModal";
 import { useCalendar } from "../../context/CalendarContext";
@@ -76,7 +76,7 @@ function SpotPage() {
           </h2>
           <p id="spotDescription">{spot.description}</p>
         </div>
-        <div className="reserveSection">
+        <div className="reserve-section">
           <div id="priceAndRating">
             <p id="spotPrice">
               <span>${Number(spot.price).toFixed(2)}</span> night
