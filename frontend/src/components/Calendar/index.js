@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useCalendar } from "../../context/CalendarContext";
 import { DateRange } from "react-date-range";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
@@ -6,10 +7,10 @@ import "react-date-range/dist/styles.css"; // main style file
 import "./Calendar.css";
 
 const Calendar = ({ bookings }) => {
-  // // state created to hold the first month that calendar is showing
-  // const [shownDateChangeValue, setShownDateChangeValue] = useState(new Date());
-  // // state created to check if use created next Month ou previous month
-  // const [isNextMonth, setIsNextMonth] = useState(true);
+  // state created to hold the first month that calendar is showing
+  const [shownDateChangeValue, setShownDateChangeValue] = useState(new Date());
+  // state created to check if use created next Month ou previous month
+  const [isNextMonth, setIsNextMonth] = useState(true);
   const { onStartDate, setOnStartDate, booking, setBooking, setStartDate, setEndDate } =
     useCalendar();
 

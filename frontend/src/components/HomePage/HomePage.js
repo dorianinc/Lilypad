@@ -8,8 +8,6 @@ function HomePage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const spots = useSelector((state) => Object.values(state.spots));
-  console.log("spots 👉", spots)
-  console.log("spots 👉", spots)
 
   useEffect(() => {
     dispatch(getSpotsThunk());

@@ -1,0 +1,23 @@
+.prev-booking-item {
+  display: flex;
+  gap: 10px;
+  height: 100px;
+  width: 300;
+}
+
+.prev-booking-image-container{
+    height: 100%;
+    width: 40%;
+}
+
+.prev-booking-image {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.prev-booking-info{
+    height: 100%;
+    width: 60%;
+}

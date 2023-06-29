@@ -1,26 +1,26 @@
-.up-booking-item {
+.upcoming-booking-item {
   display: flex;
   height: 200px;
   width: 900px;
-  margin: 25px 0;
+  margin-bottom: 25px;
   overflow: hidden;
   border-radius: 15px;
   -webkit-box-shadow: 0 0 20px #999999;
   box-shadow: 0 0 15px #999999;
 }
 
-.up-booking-item-info {
+.upcoming-booking-item-info {
   height: 100%;
   width: 50%;
 }
 
-.up-booking-item-image-container {
+.upcoming-booking-item-image-container {
   position: relative;
   height: 100%;
   width: 50%;
 }
 
-.up-booking-item-image {
+.upcoming-booking-item-image {
   position: absolute;
   height: 100%;
   width: 100%;
@@ -48,7 +48,7 @@
   border: .5px solid #d2d2d2;
 }
 
-.up-booking-item-date-address{
+.upcoming-booking-item-date-address{
     display: flex;
 }
 
@@ -64,7 +64,7 @@
 }
 
 
-.up-booking-item-info {
+.upcoming-booking-item-info {
   padding: 20px 20px;
   box-sizing: border-box;
 }
