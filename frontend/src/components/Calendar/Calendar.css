@@ -468,7 +468,7 @@ Created for transition from right to left
 }
 .fadeRightToLeft-enter-active .rdrMonths,
 .fadeRightToLeft-exit-active .rdrMonths {
-  transition: opacity 100ms, transform 100ms;
+  transition: opacity 150ms, transform 150ms;
 }
 
 /*
@@ -494,5 +494,5 @@ Created for transition from left to right
 }
 .fadeLeftToRight-enter-active .rdrMonths,
 .fadeLeftToRight-exit-active .rdrMonths {
-  transition: opacity 100ms, transform 100ms;
+  transition: opacity 150ms, transform 150ms;
 }
