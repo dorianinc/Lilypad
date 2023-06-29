@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getSingleSpotThunk, clearSpots } from "../../store/spotsReducer";
-import { getReviewsThunk, clearReviews } from "../../store/reviewsReducer";
-import OpenModalButton from "../Modals/OpenModalButton/OpenModal";
-import Bookings from "../Forms/BookingForm";
-import CreateReviewModal from "../Modals/CreateReviewModal/CreateReview";
-import DeleteReviewModal from "../Modals/DeleteReviewModal/DeleteReviewModal";
-import { useCalendar } from "../../context/CalendarContext";
+import { getSingleSpotThunk, clearSpots } from "../../../store/spotsReducer";
+import { getReviewsThunk, clearReviews } from "../../../store/reviewsReducer";
+import OpenModalButton from "../../Modals/OpenModalButton/OpenModal";
+import Bookings from "../../Bookings/BookingForm";
+import CreateReviewModal from "../../Modals/CreateReviewModal/CreateReview";
+import DeleteReviewModal from "../../Modals/DeleteReviewModal/DeleteReviewModal";
+import { useCalendar } from "../../../context/CalendarContext";
 import "./SpotDetails.css";
 
 function SpotPage() {

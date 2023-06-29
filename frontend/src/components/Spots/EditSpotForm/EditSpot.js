@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getSingleSpotThunk, updateSpotThunk } from "../../../store/spotsReducer";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import '../../Forms/Forms.css'
+
 
 function EditSpotPage() {
   const [country, setCountry] = useState("");

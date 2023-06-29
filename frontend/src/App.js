@@ -4,12 +4,12 @@ import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/sessionReducer";
 import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage/HomePage";
-import SpotPage from "./components/SpotDetailsPage/SpotDetails";
-import ManageSpotsPage from "./components/ManageSpotsPage/ManageSpots";
-import NewSpotPage from "./components/Forms/CreateSpotForm/CreateSpot";
-import EditSpotPage from "./components/Forms/EditSpotForm/EditSpot";
-import ManageBookingsPage from "./components/ManageBookingsPage";
-import ConfirmBooking from "./components/ConfirmBooking";
+import SpotPage from "./components/Spots/SpotDetails/SpotDetails";
+import ManageSpotsPage from "./components/Spots/UsersSpots/UsersSpots";
+import NewSpotPage from "./components/Spots/CreateSpotForm/CreateSpot";
+import EditSpotPage from "./components/Spots/EditSpotForm/EditSpot";
+import BookingsPage from "./components/Bookings/UsersBookings";
+import ConfirmBooking from "./components/Bookings/BookingConfirmation";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,7 +39,7 @@ function App() {
             <ConfirmBooking />
           </Route>
           <Route path="/bookings">
-            <ManageBookingsPage />
+            <BookingsPage />
           </Route>
           <Route path="/">
             <HomePage />

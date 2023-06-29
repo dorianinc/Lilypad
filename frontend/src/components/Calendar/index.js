@@ -14,6 +14,7 @@ const Calendar = ({ bookings }) => {
     useCalendar();
 
   const disabledDays = [];
+  console.log("disabledDays 👉", disabledDays);
   const bookedDays = (day) => {
     // need to convert into utc or else there is a weird offset
     const utcDay = new Date(day.toLocaleDateString("sv-SE"));
@@ -29,7 +30,6 @@ const Calendar = ({ bookings }) => {
           disabledDays.push(new Date(currentDate));
           return true;
         }
-        return false;
       }
     }
   };

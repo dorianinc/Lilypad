@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSpotThunk, addImageThunk, getSingleSpotThunk } from "../../../store/spotsReducer";
-import "../../Forms/Forms.css";
 
 function NewSpotPage() {
   const [country, setCountry] = useState("");

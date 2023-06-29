@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserSpotsThunk, clearSpots } from "../../store/spotsReducer";
-import OpenModalButton from "../Modals/OpenModalButton/OpenModal";
-import DeleteSpotModal from "../Modals/DeleteSpotModal/DeleteSpot";
-import "./ManageSpots.css";
+import { getUserSpotsThunk, clearSpots } from "../../../store/spotsReducer";
+import OpenModalButton from "../../Modals/OpenModalButton/OpenModal";
+import DeleteSpotModal from "../../Modals/DeleteSpotModal/DeleteSpot";
+import "./UsersSpots.css";
 
-function ManageSpotsPage() {
+function UsersSpots() {
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -81,4 +81,4 @@ function ManageSpotsPage() {
   );
 }
 
-export default ManageSpotsPage;
+export default UsersSpots;

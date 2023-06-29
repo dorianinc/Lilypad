@@ -8,19 +8,18 @@ function HomePage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const spots = useSelector((state) => Object.values(state.spots));
+  console.log("spots 👉", spots)
+  console.log("spots 👉", spots)
 
   useEffect(() => {
     dispatch(getSpotsThunk());
-    return () => {
-      dispatch(clearSpots());
-    };
   }, [dispatch]);
 
   const handleClick = (spotId) => {
     history.push(`/spots/${spotId}`);
   };
 
-  if (!spots) return null;
+  if (!spots.length) return null;
   return (
     <div className="hailMary">
       <div className="mainContainer homePage">
