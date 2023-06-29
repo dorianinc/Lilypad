@@ -1,0 +1,19 @@
+.booking-details-section {
+  display: flex;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 92.5vh;
+  border: 2px solid red;
+}
+
+.booking-details-content {
+  border: 2px solid blue;
+  height: 100%;
+  width: 30%;
+}
+
+.map {
+  border: 2px solid green;
+  height: 100%;
+  width: 70%;
+}

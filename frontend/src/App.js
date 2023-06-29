@@ -10,6 +10,7 @@ import NewSpotPage from "./components/Spots/CreateSpotForm/CreateSpot";
 import EditSpotPage from "./components/Spots/EditSpotForm/EditSpot";
 import BookingsPage from "./components/Bookings/UsersBookings";
 import ConfirmBooking from "./components/Bookings/BookingConfirmation";
+import BookingDetails from "./components/Bookings/BookingDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ function App() {
           <Route path="/spots/new">
             <NewSpotPage />
           </Route>
-          <Route exact path="/spots/:spotId">
+          <Route path="/spots/:spotId">
             <SpotPage />
           </Route>
           <Route path="/spots">
@@ -37,6 +38,9 @@ function App() {
           </Route>
           <Route path="/bookings/spots/:spotId">
             <ConfirmBooking />
+          </Route>
+          <Route path="/bookings/:bookingId">
+            <BookingDetails />
           </Route>
           <Route path="/bookings">
             <BookingsPage />

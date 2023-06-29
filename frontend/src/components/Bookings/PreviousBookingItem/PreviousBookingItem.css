@@ -3,6 +3,7 @@
   gap: 10px;
   height: 100px;
   width: 300;
+  cursor: pointer;
 }
 
 .prev-booking-image-container{

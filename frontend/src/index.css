@@ -1,4 +1,9 @@
 /* Global CSS Styles */
+html,body{
+  padding: 0;
+  margin: 0;
+}
+
 body,textarea,input {
   font-family: "Poppins", sans-serif;
 }

@@ -1,12 +1,19 @@
+import { useHistory } from "react-router-dom";
 import { format, formatDistance, addDays } from "date-fns";
 import "./PreviousBookingItem.css";
 
 const PreviousBookingItem = ({ booking }) => {
+  const history = useHistory();
   const formattedStartDate = format(addDays(new Date(booking.startDate), 1), "MMM do");
   const formattedEndDate = format(addDays(new Date(booking.endDate), 1), "MMM do");
+
+  const handleClick = () => {
+    history.push(`/bookings/${booking.id}`);
+  };
+
   if (!booking.id || !booking.Spot) return null;
   return (
-    <div className="prev-booking-item">
+    <div className="prev-booking-item" onClick={handleClick}>
       <div className="prev-booking-image-container">
         <img className="prev-booking-image" alt="booking-preview" src={booking.Spot.previewImage} />
       </div>

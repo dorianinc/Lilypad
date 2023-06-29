@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserBookingsThunk } from "../../../store/bookingsReducer";
 import { isPast, isFuture, isSameDay, addDays, isAfter } from "date-fns";
