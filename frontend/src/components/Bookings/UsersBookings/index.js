@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserBookingsThunk } from "../../../store/bookingsReducer";
 import { isPast, isFuture, isSameDay, isAfter } from "date-fns";
@@ -7,15 +8,18 @@ import PreviousBookingItem from "../PreviousBookingItem";
 import "./UsersBookings.css";
 
 const UsersBookings = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const bookings = useSelector((state) => Object.values(state.bookings));
   const upcomingBookings = bookings.filter(
     (booking) =>
       isFuture(new Date(booking.startDate)) || isSameDay(new Date(), new Date(booking.startDate))
   );
-  const previousBookings = bookings.filter((booking) =>
-    isPast(new Date(booking.endDate))
-  );
+  const previousBookings = bookings.filter((booking) => isPast(new Date(booking.endDate)));
+
+  const goBack = () => {
+    history.push("/")
+  }
 
   useEffect(() => {
     dispatch(getUserBookingsThunk());
@@ -29,16 +33,22 @@ const UsersBookings = () => {
       </div>
       <div className="booking-cards-content">
         <div className="upcoming-booking-cards">
-          {upcomingBookings.map((booking) => (
-            <UpcomingBookingItem booking={booking} />
-          ))}
+          {upcomingBookings.length ? (
+            upcomingBookings.map((booking) => <UpcomingBookingItem booking={booking} />)
+          ) : (
+            <div>
+              <h2>Looks like you dont have any upcoming trips!</h2>
+              <div style={{marginTop: "20px"}}>
+                <button className="pink-button" onClick={goBack}>Go back to spots</button>
+              </div>
+            </div>
+          )}
         </div>
         <div className="previous-booking-cards">
           <h2 className="previous-trips-header">Previous trips</h2>
           <div className="previous-bookings-grid">
-            {previousBookings.map((booking) => (
-              <PreviousBookingItem booking={booking} />
-            ))}
+            {previousBookings.length &&
+              previousBookings.map((booking) => <PreviousBookingItem booking={booking} />)}
           </div>
         </div>
       </div>
