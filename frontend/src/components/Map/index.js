@@ -1,14 +1,13 @@
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import { useEffect, useMemo } from "react";
 import { useMap } from "../../context/MapContext";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import "./Map.css";
-dotenv.config();
 
-const Map = ({ bookmarks }) => {
+const Map = ({ spot }) => {
   const { currentZoom, setCurrentZoom, currentLat, setCurrentLat, currentLng, setCurrentLng } =
     useMap();
-  // const center = useMemo(() => ({ lat: currentLat, lng: currentLng }), [currentLat, currentLng]);
+  const center = useMemo(() => ({ lat: currentLat, lng: currentLng }), [currentLat, currentLng]);
   const mapOptions = {
     zoom: currentZoom,
     center,
@@ -26,8 +25,7 @@ const Map = ({ bookmarks }) => {
   if (!isLoaded) return <h1>Loading...</h1>;
   return (
     <>
-      <GoogleMap options={mapOptions} mapContainerClassName="map-container">
-      </GoogleMap>
+      <GoogleMap options={mapOptions} mapContainerClassName="map-container"></GoogleMap>
     </>
   );
 };

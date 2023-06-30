@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserBookingsThunk } from "../../../store/bookingsReducer";
-import { isPast, isFuture, isSameDay, addDays, isAfter } from "date-fns";
+import { isPast, isFuture, isSameDay, isAfter } from "date-fns";
 import UpcomingBookingItem from "../UpcomingBookingItem";
 import PreviousBookingItem from "../PreviousBookingItem";
 import "./UsersBookings.css";
@@ -11,11 +11,10 @@ const UsersBookings = () => {
   const bookings = useSelector((state) => Object.values(state.bookings));
   const upcomingBookings = bookings.filter(
     (booking) =>
-      isFuture(addDays(new Date(booking.startDate), 1)) ||
-      isSameDay(new Date(), addDays(new Date(booking.startDate), 1))
+      isFuture(new Date(booking.startDate)) || isSameDay(new Date(), new Date(booking.startDate))
   );
   const previousBookings = bookings.filter((booking) =>
-    isPast(addDays(new Date(booking.endDate), 1))
+    isPast(new Date(booking.endDate))
   );
 
   useEffect(() => {
@@ -38,9 +37,8 @@ const UsersBookings = () => {
           <h2 className="previous-trips-header">Previous trips</h2>
           <div className="previous-bookings-grid">
             {previousBookings.map((booking) => (
-              <PreviousBookingItem booking={booking}/>
+              <PreviousBookingItem booking={booking} />
             ))}
-
           </div>
         </div>
       </div>
