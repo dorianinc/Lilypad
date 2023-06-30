@@ -1,0 +1,44 @@
+.bookings-main-container {
+  width: 1440px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.bookings-header-container {
+  display: grid;
+  gap: 25px;
+  align-content: space-between;
+}
+
+.bookings-header {
+  font-weight: 500;
+  font-size: 2rem;
+}
+
+.bookings-sub-header {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.booking-cards-content {
+  display: flex;
+  margin-top: 25px;
+}
+.upcoming-booking-cards {
+  width: 65%;
+}
+
+.previous-booking-cards {
+  width: 35%;
+}
+
+.previous-trips-header {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.previous-bookings-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(2, 275px);
+}

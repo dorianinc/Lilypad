@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getSingleSpotThunk, updateSpotThunk } from "../../../store/spotsReducer";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import '../../Forms/Forms.css'
+
 
 function EditSpotPage() {
   const [country, setCountry] = useState("");
@@ -162,7 +162,7 @@ function EditSpotPage() {
         <p className="errors">{errors.price}</p>
         <hr className="lines form"/>
         <div className="buttonContainer">
-          <button className="pinkButton edit">Update your Spot</button>
+          <button className="pink-button edit">Update your Spot</button>
         </div>
       </form>
     </div>

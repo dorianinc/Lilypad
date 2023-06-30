@@ -13,7 +13,7 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [buttonClass, setButtonClass] = useState("pinkButton disabled");
+  const [buttonClass, setButtonClass] = useState("pink-button disabled");
   const { closeModal } = useModal();
 
   const handleSubmit = (e) => {
@@ -51,9 +51,9 @@ function SignupFormModal() {
       password.length >= 6 &&
       password === confirmPassword
     ) {
-      setButtonClass("pinkButton");
+      setButtonClass("pink-button");
     } else {
-      setButtonClass("pinkButton disabled");
+      setButtonClass("pink-button disabled");
     }
   }, [username, password, confirmPassword]);
 
@@ -123,7 +123,7 @@ function SignupFormModal() {
         {errors.confirmPassword && <p className="errors">{errors.confirmPassword}</p>}
         <button
           className={buttonClass}
-          disabled={buttonClass === "pinkButton disabled"}
+          disabled={buttonClass === "pink-button disabled"}
           type="submit"
         >
           Sign Up

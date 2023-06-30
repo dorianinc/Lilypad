@@ -32,7 +32,7 @@
   text-align: center;
 }
 
-.pinkButton.disabled {
+.pink-button.disabled {
   cursor: default;
   color: white;
   background-color: #a6a6aa;
@@ -41,7 +41,7 @@
   box-shadow: 5px 5px 5px #80808b;
 }
 
-input {
+input.modal {
   height: 30px;
   width: 350px;
 }

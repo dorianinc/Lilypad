@@ -94,8 +94,9 @@ router.get("/", validateQueries, async (req, res) => {
     if (previewImage) spot.previewImage = previewImage.url;
     else spot.previewImage = "image url";
   }
-
-  res.status(200).json({ Spots: spots, page, size });
+  
+  res.status(200).json(spots);
+  // res.status(200).json({ Spots: spots, page, size });
 });
 
 // Get all Spots of Specfic Owner
@@ -346,14 +347,14 @@ router.get("/:spotId/bookings", [restoreUser, requireAuth], async (req, res) => 
         const newBooking = { User, id, spotId, userId, startDate, endDate, createdAt, updatedAt };
         bookingsObj.push(newBooking);
       }
-      res.status(200).json({ Booking: bookingsObj });
+      res.status(200).json(bookingsObj);
     } else {
       bookings = await Booking.findAll({
         where: {
           spotId: req.params.spotId,
         },
       });
-      res.status(200).json({ Booking: bookings });
+      res.status(200).json(bookings);
     }
   }
 });

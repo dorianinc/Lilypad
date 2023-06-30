@@ -8,13 +8,13 @@ function CreateReviewModal({ spotId }) {
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
   const [errorsObj, setErrorsObj] = useState({});
-  const [buttonClass, setButtonClass] = useState("pinkButton disabled");
+  const [buttonClass, setButtonClass] = useState("pink-button disabled");
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (review.length >= 10 && stars >= 1) {
-      setButtonClass("pinkButton");
+      setButtonClass("pink-button");
     }
   }, [review, stars]);
 

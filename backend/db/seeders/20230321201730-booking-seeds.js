@@ -22,14 +22,14 @@ module.exports = {
         {
           // 2
           spotId: 2,
-          userId: 1,
+          userId: 6,
           startDate: "2022-11-10T00:00:00", // nov 10th 2021
           endDate: "2022-11-15T00:00:00" // Nov 15th 2021
         },
         {
           // 3
           spotId: 3,
-          userId: 1,
+          userId: 6,
           startDate: "2021-07-01T00:00:00",
           endDate: "2021-07-05T00:00:00",
         },
@@ -38,14 +38,14 @@ module.exports = {
           spotId: 4,
           userId: 1,
           startDate: "2023-03-26T00:00:00",
-          endDate: "2025-03-30T00:00:00",
+          endDate: "2023-03-30T00:00:00",
         },
         {
           // 5
           spotId: 5,
           userId: 1,
           startDate: "2023-03-25T00:00:00",
-          endDate: "2025-03-31T00:00:00",
+          endDate: "2023-03-31T00:00:00",
         },
         {
           // 6
@@ -57,7 +57,7 @@ module.exports = {
         {
           // 7
           spotId: 2,
-          userId: 2,
+          userId: 6,
           startDate: "2021-07-01T00:00:00",
           endDate: "2021-07-05T00:00:00",
         },
@@ -78,7 +78,7 @@ module.exports = {
         {
           // 10
           spotId: 5,
-          userId: 1,
+          userId: 6,
           startDate: "2021-07-01T00:00:00",
           endDate: "2021-07-05T00:00:00",
         },

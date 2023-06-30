@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { createSpotThunk, addImageThunk, getSingleSpotThunk } from "../../../store/spotsReducer";
-import "../../Forms/Forms.css";
 
 function NewSpotPage() {
   const [country, setCountry] = useState("");
@@ -239,7 +238,7 @@ function NewSpotPage() {
         </div>
         <hr className="lines form" />
         <div className="buttonContainer">
-          <button className="pinkButton create">Create Spot</button>
+          <button className="pink-button create">Create Spot</button>
         </div>
       </form>
     </div>

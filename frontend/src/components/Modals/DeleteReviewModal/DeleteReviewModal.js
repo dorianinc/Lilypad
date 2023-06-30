@@ -17,10 +17,10 @@ function DeleteReviewModal({ reviewId }) {
       <h1>Confirm Delete</h1>
       <p style={{"margin-bottom": "15px"}}>Are you sure you want to delete this review?</p>
       <form className="loginForm">
-        <button className="pinkButton confirm" onClick={(e) => handleClick(e, reviewId)}>
+        <button className="pink-button confirm" onClick={(e) => handleClick(e, reviewId)}>
           Yes (Delete Review)
         </button>
-        <button className="greyButton reject" onClick={(e) => handleClick(e)}>
+        <button className="grey-button reject" onClick={(e) => handleClick(e)}>
           No (Keep Review)
         </button>
       </form>

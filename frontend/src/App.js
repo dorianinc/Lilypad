@@ -4,10 +4,13 @@ import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/sessionReducer";
 import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage/HomePage";
-import SpotPage from "./components/SpotDetailsPage/SpotDetails";
-import ManageSpotsPage from "./components/ManageSpotsPage/ManageSpots";
-import NewSpotPage from "./components/Forms/CreateSpotForm/CreateSpot";
-import EditSpotPage from "./components/Forms/EditSpotForm/EditSpot";
+import SpotPage from "./components/Spots/SpotDetails/SpotDetails";
+import ManageSpotsPage from "./components/Spots/UsersSpots/UsersSpots";
+import NewSpotPage from "./components/Spots/CreateSpotForm/CreateSpot";
+import EditSpotPage from "./components/Spots/EditSpotForm/EditSpot";
+import BookingsPage from "./components/Bookings/UsersBookings";
+import ConfirmBooking from "./components/Bookings/BookingConfirmation";
+import BookingDetails from "./components/Bookings/BookingDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,20 +24,29 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
           <Route path="/spots/new">
             <NewSpotPage />
           </Route>
-          <Route path="/spots/current">
-            <ManageSpotsPage />
+          <Route path="/spots/:spotId/edit">
+            <EditSpotPage />
           </Route>
           <Route exact path="/spots/:spotId">
             <SpotPage />
           </Route>
-          <Route path="/spots/:spotId/edit">
-            <EditSpotPage />
+          <Route exact path="/spots">
+            <ManageSpotsPage />
+          </Route>
+          <Route path="/bookings/spots/:spotId">
+            <ConfirmBooking />
+          </Route>
+          <Route path="/bookings/:bookingId">
+            <BookingDetails />
+          </Route>
+          <Route path="/bookings">
+            <BookingsPage />
+          </Route>
+          <Route path="/">
+            <HomePage />
           </Route>
         </Switch>
       )}

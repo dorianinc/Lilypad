@@ -1,35 +1,31 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getSingleSpotThunk, clearSpots } from "../../store/spotsReducer";
-import { getReviewsThunk, clearReviews } from "../../store/reviewsReducer";
-import OpenModalButton from "../Modals/OpenModalButton/OpenModal";
-import Bookings from "../Bookings";
-import CreateReviewModal from "../Modals/CreateReviewModal/CreateReview";
-import DeleteReviewModal from "../Modals/DeleteReviewModal/DeleteReviewModal";
+import { getSingleSpotThunk } from "../../../store/spotsReducer";
+import { getReviewsThunk, clearReviews } from "../../../store/reviewsReducer";
+import OpenModalButton from "../../Modals/OpenModalButton/OpenModal";
+import Bookings from "../../Bookings/BookingForm";
+import CreateReviewModal from "../../Modals/CreateReviewModal/CreateReview";
+import DeleteReviewModal from "../../Modals/DeleteReviewModal/DeleteReviewModal";
+import { useCalendar } from "../../../context/CalendarContext";
 import "./SpotDetails.css";
 
 function SpotPage() {
   const { spotId } = useParams();
+  const { startDate, endDate } = useCalendar();
   const dispatch = useDispatch();
 
-  const spot = useSelector((state) => state.spots[spotId]);
+  const spot = useSelector((state) => state.spots);
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
     return () => {
-      dispatch(clearSpots());
+      // dispatch(clearSpots());
       dispatch(clearReviews());
     };
   }, [dispatch, spotId]);
 
-  const reviewsObj = useSelector((state) => state.reviews);
-  const reviews = Object.values(reviewsObj).reverse();
-
-  // check to see if reviews have been added or deleted
-  useEffect(() => {
-    dispatch(getSingleSpotThunk(spotId));
-  }, [dispatch, spotId, reviewsObj]);
+  const reviews = useSelector((state) => Object.values(state.reviews).reverse());
 
   // find user then check if user has left a review
   let hasReviewed = false;
@@ -54,10 +50,8 @@ function SpotPage() {
     return image.preview === true || image.preview === 1;
   });
   const imageArray = spot.SpotImages.filter((image) => {
-
     return image.id !== previewImage.id;
   });
-
 
   return (
     <div className="mainContainer spotDetails">
@@ -82,7 +76,7 @@ function SpotPage() {
           </h2>
           <p id="spotDescription">{spot.description}</p>
         </div>
-        <div className="reserveSection">
+        <div className="reserve-section">
           <div id="priceAndRating">
             <p id="spotPrice">
               <span>${Number(spot.price).toFixed(2)}</span> night
@@ -97,10 +91,7 @@ function SpotPage() {
                 : ` · ${spot.numReviews} reviews`}
             </p>
           </div>
-          <Bookings/>
-          <button className="pinkButton reserve" onClick={() => alert("Feature Coming Soon!")}>
-            Reserve
-          </button>
+          <Bookings spotId={spotId} />
         </div>
       </div>
       <hr className="lines spotDetails" />
@@ -116,7 +107,7 @@ function SpotPage() {
         </h2>
         {!user ? null : user.id && user.id !== spot.Owner.id && !hasReviewed ? (
           <OpenModalButton
-            className="greyButton review"
+            className="grey-button review"
             buttonText="Post your Review"
             modalComponent={<CreateReviewModal spotId={spotId} />}
           />
@@ -131,7 +122,7 @@ function SpotPage() {
               <p>{review.review}</p>
               {!user ? null : user.id === review.userId ? (
                 <OpenModalButton
-                  className="greyButton delete"
+                  className="grey-button delete"
                   buttonText="Delete"
                   modalComponent={<DeleteReviewModal reviewId={review.id} />}
                 />

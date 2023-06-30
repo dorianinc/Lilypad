@@ -1,25 +1,24 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserSpotsThunk, clearSpots } from "../../store/spotsReducer";
-import OpenModalButton from "../Modals/OpenModalButton/OpenModal";
-import DeleteSpotModal from "../Modals/DeleteSpotModal/DeleteSpot";
-import "./ManageSpots.css";
+import { getUserSpotsThunk } from "../../../store/spotsReducer";
+import OpenModalButton from "../../Modals/OpenModalButton/OpenModal";
+import DeleteSpotModal from "../../Modals/DeleteSpotModal/DeleteSpot";
+import "./UsersSpots.css";
 
-function ManageSpotsPage() {
+function UsersSpots() {
   const dispatch = useDispatch();
   const history = useHistory();
 
   let closeMenu;
-  const spotsObj = useSelector((state) => state.spots);
-  const spots = Object.values(spotsObj);
+  const spots = useSelector((state) => Object.values(state.spots));
 
   useEffect(() => {
     dispatch(getUserSpotsThunk());
 
-    return () => {
-      dispatch(clearSpots());
-    };
+    // return () => {
+    //   dispatch(clearSpots());
+    // };
   }, [dispatch]);
 
   const handleCreate = () => {
@@ -57,11 +56,11 @@ function ManageSpotsPage() {
                 </div>
               </div>
               <div className="buttonsContainer">
-                <button className="greyButton update" onClick={() => handleUpdate(spot.id)}>
+                <button className="grey-button update" onClick={() => handleUpdate(spot.id)}>
                   Update
                 </button>
                 <OpenModalButton
-                  className="greyButton delete"
+                  className="grey-button delete"
                   buttonText="Delete"
                   onButtonClick={closeMenu}
                   modalComponent={<DeleteSpotModal spotId={spot.id} />}
@@ -72,7 +71,7 @@ function ManageSpotsPage() {
         </div>
       ) : (
         <div>
-          <button className="greyButton create" onClick={handleCreate}>
+          <button className="grey-button create" onClick={handleCreate}>
             Create a Spot
           </button>
         </div>
@@ -81,4 +80,4 @@ function ManageSpotsPage() {
   );
 }
 
-export default ManageSpotsPage;
+export default UsersSpots;

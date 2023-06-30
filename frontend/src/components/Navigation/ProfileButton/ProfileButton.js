@@ -42,11 +42,6 @@ function ProfileButton({ user }) {
     history.push("/");
   };
 
-  const manageSpots = (e) => {
-    e.preventDefault();
-    history.push("/spots/current");
-  };
-
   const dropdown = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -68,15 +63,20 @@ function ProfileButton({ user }) {
         <div className={dropdown} ref={ulRef}>
           {user ? (
             <div className="userInfo">
-              <div><p id="firstName">Hello, {user.firstName}</p></div>
-              <div><p id="email">{user.email}</p></div>
-              <hr className="line userMenu"/>
               <div>
-                <button className="modalButtons auth" onClick={manageSpots}>
-                  Manage Spots
-                </button>
+                <p id="firstName">Hello, {user.firstName}</p>
               </div>
-              <hr className="line userModal"/>
+              <div>
+                <p id="email">{user.email}</p>
+              </div>
+              <hr className="line userMenu" />
+              <Link to="/bookings" onClick={closeMenu}>
+                <button className="modalButtons auth">Trips</button>
+              </Link>
+              <Link to="/spots" onClick={closeMenu}>
+                <button className="modalButtons auth">Manage Spots</button>
+              </Link>
+              <hr className="line userModal" />
               <div>
                 <button className="modalButtons auth" onClick={logout}>
                   Log Out

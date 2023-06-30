@@ -1,0 +1,72 @@
+.upcoming-booking-item {
+  display: flex;
+  height: 200px;
+  width: 900px;
+  margin-bottom: 25px;
+  overflow: hidden;
+  border-radius: 15px;
+  -webkit-box-shadow: 0 0 20px #999999;
+  box-shadow: 0 0 15px #999999;
+  cursor: pointer;
+}
+
+.upcoming-booking-item-info {
+  height: 100%;
+  width: 50%;
+}
+
+.upcoming-booking-item-image-container {
+  position: relative;
+  height: 100%;
+  width: 50%;
+}
+
+.upcoming-booking-item-image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.time-remaining {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  left: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: #fff;
+}
+
+.booking-city-header {
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.booking-section-divider {
+  margin: 15px 0;
+  border: .5px solid #d2d2d2;
+}
+
+.upcoming-booking-item-date-address{
+    display: flex;
+}
+
+.booking-dates{
+    width: 20%;
+    text-align: center;
+    align-self: center;
+    line-height: 20px;
+}
+
+.booking-address-info{
+    align-items: center;
+}
+
+
+.upcoming-booking-item-info {
+  padding: 20px 20px;
+  box-sizing: border-box;
+}
+

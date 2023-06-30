@@ -1,4 +1,9 @@
 /* Global CSS Styles */
+html,body{
+  padding: 0;
+  margin: 0;
+}
+
 body,textarea,input {
   font-family: "Poppins", sans-serif;
 }
@@ -15,7 +20,7 @@ input {
   font-size: 18px;
 }
 
-.pinkButton {
+.pink-button {
   cursor: pointer;
   color: white;
   background-color: #ff5c6c;
@@ -26,14 +31,52 @@ input {
   border-radius: 5px;
 }
 
-.greyButton {
+.grey-button {
   cursor: pointer;
   color: white;
   background-color: #80808b;
   height: 45px;
   font-weight: bold;
   font-size: 18px;
+  border: none;
+  border-radius: 5px;
 }
+
+.buttons-end{
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.black-button{
+  cursor: pointer;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  background-color: #000;
+  width: 70px;
+  border: none;
+  border-radius: 10px;
+}
+
+.clear-button{
+  cursor: pointer;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 400;
+  background-color: transparent;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  text-decoration: underline;
+}
+
+.clear-button:hover{
+  background-color: #f7f7f7;
+}
+
 
 .textArea {
   resize: none;
@@ -95,9 +138,87 @@ input {
 .cardContainer:hover::before {
   position: absolute;
   top: 0;
+  font-weight: 500;
+  font-size: .8rem;
   height: 20px;
   padding: 5px;
   content: attr(data-tooltip);
-  border: 2px solid black;
   background-color: white;
+  border-bottom-right-radius: 10px;
+}
+
+
+.item-divider{
+  margin: 15px 0;
+  border: 1px solid #d2d2d2;;
+}
+
+
+/* -------- CSS for forms --------- */
+
+.mainContainer.newSpot {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.oneLiner {
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.flexedInputs {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.cityLabel {
+  flex-basis: 60%;
+}
+
+.cityLabel > input {
+  width: 100%;
+}
+
+.stateLabel {
+  flex-basis: 40%;
+}
+
+.stateLabel > input {
+  width: 100%;
+}
+
+.priceLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.images {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.lines.form {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+}
+.pink-button.create,
+.pink-button.edit {
+  margin: 10px;
+  width: 200px;
+}
+
+.errors {
+  color: red;
+  font-weight: bold;
 }
