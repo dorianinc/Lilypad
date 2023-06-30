@@ -45,8 +45,9 @@ const Calendar = ({ bookings }) => {
     const currentDate = format(addDays(new Date(utcDay), 1), "MMM-dd-yyyy");
     if (bookings.length) {
       for (let i = 0; i < bookings.length; i++) {
-        let startDate = bookings[i].startDate;
-        let endDate = bookings[i].endDate;
+        console.log("LOOOOP CHECK");
+        let startDate = format(addDays(new Date(bookings[i].startDate), 1), "MMM-dd-yyyy");
+        let endDate = format(addDays(new Date(bookings[i].endDate), 1), "MMM-dd-yyyy");
         if (
           getTime(new Date(currentDate)) >= getTime(new Date(startDate)) &&
           getTime(new Date(currentDate)) <= getTime(new Date(endDate))

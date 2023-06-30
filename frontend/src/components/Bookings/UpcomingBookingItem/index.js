@@ -5,8 +5,6 @@ import "./UpcomingBookingItem.css";
 const UpcomingBookingItem = ({ booking }) => {
   const history = useHistory();
   const startDate = addDays(new Date(booking.startDate), 1);
-  console.log("startDate 👉", startDate)
-  console.log("booking.startDate 👉", booking.startDate)
   const timeRemaining = formatDistance(Date.now(), startDate);
   const formattedStartDate = format(addDays(new Date(booking.startDate), 1), "MMM do");
   const formattedEndDate = format(addDays(new Date(booking.endDate), 1), "MMM do");
