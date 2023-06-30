@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserSpotsThunk, clearSpots } from "../../../store/spotsReducer";
+import { getUserSpotsThunk } from "../../../store/spotsReducer";
 import OpenModalButton from "../../Modals/OpenModalButton/OpenModal";
 import DeleteSpotModal from "../../Modals/DeleteSpotModal/DeleteSpot";
 import "./UsersSpots.css";
@@ -11,15 +11,14 @@ function UsersSpots() {
   const history = useHistory();
 
   let closeMenu;
-  const spotsObj = useSelector((state) => state.spots);
-  const spots = Object.values(spotsObj);
+  const spots = useSelector((state) => Object.values(state.spots));
 
   useEffect(() => {
     dispatch(getUserSpotsThunk());
 
-    return () => {
-      dispatch(clearSpots());
-    };
+    // return () => {
+    //   dispatch(clearSpots());
+    // };
   }, [dispatch]);
 
   const handleCreate = () => {

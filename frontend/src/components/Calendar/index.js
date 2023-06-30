@@ -7,7 +7,6 @@ import "react-date-range/dist/styles.css"; // main style file
 import "./Calendar.css";
 
 const Calendar = ({ bookings }) => {
-  console.log("bookings 👉", bookings);
   const [shownDateChangeValue, setShownDateChangeValue] = useState(new Date());
   // state created to check if use created next Month ou previous month
   const [isNextMonth, setIsNextMonth] = useState(true);
@@ -45,7 +44,6 @@ const Calendar = ({ bookings }) => {
     const currentDate = format(addDays(new Date(utcDay), 1), "MMM-dd-yyyy");
     if (bookings.length) {
       for (let i = 0; i < bookings.length; i++) {
-        console.log("LOOOOP CHECK");
         let startDate = format(addDays(new Date(bookings[i].startDate), 1), "MMM-dd-yyyy");
         let endDate = format(addDays(new Date(bookings[i].endDate), 1), "MMM-dd-yyyy");
         if (

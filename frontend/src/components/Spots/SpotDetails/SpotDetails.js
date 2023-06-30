@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getSingleSpotThunk, clearSpots } from "../../../store/spotsReducer";
+import { getSingleSpotThunk } from "../../../store/spotsReducer";
 import { getReviewsThunk, clearReviews } from "../../../store/reviewsReducer";
 import OpenModalButton from "../../Modals/OpenModalButton/OpenModal";
 import Bookings from "../../Bookings/BookingForm";
@@ -20,7 +20,7 @@ function SpotPage() {
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
     return () => {
-      dispatch(clearSpots());
+      // dispatch(clearSpots());
       dispatch(clearReviews());
     };
   }, [dispatch, spotId]);

@@ -27,14 +27,14 @@ function App() {
           <Route path="/spots/new">
             <NewSpotPage />
           </Route>
+          <Route path="/spots/:spotId/edit">
+            <EditSpotPage />
+          </Route>
           <Route path="/spots/:spotId">
             <SpotPage />
           </Route>
           <Route path="/spots">
             <ManageSpotsPage />
-          </Route>
-          <Route path="/spots/:spotId/edit">
-            <EditSpotPage />
           </Route>
           <Route path="/bookings/spots/:spotId">
             <ConfirmBooking />
