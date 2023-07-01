@@ -48,6 +48,8 @@ router.get("/", [restoreUser, requireAuth], async (req, res) => {
       const image = booking.Spot.SpotImages[j];
       if (image.preview === true) {
         booking.Spot.previewImage = image.url;
+      }else{
+        booking.Spot.images = image.url
       }
     }
     if (!booking.Spot.previewImage) {

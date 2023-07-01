@@ -4,7 +4,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class SpotImage extends Model {
     static associate(models) {
-      SpotImage.belongsTo(models.Spot, {foreignKey: "spotId"})
+      SpotImage.belongsTo(models.Spot, { foreignKey: "spotId" });
     }
   }
   SpotImage.init(
@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "SpotImage",
+      defaultScope: {
+        attributes: {
+          exclude: ["userId", "createdAt", "updatedAt"],
+        },
+      },
     }
   );
   return SpotImage;

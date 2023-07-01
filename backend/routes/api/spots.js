@@ -85,16 +85,38 @@ router.get("/", validateQueries, async (req, res) => {
     average = starSum / totalReviews;
     spot.avgRating = average;
 
-    const previewImage = await SpotImage.findOne({
+    const owner = await User.findOne({
+      where: {
+        id: spot.ownerId,
+      },
+      attributes: ["id", "firstName", "lastName"],
+      raw: true,
+    });
+    spot.owner = owner;
+
+    const imagesArr = await SpotImage.findAll({
       where: {
         spotId: spot.id,
-        preview: true,
       },
+      raw: true,
     });
+
+    const previewImage = imagesArr.filter(
+      (image) => image.preview === 1 || image.preview === true
+    )[0];
+
+    const images = imagesArr.reduce((filtered, image) => {
+      if(image.id !== previewImage.id){
+        filtered.push(image.url)
+      }
+      return filtered
+    }, []);
+
+    if (images) spot.images = images;
     if (previewImage) spot.previewImage = previewImage.url;
     else spot.previewImage = "image url";
   }
-  
+
   res.status(200).json(spots);
   // res.status(200).json({ Spots: spots, page, size });
 });
@@ -158,18 +180,28 @@ router.get("/:spotId", async (req, res) => {
     });
     spot.avgStarRating = starSum / totalReviews;
 
-    const spotImages = await SpotImage.findAll({
+    const imagesArr = await SpotImage.findAll({
       where: {
-        spotId: spotId,
+        spotId: spot.id,
       },
-      attributes: ["id", "url", "preview"],
+      raw: true,
     });
-    
-    spot.SpotImages = [];
-    for(let i = 0; i < spotImages.length; i++){
-      spot.SpotImages.push(spotImages[i].toJSON())
-    }
-    
+
+    const previewImage = imagesArr.filter(
+      (image) => image.preview === 1 || image.preview === true
+    )[0];
+
+    const images = imagesArr.reduce((filtered, image) => {
+      if(image.id !== previewImage.id){
+        filtered.push(image.url)
+      }
+      return filtered
+    }, []);
+
+    if (images) spot.images = images;
+    if (previewImage) spot.previewImage = previewImage.url;
+    else spot.previewImage = "image url";
+
     const owner = await User.findOne({
       where: {
         id: spot.ownerId,
@@ -177,7 +209,7 @@ router.get("/:spotId", async (req, res) => {
       attributes: ["id", "firstName", "lastName"],
       raw: true,
     });
-    spot.Owner = owner;
+    spot.owner = owner;
 
     res.status(200).json(spot);
   }

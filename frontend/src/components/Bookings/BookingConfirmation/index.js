@@ -10,12 +10,11 @@ import "./BookingConfirmation.css";
 const BookingConfirmation = () => {
   const [paymentOption, setPaymentOption] = useState("");
   const [errors, setErrors] = useState({});
-  console.log("paymentOption 👉", paymentOption);
   const dispatch = useDispatch();
   const history = useHistory();
   const { spotId } = useParams();
   const { startDate, endDate, setStartDate, setEndDate } = useCalendar();
-
+  
   const frogFacts = [
     "Most frogs can jump 20 times their body length.",
     "Frogs breathe through their skin.",
@@ -24,6 +23,8 @@ const BookingConfirmation = () => {
     "Frogs have been on Earth since the age of dinosaurs.",
     "Some frogs spend part of their lives frozen solid.",
   ];
+  const [quoteIndex, setQuoteIndex] = useState(Math.floor(Math.random() * frogFacts.length))
+
   const user = useSelector((state) => state.session.user);
   const spot = useSelector((state) => state.spots);
   const formattedStartDate = format(new Date(startDate), "MMM do");
