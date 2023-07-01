@@ -7,12 +7,10 @@ import ModalButton from "../../Modals/ModalButton";
 import Bookings from "../../Bookings/BookingForm";
 import CreateReviewModal from "../../Modals/CreateReviewModal/CreateReview";
 import DeleteReviewModal from "../../Modals/DeleteReviewModal/DeleteReviewModal";
-import { useCalendar } from "../../../context/CalendarContext";
 import "./SpotDetails.css";
 
 function SpotPage() {
   const { spotId } = useParams();
-  const { startDate, endDate } = useCalendar();
   const dispatch = useDispatch();
 
   const spot = useSelector((state) => state.spots);

@@ -1,6 +1,5 @@
 import React from "react";
 import { useModal } from "../../../context/Modal";
-import Calendar from "../../Calendar";
 
 function ModalButton({
   type,

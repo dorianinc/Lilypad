@@ -1,5 +1,4 @@
 import { csrfFetch } from "./csrf";
-import { format, addDays } from "date-fns";
 
 ////////////// Action Creators ///////////////
 export const GET_BOOKINGS = "bookings/GET_BOOKINGS";
@@ -57,8 +56,6 @@ export const getSingleBookingsThunk = (bookingId) => async (dispatch) => {
 
 // create a booking
 export const createBookingsThunk = (spotId, booking) => async (dispatch) => {
-  console.log("booking 👉", booking)
-  console.log("booking 👉", booking)
   const res = await csrfFetch(`/api/spots/${spotId}/bookings`, {
     method: "POST",
     headers: {
@@ -67,7 +64,7 @@ export const createBookingsThunk = (spotId, booking) => async (dispatch) => {
     body: JSON.stringify(booking),
   });
   if (res.ok) {
-    const data = await res.json();
+    await res.json();
     await dispatch(getSpotBookingsThunk(spotId));
   }
 };

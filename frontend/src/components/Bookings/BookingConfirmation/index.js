@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useHistory, Redirect } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleSpotThunk } from "../../../store/spotsReducer";
 import { createBookingsThunk } from "../../../store/bookingsReducer";
@@ -27,7 +27,7 @@ const BookingConfirmation = () => {
     "Frogs have been on Earth since the age of dinosaurs.",
     "Some frogs spend part of their lives frozen solid.",
   ];
-  const [quoteIndex, setQuoteIndex] = useState(Math.floor(Math.random() * frogFacts.length));
+  const [quoteIndex] = useState(Math.floor(Math.random() * frogFacts.length));
 
   const user = useSelector((state) => state.session.user);
   const spot = useSelector((state) => state.spots);
@@ -43,7 +43,7 @@ const BookingConfirmation = () => {
 
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
-  }, [dispatch]);
+  }, [dispatch, spotId]);
 
   useEffect(() => {
     if (startDate && endDate) {

@@ -1,8 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useRef } from "react";
 import { useCalendar } from "../../../context/CalendarContext";
 import { useHistory } from "react-router-dom";
-import { getSpotBookingsThunk, createBookingsThunk } from "../../../store/bookingsReducer";
 import { format } from "date-fns";
 import Calendar from "../../Calendar";
 import "./BookingForm.css";
@@ -10,15 +8,10 @@ import "./BookingForm.css";
 const BookingForm = ({ spotId }) => {
   const {
     setOnStartDate,
-    booking,
-    setBooking,
     startDate,
-    setStartDate,
     endDate,
-    setEndDate,
     showCalendar,
     setShowCalendar,
-    focus,
     setFocus,
   } = useCalendar();
   const history = useHistory();

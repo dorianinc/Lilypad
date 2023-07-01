@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useCalendar } from "../../context/CalendarContext";
-import { useHistory, useLocation } from "react-router-dom";
-import { getSpotBookingsThunk, createBookingsThunk } from "../../store/bookingsReducer";
+import { useLocation } from "react-router-dom";
+import { getSpotBookingsThunk } from "../../store/bookingsReducer";
 import { format } from "date-fns";
 import Dates from "./Dates";
 import "./Calendar.css";
@@ -138,7 +138,10 @@ const Calendar = ({ spotId }) => {
           <button className="clear-button" onClick={() => clearDates(false)}>
             Clear Dates
           </button>
-          <button className="black-button" onClick={pathName.startsWith("/spots") ? closeCalendar : closeModal}>
+          <button
+            className="black-button"
+            onClick={pathName.startsWith("/spots") ? closeCalendar : closeModal}
+          >
             {pathName.startsWith("/spots") ? "Close" : "Save"}
           </button>
         </div>
