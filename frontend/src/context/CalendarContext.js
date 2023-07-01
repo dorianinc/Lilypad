@@ -4,6 +4,8 @@ export const useCalendar = () => useContext(CalendarContext);
 
 export default function CalendarProvider({ children }) {
   const [onStartDate, setOnStartDate] = useState(true);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [focus, setFocus] = useState("");
   const [startDate, setStartDate] = useState(localStorage.getItem("localStartDate"));
   const [endDate, setEndDate] = useState(localStorage.getItem("localEndDate"));
   const [booking, setBooking] = useState([
@@ -18,14 +20,18 @@ export default function CalendarProvider({ children }) {
   return (
     <CalendarContext.Provider
       value={{
-        startDate,
-        setStartDate,
-        endDate,
-        setEndDate,
-        onStartDate,
-        setOnStartDate,
-        booking,
-        setBooking,
+        startDate, // holds start date
+        setStartDate, // sets start date
+        endDate, // holds end date
+        setEndDate, //sets end date
+        onStartDate, // boolean the determines whether we are focused on the start date value or not
+        setOnStartDate, // sets on setOnstartDate (boolean)
+        booking, // holds information for calendar like color and startdate/endate object
+        setBooking, // updates booking each time we select a new date
+        showCalendar, // true of false value that can be used to determine if calendar is being shown or not
+        setShowCalendar, // toggles showCalendar
+        focus, // highlights the startdate or endate when they are focused on with a green sillhouette
+        setFocus,// this can be anything but's currently set to "focused" and unfocused
       }}
     >
       {children}

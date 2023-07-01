@@ -202,7 +202,7 @@ const BookingConfirmation = () => {
         <div className="confirmation-right">
           <div className="confirmation-spot-card">
             <div className="confirmation-spot-card-top">
-              <img alt="spot-preview" id="card-image" src={spot.SpotImages[0].url} />
+              <img alt="spot-preview" id="card-image" src={spot.previewImage} />
               <div className="spot-card-info">
                 <p style={{ fontWeight: "500" }}>{spot.name}</p>
 

@@ -1,100 +1,141 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useCalendar } from "../../context/CalendarContext";
-import { DateRange } from "react-date-range";
-import { SwitchTransition, CSSTransition } from "react-transition-group";
-import { format, addDays, getTime, isAfter } from "date-fns";
-import "react-date-range/dist/styles.css"; // main style file
+import { useHistory } from "react-router-dom";
+import { getSpotBookingsThunk, createBookingsThunk } from "../../store/bookingsReducer";
+import { format } from "date-fns";
+import Dates from "./Dates";
 import "./Calendar.css";
 
-const Calendar = ({ bookings }) => {
-  const [shownDateChangeValue, setShownDateChangeValue] = useState(new Date());
-  // state created to check if use created next Month ou previous month
-  const [isNextMonth, setIsNextMonth] = useState(true);
-  const { onStartDate, setOnStartDate, booking, setBooking, setStartDate, setEndDate } =
-    useCalendar();
-  const [state, setState] = useState(booking);
-  // state created to hold the first month that calendar is showing
+const Calendar = ({ spotId }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const calendarRef = useRef();
+  const [formattedDate, setFormattedDate] = useState("");
+  const [numNights, setNumNights] = useState();
+  const bookings = useSelector((state) => Object.values(state.bookings));
+  
+  const { setOnStartDate, booking, setBooking, startDate, setStartDate, endDate, setEndDate,  showCalendar, setShowCalendar, focus, setFocus} =
+  useCalendar();
+  console.log("focus in calendar 👉", focus)
 
-  const setFocusedRange = (focusedRange) => {
-    setState((state) => {
-      return { ...state, focusedRange };
+  ////// bookings logic ///////
+  useEffect(() => {
+    dispatch(getSpotBookingsThunk(spotId));
+  }, [dispatch, spotId]);
+
+
+  ////// calendar logic ///////
+  const openCalendar = () => {
+    setOnStartDate(true);
+    setShowCalendar(true);
+    setFocus(1);
+  };
+
+  const closeCalendar = () => {
+    setShowCalendar(false);
+    setFocus("");
+  };
+
+  useEffect(() => {
+    if (!showCalendar) return;
+
+    document.addEventListener("click", (e) => {
+      if (calendarRef.current && !calendarRef.current.contains(e.target)) {
+        closeCalendar(true);
+      }
     });
-  };
+    return () => document.removeEventListener("click", closeCalendar);
+  }, [showCalendar]);
 
-  const handleSelect = (ranges) => {
-    const { selection } = ranges;
-    const startDate = selection.startDate;
-    const endDate = selection.endDate;
-    setBooking([selection]);
-    localStorage.setItem("localStartDate", startDate);
-    setStartDate(startDate);
-    if (startDate.getTime() < endDate.getTime()) {
-      localStorage.setItem("localEndDate", endDate);
-      setEndDate(endDate);
-    } else {
-      localStorage.setItem("localEndDate", "");
-      setEndDate("");
+  useEffect(() => {
+    if (startDate && !endDate) {
+      setFocus(2);
+      setNumNights(0);
+      setFormattedDate("");
     }
-    setOnStartDate(false);
-  };
-
-  const disabledDays = [];
-  const bookedDays = (day) => {
-    const utcDay = new Date(day.toLocaleDateString("sv-SE"));
-    const currentDate = format(addDays(new Date(utcDay), 1), "MMM-dd-yyyy");
-    if (bookings.length) {
-      for (let i = 0; i < bookings.length; i++) {
-        let startDate = format(addDays(new Date(bookings[i].startDate), 1), "MMM-dd-yyyy");
-        let endDate = format(addDays(new Date(bookings[i].endDate), 1), "MMM-dd-yyyy");
-        if (
-          getTime(new Date(currentDate)) >= getTime(new Date(startDate)) &&
-          getTime(new Date(currentDate)) <= getTime(new Date(endDate))
-        ) {
-          disabledDays.push(new Date(currentDate));
-          return true;
-        }
+    if (startDate && endDate) {
+      const formattedStartDate = format(new Date(startDate), "MMM dd");
+      const formattedEndDate = format(new Date(endDate), "MMM dd");
+      if (new Date(formattedStartDate).getTime() < new Date(formattedEndDate).getTime()) {
+        setFormattedDate(`${formattedStartDate} - ${formattedEndDate}`);
+        setNumNights(
+          Math.round(
+            (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 3600 * 24)
+          )
+        );
+        closeCalendar();
       }
     }
+  }, [startDate, endDate]);
+
+  const clearDates = (submitted) => {
+    const dates = booking[0];
+
+    if (submitted) setFocus("");
+    else setFocus(1);
+    dates.startDate = null;
+    dates.endDate = new Date("");
+    localStorage.setItem("localStartDate", "");
+    setStartDate("");
+    localStorage.setItem("localEndDate", "");
+    setEndDate("");
+    setNumNights(0);
+    setFormattedDate("");
+    setBooking([dates]);
+    setOnStartDate(true);
   };
 
   return (
-    <>
-      <SwitchTransition mode="out-in">
-        <CSSTransition
-          /*** call the transition when month changes ***/
-          key={shownDateChangeValue}
-          /*** code related to SwitchTransition ***/
-          addEndListener={(node, done) => node.addEventListener("transitionend", done, false)}
-          /*** Set the transition class related to the user action ***/
-          classNames={isNextMonth ? "fadeRightToLeft" : "fadeLeftToRight"}
-        >
-          <DateRange
-            months={2} // number of months thats are displayed
-            minDate={new Date()} // if less than minDate those days are disables
-            showDateDisplay={false} // hides the default start date - end date display
-            focusedRange={onStartDate ? [0, 0] : [0, 1]} // [0,0] focuses the start date && [0,1] focuses the end date
-            disabledDay={bookedDays} // pushed the days that should be disabled into an array
-            disabledDates={disabledDays} // takes the disables days array and disables the days
-            ranges={booking} // ** collects the start date and end date values **
-            onRangeFocusChange={setFocusedRange}
-            onChange={handleSelect} // handles on change after every date is selected
-            showSelectionPreview={true}
-            moveRangeOnFirstSelection={false}
-            direction="horizontal" // direction the months flow
-            shownDate={shownDateChangeValue} /*** set the current month ***/
-            showMonthAndYearPickers={false} // hides the dropdown option for months
-            fixedHeight={true} // keeps the calender a consistent height
-            preventSnapRefocus={true} // keeps the calendar from rendering when you select a date in the 2nd month
-            onShownDateChange={(month) => {
-              // checks if user clicked next or previous month, this is used to trigger transitions
-              const isNext = isAfter(month, shownDateChangeValue);
-              setIsNextMonth(isNext ? true : false);
-              setShownDateChangeValue(month);
-            }}
-          />
-        </CSSTransition>
-      </SwitchTransition>
-    </>
+        <div className="calendar-content">
+          <div className="month-container">
+            <div className="booking-summary-review">
+              <div>
+                <h2>
+                  {numNights
+                    ? `${numNights} ${numNights === 1 ? "night" : "nights"}`
+                    : "Select dates"}
+                </h2>
+                <p>
+                  {formattedDate ? `${formattedDate}` : "Add your travel dates for exact pricing"}
+                </p>
+              </div>
+              <div className="start-end-container">
+                <div
+                  className={`start-date-container ${
+                    focus === 1 ? "focused" : focus === 2 ? "unfocused" : null
+                  }`}
+                  onClick={openCalendar}
+                >
+                  <p id="checkin-text">CHECK-IN</p>
+                  <p id="start-date-text">
+                    {startDate ? format(new Date(startDate), "MM/dd/yyyy") : "Add Date"}
+                  </p>
+                </div>
+                <div
+                  className={`end-date-container ${
+                    focus === 2 ? "focused" : focus === 1 ? "unfocused" : null
+                  }`}
+                  onClick={openCalendar}
+                >
+                  <p id="checkout-text">CHECKOUT</p>
+                  <p id="end-date-text">
+                    {endDate ? format(new Date(endDate), "MM/dd/yyyy") : "Add Date"}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <Dates bookings={bookings} />
+            <div className="buttons-end">
+              <button className="clear-button" onClick={() => clearDates(false)}>
+                Clear Dates
+              </button>
+              <button className="black-button" onClick={closeCalendar}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
   );
 };
 

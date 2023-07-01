@@ -24,18 +24,18 @@ if (process.env.NODE_ENV !== "production") {
 
 function Root() {
   return (
-    <ModalProvider>
-      <Provider store={store}>
-        <BrowserRouter>
-          <MapProvider>
-            <CalendarProvider>
+    <CalendarProvider>
+      <ModalProvider>
+        <Provider store={store}>
+          <BrowserRouter>
+            <MapProvider>
               <App />
-            </CalendarProvider>
-          </MapProvider>
-          <Modal />
-        </BrowserRouter>
-      </Provider>
-    </ModalProvider>
+            </MapProvider>
+            <Modal />
+          </BrowserRouter>
+        </Provider>
+      </ModalProvider>
+    </CalendarProvider>
   );
 }
 

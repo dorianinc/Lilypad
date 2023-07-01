@@ -1,5 +1,6 @@
 import React from "react";
 import { useModal } from "../../../context/Modal";
+import Calendar from "../../Calendar";
 
 function OpenModalButton({
   modalComponent, // component to render inside the modal
@@ -8,10 +9,8 @@ function OpenModalButton({
   onModalClose, // optional: callback function that will be called once the modal is closed
   className
 }) {
-  console.log("onButtonClick 👉", onButtonClick)
   const { setModalContent, setOnModalClose } = useModal();
 
-  console.log("typeof onButtonClick  👉", typeof onButtonClick )
   const onClick = () => {
     if (typeof onButtonClick === "function") onButtonClick();
     if (typeof onModalClose === "function") setOnModalClose(onModalClose);
