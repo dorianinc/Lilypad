@@ -16,16 +16,17 @@ function SpotPage() {
   const dispatch = useDispatch();
 
   const spot = useSelector((state) => state.spots);
+
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
     return () => {
-      // dispatch(clearSpots());
       dispatch(clearReviews());
     };
   }, [dispatch, spotId]);
 
   const reviews = useSelector((state) => Object.values(state.reviews).reverse());
+  console.log("reviews 👉", reviews)
 
   // find user then check if user has left a review
   let hasReviewed = false;
@@ -43,16 +44,8 @@ function SpotPage() {
     })
   );
 
-  if (!spot || !spot.Owner) return null;
-
-  // finds one preview image to set as main image and then add the rest to an array
-  const previewImage = spot.SpotImages.find((image) => {
-    return image.preview === true || image.preview === 1;
-  });
-  const imageArray = spot.SpotImages.filter((image) => {
-    return image.id !== previewImage.id;
-  });
-
+  if (!spot || !spot.owner) return null;
+  const images = spot.images;
   return (
     <div className="mainContainer spotDetails">
       <h1>{spot.name}</h1>
@@ -61,18 +54,18 @@ function SpotPage() {
       </h2>
       <div className="imagesContainer">
         <div className="previewImage" id="box-1">
-          <img alt="preview" src={previewImage?.url} />
+          <img alt="preview" src={spot.previewImage} />
         </div>
-        {imageArray.map((image) => (
-          <div className="supportImages" key={`box-${image.id}`}>
-            <img className="supportingImages" alt={image.id} src={image.url} />
+        {images.map((image, i) => (
+          <div className="supportImages" key={i}>
+            <img className="supportingImages" alt={i} src={image} />
           </div>
         ))}
       </div>
       <div className="spotMenu">
         <div className="spotInfo">
           <h2>
-            Hosted By: {spot.Owner.firstName} {spot.Owner.lastName}
+            Hosted By: {spot.owner.firstName} {spot.owner.lastName}
           </h2>
           <p id="spotDescription">{spot.description}</p>
         </div>
@@ -105,7 +98,7 @@ function SpotPage() {
             ? null
             : ` · ${spot.numReviews} reviews`}
         </h2>
-        {!user ? null : user.id && user.id !== spot.Owner.id && !hasReviewed ? (
+        {!user ? null : user.id && user.id !== spot.owner.id && !hasReviewed ? (
           <OpenModalButton
             className="grey-button review"
             buttonText="Post your Review"
@@ -131,7 +124,7 @@ function SpotPage() {
           ))
         ) : !user ? (
           <div>Be the First to Review!</div>
-        ) : user.id !== spot.Owner.id ? (
+        ) : user.id !== spot.owner.id ? (
           <div>Be the First to Review!</div>
         ) : null}
       </div>

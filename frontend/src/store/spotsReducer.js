@@ -6,7 +6,7 @@ export const GET_SPOTS = "spots/GET_SPOTS";
 export const GET_SINGLE_SPOT = "spots/GET_SINGLE_SPOT";
 // export const UPDATE_SPOT = "spots/UPDATE_SPOT";
 // export const DELETE_SPOT = "spots/DELETE_SPOT";
-// export const CLEAR_SPOTS = "spots/CLEAR_SPOTS";
+export const CLEAR_SPOTS = "spots/CLEAR_SPOTS";
 
 ///////////// Action Creators ///////////////
 
@@ -33,10 +33,10 @@ export const getSingleSpot = (spot) => ({
 //   spotId,
 // });
 
-// // clear spots state
-// export const clearSpots = () => ({
-//   type: CLEAR_SPOTS,
-// });
+// clear spots state
+export const clearSpots = () => ({
+  type: CLEAR_SPOTS,
+});
 
 /////////////////// Thunks ///////////////////
 
@@ -62,7 +62,6 @@ export const getUserSpotsThunk = () => async (dispatch) => {
 // get spot details of single spot
 export const getSingleSpotThunk = (spotId) => async (dispatch) => {
   const res = await fetch(`/api/spots/${spotId}`);
-
   if (res.ok) {
     const data = await res.json();
     dispatch(getSingleSpot(data));
@@ -102,8 +101,8 @@ export const addImageThunk = (spotId, imageObj) => async (dispatch) => {
 };
 
 // update a spot
-export const updateSpotThunk = (spot, spotEdits) => async (dispatch) => {
-  const res = await csrfFetch(`/api/spots/${spot.id}`, {
+export const updateSpotThunk = (spotId, spotEdits) => async (dispatch) => {
+  const res = await csrfFetch(`/api/spots/${spotId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -147,8 +146,8 @@ const spotsReducer = (state = {}, action) => {
     //   newState = { ...state };
     //   delete newState[action.spotId];
     //   return newState;
-    // case CLEAR_SPOTS:
-    //   return {};
+    case CLEAR_SPOTS:
+      return {};
     default:
       return state;
   }

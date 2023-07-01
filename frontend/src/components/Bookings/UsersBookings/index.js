@@ -24,6 +24,7 @@ const UsersBookings = () => {
   useEffect(() => {
     dispatch(getUserBookingsThunk());
   }, [dispatch]);
+  
   if (!bookings.length) return null;
   return (
     <div className="bookings-main-container">

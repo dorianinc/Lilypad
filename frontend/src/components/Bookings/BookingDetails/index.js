@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { format, formatDistance } from "date-fns";
-import { getSingleBookingsThunk, clearBookings } from "../../../store/bookingsReducer";
+import { getUserBookingsThunk } from "../../../store/bookingsReducer";
 import Map from "../../Map";
 import "./BookingDetails.css";
 
@@ -10,27 +10,26 @@ const BookingDetails = () => {
   const { bookingId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const booking = useSelector((state) => state.bookings);
 
+  const getBookings = useSelector((state) => state.bookings);
+  const booking = getBookings[`${bookingId}`];
+  
   useEffect(() => {
-    dispatch(getSingleBookingsThunk(bookingId));
-    return () => {
-      dispatch(clearBookings());
-    };
+    dispatch(getUserBookingsThunk());
   }, [dispatch, bookingId]);
 
   const goBack = () => {
     history.push("/bookings");
   };
 
-  if (!booking.id || !booking.Spot) return null;
+  if (!booking || !booking.Spot) return null;
   const formattedStartDate = format(new Date(booking.startDate), "EE, MMM do");
   const formattedEndDate = format(new Date(booking.endDate), "EE, MMM do");
   return (
     <div className="booking-details-section">
       <div className="booking-details-content">
         <div className="booking-details-image">
-          <img src={booking.Spot.SpotImages[0].url} />
+          <img src={booking.Spot.previewImage} />
           <div className="booking-image-overlay">
             <button className="booking-back-button" onClick={goBack}>
               <i class="fa-solid fa-arrow-left fa-2xl" />
@@ -73,7 +72,7 @@ const BookingDetails = () => {
               <div className="booking-details-meu-content">
                 <p style={{ fontSize: "1rem", fontWeight: "500" }}>Change Booking</p>
                 <p style={{ fontSize: "1rem", fontWeight: "500", color: "#888888" }}>
-                Customize Your Lilypad Bookings for the Perfect Stay
+                  Customize Your Lilypad Bookings for the Perfect Stay
                 </p>
               </div>
             </div>

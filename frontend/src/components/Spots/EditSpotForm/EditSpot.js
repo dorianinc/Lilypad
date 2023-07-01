@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { getSingleSpotThunk, updateSpotThunk } from "../../../store/spotsReducer";
+import { getSingleSpotThunk, updateSpotThunk, getSpotsThunk,clearSpots } from "../../../store/spotsReducer";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-
 
 function EditSpotPage() {
   const [country, setCountry] = useState("");
@@ -17,6 +16,7 @@ function EditSpotPage() {
   const [errors, setErrors] = useState({});
 
   const { spotId } = useParams();
+
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -30,11 +30,16 @@ function EditSpotPage() {
       setName(spot.name);
       setPrice(spot.price);
     });
+
   }, [dispatch, spotId]);
+  
+  useEffect(() => {
+    return(() => {
+      dispatch(getSpotsThunk())
+    })
+  }, [])
 
-  const spot = useSelector((state) => state.spots)[spotId];
-  if (!spot || !spot.id) return null;
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const err = {};
@@ -48,15 +53,16 @@ function EditSpotPage() {
     if (price === null || price === "" || price === 0) {
       err.price = "Price is required";
     }
-
+    
     if (!!Object.values(err).length) {
       setErrors(err);
     } else {
-      const updatedSpot = await dispatch(updateSpotThunk(spot, spotEdits));
-      history.push(`/spots/${updatedSpot.id}`);
+      await dispatch(updateSpotThunk(spotId, spotEdits));
+      history.push(`/spots/${spotId}`);
     }
   };
-
+  
+  // if (!spot || !spot.id) return null;
   return (
     <div className="mainContainer newSpot">
       <form onSubmit={handleSubmit}>
@@ -113,9 +119,9 @@ function EditSpotPage() {
             <p className="errors">{errors.state}</p>
           </label>
         </div>
-        <hr className="lines form"/>
+        <hr className="lines form" />
         <h1>Describe your place to guests</h1>
-        <p style={{"fontSize": "15px"}}>
+        <p style={{ fontSize: "15px" }}>
           Mention the best features of your space, any special amentities like fast wifi or parking,
           and what you love about the neighborhood.
         </p>
@@ -127,7 +133,7 @@ function EditSpotPage() {
           onChange={(e) => setDescription(e.target.value)}
         />
         <p className="errors">{errors.description}</p>
-        <hr className="lines form"/>
+        <hr className="lines form" />
         <h1>Create a title for your spot</h1>
         <p>
           Catch guests' attention with a spot title that highlights what makes your place special.
@@ -143,7 +149,7 @@ function EditSpotPage() {
           />
           <p className="errors">{errors.name}</p>
         </label>
-        <hr className="lines form"/>
+        <hr className="lines form" />
         <h1>Set a base price for your spot</h1>
         <p>
           Competitive pricing can help your listing stand out and rank higher in search results.
@@ -160,7 +166,7 @@ function EditSpotPage() {
           />
         </label>
         <p className="errors">{errors.price}</p>
-        <hr className="lines form"/>
+        <hr className="lines form" />
         <div className="buttonContainer">
           <button className="pink-button edit">Update your Spot</button>
         </div>

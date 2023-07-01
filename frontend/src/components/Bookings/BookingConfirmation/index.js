@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useHistory, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleSpotThunk } from "../../../store/spotsReducer";
@@ -8,6 +8,9 @@ import { format } from "date-fns";
 import "./BookingConfirmation.css";
 
 const BookingConfirmation = () => {
+  const [paymentOption, setPaymentOption] = useState("");
+  const [errors, setErrors] = useState({});
+  console.log("paymentOption 👉", paymentOption);
   const dispatch = useDispatch();
   const history = useHistory();
   const { spotId } = useParams();
@@ -39,13 +42,19 @@ const BookingConfirmation = () => {
 
   const confirmBooking = async (e) => {
     e.preventDefault();
-    const formattedStartDate = format(startDate, "Y-MM-dd");
-    const formattedEndDate = format(endDate, "Y-MM-dd");
-    const requestedDates = { startDate: formattedStartDate, endDate: formattedEndDate };
-    await dispatch(createBookingsThunk(spotId, requestedDates));
-    localStorage.setItem("localStartDate", "");
-    localStorage.setItem("localEndDate", "");
-    history.push(`/bookings`);
+    if (!paymentOption) {
+      const err = {};
+      err.payment = "Please select a payment plan";
+      setErrors(err);
+    } else {
+      const formattedStartDate = format(startDate, "Y-MM-dd");
+      const formattedEndDate = format(endDate, "Y-MM-dd");
+      const requestedDates = { startDate: formattedStartDate, endDate: formattedEndDate };
+      await dispatch(createBookingsThunk(spotId, requestedDates));
+      localStorage.setItem("localStartDate", "");
+      localStorage.setItem("localEndDate", "");
+      history.push(`/bookings`);
+    }
   };
 
   if (!spot.id) return null;
@@ -108,7 +117,13 @@ const BookingConfirmation = () => {
                     Pay the total (${total}) now and you're all set.
                   </p>
                 </div>
-                <input type="radio" id="insurance-check" name="payment" />
+                <input
+                  type="radio"
+                  id="insurance-check"
+                  name="payment"
+                  value="upfront"
+                  onClick={(e) => setPaymentOption(e.target.value)}
+                />
               </div>
               <hr style={{ border: "1px solid #d2d2d2" }} />
               <div className="payment-option">
@@ -118,7 +133,13 @@ const BookingConfirmation = () => {
                     Not our favorite option, but we'll take it.
                   </p>
                 </div>
-                <input type="radio" id="insurance-check" name="payment" />
+                <input
+                  type="radio"
+                  id="insurance-check"
+                  name="payment"
+                  value="friendship"
+                  onClick={(e) => setPaymentOption(e.target.value)}
+                />
               </div>
               <hr style={{ border: "1px solid #d2d2d2" }} />
               <div className="payment-option">
@@ -128,7 +149,13 @@ const BookingConfirmation = () => {
                     Pay in form of yummy flies! Preferably fruit flies.
                   </p>
                 </div>
-                <input type="radio" id="insurance-check" name="payment" />
+                <input
+                  type="radio"
+                  id="insurance-check"
+                  name="payment"
+                  value="flies"
+                  onClick={(e) => setPaymentOption(e.target.value)}
+                />
               </div>
             </div>
           </div>
@@ -157,6 +184,9 @@ const BookingConfirmation = () => {
               </p>
             </div>
             <hr className="section-divider" />
+            <p style={{ textAlign: "center", marginBottom: "15px" }} className="errors">
+              {errors.payment}
+            </p>
             <div style={{ display: "flex" }}>
               <button
                 className="pink-button confirmation"
