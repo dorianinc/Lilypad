@@ -26,13 +26,13 @@ const Dates = ({ bookings }) => {
     const startDate = selection.startDate;
     const endDate = selection.endDate;
     setBooking([selection]);
-    localStorage.setItem("localStartDate", startDate);
+    localStorage.setItem("storedStartDate", startDate);
     setStartDate(startDate);
     if (startDate.getTime() < endDate.getTime()) {
-      localStorage.setItem("localEndDate", endDate);
+      localStorage.setItem("storedEndDate", endDate);
       setEndDate(endDate);
     } else {
-      localStorage.setItem("localEndDate", "");
+      localStorage.setItem("storedEndDate", "");
       setEndDate("");
     }
     setOnStartDate(false);

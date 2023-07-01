@@ -18,11 +18,11 @@ const BookingForm = ({ spotId }) => {
     setEndDate,
     showCalendar,
     setShowCalendar,
-    focus, setFocus
+    focus,
+    setFocus,
   } = useCalendar();
   const history = useHistory();
   const calendarRef = useRef();
-  console.log("focus in booking form 👉", focus)
 
   const handleBooking = async (e) => {
     e.preventDefault();
@@ -56,19 +56,13 @@ const BookingForm = ({ spotId }) => {
     <div ref={calendarRef}>
       <div className="bookings-container">
         <div className="start-end-display">
-          <div
-            className={`start-date-shell`}
-            onClick={openCalendar}
-          >
+          <div className={`start-date-shell`} onClick={openCalendar}>
             <p id="checkin-text">CHECK-IN</p>
             <p id="start-date-text">
               {startDate ? format(new Date(startDate), "MM/dd/yyyy") : "Add Date"}
             </p>
           </div>
-          <div
-            className={`end-date-shell`}
-            onClick={openCalendar}
-          >
+          <div className={`end-date-shell`} onClick={openCalendar}>
             <p id="checkout-text">CHECKOUT</p>
             <p id="end-date-text">
               {endDate ? format(new Date(endDate), "MM/dd/yyyy") : "Add Date"}

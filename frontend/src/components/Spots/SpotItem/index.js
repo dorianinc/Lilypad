@@ -1,5 +1,5 @@
 import { useHistory, useLocation } from "react-router-dom";
-import OpenModalButton from "../../Modals/OpenModalButton/OpenModal";
+import ModalButton from "../../Modals/ModalButton";
 import DeleteSpotModal from "../../Modals/DeleteSpotModal/DeleteSpot";
 
 const SpotItem = ({ spot }) => {
@@ -43,9 +43,9 @@ const SpotItem = ({ spot }) => {
             <button className="grey-button update" onClick={() => handleUpdate()}>
               Update
             </button>
-            <OpenModalButton
+            <ModalButton
               className="grey-button delete"
-              buttonText="Delete"
+              buttonContent={<p>Delete</p>}
               modalComponent={<DeleteSpotModal spotId={spot.id} />}
             />
           </div>

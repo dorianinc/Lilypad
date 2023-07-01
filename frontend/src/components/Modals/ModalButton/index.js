@@ -2,22 +2,31 @@ import React from "react";
 import { useModal } from "../../../context/Modal";
 import Calendar from "../../Calendar";
 
-function OpenModalButton({
+function ModalButton({
+  type,
+  nameOfClass,
   modalComponent, // component to render inside the modal
+  buttonContent,
   buttonText, // text of the button that opens the modal
   onButtonClick, // optional: callback function that will be called once the button that opens the modal is clicked
   onModalClose, // optional: callback function that will be called once the modal is closed
-  className
 }) {
   const { setModalContent, setOnModalClose } = useModal();
 
-  const onClick = () => {
-    if (typeof onButtonClick === "function") onButtonClick();
-    if (typeof onModalClose === "function") setOnModalClose(onModalClose);
+  const handleClick = (e) => {
+    e.stopPropagation();
+    if (onModalClose) setOnModalClose(onModalClose);
     setModalContent(modalComponent);
+    if (onButtonClick) onButtonClick();
   };
 
-  return <button className={className} onClick={onClick}>{buttonText}</button>;
+  return (
+    <>
+      <div className={nameOfClass} onClick={handleClick}>
+        {buttonContent}
+      </div>
+    </>
+  );
 }
 
-export default OpenModalButton;
+export default ModalButton;

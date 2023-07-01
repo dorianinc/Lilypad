@@ -57,6 +57,8 @@ export const getSingleBookingsThunk = (bookingId) => async (dispatch) => {
 
 // create a booking
 export const createBookingsThunk = (spotId, booking) => async (dispatch) => {
+  console.log("booking 👉", booking)
+  console.log("booking 👉", booking)
   const res = await csrfFetch(`/api/spots/${spotId}/bookings`, {
     method: "POST",
     headers: {

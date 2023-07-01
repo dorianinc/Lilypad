@@ -5,16 +5,20 @@ import { getSingleSpotThunk } from "../../../store/spotsReducer";
 import { createBookingsThunk } from "../../../store/bookingsReducer";
 import { useCalendar } from "../../../context/CalendarContext";
 import { format } from "date-fns";
+import Calendar from "../../Calendar";
+import ModalButton from "../../Modals/ModalButton";
 import "./BookingConfirmation.css";
 
 const BookingConfirmation = () => {
+  const { spotId } = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { startDate, endDate } = useCalendar();
+  const [localStartDate, setLocalStartDate] = useState(startDate);
+  const [localEndDate, setLocalEndDate] = useState(endDate);
   const [paymentOption, setPaymentOption] = useState("");
   const [errors, setErrors] = useState({});
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const { spotId } = useParams();
-  const { startDate, endDate, setStartDate, setEndDate } = useCalendar();
-  
+
   const frogFacts = [
     "Most frogs can jump 20 times their body length.",
     "Frogs breathe through their skin.",
@@ -23,15 +27,15 @@ const BookingConfirmation = () => {
     "Frogs have been on Earth since the age of dinosaurs.",
     "Some frogs spend part of their lives frozen solid.",
   ];
-  const [quoteIndex, setQuoteIndex] = useState(Math.floor(Math.random() * frogFacts.length))
+  const [quoteIndex, setQuoteIndex] = useState(Math.floor(Math.random() * frogFacts.length));
 
   const user = useSelector((state) => state.session.user);
   const spot = useSelector((state) => state.spots);
-  const formattedStartDate = format(new Date(startDate), "MMM do");
-  const formattedEndDate = format(new Date(endDate), "MMM do");
+  const formattedStartDate = format(new Date(localStartDate), "MMM do");
+  const formattedEndDate = format(new Date(localEndDate), "MMM do");
 
   const numNights = Math.round(
-    (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 3600 * 24)
+    (new Date(localEndDate).getTime() - new Date(localStartDate).getTime()) / (1000 * 3600 * 24)
   );
   const price = Number(spot.price * numNights).toFixed(2);
   const taxes = (price / 14.25).toFixed(2);
@@ -41,6 +45,13 @@ const BookingConfirmation = () => {
     dispatch(getSingleSpotThunk(spotId));
   }, [dispatch]);
 
+  useEffect(() => {
+    if (startDate && endDate) {
+      setLocalStartDate(startDate);
+      setLocalEndDate(endDate);
+    }
+  }, [startDate, endDate]);
+
   const confirmBooking = async (e) => {
     e.preventDefault();
     if (!paymentOption) {
@@ -48,12 +59,13 @@ const BookingConfirmation = () => {
       err.payment = "Please select a payment plan";
       setErrors(err);
     } else {
-      const formattedStartDate = format(startDate, "Y-MM-dd");
-      const formattedEndDate = format(endDate, "Y-MM-dd");
+      const formattedStartDate = format(new Date(localStartDate), "Y-MM-dd");
+      const formattedEndDate = format(new Date(localEndDate), "Y-MM-dd");
       const requestedDates = { startDate: formattedStartDate, endDate: formattedEndDate };
+
       await dispatch(createBookingsThunk(spotId, requestedDates));
-      localStorage.setItem("localStartDate", "");
-      localStorage.setItem("localEndDate", "");
+      localStorage.setItem("storedStartDate", "");
+      localStorage.setItem("storedEndDate", "");
       history.push(`/bookings`);
     }
   };
@@ -72,7 +84,7 @@ const BookingConfirmation = () => {
           <div className="confirmation-greeting">
             <div className="greeting-text">
               <h3>Great choice, have a frog fact!</h3>
-              <p>{frogFacts[Math.floor(Math.random() * frogFacts.length)]}</p>
+              <p>{frogFacts[quoteIndex]}</p>
             </div>
             <img className="lily-the-frog" alt="cute-frog" src="/images/cute-frog2.png" />
           </div>
@@ -83,7 +95,10 @@ const BookingConfirmation = () => {
                 <h4 style={{ fontWeight: "600" }}>Dates</h4>
                 {`${formattedStartDate} - ${formattedEndDate}`}
               </div>
-              <p className="edit-tags">Edit</p>
+              <ModalButton
+                modalComponent={<Calendar spotId={spotId} />}
+                buttonContent={<p className="edit-tags">Edit</p>}
+              />
             </div>
             <div className="booking-guests">
               <div>

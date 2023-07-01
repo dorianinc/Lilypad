@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getSingleSpotThunk } from "../../../store/spotsReducer";
 import { getReviewsThunk, clearReviews } from "../../../store/reviewsReducer";
-import OpenModalButton from "../../Modals/OpenModalButton/OpenModal";
+import ModalButton from "../../Modals/ModalButton";
 import Bookings from "../../Bookings/BookingForm";
 import CreateReviewModal from "../../Modals/CreateReviewModal/CreateReview";
 import DeleteReviewModal from "../../Modals/DeleteReviewModal/DeleteReviewModal";
@@ -26,7 +26,6 @@ function SpotPage() {
   }, [dispatch, spotId]);
 
   const reviews = useSelector((state) => Object.values(state.reviews).reverse());
-  console.log("reviews 👉", reviews)
 
   // find user then check if user has left a review
   let hasReviewed = false;
@@ -99,9 +98,9 @@ function SpotPage() {
             : ` · ${spot.numReviews} reviews`}
         </h2>
         {!user ? null : user.id && user.id !== spot.owner.id && !hasReviewed ? (
-          <OpenModalButton
+          <ModalButton
             className="grey-button review"
-            buttonText="Post your Review"
+            buttonContent={<p>Post your review</p>}
             modalComponent={<CreateReviewModal spotId={spotId} />}
           />
         ) : null}
@@ -114,9 +113,9 @@ function SpotPage() {
               <h3 style={{ color: "lightgray" }}>{dates[i]}</h3>
               <p>{review.review}</p>
               {!user ? null : user.id === review.userId ? (
-                <OpenModalButton
+                <ModalButton
                   className="grey-button delete"
-                  buttonText="Delete"
+                  buttonContent={<p>Delete</p>}
                   modalComponent={<DeleteReviewModal reviewId={review.id} />}
                 />
               ) : null}
