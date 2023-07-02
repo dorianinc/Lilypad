@@ -24,7 +24,7 @@ const SpotItem = ({ spot }) => {
         onClick={() => handleClick(spot.id)}
       >
         <div className="imageContainer">
-          <img className="cardImage" alt="airBnB" src={spot.previewImage} />
+          <img className="cardImage" alt="airBnB" loading="lazy" src={spot.previewImage} />
         </div>
         <div className="cardInfo">
           <div className="cityState">

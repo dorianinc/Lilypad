@@ -51,11 +51,11 @@ function SpotPage() {
       </h2>
       <div className="imagesContainer">
         <div className="previewImage" id="box-1">
-          <img alt="preview" src={spot.previewImage} />
+          <img alt="preview" loading="lazy" src={spot.previewImage} />
         </div>
         {images.map((image, i) => (
           <div className="supportImages" key={i}>
-            <img className="supportingImages" alt={i} src={image} />
+            <img className="supportingImages" alt={i} loading="lazy" src={image} />
           </div>
         ))}
       </div>

@@ -15,7 +15,7 @@ const PreviousBookingItem = ({ booking }) => {
   return (
     <div className="prev-booking-item" onClick={handleClick}>
       <div className="prev-booking-image-container">
-        <img className="prev-booking-image" alt="booking-preview" src={booking.Spot.previewImage} />
+        <img className="prev-booking-image" alt="booking-preview" loading="lazy" src={booking.Spot.previewImage} />
       </div>
       <div className="prev-booking-info">
         <p style={{ fontSize: ".9rem", fontWeight: "500" }}>{booking.Spot.city}</p>

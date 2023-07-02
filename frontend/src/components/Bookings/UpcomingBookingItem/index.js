@@ -10,8 +10,8 @@ const UpcomingBookingItem = ({ booking }) => {
   const formattedEndDate = format(addDays(new Date(booking.endDate), 1), "MMM do");
 
   const handleClick = () => {
-    history.push(`/bookings/${booking.id}`)
-  }
+    history.push(`/bookings/${booking.id}`);
+  };
   // const formattedRange = () => {
   //   const rangeSet = new Set();
   //   const formattedStartDate = format(new Date(booking.startDate), "MMM dd yyyy");
@@ -45,6 +45,7 @@ const UpcomingBookingItem = ({ booking }) => {
         <img
           className="upcoming-booking-item-image"
           alt="booking-preview"
+          loading="lazy"
           src={booking.Spot.previewImage}
         />
         <div className="time-remaining">
