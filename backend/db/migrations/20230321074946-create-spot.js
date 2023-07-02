@@ -23,7 +23,7 @@ module.exports = {
           references: {
             model: "Users",
           },
-          onDelete: 'cascade'
+          onDelete: "cascade",
         },
         address: {
           allowNull: false,
@@ -53,6 +53,14 @@ module.exports = {
         },
         description: {
           type: Sequelize.STRING(400),
+        },
+        minNights: {
+          type: Sequelize.INTEGER,
+          defaultValue: 2,
+        },
+        maxGuests: {
+          type: Sequelize.INTEGER,
+          defaultValue: 8,
         },
         price: {
           allowNull: false,

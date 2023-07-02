@@ -33,6 +33,12 @@ module.exports = {
           },
           onDelete: 'cascade'
         },
+        numNights: {
+          type: Sequelize.INTEGER,
+        },
+        numGuests: {
+          type: Sequelize.INTEGER,
+        },
         startDate: {
           allowNull: false,
           type: Sequelize.DATE,

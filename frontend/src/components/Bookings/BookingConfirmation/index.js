@@ -13,7 +13,7 @@ const BookingConfirmation = () => {
   const { spotId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { startDate, endDate } = useCalendar();
+  const { startDate, endDate, setFocus } = useCalendar();
   const [localStartDate, setLocalStartDate] = useState(startDate);
   const [localEndDate, setLocalEndDate] = useState(endDate);
   const [paymentOption, setPaymentOption] = useState("");
@@ -97,7 +97,7 @@ const BookingConfirmation = () => {
               </div>
               <ModalButton
                 modalComponent={<Calendar spotId={spotId} />}
-                buttonContent={<p className="edit-tags">Edit</p>}
+                buttonContent={<p className="edit-tags" onClick={() => setFocus(1)}>Edit</p>}
               />
             </div>
             <div className="booking-guests">

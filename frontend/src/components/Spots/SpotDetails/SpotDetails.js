@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getSingleSpotThunk } from "../../../store/spotsReducer";
 import { getReviewsThunk, clearReviews } from "../../../store/reviewsReducer";
 import ModalButton from "../../Modals/ModalButton";
-import Bookings from "../../Bookings/BookingForm";
+import BookingForm from "../../Bookings/BookingForm";
 import CreateReviewModal from "../../Modals/CreateReviewModal/CreateReview";
 import DeleteReviewModal from "../../Modals/DeleteReviewModal/DeleteReviewModal";
 import "./SpotDetails.css";
@@ -14,6 +14,7 @@ function SpotPage() {
   const dispatch = useDispatch();
 
   const spot = useSelector((state) => state.spots);
+  console.log("spot 👉", spot)
 
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
@@ -81,7 +82,7 @@ function SpotPage() {
                 : ` · ${spot.numReviews} reviews`}
             </p>
           </div>
-          <Bookings spotId={spotId} />
+          <BookingForm spot={spot} action="create" />
         </div>
       </div>
       <hr className="lines spotDetails" />

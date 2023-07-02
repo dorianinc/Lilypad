@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Spot extends Model {
     static associate(models) {
       Spot.belongsTo(models.User, { foreignKey: "ownerId", as: "owner" });
-      Spot.hasMany(models.SpotImage, {foreignKey: "spotId",});
+      Spot.hasMany(models.SpotImage, { foreignKey: "spotId" });
       Spot.hasMany(models.Booking, { foreignKey: "spotId" });
       Spot.hasMany(models.Review, { foreignKey: "spotId" });
       // Spot.belongsToMany(models.User, {
@@ -70,6 +70,14 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           max: 400,
         },
+      },
+      minNights: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      maxGuests: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
       },
       price: {
         // minimum is 0

@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { format, formatDistance } from "date-fns";
 import { getUserBookingsThunk } from "../../../store/bookingsReducer";
 import DeleteBooking from "../../Modals/DeleteBooking";
 import ModalButton from "../../Modals/ModalButton";
+import Calendar from "../../Calendar"
 import Map from "../../Map";
 import "./BookingDetails.css";
 
@@ -12,7 +13,6 @@ const BookingDetails = () => {
   const { bookingId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-
   const getBookings = useSelector((state) => state.bookings);
   const booking = getBookings[`${bookingId}`];
 
@@ -69,18 +69,26 @@ const BookingDetails = () => {
               </div>
             </div>
             <hr style={{ border: "1px solid #d2d2d2" }} />
-            <div className="booking-details-menu-section clickable">
-              <i class="fa-solid fa-pen-to-square fa-2xl booking-icon" />
-              <div className="booking-details-meu-content">
-                <p style={{ fontSize: "1rem", fontWeight: "500" }}>Change Booking</p>
-                <p style={{ fontSize: "1rem", fontWeight: "500", color: "#888888" }}>
-                  Customize Your Lilypad bookings for the perfect stay
-                </p>
-              </div>
-            </div>
+
+            <ModalButton
+              modalComponent={<Calendar spotId={booking.spotId}/>}
+              buttonContent={
+                <>
+                  <div className="booking-details-menu-section clickable">
+                    <i class="fa-solid fa-pen-to-square fa-2xl booking-icon" />
+                    <div className="booking-details-meu-content">
+                      <p style={{ fontSize: "1rem", fontWeight: "500" }}>Change Booking</p>
+                      <p style={{ fontSize: "1rem", fontWeight: "500", color: "#888888" }}>
+                        Customize Your Lilypad bookings for the perfect stay
+                      </p>
+                    </div>
+                  </div>
+                </>
+              }
+            />
             <hr style={{ border: "1px solid #d2d2d2" }} />
             <ModalButton
-              modalComponent={<DeleteBooking bookingId={bookingId}/>}
+              modalComponent={<DeleteBooking bookingId={bookingId} />}
               buttonContent={
                 <>
                   <div className="booking-details-menu-section clickable">

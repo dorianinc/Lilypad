@@ -16,6 +16,8 @@ module.exports = {
           // 1
           spotId: 1,
           userId: 1,
+          numNights: 3,
+          numGuests: 6,
           startDate: "2024-07-15T00:00:00",
           endDate: "2024-07-20T00:00:00",
         },
@@ -23,6 +25,8 @@ module.exports = {
           // 2
           spotId: 2,
           userId: 6,
+          numNights: 4,
+          numGuests: 4,
           startDate: "2022-11-10T00:00:00", // nov 10th 2021
           endDate: "2022-11-15T00:00:00" // Nov 15th 2021
         },
@@ -30,6 +34,8 @@ module.exports = {
           // 3
           spotId: 3,
           userId: 6,
+          numNights: 3,
+          numGuests: 6,
           startDate: "2021-07-01T00:00:00",
           endDate: "2021-07-05T00:00:00",
         },
@@ -37,6 +43,8 @@ module.exports = {
           // 4
           spotId: 4,
           userId: 1,
+          numNights: 3,
+          numGuests: 6,
           startDate: "2023-03-26T00:00:00",
           endDate: "2023-03-30T00:00:00",
         },
@@ -44,6 +52,8 @@ module.exports = {
           // 5
           spotId: 5,
           userId: 1,
+          numNights: 3,
+          numGuests: 6,
           startDate: "2023-03-25T00:00:00",
           endDate: "2023-03-31T00:00:00",
         },
@@ -51,6 +61,8 @@ module.exports = {
           // 6
           spotId: 1,
           userId: 3,
+          numNights: 3,
+          numGuests: 6,
           startDate: "2021-07-01T00:00:00",
           endDate: "2021-07-05T00:00:00",
         },
@@ -58,6 +70,8 @@ module.exports = {
           // 7
           spotId: 2,
           userId: 6,
+          numNights: 3,
+          numGuests: 6,
           startDate: "2021-07-01T00:00:00",
           endDate: "2021-07-05T00:00:00",
         },
@@ -65,6 +79,8 @@ module.exports = {
           // 8
           spotId: 3,
           userId: 4,
+          numNights: 3,
+          numGuests: 6,
           startDate: "2021-07-01T00:00:00",
           endDate: "2021-07-05",
         },
@@ -72,6 +88,8 @@ module.exports = {
           // 9
           spotId: 4,
           userId: 5,
+          numNights: 3,
+          numGuests: 6,
           startDate: "2021-07-01T00:00:00",
           endDate: "2021-07-05T00:00:00",
         },
@@ -79,6 +97,8 @@ module.exports = {
           // 10
           spotId: 5,
           userId: 6,
+          numNights: 3,
+          numGuests: 6,
           startDate: "2021-07-01T00:00:00",
           endDate: "2021-07-05T00:00:00",
         },

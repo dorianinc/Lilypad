@@ -98,6 +98,10 @@ const Calendar = ({ spotId }) => {
     setOnStartDate(true);
   };
 
+  const handleEdit = () => {
+
+  }
+
   return (
     <div className="calendar-content">
       <div className="month-container">
@@ -142,7 +146,7 @@ const Calendar = ({ spotId }) => {
             className="black-button"
             onClick={pathName.startsWith("/spots") ? closeCalendar : closeModal}
           >
-            {pathName.startsWith("/spots") ? "Close" : "Save"}
+            {pathName.startsWith("/spots") ? "Close" : "Save" }
           </button>
         </div>
       </div>
