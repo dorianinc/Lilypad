@@ -71,7 +71,6 @@ export const createBookingsThunk = (spotId, booking) => async (dispatch) => {
 
 // delete a list
 export const deleteBookingThunk = (bookingId) => async (dispatch) => {
-  console.log("bookingId 👉", bookingId)
   const res = await csrfFetch(`/api/bookings/${bookingId}`, {
     method: "DELETE",
     headers: {

@@ -3,53 +3,38 @@ import { useCalendar } from "../../../context/CalendarContext";
 import { useHistory } from "react-router-dom";
 import { format } from "date-fns";
 import Calendar from "../../Calendar";
+import GuestCounter from "../GuestCounter";
 import "./BookingForm.css";
 
 const BookingForm = ({ spot, action }) => {
-  const [numAdults, setNumAdults] = useState(1);
-  const [numChildren, setNumChildren] = useState(0);
-  const [numPets, setNumPets] = useState(0);
-  const [currentOccupancy, setcurrentOccupancy] = useState(1);
+  const [showCounter, setShowCounter] = useState(false);
+  const {
+    setOnStartDate,
+    startDate,
+    endDate,
+    showCalendar,
+    setShowCalendar,
+    setFocus,
+    numAdults,
+    numChildren,
+    numInfants,
+    setNumAdults,
+    setNumChildren,
+    setNumInfants,
+    occupancy,
+    setOccupancy,
 
-  const { setOnStartDate, startDate, endDate, showCalendar, setShowCalendar, setFocus } =
-    useCalendar();
+  } = useCalendar();
   const history = useHistory();
   const calendarRef = useRef();
+  const counterRef = useRef();
+  const counter = numAdults + numChildren + numInfants;
 
   const handleBooking = (e) => {
     e.preventDefault();
     history.push(`/bookings/spots/${spot.id}`);
   };
 
-  const handleOccupancy = (key, action) => {
-    if (action === "add" && currentOccupancy < spot.maxGuests) {
-      setcurrentOccupancy((prev) => prev + 1);
-      if (key === "adult") setNumAdults((prev) => prev + 1);
-      if (key === "child") setNumChildren((prev) => prev + 1);
-      if (key === "pet") setNumPets((prev) => prev + 1);
-    } else if (action === "subtract") {
-      if (key === "adult") {
-        if (numAdults > 1) {
-          setNumAdults((prev) => prev - 1);
-          setcurrentOccupancy((prev) => prev - 1);
-        }
-      }
-      if (key === "child") {
-        if (numChildren > 0) {
-          setNumChildren((prev) => prev - 1);
-          setcurrentOccupancy((prev) => prev - 1);
-        }
-      }
-      if (key === "pet") {
-        if (numPets > 0) {
-          setNumPets((prev) => prev - 1);
-          setcurrentOccupancy((prev) => prev - 1);
-        }
-      }
-    }
-  };
-
-  ////// calendar logic ///////
   const openCalendar = () => {
     setOnStartDate(true);
     setShowCalendar(true);
@@ -61,16 +46,41 @@ const BookingForm = ({ spot, action }) => {
     setFocus("");
   };
 
+  const openCounter = () => {
+    setShowCounter(true);
+  };
+
+  const closeCounter = () => {
+    setShowCounter(false);
+  };
+
   useEffect(() => {
-    if (!showCalendar) return;
+    localStorage.setItem("storedNumAdults", 1);
+    localStorage.setItem("storedNumChildren", 0);
+    localStorage.setItem("storedNumInfants", 0);
+    setNumAdults(1);
+    setNumChildren(0);
+    setNumInfants(0);
+    setOccupancy(1 );
+  }, []);
+
+  useEffect(() => {
+    if (!showCalendar && !showCounter) return;
 
     document.addEventListener("click", (e) => {
       if (calendarRef.current && !calendarRef.current.contains(e.target)) {
         closeCalendar(true);
       }
+      if (counterRef.current && !counterRef.current.contains(e.target)) {
+        closeCounter();
+      }
     });
-    return () => document.removeEventListener("click", closeCalendar);
-  }, [showCalendar]);
+
+    return () => {
+      document.removeEventListener("click", closeCalendar);
+      document.removeEventListener("click", closeCounter);
+    };
+  }, [showCalendar, showCounter]);
 
   return (
     <>
@@ -95,81 +105,15 @@ const BookingForm = ({ spot, action }) => {
                   <Calendar spotId={spot.id} minNights={spot.minNights} setShowCalendar />
                 </div>
               </div>
-              <div className="num-guests-selector">
+              <div className="num-guests-selector" onClick={openCounter} ref={counterRef}>
                 <div style={{ padding: "5px 10px" }}>
                   <p id="checkout-text">Guests</p>
-                  <p id="end-date-text">1 guest</p>
-                </div>
-                <div className="num-guests-content">
-                  <div className="guest-catagory">
-                    <div className="guest-key">
-                      <p>Adults</p>
-                    </div>
-                    <div className="guest-values">
-                      <button
-                        className="plus-minus-button"
-                        onClick={() => handleOccupancy("adult", "subtract")}
-                      >
-                        <i class="fa-solid fa-minus" />
-                      </button>
-                      <p style={{ minWidth: "15px", maxWidth: "15px", textAlign: "center" }}>
-                        {numAdults}
-                      </p>
-                      <button
-                        className="plus-minus-button"
-                        onClick={() => handleOccupancy("adult", "add")}
-                      >
-                        <i class="fa-solid fa-plus" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="guest-catagory">
-                    <div className="guest-key">
-                      <p>Children</p>
-                    </div>
-                    <div className="guest-values">
-                      <button
-                        className="plus-minus-button"
-                        onClick={() => handleOccupancy("child", "subtract")}
-                      >
-                        <i class="fa-solid fa-minus" />
-                      </button>
-                      <p style={{ minWidth: "15px", maxWidth: "15px", textAlign: "center" }}>
-                        {numChildren}
-                      </p>
-                      <button
-                        className="plus-minus-button"
-                        onClick={() => handleOccupancy("child", "add")}
-                      >
-                        <i class="fa-solid fa-plus" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="guest-catagory">
-                    <div className="guest-key">
-                      <p>Pets</p>
-                    </div>
-                    <div className="guest-values">
-                      <button
-                        className="plus-minus-button"
-                        onClick={() => handleOccupancy("pet", "subtract")}
-                      >
-                        <i class="fa-solid fa-minus" />
-                      </button>
-                      <p style={{ minWidth: "15px", maxWidth: "15px", textAlign: "center" }}>
-                        {numPets}
-                      </p>
-                      <button
-                        className="plus-minus-button"
-                        onClick={() => handleOccupancy("pet", "add")}
-                      >
-                        <i class="fa-solid fa-plus" />
-                      </button>
-                    </div>
-                  </div>
-                  <p style={{ fontSize: ".9rem", fontWeight: "500", textAlign: "center" }}>
-                    Maximum Occupancy: {spot.maxGuests}
+                  <p id="end-date-text">
+                    {counter} guest{counter > 1 ? "s" : ""}
                   </p>
+                </div>
+                <div className={`num-guests-container ${!showCounter ? "hidden" : ""}`}>
+                  <GuestCounter maxGuests={spot.maxGuests} />
                 </div>
               </div>
             </div>

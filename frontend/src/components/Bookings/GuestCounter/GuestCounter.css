@@ -1,0 +1,31 @@
+
+.num-guests-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .guest-values {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .guest-catagory {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .plus-minus-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    color: #c0c0c0;
+    border: 2px solid #c0c0c0;
+    background-color: #fff;
+    border-radius: 20px;
+  }
+  

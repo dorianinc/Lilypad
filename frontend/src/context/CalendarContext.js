@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
 export const CalendarContext = createContext();
 export const useCalendar = () => useContext(CalendarContext);
 
@@ -17,6 +18,12 @@ export default function CalendarProvider({ children }) {
     },
   ]);
 
+  const [numAdults, setNumAdults] = useState(1);
+  const [numChildren, setNumChildren] = useState(0);
+  const [numInfants, setNumInfants] = useState(0);
+  const [occupancy, setOccupancy] = useState(1);
+  
+
   return (
     <CalendarContext.Provider
       value={{
@@ -31,7 +38,15 @@ export default function CalendarProvider({ children }) {
         showCalendar, // true of false value that can be used to determine if calendar is being shown or not
         setShowCalendar, // toggles showCalendar
         focus, // highlights the startdate or endate when they are focused on with a green sillhouette
-        setFocus,// this can be anything but's currently set to "focused" and unfocused
+        setFocus, // this can be anything but's currently set to "focused" and unfocused
+        numAdults,
+        setNumAdults,
+        numChildren,
+        setNumChildren,
+        numInfants,
+        setNumInfants,
+        occupancy, 
+        setOccupancy
       }}
     >
       {children}

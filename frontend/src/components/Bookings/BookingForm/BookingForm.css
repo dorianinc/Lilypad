@@ -1,6 +1,7 @@
 .bookings-container {
   position: relative;
   margin: 20px 0;
+
 }
 
 .calendar-container {
@@ -35,6 +36,7 @@
 
 .calendar-container {
   position: absolute;
+  z-index: 1;
   padding: 15px;
   border-radius: 15px;
   background-color: #fff;
@@ -45,48 +47,21 @@
 }
 
 .num-guests-selector {
-
   position: relative;
+  cursor: pointer;
   border-top: 2px solid #c0c0c0;
 }
 
-.num-guests-content {
+.num-guests-container {
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
   top: 55px;
   width: 100%;
+  background-color: #fff;
   padding: 10px;
   box-sizing: border-box;
   border-radius: 8px;
-  background-color: #fff;
   -webkit-box-shadow: 0 0 10px #999999;
   box-shadow: 0 0 10px #999999;
-}
-
-.guest-values {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.guest-catagory {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.plus-minus-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-  width: 30px;
-  color: #c0c0c0;
-  border: 2px solid #c0c0c0;
-  background-color: #fff;
-  border-radius: 20px;
 }
 
 .hidden {

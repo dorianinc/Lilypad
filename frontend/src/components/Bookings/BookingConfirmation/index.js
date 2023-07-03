@@ -6,6 +6,7 @@ import { createBookingsThunk } from "../../../store/bookingsReducer";
 import { useCalendar } from "../../../context/CalendarContext";
 import { format } from "date-fns";
 import Calendar from "../../Calendar";
+import GuestCounter from "../GuestCounter";
 import ModalButton from "../../Modals/ModalButton";
 import "./BookingConfirmation.css";
 
@@ -13,11 +14,24 @@ const BookingConfirmation = () => {
   const { spotId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { startDate, endDate, setFocus } = useCalendar();
+  const {
+    startDate,
+    endDate,
+    setFocus,
+    numAdults,
+    numChildren,
+    numInfants,
+    setNumAdults,
+    setNumChildren,
+    setNumInfants,
+    setOccupancy,
+    occupancy,
+  } = useCalendar();
   const [localStartDate, setLocalStartDate] = useState(startDate);
   const [localEndDate, setLocalEndDate] = useState(endDate);
   const [paymentOption, setPaymentOption] = useState("");
   const [errors, setErrors] = useState({});
+  const counter = numAdults + numChildren + numInfants;
 
   const frogFacts = [
     "Most frogs can jump 20 times their body length.",
@@ -52,6 +66,13 @@ const BookingConfirmation = () => {
     }
   }, [startDate, endDate]);
 
+  useEffect(() => {
+    setNumAdults(Number(localStorage.getItem("storedNumAdults")));
+    setNumChildren(Number(localStorage.getItem("storedNumChildren")));
+    setNumInfants(Number(localStorage.getItem("storedNumInfants")));
+    setOccupancy(Number(localStorage.getItem("storedOccupancy")));
+  }, []);
+
   const confirmBooking = async (e) => {
     e.preventDefault();
     if (!paymentOption) {
@@ -61,7 +82,12 @@ const BookingConfirmation = () => {
     } else {
       const formattedStartDate = format(new Date(localStartDate), "Y-MM-dd");
       const formattedEndDate = format(new Date(localEndDate), "Y-MM-dd");
-      const requestedDates = { startDate: formattedStartDate, endDate: formattedEndDate };
+      const requestedDates = {
+        startDate: formattedStartDate,
+        endDate: formattedEndDate,
+        numNights,
+        numGuests: occupancy,
+      };
 
       await dispatch(createBookingsThunk(spotId, requestedDates));
       localStorage.setItem("storedStartDate", "");
@@ -97,15 +123,28 @@ const BookingConfirmation = () => {
               </div>
               <ModalButton
                 modalComponent={<Calendar spotId={spotId} />}
-                buttonContent={<p className="edit-tags" onClick={() => setFocus(1)}>Edit</p>}
+                buttonContent={
+                  <p className="edit-tags" onClick={() => setFocus(1)}>
+                    Edit
+                  </p>
+                }
               />
             </div>
             <div className="booking-guests">
               <div>
                 <h4 style={{ fontWeight: "500" }}>Guests</h4>
-                <p style={{ fontWeight: "300" }}>1 guest</p>
+                <p style={{ fontWeight: "300" }}>
+                  {counter} guest{counter > 1 ? "s" : ""}
+                </p>
               </div>
-              <p className="edit-tags">Edit</p>
+              <ModalButton
+                modalComponent={<GuestCounter maxGuests={spot.maxGuests} />}
+                buttonContent={
+                  <p className="edit-tags" onClick={() => setFocus(1)}>
+                    Edit
+                  </p>
+                }
+              />
             </div>
           </div>
           <hr className="section-divider" />

@@ -14,8 +14,7 @@ function SpotPage() {
   const dispatch = useDispatch();
 
   const spot = useSelector((state) => state.spots);
-  console.log("spot 👉", spot)
-
+  
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
