@@ -1,11 +1,17 @@
 /* Global CSS Styles */
-html,body{
+html,
+body {
   padding: 0;
   margin: 0;
 }
 
-body,textarea,input {
+* {
   font-family: "Poppins", sans-serif;
+}
+
+.content-header{
+  font-size: 2rem;
+  font-weight: 500;
 }
 
 h1,
@@ -18,6 +24,10 @@ h4 {
 textarea,
 input {
   font-size: 18px;
+}
+
+.content-container {
+  margin: 25px 10px;
 }
 
 .pink-button {
@@ -42,7 +52,7 @@ input {
   border-radius: 5px;
 }
 
-.buttons-end{
+.buttons-end {
   display: flex;
   justify-content: flex-end;
   gap: 15px;
@@ -50,7 +60,7 @@ input {
   box-sizing: border-box;
 }
 
-.black-button{
+.black-button {
   cursor: pointer;
   color: #fff;
   font-size: 1rem;
@@ -61,7 +71,7 @@ input {
   padding: 0 15px;
 }
 
-.clear-button{
+.clear-button {
   cursor: pointer;
   color: #000;
   font-size: 1rem;
@@ -73,10 +83,9 @@ input {
   text-decoration: underline;
 }
 
-.clear-button:hover{
+.clear-button:hover {
   background-color: #f7f7f7;
 }
-
 
 .textArea {
   resize: none;
@@ -84,79 +93,22 @@ input {
   height: 150px;
 }
 
-*{
+* {
   margin: 0px;
+}
+
+.spots-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2.5em;
 }
 
 /* CSS for HomePage and ManageSpots */
 
-.cardContainer{
-  display: flex;
-  justify-self: center;
-  cursor: pointer;
-  flex-direction: column;
-  position: relative;
-}
-
-.cardImage {
-  height: 175px;
-  width: 100%;
-  border-radius: 10px;
-}
-
-.mainContainer.homePage,.mainContainer.manageSpots{
-  display: flex;
-  flex-wrap: wrap;
-  grid-gap: 2.5em;
-}
-
-.cardInfo {
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-}
-
-.cardPrice{
-  font-size: 13px;
-}
-
-
-.cityState {
-  text-align: left;
-  flex-basis: 65%;
-}
-
-.rating {
-  text-align: right;
-  flex-basis: 35%;
-}
-
-.cardPrice > span {
-  font-weight: 600;
-}
-
-.cardContainer:hover::before {
-  position: absolute;
-  top: 0;
-  font-weight: 500;
-  font-size: .8rem;
-  height: 20px;
-  padding: 5px;
-  content: attr(data-tooltip);
-  background-color: white;
-  border-bottom-right-radius: 10px;
-}
-
-
-.item-divider{
-  margin: 15px 0;
-  border: 1px solid #d2d2d2;;
-}
-
-
 /* -------- CSS for forms --------- */
 
-.mainContainer.newSpot {
+.spots-container.newSpot {
   width: 50%;
   margin: 0 auto;
 }

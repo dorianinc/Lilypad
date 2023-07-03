@@ -1,6 +1,7 @@
 import { useHistory, useLocation } from "react-router-dom";
 import ModalButton from "../../Modals/ModalButton";
 import DeleteSpotModal from "../../Modals/DeleteSpotModal/DeleteSpot";
+import "./SpotItem.css"
 
 const SpotItem = ({ spot }) => {
   const history = useHistory();
@@ -16,18 +17,18 @@ const SpotItem = ({ spot }) => {
   };
   if (!spot) return null;
   return (
-    <>
+    <div>
       <div
         key={spot.id}
         data-tooltip={spot.name}
-        className="cardContainer homePage"
+        className="card-container homepage"
         onClick={() => handleClick(spot.id)}
       >
         <div className="imageContainer">
-          <img className="cardImage" alt="airBnB" loading="lazy" src={spot.previewImage} />
+          <img className="card-image" alt="airBnB" loading="lazy" src={spot.previewImage} />
         </div>
-        <div className="cardInfo">
-          <div className="cityState">
+        <div className="card-info">
+          <div className="city-state-info">
             <p>{`${spot.city}, ${spot.state}`}</p>
           </div>
           <div className="rating">
@@ -35,23 +36,22 @@ const SpotItem = ({ spot }) => {
             {" · "} {spot.avgRating ? Number(spot.avgRating).toFixed(2) : "New!"}
           </div>
         </div>
-        <div className="cardPrice">
+        <div className="card-price">
           <span>${spot.price}</span> night
         </div>
+      </div>
         {pathName.startsWith("/spots") ? (
           <div className="buttonsContainer" onClick={(e) => e.stopPropagation()}>
             <button className="grey-button update" onClick={() => handleUpdate()}>
               Update
             </button>
             <ModalButton
-              className="grey-button delete"
-              buttonContent={<p>Delete</p>}
+              buttonContent={<button className="grey-button delete">Delete</button>}
               modalComponent={<DeleteSpotModal spotId={spot.id} />}
             />
           </div>
         ) : null}
-      </div>
-    </>
+    </div>
   );
 };
 

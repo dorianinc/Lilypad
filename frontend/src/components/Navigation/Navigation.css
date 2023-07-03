@@ -1,16 +1,14 @@
-.navBar {
+.nav-bar {
   position: sticky;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   z-index: 1;
   border-bottom: 1px solid #ddd;
   padding: 10px;
 }
 
-
-
-
-
-
-
+.nav-bar-content {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  width: 98%;
+}

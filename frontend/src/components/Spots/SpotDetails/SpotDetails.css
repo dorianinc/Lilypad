@@ -1,6 +1,6 @@
 /* SpotPage Specific CSS Styles */
 
-.mainContainer.spotDetails {
+.spots-container.spotDetails {
   max-width: 1000px;
   min-width: 925px;
   width: 90%;
@@ -117,31 +117,4 @@
 .lines.spotDetails{
   margin-top: 10px;
   margin-bottom: 10px;
-}
-
-/*---------- between 550px and 1024px ----------*/
-@media (min-width: 550px) and (max-width: 2000px) {
-  .mainContainer.spots {
-    /* background-color: red; */
-    grid-gap: 1em;
-    grid-template-columns: repeat(auto-fit, minmax(12.5em, 8fr));
-  }
-
-  .cardContainer {
-    width: 200px;
-    font-size: 12px;
-  }
-  
-  #cardImage {
-    height: 175px;
-  }
-
-  .cityState {
-    flex-basis: 65%;
-  }
-
-  .rating {
-    flex-basis: 35%;
-  }
-
 }

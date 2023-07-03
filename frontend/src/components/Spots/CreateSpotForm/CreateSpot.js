@@ -74,7 +74,7 @@ function NewSpotPage() {
   };
 
   return (
-    <div className="mainContainer newSpot">
+    <div className="spots-container newSpot">
       <form onSubmit={handleSubmit}>
         <div>
           <h1>Create a new Spot</h1>

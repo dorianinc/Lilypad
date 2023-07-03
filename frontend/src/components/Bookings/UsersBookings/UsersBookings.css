@@ -1,16 +1,16 @@
-.bookings-main-container {
+.bookings-spots-container {
   width: 1440px;
   margin: 0 auto;
   margin-top: 30px;
 }
 
-.bookings-header-container {
+.content-header-container {
   display: grid;
   gap: 25px;
   align-content: space-between;
 }
 
-.bookings-header {
+.content-header {
   font-weight: 500;
   font-size: 2rem;
 }

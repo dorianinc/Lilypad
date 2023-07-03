@@ -23,9 +23,9 @@ function UsersSpots() {
 
   return (
     <div style={{ width: "95%", margin: "0 auto" }}>
-      <h1>Manage Your Spots</h1>
+      <h1 className="content-header">Manage Your Spots</h1>
       {spots.length ? (
-        <div className="mainContainer manageSpots">
+        <div className="spots-container manageSpots">
           {spots.map((spot) => (
             <SpotItem spot={spot} />
           ))}

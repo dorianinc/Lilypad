@@ -48,7 +48,7 @@ function ProfileButton({ user }) {
     <div className="userMenu">
       {user ? (
         <Link to="/spots/new">
-          <p>Create a New Spot</p>
+          <p style={{color: "#000"}}>Create a New Spot</p>
         </Link>
       ) : null}
       <div className="userButton">

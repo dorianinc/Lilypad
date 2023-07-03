@@ -27,9 +27,9 @@ const UsersBookings = () => {
   
   if (!bookings.length) return null;
   return (
-    <div className="bookings-main-container">
-      <div className="bookings-header-container">
-        <h1 className="bookings-header">Trips</h1>
+    <div className="bookings-spots-container">
+      <div className="content-header-container">
+        <h1 className="content-header">Trips</h1>
         <h2 className="bookings-sub-header">Upcoming trips</h2>
       </div>
       <div className="booking-cards-content">

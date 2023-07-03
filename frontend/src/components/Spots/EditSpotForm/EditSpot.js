@@ -64,7 +64,7 @@ function EditSpotPage() {
   
   // if (!spot || !spot.id) return null;
   return (
-    <div className="mainContainer newSpot">
+    <div className="spots-container newSpot">
       <form onSubmit={handleSubmit}>
         <div>
           <h1>Update Spot</h1>

@@ -14,13 +14,11 @@ function HomePage() {
 
 
   return (
-    <div className="hailMary">
-      <div className="mainContainer homePage">
+      <div className="spots-container homepage">
         {spots.map((spot) => (
           <SpotItem spot={spot}/>
         ))}
       </div>
-    </div>
   );
 }
 

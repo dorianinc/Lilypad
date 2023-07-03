@@ -24,35 +24,37 @@ function App() {
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
-        <Switch>
-          <Route path="/calendar/:spotId">
-            <Calendar />
-          </Route>
-          <Route path="/spots/new">
-            <NewSpotPage />
-          </Route>
-          <Route path="/spots/:spotId/edit">
-            <EditSpotPage />
-          </Route>
-          <Route exact path="/spots/:spotId">
-            <SpotPage />
-          </Route>
-          <Route exact path="/spots">
-            <ManageSpotsPage />
-          </Route>
-          <Route path="/bookings/spots/:spotId">
-            <ConfirmBooking />
-          </Route>
-          <Route path="/bookings/:bookingId">
-            <BookingDetails />
-          </Route>
-          <Route path="/bookings">
-            <BookingsPage />
-          </Route>
-          <Route path="/">
-            <HomePage />
-          </Route>
-        </Switch>
+        <div className="content-container">
+          <Switch>
+            <Route path="/calendar/:spotId">
+              <Calendar />
+            </Route>
+            <Route path="/spots/new">
+              <NewSpotPage />
+            </Route>
+            <Route path="/spots/:spotId/edit">
+              <EditSpotPage />
+            </Route>
+            <Route exact path="/spots/:spotId">
+              <SpotPage />
+            </Route>
+            <Route exact path="/spots">
+              <ManageSpotsPage />
+            </Route>
+            <Route path="/bookings/spots/:spotId">
+              <ConfirmBooking />
+            </Route>
+            <Route path="/bookings/:bookingId">
+              <BookingDetails />
+            </Route>
+            <Route path="/bookings">
+              <BookingsPage />
+            </Route>
+            <Route path="/">
+              <HomePage />
+            </Route>
+          </Switch>
+        </div>
       )}
     </>
   );

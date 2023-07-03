@@ -44,7 +44,7 @@ function SpotPage() {
   if (!spot || !spot.owner) return null;
   const images = spot.images;
   return (
-    <div className="mainContainer spotDetails">
+    <div className="spots-container spotDetails">
       <h1>{spot.name}</h1>
       <h2>
         {spot.city}, {spot.state} {" - "} {spot.country}
