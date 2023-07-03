@@ -80,7 +80,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       price: {
-        // minimum is 0
         allowNull: false,
         type: DataTypes.DECIMAL,
         validate: {

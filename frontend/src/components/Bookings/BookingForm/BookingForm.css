@@ -1,14 +1,8 @@
 .bookings-container {
   position: relative;
   margin: 20px 0;
-
 }
 
-.calendar-container {
-  display: flex;
-  border-radius: 8px;
-  margin: 10px 0;
-}
 
 .bookings-selection-container {
   border: 2px solid #c0c0c0;

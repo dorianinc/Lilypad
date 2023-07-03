@@ -1,11 +1,7 @@
-/*--- Rest of CSS can be found in index.css ---*/
-/* .hailMary{
-  display: flex;
-
-} */
-/* .spots-container.homepage {
+.spots-container {
   display: grid;
-  grid-template-columns: repeat(4,1fr);
-  width: 90%;
+  grid-template-columns: repeat(6, 350px);
+  width:fit-content;
   margin: 0 auto;
-} */
+  gap: 2.5em;
+}

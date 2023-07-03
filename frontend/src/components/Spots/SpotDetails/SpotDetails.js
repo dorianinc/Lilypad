@@ -44,30 +44,30 @@ function SpotPage() {
   if (!spot || !spot.owner) return null;
   const images = spot.images;
   return (
-    <div className="spots-container spotDetails">
-      <h1>{spot.name}</h1>
-      <h2>
+    <div className="spot-details-container">
+      <h1 className="content-header">{spot.name}</h1>
+      <h2 className="content-sub-header">
         {spot.city}, {spot.state} {" - "} {spot.country}
       </h2>
-      <div className="imagesContainer">
-        <div className="previewImage" id="box-1">
+      <div className="spot-details-images">
+        <div className="preview-image-container" id="box-1">
           <img alt="preview" loading="lazy" src={spot.previewImage} />
         </div>
         {images.map((image, i) => (
-          <div className="supportImages" key={i}>
+          <div className="support-images" key={i}>
             <img className="supportingImages" alt={i} loading="lazy" src={image} />
           </div>
         ))}
       </div>
-      <div className="spotMenu">
-        <div className="spotInfo">
+      <div className="spot-details-menu">
+        <div className="spot-details-info">
           <h2>
             Hosted By: {spot.owner.firstName} {spot.owner.lastName}
           </h2>
-          <p id="spotDescription">{spot.description}</p>
+          <p id="spot-description-info">{spot.description}</p>
         </div>
         <div className="reserve-section">
-          <div id="priceAndRating">
+          <div id="price-and-rating">
             <p id="spotPrice">
               <span>${Number(spot.price).toFixed(2)}</span> night
             </p>
@@ -84,8 +84,8 @@ function SpotPage() {
           <BookingForm spot={spot} action="create" />
         </div>
       </div>
-      <hr className="lines spotDetails" />
-      <div className="reviewsContainer">
+      <hr className="lines spot-details" />
+      <div className="reviews-container">
         <h2>
           <i className="fa-solid fa-star" />
           {Number(spot.avgStarRating) ? " " + Number(spot.avgStarRating).toFixed(2) : " New"}

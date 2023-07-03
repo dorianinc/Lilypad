@@ -218,7 +218,7 @@ router.get("/:spotId", async (req, res) => {
 // Create a new Spot
 router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
   const { user } = req;
-  const reqData = { ownerId: user.id };
+  const reqData = { ownerId: user.id, minNights: 2, maxGuests: 8 };
 
   for (property in req.body) {
     let value = req.body[property];

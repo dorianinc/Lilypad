@@ -1,13 +1,13 @@
 /* SpotPage Specific CSS Styles */
 
-.spots-container.spotDetails {
-  max-width: 1000px;
+.spot-details-container {
+  max-width: 1200px;
   min-width: 925px;
-  width: 90%;
+  box-sizing: border-box;
   margin: 0 auto;
 }
 
-.imagesContainer {
+.spot-details-images {
   display: grid;
   grid-template-areas:
     "one one two three"
@@ -18,20 +18,13 @@
   border-radius: 10px;
 }
 
-.previewImage {
-  height: 400px;
-}
-
-.previewImage > img {
+.preview-image-container > img {
+  height: 100%;
   width: 100%;
-  height: 400px;
 }
-.supportImages {
-  height: 197px;
-}
-.supportImages > img {
+.support-images > img {
+  height: 100%;
   width: 100%;
-  height: 197px;
 }
 
 #box-1 {
@@ -54,21 +47,22 @@
   grid-area: five;
 }
 
-.spotMenu {
+.spot-details-menu {
   display: flex;
+  justify-content: space-between;
   gap: 10px;
 }
 
-.spotInfo{
-  flex-basis: 70%;
+.spot-details-info{
+  width: 75%;
 }
 
-#spotDescription {
+#spot-description-info {
   text-align: left;
 }
 .reserve-section {
   display: flex;
-  width: 1000px;
+  width: 25%;
   padding: 10px;
   box-sizing: border-box;
   -webkit-box-shadow: 0 0 10px #999999;
@@ -76,10 +70,9 @@
   border-radius: 10px;
   justify-content: center;
   flex-direction: column;
-  flex-basis: 30%;
 }
 
-#priceAndRating {
+#price-and-rating {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -99,11 +92,11 @@
   margin-bottom: 20px;
 }
 
-.reviewsContainer > h2 {
+.reviews-container > h2 {
   margin-bottom: 30px;
 }
 
-.ratingInput {
+.ratings-input {
   display: flex;
   justify-content: center;
   align-content: center;
@@ -114,7 +107,7 @@
   color: gold;
 }
 
-.lines.spotDetails{
+.lines.spot-details{
   margin-top: 10px;
   margin-bottom: 10px;
 }

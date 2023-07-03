@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import DropZone from "../../DropZone";
 import { createSpotThunk, addImageThunk, getSingleSpotThunk } from "../../../store/spotsReducer";
 
 function NewSpotPage() {
@@ -74,7 +75,7 @@ function NewSpotPage() {
   };
 
   return (
-    <div className="spots-container newSpot">
+    <div className="spots-form-container newSpot">
       <form onSubmit={handleSubmit}>
         <div>
           <h1>Create a new Spot</h1>

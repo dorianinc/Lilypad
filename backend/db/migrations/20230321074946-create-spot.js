@@ -55,10 +55,12 @@ module.exports = {
           type: Sequelize.STRING(400),
         },
         minNights: {
+          allowNull: false,
           type: Sequelize.INTEGER,
           defaultValue: 2,
         },
         maxGuests: {
+          allowNull: false,
           type: Sequelize.INTEGER,
           defaultValue: 8,
         },

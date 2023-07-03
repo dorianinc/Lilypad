@@ -13,7 +13,7 @@ const StarsRatingInput = ({ stars, onChange }) => {
   // necessary.
 
   return (
-    <div className="ratingInput">
+    <div className="ratings-input">
       <div
         className="goldStars"
         onMouseEnter={() => {

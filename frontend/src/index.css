@@ -7,11 +7,25 @@ body {
 
 * {
   font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
+.app-container{
+  overflow: hidden;
+}
+
+.content-container {
+  padding: 25px 10px;
+  overflow: auto;
+  scrollbar-gutter: stable;
+}
 .content-header{
   font-size: 2rem;
-  font-weight: 500;
+}
+
+.content-sub-header{
+  font-size: 1.5rem;
 }
 
 h1,
@@ -19,6 +33,7 @@ h2,
 h3,
 h4 {
   margin: 0px;
+  font-weight: 500;
 }
 
 textarea,
@@ -26,9 +41,6 @@ input {
   font-size: 18px;
 }
 
-.content-container {
-  margin: 25px 10px;
-}
 
 .pink-button {
   cursor: pointer;
@@ -97,19 +109,12 @@ input {
   margin: 0px;
 }
 
-.spots-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 2.5em;
-}
-
 /* CSS for HomePage and ManageSpots */
 
 /* -------- CSS for forms --------- */
 
-.spots-container.newSpot {
-  width: 50%;
+.spots-form-container.newSpot {
+  width: 40%;
   margin: 0 auto;
 }
 

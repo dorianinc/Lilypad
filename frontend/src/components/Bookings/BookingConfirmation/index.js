@@ -90,8 +90,7 @@ const BookingConfirmation = () => {
       };
 
       await dispatch(createBookingsThunk(spotId, requestedDates));
-      localStorage.setItem("storedStartDate", "");
-      localStorage.setItem("storedEndDate", "");
+      localStorage.clear();
       history.push(`/bookings`);
     }
   };
