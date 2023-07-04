@@ -1,7 +1,8 @@
 .spots-container {
   display: grid;
-  grid-template-columns: repeat(6, 350px);
-  width:fit-content;
+  grid-template-columns: repeat(auto-fit, 350px);
+  justify-content: center;
+  width: 100%;
   margin: 0 auto;
   gap: 2.5em;
 }
