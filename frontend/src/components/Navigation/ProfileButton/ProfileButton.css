@@ -53,7 +53,7 @@
   cursor: pointer;
 }
 
-.modalButtons.auth {
+.modal-button.auth {
   background-color: white;
   text-align: left;
   width: 100%;
@@ -64,7 +64,7 @@
   cursor: pointer;
 }
 
-.modalButtons.auth:hover {
+.modal-button.auth:hover {
   background-color: #f7f7f7;
 }
 

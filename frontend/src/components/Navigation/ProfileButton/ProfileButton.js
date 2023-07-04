@@ -48,7 +48,7 @@ function ProfileButton({ user }) {
     <div className="userMenu">
       {user ? (
         <Link to="/spots/new">
-          <p style={{color: "#000"}}>Create a New Spot</p>
+          <p style={{ color: "#000" }}>Create a New Spot</p>
         </Link>
       ) : null}
       <div className="userButton">
@@ -71,14 +71,14 @@ function ProfileButton({ user }) {
               </div>
               <hr className="line userMenu" />
               <Link to="/bookings" onClick={closeMenu}>
-                <button className="modalButtons auth">Trips</button>
+                <button className="modal-button auth">Trips</button>
               </Link>
               <Link to="/spots" onClick={closeMenu}>
-                <button className="modalButtons auth">Manage Spots</button>
+                <button className="modal-button auth">Manage Spots</button>
               </Link>
               <hr className="line userModal" />
               <div>
-                <button className="modalButtons auth" onClick={logout}>
+                <button className="modal-button auth" onClick={logout}>
                   Log Out
                 </button>
               </div>
@@ -87,16 +87,23 @@ function ProfileButton({ user }) {
             <div>
               <div className="login">
                 <ModalButton
-                  className="modalButtons auth"
-                  buttonContent={<p>Log In</p>}
+                  buttonContent={
+                    <button className="modal-button auth">
+                      <p>Log In</p>
+                    </button>
+                  }
                   onButtonClick={closeMenu}
                   modalComponent={<LoginFormModal />}
                 />
               </div>
               <div children="signup">
                 <ModalButton
-                  className="modalButtons auth"
-                  buttonContent={<p>Sign Up</p>}
+                  className="modal-button auth"
+                  buttonContent={
+                    <button className="modal-button auth">
+                      <p>Sign Up</p>
+                    </button>
+                  }
                   onButtonClick={closeMenu}
                   modalComponent={<SignupFormModal />}
                 />

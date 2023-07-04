@@ -36,7 +36,7 @@ h4 {
   font-weight: 500;
 }
 
-textarea,
+text-area,
 input {
   font-size: 18px;
 }
@@ -99,7 +99,7 @@ input {
   background-color: #f7f7f7;
 }
 
-.textArea {
+.text-area {
   resize: none;
   width: 100%;
   height: 150px;
@@ -113,37 +113,37 @@ input {
 
 /* -------- CSS for forms --------- */
 
-.spots-form-container.newSpot {
+.spots-form-container.new-spot {
   width: 40%;
   margin: 0 auto;
 }
 
-.oneLiner {
+.one-liner {
   min-width: 0;
   width: 100%;
   overflow: hidden;
 }
 
-.flexedInputs {
+.flex-inputs {
   display: flex;
   gap: 15px;
   margin-top: 15px;
   width: 100%;
 }
 
-.cityLabel {
+.city-label {
   flex-basis: 60%;
 }
 
-.cityLabel > input {
+.city-label > input {
   width: 100%;
 }
 
-.stateLabel {
+.state-label {
   flex-basis: 40%;
 }
 
-.stateLabel > input {
+.state-label > input {
   width: 100%;
 }
 

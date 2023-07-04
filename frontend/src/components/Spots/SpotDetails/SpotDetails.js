@@ -14,7 +14,7 @@ function SpotPage() {
   const dispatch = useDispatch();
 
   const spot = useSelector((state) => state.spots);
-  
+
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
@@ -97,8 +97,11 @@ function SpotPage() {
         </h2>
         {!user ? null : user.id && user.id !== spot.owner.id && !hasReviewed ? (
           <ModalButton
-            className="grey-button review"
-            buttonContent={<p>Post your review</p>}
+            buttonContent={
+              <button className="grey-button review">
+                <p>Post your review</p>
+              </button>
+            }
             modalComponent={<CreateReviewModal spotId={spotId} />}
           />
         ) : null}
@@ -112,8 +115,11 @@ function SpotPage() {
               <p>{review.review}</p>
               {!user ? null : user.id === review.userId ? (
                 <ModalButton
-                  className="grey-button delete"
-                  buttonContent={<p>Delete</p>}
+                  buttonContent={
+                    <button className="grey-button delete">
+                      <p>Delete</p>
+                    </button>
+                  }
                   modalComponent={<DeleteReviewModal reviewId={review.id} />}
                 />
               ) : null}

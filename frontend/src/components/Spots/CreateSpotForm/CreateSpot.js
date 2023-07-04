@@ -75,39 +75,39 @@ function NewSpotPage() {
   };
 
   return (
-    <div className="spots-form-container newSpot">
+    <div className="spots-form-container new-spot">
       <form onSubmit={handleSubmit}>
         <div>
           <h1>Create a new Spot</h1>
           <h2>Where's your place located?</h2>
           <p>Guests will only get your exact addres once they booked a reservation.</p>
         </div>
-        <label className="countryLabel">
+        <label className="country-label">
           Country
           <input
             name="country"
             value={country}
-            className="oneLiner"
+            className="one-liner"
             id="country"
             placeholder="Country"
             onChange={(e) => setCountry(e.target.value)}
           />
           <p className="errors">{errors.country}</p>
         </label>
-        <label className="streetLabel">
+        <label className="street-label">
           Street Address
           <input
             name="address"
             value={address}
-            className="oneLiner"
+            className="one-liner"
             id="address"
             placeholder="Address"
             onChange={(e) => setAddress(e.target.value)}
           />
           <p className="errors">{errors.address}</p>
         </label>
-        <div className="flexedInputs">
-          <label className="cityLabel">
+        <div className="flex-inputs">
+          <label className="city-label">
             City
             <input
               name="city"
@@ -118,7 +118,7 @@ function NewSpotPage() {
             />
             <p className="errors">{errors.city}</p>
           </label>
-          <label className="stateLabel">
+          <label className="state-label">
             State
             <input
               name="state"
@@ -136,9 +136,9 @@ function NewSpotPage() {
           Mention the best features of your space, any special amentities like fast wifi or parking,
           and what you love about the neighborhood.
         </p>
-        <textarea
+        <text-area
           name="description"
-          className="textArea newSpot"
+          className="text-area new-spot"
           value={description}
           placeholder="Please write at least 30 characters"
           onChange={(e) => setDescription(e.target.value)}
@@ -153,7 +153,7 @@ function NewSpotPage() {
           <input
             name="name"
             value={name}
-            className="oneLiner"
+            className="one-liner"
             id="name"
             placeholder="Name of your spot"
             onChange={(e) => setName(e.target.value)}
@@ -170,7 +170,7 @@ function NewSpotPage() {
           <input
             name="price"
             value={price}
-            className="oneLiner"
+            className="one-liner"
             id="price"
             placeholder="Price per night (USD)"
             onChange={(e) => setPrice(e.target.value)}

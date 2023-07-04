@@ -47,9 +47,9 @@ function CreateReviewModal({ spotId }) {
         </p>
       ))}
       <form className="loginForm" onSubmit={(e) => handleSubmit(e)}>
-        <textarea
+        <text-area
           name="description"
-          className="textArea review"
+          className="text-area review"
           value={review}
           placeholder="Leave your review here..."
           onChange={(e) => setReview(e.target.value)}
