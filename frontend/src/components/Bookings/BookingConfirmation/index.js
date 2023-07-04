@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSingleSpotThunk } from "../../../store/spotsReducer";
 import { createBookingsThunk } from "../../../store/bookingsReducer";
 import { useCalendar } from "../../../context/CalendarContext";
+import { useCounter } from "../../../context/CounterContext";
 import { format } from "date-fns";
 import Calendar from "../../Calendar";
 import GuestCounter from "../GuestCounter";
@@ -14,10 +15,8 @@ const BookingConfirmation = () => {
   const { spotId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+  const { startDate, endDate, setFocus } = useCalendar();
   const {
-    startDate,
-    endDate,
-    setFocus,
     numAdults,
     numChildren,
     numInfants,
@@ -26,7 +25,7 @@ const BookingConfirmation = () => {
     setNumInfants,
     setOccupancy,
     occupancy,
-  } = useCalendar();
+  } = useCounter();
   const [localStartDate, setLocalStartDate] = useState(startDate);
   const [localEndDate, setLocalEndDate] = useState(endDate);
   const [paymentOption, setPaymentOption] = useState("");
@@ -218,7 +217,7 @@ const BookingConfirmation = () => {
             <h2 className="section-header">Before for your trip</h2>
             <h4 style={{ fontWeight: "500" }}>Message from the Host</h4>
             <p style={{ fontWeight: "300", marginBottom: "15px" }}>
-              Welcome to your lilypad Away from Home!
+              Welcome to your lilypad away from home!
             </p>
             <div className="message-content">
               <h4 style={{ fontWeight: "500" }}> Dear {user.firstName},</h4>

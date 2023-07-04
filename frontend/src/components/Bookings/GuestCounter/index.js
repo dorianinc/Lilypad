@@ -1,4 +1,4 @@
-import { useCalendar } from "../../../context/CalendarContext";
+import { useCounter } from "../../../context/CounterContext";
 import "./GuestCounter.css";
 
 const GuestCounter = ({ maxGuests }) => {
@@ -11,7 +11,7 @@ const GuestCounter = ({ maxGuests }) => {
     setNumInfants,
     occupancy,
     setOccupancy,
-  } = useCalendar();
+  } = useCounter();
 
 
   const handleOccupancy = (key, action) => {

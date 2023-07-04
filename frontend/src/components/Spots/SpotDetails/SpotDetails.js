@@ -42,7 +42,6 @@ function SpotPage() {
   );
 
   if (!spot || !spot.owner) return null;
-  const images = spot.images;
   return (
     <div className="spot-details-container">
       <h1 className="content-header">{spot.name}</h1>
@@ -53,7 +52,7 @@ function SpotPage() {
         <div className="preview-image-container" id="box-1">
           <img alt="preview" loading="lazy" src={spot.previewImage} />
         </div>
-        {images.map((image, i) => (
+        {spot.images.map((image, i) => (
           <div className="support-images" key={i}>
             <img className="supportingImages" alt={i} loading="lazy" src={image} />
           </div>

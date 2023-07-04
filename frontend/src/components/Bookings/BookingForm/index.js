@@ -1,9 +1,13 @@
 import { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { useCalendar } from "../../../context/CalendarContext";
+import { useCounter } from "../../../context/CounterContext";
 import { useHistory } from "react-router-dom";
 import { format } from "date-fns";
 import Calendar from "../../Calendar";
 import GuestCounter from "../GuestCounter";
+import ModalButton from "../../Modals/ModalButton";
+import LoginFormModal from "../../Modals/LoginFormModal/LoginForm";
 import "./BookingForm.css";
 
 const BookingForm = ({ spot, action }) => {
@@ -15,24 +19,28 @@ const BookingForm = ({ spot, action }) => {
     showCalendar,
     setShowCalendar,
     setFocus,
+    calendarErrors,
+  } = useCalendar();
+  const {
     numAdults,
     numChildren,
     numInfants,
     setNumAdults,
     setNumChildren,
     setNumInfants,
-    occupancy,
-    setOccupancy,
-
-  } = useCalendar();
+    setOccupancy
+  } = useCounter();
   const history = useHistory();
   const calendarRef = useRef();
   const counterRef = useRef();
+  const user = useSelector((state) => state.session.user);
   const counter = numAdults + numChildren + numInfants;
 
   const handleBooking = (e) => {
     e.preventDefault();
-    history.push(`/bookings/spots/${spot.id}`);
+    if (!Object.values(calendarErrors).length) {
+      history.push(`/bookings/spots/${spot.id}`);
+    }
   };
 
   const openCalendar = () => {
@@ -61,7 +69,7 @@ const BookingForm = ({ spot, action }) => {
     setNumAdults(1);
     setNumChildren(0);
     setNumInfants(0);
-    setOccupancy(1 );
+    setOccupancy(1);
   }, []);
 
   useEffect(() => {
@@ -102,7 +110,11 @@ const BookingForm = ({ spot, action }) => {
                   </p>
                 </div>
                 <div className={`calendar-container ${!showCalendar ? "hidden" : ""}`}>
-                  <Calendar spotId={spot.id} minNights={spot.minNights} setShowCalendar />
+                  <Calendar
+                    spotId={spot.id}
+                    minNights={spot.minNights}
+                    setShowCalendar={setShowCalendar}
+                  />
                 </div>
               </div>
               <div className="num-guests-selector" onClick={openCounter} ref={counterRef}>
@@ -120,9 +132,16 @@ const BookingForm = ({ spot, action }) => {
           </div>
           <div className="booking-button-container">
             {startDate && endDate ? (
-              <button className="pink-button reserve" onClick={(e) => handleBooking(e)}>
-                Reserve
-              </button>
+              user ? (
+                <button className="pink-button reserve" onClick={(e) => handleBooking(e)}>
+                  Reserve
+                </button>
+              ) : (
+                <ModalButton
+                  modalComponent={<LoginFormModal />}
+                  buttonContent={<button className="pink-button reserve">Reserve</button>}
+                />
+              )
             ) : (
               <button className="pink-button reserve" onClick={openCalendar}>
                 Check Availability

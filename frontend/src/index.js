@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { ModalProvider, Modal } from "./context/Modal";
 import CalendarProvider from "./context/CalendarContext";
+import CounterProvider from "./context/CounterContext";
 import MapProvider from "./context/MapContext";
 import App from "./App";
 
@@ -25,16 +26,18 @@ if (process.env.NODE_ENV !== "production") {
 function Root() {
   return (
     <CalendarProvider>
-      <ModalProvider>
-        <Provider store={store}>
-          <BrowserRouter>
-            <MapProvider>
-              <App />
-            </MapProvider>
-            <Modal />
-          </BrowserRouter>
-        </Provider>
-      </ModalProvider>
+      <CounterProvider>
+        <ModalProvider>
+          <Provider store={store}>
+            <BrowserRouter>
+              <MapProvider>
+                <App />
+              </MapProvider>
+              <Modal />
+            </BrowserRouter>
+          </Provider>
+        </ModalProvider>
+      </CounterProvider>
     </CalendarProvider>
   );
 }

@@ -53,7 +53,7 @@
   gap: 10px;
 }
 
-.spot-details-info{
+.spot-details-info {
   width: 75%;
 }
 
@@ -84,7 +84,7 @@
 
 .pink-button.reserve {
   align-self: center;
-  width: 80%;
+  padding: 0 15px;
   height: 40px;
 }
 
@@ -107,7 +107,7 @@
   color: gold;
 }
 
-.lines.spot-details{
+.lines.spot-details {
   margin-top: 10px;
   margin-bottom: 10px;
 }

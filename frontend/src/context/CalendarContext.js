@@ -9,6 +9,7 @@ export default function CalendarProvider({ children }) {
   const [focus, setFocus] = useState("");
   const [startDate, setStartDate] = useState(localStorage.getItem("storedStartDate"));
   const [endDate, setEndDate] = useState(localStorage.getItem("storedEndDate"));
+  const [calendarErrors, setCalendarErrors] = useState({});
   const [booking, setBooking] = useState([
     {
       startDate: startDate ? new Date(startDate) : null,
@@ -17,12 +18,6 @@ export default function CalendarProvider({ children }) {
       key: "selection",
     },
   ]);
-
-  const [numAdults, setNumAdults] = useState(1);
-  const [numChildren, setNumChildren] = useState(0);
-  const [numInfants, setNumInfants] = useState(0);
-  const [occupancy, setOccupancy] = useState(1);
-  
 
   return (
     <CalendarContext.Provider
@@ -39,14 +34,8 @@ export default function CalendarProvider({ children }) {
         setShowCalendar, // toggles showCalendar
         focus, // highlights the startdate or endate when they are focused on with a green sillhouette
         setFocus, // this can be anything but's currently set to "focused" and unfocused
-        numAdults,
-        setNumAdults,
-        numChildren,
-        setNumChildren,
-        numInfants,
-        setNumInfants,
-        occupancy, 
-        setOccupancy
+        calendarErrors,
+        setCalendarErrors,
       }}
     >
       {children}

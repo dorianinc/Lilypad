@@ -1,19 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCalendar } from "../../../context/CalendarContext";
 import { DateRange } from "react-date-range";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
-import { format, addDays, getTime, isAfter } from "date-fns";
+import { format, addDays, getTime, isAfter, differenceInCalendarDays } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "./Dates.css";
 
-const Dates = ({ bookings }) => {
+const Dates = ({ bookings, minNights }) => {
   const [shownDateChangeValue, setShownDateChangeValue] = useState(new Date());
-  // state created to check if use created next Month ou previous month
   const [isNextMonth, setIsNextMonth] = useState(true);
-  const { onStartDate, setOnStartDate, booking, setBooking, setStartDate, setEndDate } =
-    useCalendar();
+  const {
+    onStartDate,
+    setOnStartDate,
+    booking,
+    setBooking,
+    setStartDate,
+    setEndDate,
+    setCalendarErrors,
+  } = useCalendar();
   const [state, setState] = useState(booking);
-  // state created to hold the first month that calendar is showing
 
   const setFocusedRange = (focusedRange) => {
     setState((state) => {
@@ -22,6 +27,7 @@ const Dates = ({ bookings }) => {
   };
 
   const handleSelect = (ranges) => {
+    setCalendarErrors({});
     const { selection } = ranges;
     const startDate = selection.startDate;
     const endDate = selection.endDate;
@@ -31,6 +37,11 @@ const Dates = ({ bookings }) => {
     if (startDate.getTime() < endDate.getTime()) {
       localStorage.setItem("storedEndDate", endDate);
       setEndDate(endDate);
+      if (differenceInCalendarDays(new Date(endDate), new Date(startDate)) < minNights) {
+        const err = {};
+        err.numNights = `Must book at least ${minNights} days`;
+        setCalendarErrors(err);
+      }
     } else {
       localStorage.setItem("storedEndDate", "");
       setEndDate("");
@@ -44,11 +55,11 @@ const Dates = ({ bookings }) => {
     const currentDate = format(addDays(new Date(utcDay), 1), "MMM-dd-yyyy");
     if (bookings.length) {
       for (let i = 0; i < bookings.length; i++) {
-        let startDate = format(addDays(new Date(bookings[i].startDate), 1), "MMM-dd-yyyy");
-        let endDate = format(addDays(new Date(bookings[i].endDate), 1), "MMM-dd-yyyy");
+        let formattedStartDate = format(addDays(new Date(bookings[i].startDate), 1), "MMM-dd-yyyy");
+        let formattedEndDate = format(addDays(new Date(bookings[i].endDate), 1), "MMM-dd-yyyy");
         if (
-          getTime(new Date(currentDate)) >= getTime(new Date(startDate)) &&
-          getTime(new Date(currentDate)) <= getTime(new Date(endDate))
+          getTime(new Date(currentDate)) >= getTime(new Date(formattedStartDate)) &&
+          getTime(new Date(currentDate)) <= getTime(new Date(formattedEndDate))
         ) {
           disabledDays.push(new Date(currentDate));
           return true;

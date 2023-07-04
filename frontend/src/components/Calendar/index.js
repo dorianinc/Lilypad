@@ -4,11 +4,11 @@ import { useModal } from "../../context/Modal";
 import { useCalendar } from "../../context/CalendarContext";
 import { useLocation } from "react-router-dom";
 import { getSpotBookingsThunk } from "../../store/bookingsReducer";
-import { format } from "date-fns";
+import { format, differenceInCalendarDays } from "date-fns";
 import Dates from "./Dates";
 import "./Calendar.css";
 
-const Calendar = ({ spotId }) => {
+const Calendar = ({ spotId, minNights }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const pathName = location.pathname;
@@ -29,7 +29,10 @@ const Calendar = ({ spotId }) => {
     setShowCalendar,
     focus,
     setFocus,
+    calendarErrors,
+    setCalendarErrors,
   } = useCalendar();
+
   const { closeModal } = useModal();
 
   ////// bookings logic ///////
@@ -71,12 +74,8 @@ const Calendar = ({ spotId }) => {
       const formattedEndDate = format(new Date(endDate), "MMM dd");
       if (new Date(formattedStartDate).getTime() < new Date(formattedEndDate).getTime()) {
         setFormattedDate(`${formattedStartDate} - ${formattedEndDate}`);
-        setNumNights(
-          Math.round(
-            (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 3600 * 24)
-          )
-        );
-        if (pathName.startsWith("/spots")) closeCalendar();
+        setNumNights(differenceInCalendarDays(new Date(endDate), new Date(startDate)));
+        if (pathName.startsWith("/spots") && !Object.values(calendarErrors).length) closeCalendar();
       }
     }
   }, [startDate, endDate]);
@@ -96,11 +95,8 @@ const Calendar = ({ spotId }) => {
     setFormattedDate("");
     setBooking([dates]);
     setOnStartDate(true);
+    setCalendarErrors({});
   };
-
-  const handleEdit = () => {
-
-  }
 
   return (
     <div className="calendar-content">
@@ -137,7 +133,8 @@ const Calendar = ({ spotId }) => {
             </div>
           </div>
         </div>
-        <Dates bookings={bookings} />
+        <Dates bookings={bookings} minNights={minNights} />
+        <p className="errors">{calendarErrors.numNights}</p>
         <div className="buttons-end">
           <button className="clear-button" onClick={() => clearDates(false)}>
             Clear Dates
@@ -146,7 +143,7 @@ const Calendar = ({ spotId }) => {
             className="black-button"
             onClick={pathName.startsWith("/spots") ? closeCalendar : closeModal}
           >
-            {pathName.startsWith("/spots") ? "Close" : "Save" }
+            {pathName.startsWith("/spots") ? "Close" : "Save"}
           </button>
         </div>
       </div>
