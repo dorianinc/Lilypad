@@ -15,10 +15,10 @@ function NewSpotPage() {
   const [name, setName] = useState(""); // this is for Title
   const [price, setPrice] = useState("");
   const [previewImage, setPreviewImage] = useState({ url: "", preview: true });
-  const [image1, setImage1] = useState({ url: "", preview: true });
-  const [image2, setImage2] = useState({ url: "", preview: true });
-  const [image3, setImage3] = useState({ url: "", preview: true });
-  const [image4, setImage4] = useState({ url: "", preview: true });
+  const [image1, setImage1] = useState({ url: "", preview: false });
+  const [image2, setImage2] = useState({ url: "", preview: false });
+  const [image3, setImage3] = useState({ url: "", preview: false });
+  const [image4, setImage4] = useState({ url: "", preview: false });
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
@@ -179,67 +179,15 @@ function NewSpotPage() {
         <p className="errors">{errors.price}</p>
         <hr className="lines form" />
         <h1>Liven up your spot with photos</h1>
-        <p>Submit a link to at least one photo to publish your spot.</p>
+        <p>Upload up to 5 images</p>
         <div className="images">
-          <label className="imagesLabel">
-            <input
-              name="previewImage"
-              value={previewImage.url}
-              className="oneLiner"
-              id="previewImage"
-              placeholder="Preview Image URL"
-              onChange={(e) => setPreviewImage({ url: e.target.value, preview: 1 })}
-            />
-            <p className="errors">{errors.previewImage}</p>
-          </label>
-          <label className="imagesLabel">
-            <input
-              name="image1"
-              value={image1.url}
-              className="oneLiner"
-              id="image"
-              placeholder="Image URL"
-              onChange={(e) => setImage1({ url: e.target.value, preview: 1 })}
-            />
-            <p className="errors">{errors.image1}</p>
-          </label>
-          <label className="imagesLabel">
-            <input
-              name="image2"
-              value={image2.url}
-              className="oneLiner"
-              id="image"
-              placeholder="Image URL"
-              onChange={(e) => setImage2({ url: e.target.value, preview: 1 })}
-            />
-            <p className="errors">{errors.image2}</p>
-          </label>
-          <label className="imagesLabel">
-            <input
-              name="image3"
-              value={image3.url}
-              className="oneLiner"
-              id="image"
-              placeholder="Image URL"
-              onChange={(e) => setImage3({ url: e.target.value, preview: 1 })}
-            />
-            <p className="errors">{errors.image3}</p>
-          </label>
-          <label className="imagesLabel">
-            <input
-              name="image4"
-              value={image4.url}
-              className="oneLiner"
-              id="image"
-              placeholder="Image URL"
-              onChange={(e) => setImage4({ url: e.target.value, preview: 1 })}
-            />
-            <p className="errors">{errors.image4}</p>
-          </label>
+          <DropZone />
         </div>
         <hr className="lines form" />
         <div className="buttonContainer">
-          <button className="pink-button create">Create Spot</button>
+          <button className="pink-button create" type="submit">
+            Create Spot
+          </button>
         </div>
       </form>
     </div>
@@ -247,5 +195,3 @@ function NewSpotPage() {
 }
 
 export default NewSpotPage;
-
-// setPreviewImage({ url: e.target.value, preview: 1 })

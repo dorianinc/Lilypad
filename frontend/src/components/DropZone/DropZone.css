@@ -1,5 +1,4 @@
 .drop-zone-modal{
-    color: #2B381F;
     padding: 20px;
     border-radius: 20px;
     background-color: #fff;
@@ -10,8 +9,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 200px;
-    width: 350px;
+    height: 500px;
+    width: 100%;
     margin-bottom: 10px;
     border: 2px dotted #2B381F;
 }
@@ -36,3 +35,43 @@
     width: 350px;
 }
 
+.dz-image-preview-section{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.dz-image-preview-container{
+    position: relative;
+}
+.dz-image-cancel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    height: 25px;
+    width: 25px;
+    color:#fff;
+    background-color: #ff5c6c;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.dz-image-cancel:hover{
+    color:#ff5c6c;
+    background-color: #fff;
+    border: 1px solid #ff5c6c;
+}
+
+.dz-image-preview{
+    height: 100px;
+    width: 100px;
+    border-radius: 10px;
+}
+
+#hidden{
+    display: none;
+}
