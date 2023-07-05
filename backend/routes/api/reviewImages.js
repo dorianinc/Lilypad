@@ -1,6 +1,6 @@
 const express = require("express");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
-const {  doesNotExist } = require("../../utils/utilities.js");
+const {  doesNotExist } = require("../../utils/helpers.js");
 const { Review, ReviewImage } = require("../../db/models");
 
 const router = express.Router();

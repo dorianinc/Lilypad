@@ -6,8 +6,14 @@ const {
   validateQueries,
 } = require("../../utils/validation");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
-const { isAvailable, doesNotExist } = require("../../utils/utilities.js");
+const { isAvailable, doesNotExist } = require("../../utils/helpers.js");
 const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require("../../db/models");
+const {
+  singlePublicFileUpload,
+  singleMulterUpload,
+  multiplePublicFileUpload,
+  multipleMulterUpload,
+} = require("../../awsS3.js");
 const { Op } = require("sequelize");
 const router = express.Router();
 
@@ -106,10 +112,10 @@ router.get("/", validateQueries, async (req, res) => {
     )[0];
 
     const images = imagesArr.reduce((filtered, image) => {
-      if(image.id !== previewImage.id){
-        filtered.push(image.url)
+      if (image.id !== previewImage.id) {
+        filtered.push(image.url);
       }
-      return filtered
+      return filtered;
     }, []);
 
     if (images) spot.images = images;
@@ -192,10 +198,10 @@ router.get("/:spotId", async (req, res) => {
     )[0];
 
     const images = imagesArr.reduce((filtered, image) => {
-      if(image.id !== previewImage.id){
-        filtered.push(image.url)
+      if (image.id !== previewImage.id) {
+        filtered.push(image.url);
       }
-      return filtered
+      return filtered;
     }, []);
 
     if (images) spot.images = images;
@@ -230,23 +236,28 @@ router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
 });
 
 // Add Image to a Spot
-router.post("/:spotId/images", [restoreUser, requireAuth], async (req, res, next) => {
-  const { user } = req;
-  const { url, preview } = req.body;
-
-  const spot = await Spot.findByPk(req.params.spotId, { raw: true });
-  if (!spot) res.status(404).json(doesNotExist("Spot"));
-  else {
-    if (isAuthorized(user.id, spot.ownerId, res)) {
-      const newImage = await SpotImage.create({
-        url,
-        preview,
-        spotId: spot.id,
-      });
-      res.status(200).json(newImage);
+router.post(
+  "/:spotId/images",
+  [singleMulterUpload("image"), restoreUser, requireAuth],
+  async (req, res) => {
+    const { user } = req;
+    const { preview } = req.body;
+    const imageUrl = await singlePublicFileUpload(req.file);
+    console.log("imageUrl 👉", imageUrl);
+    const spot = await Spot.findByPk(req.params.spotId, { raw: true });
+    if (!spot) res.status(404).json(doesNotExist("Spot"));
+    else {
+      if (isAuthorized(user.id, spot.ownerId, res)) {
+        const newImage = await SpotImage.create({
+          url: imageUrl,
+          preview,
+          spotId: spot.id,
+        });
+        res.status(200).json(newImage);
+      }
     }
   }
-});
+);
 
 // Update a Spot
 router.put("/:spotId", [restoreUser, requireAuth, validateSpot], async (req, res) => {
@@ -348,7 +359,7 @@ router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], as
           startDate,
           endDate,
           numNights,
-          numGuests
+          numGuests,
         });
         res.status(200).json(newBooking);
       }

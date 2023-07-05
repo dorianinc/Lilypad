@@ -1,6 +1,6 @@
 const express = require("express");
 const { validateReview } = require("../../utils/validation");
-const {  doesNotExist } = require("../../utils/utilities.js");
+const {  doesNotExist } = require("../../utils/helpers.js");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { ReviewImage, Review, User, Spot } = require("../../db/models");
 

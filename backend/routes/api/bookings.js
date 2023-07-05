@@ -1,7 +1,7 @@
 const express = require("express");
 const { validateBooking } = require("../../utils/validation");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
-const { isAvailable, doesNotExist, hasPassed } = require("../../utils/utilities.js");
+const { isAvailable, doesNotExist, hasPassed } = require("../../utils/helpers.js");
 const { Booking, Spot, SpotImage, User } = require("../../db/models");
 
 const router = express.Router();
