@@ -73,36 +73,31 @@ export const createSpotThunk = (spot) => async (dispatch) => {
 };
 
 // post image to spot
-export const addImageThunk = (spotId, formData) => async (dispatch) => {
-  console.log("formData 👉", formData.values())
-  // console.log("imageObjects IN THUNK 👉", imageObjects);
-  // console.log("spotId IN THUNK 👉", spotId)
-
-  // if (imageObjects && imageObjects.length !== 0) {
-  //   const formData = new FormData();
-  //   console.log("imageObjects[0].image 👉", imageObjects[0].image)
-  //   formData.append("images", imageObjects[0].image);
-
-  // for (let i = 0; i < imageObjects.length; i++) {
-  //   // let previewStatus = imageObjects[i].preview;
-  //   // formData.append("preview", previewStatus);
-  //   let image = imageObjects[i].image;
-  //   console.log("i 👉", i);
-  //   console.log("image 👉", image)
-  //   formData.append("images", image);
-  // }
-
-  const res = await csrfFetch(`/api/spots/${spotId}/images`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-    body: formData,
-  });
-  if (res.ok) {
-    const data = await res.json();
-    console.log("data 👉", data);
-    await dispatch(getSingleSpotThunk(spotId));
+export const addImageThunk = (spotId, imageObjects) => async (dispatch) => {
+  console.log("imageObjects IN THUNK 👉", imageObjects);
+  if (imageObjects && imageObjects.length !== 0) {
+    const formData = new FormData();
+    for (let i = 0; i < imageObjects.length; i++) {
+      let previewStatus = imageObjects[i].preview;
+      let image = imageObjects[i].image;
+      formData.append("preview", previewStatus);
+      formData.append("image", image);
+      for (const pair of formData.entries()) {
+        console.log(`${pair[0]}, ${pair[1]}`);
+      }
+      const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+      });
+      if (res.ok) {
+        const data = await res.json();
+        console.log("data 👉", data);
+        await dispatch(getSingleSpotThunk(spotId));
+      }
+    }
   }
 };
 

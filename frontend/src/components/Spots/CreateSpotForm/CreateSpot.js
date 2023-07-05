@@ -22,23 +22,23 @@ function NewSpotPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("HANDLING SUBMIT");
-    // const err = {};
-    // const spot = { address, city, state, country, lat, lng, name, description, price };
-    // if (address === null || address === "") err.address = "Address is required";
-    // if (city === null || city === "") err.city = "City is required";
-    // if (state === null || state === "") err.state = "State is required";
-    // if (country === null || country === "") err.country = "Country is required";
-    // if (description.length < 30) err.description = "Description needs a minimum of 30 characters";
-    // if (name === null || name === "") err.name = "Name is required";
-    // if (price === null || price === "" || price === 0) {
-    //   err.price = "Price is required";
-    // }
+    console.log("HANDLING SUBMIT");
+    const err = {};
+    const spot = { address, city, state, country, lat, lng, name, description, price };
+    if (address === null || address === "") err.address = "Address is required";
+    if (city === null || city === "") err.city = "City is required";
+    if (state === null || state === "") err.state = "State is required";
+    if (country === null || country === "") err.country = "Country is required";
+    if (description.length < 30) err.description = "Description needs a minimum of 30 characters";
+    if (name === null || name === "") err.name = "Name is required";
+    if (price === null || price === "" || price === 0) {
+      err.price = "Price is required";
+    }
 
-    // if (!!Object.values(err).length) {
-    //   setErrors(err);
-    // } else {
-      // const newSpot = await dispatch(createSpotThunk(spot));
+    if (!!Object.values(err).length) {
+      setErrors(err);
+    } else {
+      const newSpot = await dispatch(createSpotThunk(spot));
       const imagesArr = [];
       for (let i = 0; i < files.length; i++) {
         const image = files[i];
@@ -48,22 +48,10 @@ function NewSpotPage() {
           imagesArr.push({ image, preview: false });
         }
       }
-      for(let i = 0; i < imagesArr.length; i++){
-        console.log("imagesArr.length 👉", imagesArr.length)
-        console.log("i 👉", i)
-        let image = imagesArr[i].image
-        let preview = imagesArr[i].preview
-        const formData = new FormData();
-        formData.append("images", image)
-        formData.append("preview", preview)
-        for (const pair of formData.entries()) {
-          console.log(`${pair[0]}, ${pair[1]}`);
-        }
-        await dispatch(addImageThunk(5, formData))
-      }
-      // dispatch(addImageThunk(10, imagesArr));
-      // history.push(`/spots/${10}`);
-    // }
+      console.log("DISPATCHING IMAGE THUNK");
+      dispatch(addImageThunk(newSpot.id, imagesArr));
+      history.push(`/spots/${newSpot.id}`);
+    }
   };
 
   return (

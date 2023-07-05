@@ -238,12 +238,12 @@ router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
 // Add Image to a Spot
 router.post(
   "/:spotId/images",
-  [multipleMulterUpload("images"), restoreUser, requireAuth],
+  [singleMulterUpload("images"), restoreUser, requireAuth],
   async (req, res) => {
-    // const { user } = req;
-    // const { preview } = req.body;
-    console.log("req.file 👉👉👉👉👉", req.file)
-    const imageUrl = await multiplePublicFileUpload(req.file);
+    const { user } = req;
+    const { preview } = req.body;
+    console.log("req.file 👉", req.file)
+    const imageUrl = await singlePublicFileUpload(req.file);
     console.log("imageUrl 👉", imageUrl);
     // const spot = await Spot.findByPk(req.params.spotId, { raw: true });
     // if (!spot) res.status(404).json(doesNotExist("Spot"));
