@@ -11,8 +11,6 @@ const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require("../../d
 const {
   singlePublicFileUpload,
   singleMulterUpload,
-  multiplePublicFileUpload,
-  multipleMulterUpload,
 } = require("../../awsS3.js");
 const { Op } = require("sequelize");
 const router = express.Router();
@@ -238,13 +236,18 @@ router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
 // Add Image to a Spot
 router.post(
   "/:spotId/images",
-  [singleMulterUpload("images"), restoreUser, requireAuth],
+  [singleMulterUpload("image"), restoreUser, requireAuth],
   async (req, res) => {
     const { user } = req;
     const { preview } = req.body;
     console.log("req.file 👉", req.file)
     const imageUrl = await singlePublicFileUpload(req.file);
     console.log("imageUrl 👉", imageUrl);
+    console.log("-----------------------------------------------")
+    console.log("-----------------------------------------------")
+    console.log("-----------------------------------------------")
+    console.log("-----------------------------------------------")
+    console.log("-----------------------------------------------")
     // const spot = await Spot.findByPk(req.params.spotId, { raw: true });
     // if (!spot) res.status(404).json(doesNotExist("Spot"));
     // else {
@@ -257,6 +260,8 @@ router.post(
     //     res.status(200).json(newImage);
     //   }
     // }
+
+    res.status(200).json({words: "hello"});
   }
 );
 

@@ -22,23 +22,22 @@ function NewSpotPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("HANDLING SUBMIT");
-    const err = {};
-    const spot = { address, city, state, country, lat, lng, name, description, price };
-    if (address === null || address === "") err.address = "Address is required";
-    if (city === null || city === "") err.city = "City is required";
-    if (state === null || state === "") err.state = "State is required";
-    if (country === null || country === "") err.country = "Country is required";
-    if (description.length < 30) err.description = "Description needs a minimum of 30 characters";
-    if (name === null || name === "") err.name = "Name is required";
-    if (price === null || price === "" || price === 0) {
-      err.price = "Price is required";
-    }
+    // const err = {};
+    // const spot = { address, city, state, country, lat, lng, name, description, price };
+    // if (address === null || address === "") err.address = "Address is required";
+    // if (city === null || city === "") err.city = "City is required";
+    // if (state === null || state === "") err.state = "State is required";
+    // if (country === null || country === "") err.country = "Country is required";
+    // if (description.length < 30) err.description = "Description needs a minimum of 30 characters";
+    // if (name === null || name === "") err.name = "Name is required";
+    // if (price === null || price === "" || price === 0) {
+    //   err.price = "Price is required";
+    // }
 
-    if (!!Object.values(err).length) {
-      setErrors(err);
-    } else {
-      const newSpot = await dispatch(createSpotThunk(spot));
+    // if (!!Object.values(err).length) {
+    //   setErrors(err);
+    // } else {
+      // const newSpot = await dispatch(createSpotThunk(spot));
       const imagesArr = [];
       for (let i = 0; i < files.length; i++) {
         const image = files[i];
@@ -48,10 +47,9 @@ function NewSpotPage() {
           imagesArr.push({ image, preview: false });
         }
       }
-      console.log("DISPATCHING IMAGE THUNK");
-      dispatch(addImageThunk(newSpot.id, imagesArr));
-      history.push(`/spots/${newSpot.id}`);
-    }
+      dispatch(addImageThunk(4, imagesArr));
+      // history.push(`/spots/${newSpot.id}`);
+    // }
   };
 
   return (

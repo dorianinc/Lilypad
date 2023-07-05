@@ -21,6 +21,7 @@ export const getSingleSpot = (spot) => ({
   spot,
 });
 
+
 // clear spots state
 export const clearSpots = () => ({
   type: CLEAR_SPOTS,
@@ -74,29 +75,32 @@ export const createSpotThunk = (spot) => async (dispatch) => {
 
 // post image to spot
 export const addImageThunk = (spotId, imageObjects) => async (dispatch) => {
-  console.log("imageObjects IN THUNK 👉", imageObjects);
+  console.log("imageObjects IN THUNK 👉", imageObjects)
   if (imageObjects && imageObjects.length !== 0) {
-    const formData = new FormData();
     for (let i = 0; i < imageObjects.length; i++) {
+      const formData = new FormData();
       let previewStatus = imageObjects[i].preview;
       let image = imageObjects[i].image;
+      // console.log("image 👉", image)
       formData.append("preview", previewStatus);
       formData.append("image", image);
+      console.log("i 👉", i)
+
       for (const pair of formData.entries()) {
-        console.log(`${pair[0]}, ${pair[1]}`);
+        console.log(`key: ${pair[0]}, value: ${pair[1]}`);
       }
-      const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+      await csrfFetch(`/api/spots/6/images`, {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        body: formData,
+        body: formData
       });
-      if (res.ok) {
-        const data = await res.json();
-        console.log("data 👉", data);
-        await dispatch(getSingleSpotThunk(spotId));
-      }
+      // if (res.ok) {
+      //   const data = await res.json();
+      //   console.log("data 👉", data);
+      //  await dispatch(getSingleSpotThunk(spotId));
+      // }
     }
   }
 };
