@@ -1,20 +1,9 @@
-import { useEffect, useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import { useEffect, useState, useCallback } from "react";
 import "./DropZone.css";
 
-const DropZone = () => {
+const DropZone = ({ files, setFiles }) => {
   const [errors, setErrors] = useState({});
-  const [files, setFiles] = useState([]);
-
-  const maxImages = (images) => {
-    if (files.length >= 5) {
-      const err = {};
-      err.max = "Maximum File Limit Reached";
-      setErrors(err);
-    } else {
-      return null;
-    }
-  };
 
   const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
     setErrors({});
@@ -44,7 +33,6 @@ const DropZone = () => {
     maxSize: 1024 * 1000,
     multiple: false,
     maxFiles: 5,
-    validator: maxImages,
     disabled: files.length === 5 ? true : false,
   });
 
@@ -77,18 +65,16 @@ const DropZone = () => {
               <p className="drop-zone-text">Drop the files here ...</p>
             ) : (
               <div>
-                <p className="drop-zone-text">
-                  Drag photos here or click to select files
-                </p>
+                <p className="drop-zone-text">Drag photos here or click to select files</p>
                 <p className="drop-zone-sub-text">PNG, JPG or JPEG</p>
               </div>
             )}
           </div>
         )}
 
-        <p className="errors">{errors.type}</p>
-        <p className="errors">{errors.size}</p>
-        <p className="errors">{errors.max}</p>
+        <p className="errors">{errors && errors.type}</p>
+        <p className="errors">{errors && errors.size}</p>
+        <p className="errors">{errors && errors.max}</p>
       </div>
       <div className="dz-preview-image-section">
         {files.map((file, i) => (

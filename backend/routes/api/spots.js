@@ -159,13 +159,12 @@ router.get("/current", [restoreUser, requireAuth], async (req, res) => {
       },
     });
     if (previewImage) spot.previewImage = previewImage.url;
-    else spot.previewImage = "image url";
   }
 
   res.status(200).json(spots);
 });
 
-// Get Details of Specific Spot
+// Get single spot Details
 router.get("/:spotId", async (req, res) => {
   const spotId = req.params.spotId;
   const spot = await Spot.findByPk(spotId, { raw: true });
@@ -197,6 +196,9 @@ router.get("/:spotId", async (req, res) => {
       (image) => image.preview === 1 || image.preview === true
     )[0];
 
+    if (previewImage) spot.previewImage = previewImage.url;
+    else spot.previewImage = "image url";
+
     const images = imagesArr.reduce((filtered, image) => {
       if (image.id !== previewImage.id) {
         filtered.push(image.url);
@@ -205,8 +207,6 @@ router.get("/:spotId", async (req, res) => {
     }, []);
 
     if (images) spot.images = images;
-    if (previewImage) spot.previewImage = previewImage.url;
-    else spot.previewImage = "image url";
 
     const owner = await User.findOne({
       where: {
@@ -238,24 +238,25 @@ router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
 // Add Image to a Spot
 router.post(
   "/:spotId/images",
-  [singleMulterUpload("image"), restoreUser, requireAuth],
+  [multipleMulterUpload("images"), restoreUser, requireAuth],
   async (req, res) => {
-    const { user } = req;
-    const { preview } = req.body;
-    const imageUrl = await singlePublicFileUpload(req.file);
+    // const { user } = req;
+    // const { preview } = req.body;
+    console.log("req.file 👉👉👉👉👉", req.file)
+    const imageUrl = await multiplePublicFileUpload(req.file);
     console.log("imageUrl 👉", imageUrl);
-    const spot = await Spot.findByPk(req.params.spotId, { raw: true });
-    if (!spot) res.status(404).json(doesNotExist("Spot"));
-    else {
-      if (isAuthorized(user.id, spot.ownerId, res)) {
-        const newImage = await SpotImage.create({
-          url: imageUrl,
-          preview,
-          spotId: spot.id,
-        });
-        res.status(200).json(newImage);
-      }
-    }
+    // const spot = await Spot.findByPk(req.params.spotId, { raw: true });
+    // if (!spot) res.status(404).json(doesNotExist("Spot"));
+    // else {
+    //   if (isAuthorized(user.id, spot.ownerId, res)) {
+    //     const newImage = await SpotImage.create({
+    //       url: imageUrl,
+    //       preview,
+    //       spotId: spot.id,
+    //     });
+    //     res.status(200).json(newImage);
+    //   }
+    // }
   }
 );
 

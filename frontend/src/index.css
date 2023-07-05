@@ -12,12 +12,12 @@ body {
 }
 
 .app-container{
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .content-container {
   padding: 25px 10px;
-  overflow: auto;
+  /* overflow: auto; */
   scrollbar-gutter: stable;
 }
 .content-header{

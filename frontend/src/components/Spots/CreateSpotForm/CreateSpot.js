@@ -1,8 +1,8 @@
+import { createSpotThunk, addImageThunk, getSingleSpotThunk } from "../../../store/spotsReducer";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import DropZone from "../../DropZone";
-import { createSpotThunk, addImageThunk, getSingleSpotThunk } from "../../../store/spotsReducer";
 
 function NewSpotPage() {
   const [country, setCountry] = useState("");
@@ -14,11 +14,7 @@ function NewSpotPage() {
   const [description, setDescription] = useState("");
   const [name, setName] = useState(""); // this is for Title
   const [price, setPrice] = useState("");
-  const [previewImage, setPreviewImage] = useState({ url: "", preview: true });
-  const [image1, setImage1] = useState({ url: "", preview: false });
-  const [image2, setImage2] = useState({ url: "", preview: false });
-  const [image3, setImage3] = useState({ url: "", preview: false });
-  const [image4, setImage4] = useState({ url: "", preview: false });
+  const [files, setFiles] = useState([]);
   const [errors, setErrors] = useState({});
 
   const dispatch = useDispatch();
@@ -26,52 +22,48 @@ function NewSpotPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const err = {};
-    const spot = { address, city, state, country, lat, lng, name, description, price };
-    if (address === null || address === "") err.address = "Address is required";
-    if (city === null || city === "") err.city = "City is required";
-    if (state === null || state === "") err.state = "State is required";
-    if (country === null || country === "") err.country = "Country is required";
-    if (description.length < 30) err.description = "Description needs a minimum of 30 characters";
-    if (name === null || name === "") err.name = "Name is required";
-    if (price === null || price === "" || price === 0) {
-      err.price = "Price is required";
-    }
-    /// images ///
-    const imageExtensionRegex = /\.(gif|jpe?g|png|bmp|svg)$/i;
-    if (previewImage.url === null || previewImage.url === "") {
-      err.previewImage = "Preview image is required";
-    }
-    if (previewImage.url.length > 0 && !imageExtensionRegex.test(previewImage.url)) {
-      err.previewImage = "Image URL must end in .png, .jpg, or .jpeg";
-    }
-    if (image1.url.length > 0 && !imageExtensionRegex.test(image1.url)) {
-      err.image1 = "Image URL must end in .png, .jpg, or .jpeg";
-    }
-    if (image2.url.length > 0 && !imageExtensionRegex.test(image2.url)) {
-      err.image2 = "Image URL must end in .png, .jpg, or .jpeg";
-    }
-    if (image3.url.length > 0 && !imageExtensionRegex.test(image3.url)) {
-      err.image3 = "Image URL must end in .png, .jpg, or .jpeg";
-    }
-    if (image4.url.length > 0 && !imageExtensionRegex.test(image4.url)) {
-      err.image4 = "Image URL must end in .png, .jpg, or .jpeg";
-    }
+    // console.log("HANDLING SUBMIT");
+    // const err = {};
+    // const spot = { address, city, state, country, lat, lng, name, description, price };
+    // if (address === null || address === "") err.address = "Address is required";
+    // if (city === null || city === "") err.city = "City is required";
+    // if (state === null || state === "") err.state = "State is required";
+    // if (country === null || country === "") err.country = "Country is required";
+    // if (description.length < 30) err.description = "Description needs a minimum of 30 characters";
+    // if (name === null || name === "") err.name = "Name is required";
+    // if (price === null || price === "" || price === 0) {
+    //   err.price = "Price is required";
+    // }
 
-    if (!!Object.values(err).length) {
-      setErrors(err);
-    } else {
-      const newSpot = await dispatch(createSpotThunk(spot));
-      const images = [previewImage, image1, image2, image3, image4];
-      for (let i = 0; i < images.length; i++) {
-        const image = images[i];
-        if (image.url) {
-          dispatch(addImageThunk(newSpot.id, image));
+    // if (!!Object.values(err).length) {
+    //   setErrors(err);
+    // } else {
+      // const newSpot = await dispatch(createSpotThunk(spot));
+      const imagesArr = [];
+      for (let i = 0; i < files.length; i++) {
+        const image = files[i];
+        if (i === 0) {
+          imagesArr.push({ image, preview: true });
+        } else {
+          imagesArr.push({ image, preview: false });
         }
       }
-      const returnedSpot = await dispatch(getSingleSpotThunk(newSpot.id));
-      history.push(`/spots/${returnedSpot.id}`);
-    }
+      for(let i = 0; i < imagesArr.length; i++){
+        console.log("imagesArr.length 👉", imagesArr.length)
+        console.log("i 👉", i)
+        let image = imagesArr[i].image
+        let preview = imagesArr[i].preview
+        const formData = new FormData();
+        formData.append("images", image)
+        formData.append("preview", preview)
+        for (const pair of formData.entries()) {
+          console.log(`${pair[0]}, ${pair[1]}`);
+        }
+        await dispatch(addImageThunk(5, formData))
+      }
+      // dispatch(addImageThunk(10, imagesArr));
+      // history.push(`/spots/${10}`);
+    // }
   };
 
   return (
@@ -136,7 +128,7 @@ function NewSpotPage() {
           Mention the best features of your space, any special amentities like fast wifi or parking,
           and what you love about the neighborhood.
         </p>
-        <text-area
+        <textarea
           name="description"
           className="text-area new-spot"
           value={description}
@@ -181,7 +173,7 @@ function NewSpotPage() {
         <h1>Liven up your spot with photos</h1>
         <p>Upload up to 5 images</p>
         <div className="images">
-          <DropZone />
+          <DropZone files={files} setFiles={setFiles} />
         </div>
         <hr className="lines form" />
         <div className="buttonContainer">

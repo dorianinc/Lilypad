@@ -21,18 +21,6 @@ export const getSingleSpot = (spot) => ({
   spot,
 });
 
-// // update single spot
-// export const updateSpot = (spot) => ({
-//   type: UPDATE_SPOT,
-//   spot,
-// });
-
-// //// delete single spot
-// export const deleteSpot = (spotId) => ({
-//   type: DELETE_SPOT,
-//   spotId,
-// });
-
 // clear spots state
 export const clearSpots = () => ({
   type: CLEAR_SPOTS,
@@ -85,18 +73,36 @@ export const createSpotThunk = (spot) => async (dispatch) => {
 };
 
 // post image to spot
-export const addImageThunk = (spotId, imageObj) => async (dispatch) => {
+export const addImageThunk = (spotId, formData) => async (dispatch) => {
+  console.log("formData 👉", formData.values())
+  // console.log("imageObjects IN THUNK 👉", imageObjects);
+  // console.log("spotId IN THUNK 👉", spotId)
+
+  // if (imageObjects && imageObjects.length !== 0) {
+  //   const formData = new FormData();
+  //   console.log("imageObjects[0].image 👉", imageObjects[0].image)
+  //   formData.append("images", imageObjects[0].image);
+
+  // for (let i = 0; i < imageObjects.length; i++) {
+  //   // let previewStatus = imageObjects[i].preview;
+  //   // formData.append("preview", previewStatus);
+  //   let image = imageObjects[i].image;
+  //   console.log("i 👉", i);
+  //   console.log("image 👉", image)
+  //   formData.append("images", image);
+  // }
+
   const res = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
     },
-    body: JSON.stringify(imageObj),
+    body: formData,
   });
   if (res.ok) {
     const data = await res.json();
-    dispatch(getUserSpotsThunk());
-    return data;
+    console.log("data 👉", data);
+    await dispatch(getSingleSpotThunk(spotId));
   }
 };
 
@@ -139,7 +145,7 @@ const spotsReducer = (state = {}, action) => {
     case GET_SINGLE_SPOT:
       newState = {};
       newState = { ...action.spot };
-      return newState
+      return newState;
     // case UPDATE_SPOT:
     //   return { ...state, [action.spot.id]: action.spot };
     // case DELETE_SPOT:

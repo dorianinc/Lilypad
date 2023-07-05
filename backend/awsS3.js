@@ -30,6 +30,7 @@ const singlePublicFileUpload = async (file) => {
 };
 
 const multiplePublicFileUpload = async (files) => {
+  console.log("files 👉", files);
   return await Promise.all(
     files.map((file) => {
       return singlePublicFileUpload(file);
@@ -82,12 +83,19 @@ const storage = multer.memoryStorage({
   },
 });
 
-const singleMulterUpload = (nameOfKey) => { 
-  console.log("storage 👉", storage)
-  return multer({ storage: storage }).single(nameOfKey)
+const singleMulterUpload = (nameOfKey) => {
+  console.log("nameOfKey in single 👉", nameOfKey);
+  const single = multer({ storage: storage }).single(nameOfKey);
+  console.log("single 👉", single)
+  return single
 };
 
-const multipleMulterUpload = (nameOfKey) => multer({ storage: storage }).array(nameOfKey);
+const multipleMulterUpload = (nameOfKey) => {
+  console.log("nameOfKey in multiple 👉", nameOfKey);
+  const multiple = multer({ storage: storage }).array(nameOfKey);
+  console.log("multiple 👉", multiple)
+  return multiple
+};
 
 module.exports = {
   s3,
