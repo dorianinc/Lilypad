@@ -24,7 +24,6 @@ const BookingConfirmation = () => {
     setNumChildren,
     setNumInfants,
     setOccupancy,
-    occupancy,
   } = useCounter();
   const [localStartDate, setLocalStartDate] = useState(startDate);
   const [localEndDate, setLocalEndDate] = useState(endDate);
@@ -74,6 +73,7 @@ const BookingConfirmation = () => {
 
   const confirmBooking = async (e) => {
     e.preventDefault();
+
     if (!paymentOption) {
       const err = {};
       err.payment = "Please select a payment plan";
@@ -81,15 +81,15 @@ const BookingConfirmation = () => {
     } else {
       const formattedStartDate = format(new Date(localStartDate), "Y-MM-dd");
       const formattedEndDate = format(new Date(localEndDate), "Y-MM-dd");
-      const requestedDates = {
+      const requestedBooking = {
         startDate: formattedStartDate,
         endDate: formattedEndDate,
         numNights,
-        numGuests: occupancy,
+        numAdults,
+        numChildren,
+        numInfants,
       };
-
-      await dispatch(createBookingsThunk(spotId, requestedDates));
-      localStorage.clear();
+      await dispatch(createBookingsThunk(spotId, requestedBooking));
       history.push(`/bookings`);
     }
   };

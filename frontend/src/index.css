@@ -11,9 +11,6 @@ body {
   scroll-behavior: smooth;
 }
 
-.app-container{
-  /* overflow: hidden; */
-}
 
 .content-container {
   padding: 25px 10px;

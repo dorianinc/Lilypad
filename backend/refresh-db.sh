@@ -1,5 +1,5 @@
 
-# Undo Migrations and seeders
+# # Undo Migrations and seeders
 npx dotenv sequelize db:seed:undo:all
 npx dotenv sequelize db:migrate:undo:all
 

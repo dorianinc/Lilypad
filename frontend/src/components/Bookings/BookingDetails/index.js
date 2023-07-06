@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { format, formatDistance } from "date-fns";
-import { getUserBookingsThunk } from "../../../store/bookingsReducer";
+import { getSingleBookingsThunk } from "../../../store/bookingsReducer";
 import DeleteBooking from "../../Modals/DeleteBooking";
 import ModalButton from "../../Modals/ModalButton";
-import Calendar from "../../Calendar"
 import Map from "../../Map";
 import "./BookingDetails.css";
 
@@ -13,31 +12,34 @@ const BookingDetails = () => {
   const { bookingId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const getBookings = useSelector((state) => state.bookings);
-  const booking = getBookings[`${bookingId}`];
+  const booking = useSelector((state) => state.bookings);
 
   useEffect(() => {
-    dispatch(getUserBookingsThunk());
+    dispatch(getSingleBookingsThunk(bookingId));
   }, [dispatch, bookingId]);
 
   const goBack = () => {
     history.push("/bookings");
   };
 
-  if (!booking || !booking.Spot) return null;
+  const goToEdit = () => {
+    history.push(`/bookings/${bookingId}/edit`)
+  }
+
+  if (!booking || !booking.spot) return null;
   const formattedStartDate = format(new Date(booking.startDate), "EE, MMM do");
   const formattedEndDate = format(new Date(booking.endDate), "EE, MMM do");
   return (
     <div className="booking-details-section">
       <div className="booking-details-content">
         <div className="booking-details-image">
-          <img loading="lazy" src={booking.Spot.previewImage} />
+          <img loading="lazy" src={booking.spot.previewImage} />
           <div className="booking-image-overlay">
             <button className="booking-back-button" onClick={goBack}>
               <i class="fa-solid fa-arrow-left fa-2xl" />
             </button>
             <h2 style={{ fontSize: "1.7rem", color: "#fff", fontWeight: "500" }}>
-              You're all set for {booking.Spot.city}
+              You're all set for {booking.spot.city}
             </h2>
           </div>
         </div>
@@ -64,28 +66,20 @@ const BookingDetails = () => {
               <div className="booking-details-meu-content">
                 <p style={{ fontSize: "1rem", fontWeight: "500" }}>Getting there</p>
                 <p style={{ fontSize: "1rem", fontWeight: "500", color: "#888888" }}>
-                  Address: {booking.Spot.address}
+                  Address: {booking.spot.address}
                 </p>
               </div>
             </div>
             <hr style={{ border: "1px solid #d2d2d2" }} />
-
-            <ModalButton
-              modalComponent={<Calendar spotId={booking.spotId}/>}
-              buttonContent={
-                <>
-                  <div className="booking-details-menu-section clickable">
-                    <i class="fa-solid fa-pen-to-square fa-2xl booking-icon" />
-                    <div className="booking-details-meu-content">
-                      <p style={{ fontSize: "1rem", fontWeight: "500" }}>Change Booking</p>
-                      <p style={{ fontSize: "1rem", fontWeight: "500", color: "#888888" }}>
-                        Customize Your Lilypad bookings for the perfect stay
-                      </p>
-                    </div>
-                  </div>
-                </>
-              }
-            />
+            <div className="booking-details-menu-section clickable" onClick={goToEdit}>
+              <i class="fa-solid fa-pen-to-square fa-2xl booking-icon" />
+              <div className="booking-details-meu-content">
+                <p style={{ fontSize: "1rem", fontWeight: "500" }}>Change Booking</p>
+                <p style={{ fontSize: "1rem", fontWeight: "500", color: "#888888" }}>
+                  Customize Your Lilypad bookings for the perfect stay
+                </p>
+              </div>
+            </div>
             <hr style={{ border: "1px solid #d2d2d2" }} />
             <ModalButton
               modalComponent={<DeleteBooking bookingId={bookingId} />}

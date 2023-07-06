@@ -344,7 +344,7 @@ router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], as
   const spot = await Spot.findByPk(req.params.spotId, { raw: true });
   if (!spot) res.status(404).json(doesNotExist("Spot"));
   else {
-    const { startDate, endDate, numNights, numGuests } = req.body;
+    const { startDate, endDate, numNights, numAdults, numChildren, numInfants } = req.body;
     const bookedDates = await Booking.findAll({
       where: { spotId: spot.id },
       attributes: ["id", "startDate", "endDate"],
@@ -358,7 +358,9 @@ router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], as
           startDate,
           endDate,
           numNights,
-          numGuests,
+          numAdults,
+          numChildren,
+          numInfants,
         });
         res.status(200).json(newBooking);
       }

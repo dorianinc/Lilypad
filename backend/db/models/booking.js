@@ -25,14 +25,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
       },
-      numNights: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-      },
-      numGuests: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-      },
       startDate: {
         allowNull: false,
         type: DataTypes.DATE,
@@ -46,6 +38,22 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isDate: true,
         },
+      },
+      numNights: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      numAdults: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      numChildren: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      numInfants: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
       },
     },
     {

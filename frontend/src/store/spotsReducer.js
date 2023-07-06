@@ -82,7 +82,6 @@ export const addImageThunk = (spotId, imageObjects) => async (dispatch) => {
       let image = imageObjects[i].image;
       formData.append("preview", previewStatus);
       formData.append("image", image);
-      console.log("i 👉", i)
      const res = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: "POST",
         headers: {

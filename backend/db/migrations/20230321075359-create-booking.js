@@ -33,12 +33,6 @@ module.exports = {
           },
           onDelete: 'cascade'
         },
-        numNights: {
-          type: Sequelize.INTEGER,
-        },
-        numGuests: {
-          type: Sequelize.INTEGER,
-        },
         startDate: {
           allowNull: false,
           type: Sequelize.DATE,
@@ -46,6 +40,24 @@ module.exports = {
         endDate: {
           allowNull: false,
           type: Sequelize.DATE,
+        },
+        numNights: {
+          type: Sequelize.INTEGER,
+        },
+        numAdults: {
+          allowNull: false,
+          type: Sequelize.INTEGER,
+          defaultValue: 1,
+        },
+        numChildren: {
+          allowNull: false,
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
+        },
+        numInfants: {
+          allowNull: false,
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
         },
         createdAt: {
           allowNull: false,

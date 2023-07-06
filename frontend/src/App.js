@@ -11,6 +11,7 @@ import EditSpotPage from "./components/Spots/EditSpotForm/EditSpot";
 import BookingsPage from "./components/Bookings/UsersBookings";
 import ConfirmBooking from "./components/Bookings/BookingConfirmation";
 import BookingDetails from "./components/Bookings/BookingDetails";
+import EditBookingForm from "./components/Bookings/EditBookingForm";
 import Calendar from "./components/Calendar";
 
 function App() {
@@ -43,6 +44,9 @@ function App() {
             </Route>
             <Route path="/bookings/spots/:spotId">
               <ConfirmBooking />
+            </Route>
+            <Route path="/bookings/:bookingId/edit">
+              <EditBookingForm />
             </Route>
             <Route path="/bookings/:bookingId">
               <BookingDetails />

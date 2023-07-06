@@ -64,8 +64,8 @@ export const createBookingsThunk = (spotId, booking) => async (dispatch) => {
     body: JSON.stringify(booking),
   });
   if (res.ok) {
-    await res.json();
-    await dispatch(getSpotBookingsThunk(spotId));
+    const data = await res.json();
+    return data
   }
 };
 
