@@ -2,7 +2,7 @@ const express = require("express");
 const { validateBooking } = require("../../utils/validation");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { isAvailable, doesNotExist, hasPassed } = require("../../utils/helpers.js");
-const { Booking, Spot, SpotImage, User } = require("../../db/models");
+const { Booking, Spot, SpotImage, User, GuestList } = require("../../db/models");
 
 const router = express.Router();
 
@@ -40,16 +40,18 @@ router.get("/", [restoreUser, requireAuth], async (req, res) => {
       attributes: ["id", "firstName", "lastName"],
       raw: true,
     });
-    if(owner) booking.Spot.owner = {
-      firstName: owner.firstName,
-      lastName: owner.lastName
-    }
+    if (owner)
+      booking.Spot.owner = {
+        firstName: owner.firstName,
+        lastName: owner.lastName,
+      };
+
     for (let j = 0; j < booking.Spot.SpotImages.length; j++) {
       const image = booking.Spot.SpotImages[j];
       if (image.preview === true) {
         booking.Spot.previewImage = image.url;
-      }else{
-        booking.Spot.images = image.url
+      } else {
+        booking.Spot.images = image.url;
       }
     }
     if (!booking.Spot.previewImage) {
@@ -64,23 +66,64 @@ router.get("/", [restoreUser, requireAuth], async (req, res) => {
 // Get single Booking
 router.get("/:bookingId", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
-  const booking = await Booking.unscoped().findByPk(req.params.bookingId,{
+  const booking = await Booking.findByPk(req.params.bookingId, {
     where: {
       userId: user.id,
     },
     include: {
       model: Spot,
       include: { model: SpotImage },
-    }
+    },
   });
   if (!booking) res.status(404).json(doesNotExist("Booking"));
-  else{
+  else {
     if (isAuthorized(user.id, booking.userId, res)) {
-      res.status(200).json(booking);
+      const { id, spotId, userId, startDate, endDate, numNights, numGuests, Spot } =
+        booking.toJSON();
+      const newBooking = { id, spotId, userId, startDate, endDate, numNights, numGuests, Spot };
+      const guestList = await GuestList.findOne({
+        where: {
+          bookingId: booking.id,
+        },
+        raw: true,
+      });
+
+      if (guestList) {
+        newBooking.guestList = {
+          numAdults: guestList.numAdults,
+          numChildren: guestList.numChildren,
+          numInfants: guestList.numInfants,
+        };
+      }
+
+      res.status(200).json(newBooking);
     }
   }
 });
 
+// Add guestlist to booking
+router.post("/:bookingId/guestlist", [restoreUser, requireAuth], async (req, res) => {
+  console.log("👉👉👉👉👉👉👉 IN ADD GUEST LIST")
+  const { user } = req;
+  const { numAdults, numChildren, numInfants } = req.body;
+  const booking = await Booking.findByPk(req.params.bookingId, { raw: true });
+  console.log("booking  👉", booking )
+  if (!booking) res.status(404).json(doesNotExist("Booking"));
+  else {
+    console.log("user.id, 👉", user.id,)
+    console.log("booking.userId 👉", booking.userId)
+    if (isAuthorized(user.id, booking.userId, res)) {
+      const newGuestList = await GuestList.create({
+        numAdults,
+        numChildren,
+        numInfants,
+        bookingId: booking.id,
+      });
+      console.log("newGuestList 👉", newGuestList)
+      res.status(200).json(newGuestList);
+    } 
+  }
+});
 
 // Update a Booking
 router.put("/:bookingId", [restoreUser, requireAuth, validateBooking], async (req, res) => {
@@ -118,7 +161,7 @@ router.delete("/:bookingId", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
   const booking = await Booking.unscoped().findByPk(req.params.bookingId);
   if (!booking) res.status(404).json(doesNotExist("Booking"));
-  else{
+  else {
     if (isAuthorized(user.id, booking.userId, res)) {
       if (!hasPassed(booking.startDate, null, res)) {
         await booking.destroy();

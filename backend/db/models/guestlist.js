@@ -9,10 +9,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   GuestList.init(
     {
-      url: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-      },
       numAdults: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -33,6 +29,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "GuestList",
+      defaultScope: {
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      },
     }
   );
   return GuestList;
