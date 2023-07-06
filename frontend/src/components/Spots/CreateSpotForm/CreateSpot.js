@@ -63,7 +63,7 @@ function NewSpotPage() {
 
   return (
     <div className="spots-form-container new-spot">
-      {!isLoading && <LoadingScreen />}
+      {isLoading && <LoadingScreen />}
       <form onSubmit={handleSubmit}>
         <div>
           <h1>Create a new Spot</h1>
