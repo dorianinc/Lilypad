@@ -1,18 +1,19 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { format } from "date-fns";
+import { format, addDays } from "date-fns";
 import { useCalendar } from "../../../context/CalendarContext";
 import { useCounter } from "../../../context/CounterContext";
 import { getSingleBookingsThunk } from "../../../store/bookingsReducer";
 import ModalButton from "../../Modals/ModalButton";
 import Calendar from "../../Calendar";
+import GuestCounter from "../GuestCounter";
 import "./EditBookingForm.css";
 
 const EditBookingForm = () => {
   const { bookingId } = useParams();
   const dispatch = useDispatch();
-  const { setOnStartDate, startDate, endDate, showCalendar, setShowCalendar, setFocus } =
+  const { setStartDate, startDate, setEndDate, endDate, showCalendar, setShowCalendar, setFocus } =
     useCalendar();
   const {
     numAdults,
@@ -22,17 +23,24 @@ const EditBookingForm = () => {
     setNumChildren,
     setNumInfants,
     setOccupancy,
+    occupancy
   } = useCounter();
   const booking = useSelector((state) => state.bookings);
 
   const openCalendar = () => {
-    setOnStartDate(true);
+    // setOnStartDate(true);
     setShowCalendar(true);
     setFocus(1);
   };
 
   useEffect(() => {
     dispatch(getSingleBookingsThunk(bookingId));
+    setStartDate(addDays(new Date(booking.startDate), 1));
+    setEndDate(addDays(new Date(booking.endDate), 1));
+    setNumAdults(booking.numAdults);
+    setNumChildren(booking.numChildren);
+    setNumInfants(booking.numInfants)
+    setOccupancy(booking.numAdults + booking.numChildren + booking.numInfants)
   }, [dispatch, bookingId]);
 
   if (!booking || !booking.spot) return null;
@@ -43,14 +51,14 @@ const EditBookingForm = () => {
       <div className="image-container edit-booking">
         <img src={booking.spot.previewImage} />
       </div>
-      <h2 style={{ marginBottom: "15px" }}>Reservation details</h2>
+      <h2 style={{ marginBottom: "2px" }}>Reservation details</h2>
       <h4>Dates</h4>
-      <ModalButton
+      {/* <ModalButton
         modalComponent={<Calendar spotId={booking.spotId} minNights={booking.spot.minNights} />}
         buttonContent={
           <div
             className="start-end-display"
-            style={{ border: "2px solid #c0c0c0", borderRadius: "5px" }}
+            style={{ border: "2px solid #c0c0c0", borderRadius: "5px", marginBottom: "15px" }}
           >
             <div className={`start-date-shell`} onClick={openCalendar}>
               <p id="checkin-text">CHECK-IN</p>
@@ -66,8 +74,23 @@ const EditBookingForm = () => {
             </div>
           </div>
         }
-      />
+      /> */}
       <h4>Guests</h4>
+      <ModalButton
+                modalComponent={<GuestCounter maxGuests={booking.spot.maxGuests} />}
+                buttonContent={
+                  <div className="num-guests-selector"
+                  style={{ border: "2px solid #c0c0c0", borderRadius: "5px" }}
+                  >
+                  <div style={{ padding: "5px 10px" }}>
+                    <p id="checkout-text">Guests</p>
+                    <p id="end-date-text">
+                      {occupancy} guest{occupancy > 1 ? "s" : ""}
+                    </p>
+                  </div>
+                </div>
+                }
+              />
     </div>
   );
 };

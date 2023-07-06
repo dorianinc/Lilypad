@@ -80,8 +80,8 @@ router.get("/:bookingId", [restoreUser, requireAuth], async (req, res) => {
     if (isAuthorized(user.id, booking.userId, res)) {
       const { id, spotId, userId, startDate, endDate, numNights, numAdults, numChildren, numInfants, Spot } =
         booking.toJSON();
-        const {ownerId, address, city, state, lat, lng, name, price, minNights, SpotImages} = Spot
-        const spot = {ownerId, address, city, state, lat, lng, name, price, minNights, previewImage: SpotImages[0].url}
+        const {ownerId, address, city, state, lat, lng, name, price, minNights, maxGuests, SpotImages} = Spot
+        const spot = {ownerId, address, city, state, lat, lng, name, price, minNights, maxGuests, previewImage: SpotImages[0].url}
       const newBooking = { id, spotId, userId, startDate, endDate, numNights, numAdults, numChildren, numInfants, spot };
       // const guestList = await GuestList.findOne({
       //   where: {

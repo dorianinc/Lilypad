@@ -1,31 +1,56 @@
+.num-guest-container.bookings {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* height: 300px; */
+  width: 300px;
+}
+
+.x-mark.guest-counter{
+  margin-bottom: 15px;
+  background-color: #fff;
+  border: none;
+  border-radius: 20px;
+  height: 30px;
+  width: 30px;
+}
+
+.x-mark.guest-counter:hover{
+  background-color: #e5e5e5;
+}
 
 .num-guests-content {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .guest-values {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  
-  .guest-catagory {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .plus-minus-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
-    width: 30px;
-    color: #c0c0c0;
-    border: 2px solid #c0c0c0;
-    background-color: #fff;
-    border-radius: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.guest-values {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.guest-catagory {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.plus-minus-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  color: #c0c0c0;
+  border: 2px solid #c0c0c0;
+  background-color: #fff;
+  border-radius: 20px;
+}
+
+.button-spaces-between{
+  display: flex;
+  margin-top: 10px;
+  justify-content: space-between;
+}
