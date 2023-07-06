@@ -2,6 +2,7 @@ import { createSpotThunk, addImageThunk } from "../../../store/spotsReducer";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import LoadingScreen from "../../LoadingScreen";
 import DropZone from "../../DropZone";
 
 function NewSpotPage() {
@@ -34,10 +35,14 @@ function NewSpotPage() {
     if (price === null || price === "" || price === 0) {
       err.price = "Price is required";
     }
-
+    if(files.length <= 0){
+      err.images = "Please add at least one image to your pad";
+    }
+    
     if (!!Object.values(err).length) {
       setErrors(err);
     } else {
+      setIsLoading(true)
       const newSpot = await dispatch(createSpotThunk(spot));
       const imagesArr = [];
       for (let i = 0; i < files.length; i++) {
@@ -50,6 +55,7 @@ function NewSpotPage() {
       }
       const spotImages = await dispatch(addImageThunk(newSpot.id, imagesArr));
       if (spotImages) {
+        setIsLoading(false)
         history.push(`/spots/${newSpot.id}`);
       }
     }
@@ -57,9 +63,11 @@ function NewSpotPage() {
 
   return (
     <div className="spots-form-container new-spot">
+      {!isLoading && <LoadingScreen />}
       <form onSubmit={handleSubmit}>
         <div>
           <h1>Create a new Spot</h1>
+          <h1>{files.length}</h1>
           <h2>Where's your place located?</h2>
           <p>Guests will only get your exact addres once they booked a reservation.</p>
         </div>
@@ -163,6 +171,7 @@ function NewSpotPage() {
         <p>Upload up to 5 images</p>
         <div className="images">
           <DropZone files={files} setFiles={setFiles} />
+          <p className="errors">{errors.images}</p>
         </div>
         <hr className="lines form" />
         <div className="buttonContainer">

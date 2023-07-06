@@ -1,0 +1,29 @@
+/* Modal Specific CSS Styles */
+
+#background {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+
+  }
+  
+  #lilypad-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 400px;
+    color: #ff5c6c;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    border: 2px dashed #ff5c6c;
+  }
