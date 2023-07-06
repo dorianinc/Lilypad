@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         // otherKey: "spotId",
         foreignKey: "userId",
       });
+      Booking.hasOne(models.GuestList, { foreignKey: "bookingId" });
     }
   }
   Booking.init(
