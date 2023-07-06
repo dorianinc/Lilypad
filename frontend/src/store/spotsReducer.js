@@ -75,33 +75,27 @@ export const createSpotThunk = (spot) => async (dispatch) => {
 
 // post image to spot
 export const addImageThunk = (spotId, imageObjects) => async (dispatch) => {
-  console.log("imageObjects IN THUNK 👉", imageObjects)
   if (imageObjects && imageObjects.length !== 0) {
     for (let i = 0; i < imageObjects.length; i++) {
       const formData = new FormData();
       let previewStatus = imageObjects[i].preview;
       let image = imageObjects[i].image;
-      // console.log("image 👉", image)
       formData.append("preview", previewStatus);
       formData.append("image", image);
       console.log("i 👉", i)
-
-      for (const pair of formData.entries()) {
-        console.log(`key: ${pair[0]}, value: ${pair[1]}`);
-      }
-      await csrfFetch(`/api/spots/6/images`, {
+     const res = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
         },
         body: formData
       });
-      // if (res.ok) {
-      //   const data = await res.json();
-      //   console.log("data 👉", data);
-      //  await dispatch(getSingleSpotThunk(spotId));
-      // }
+      if (!res.ok) {
+        return false
+      }
     }
+    await dispatch(getSingleSpotThunk(spotId));
+    return true
   }
 };
 
@@ -145,12 +139,6 @@ const spotsReducer = (state = {}, action) => {
       newState = {};
       newState = { ...action.spot };
       return newState;
-    // case UPDATE_SPOT:
-    //   return { ...state, [action.spot.id]: action.spot };
-    // case DELETE_SPOT:
-    //   newState = { ...state };
-    //   delete newState[action.spotId];
-    //   return newState;
     case CLEAR_SPOTS:
       return {};
     default:

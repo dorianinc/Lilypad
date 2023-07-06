@@ -8,10 +8,7 @@ const {
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
 const { isAvailable, doesNotExist } = require("../../utils/helpers.js");
 const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require("../../db/models");
-const {
-  singlePublicFileUpload,
-  singleMulterUpload,
-} = require("../../awsS3.js");
+const { singlePublicFileUpload, singleMulterUpload } = require("../../awsS3.js");
 const { Op } = require("sequelize");
 const router = express.Router();
 
@@ -240,28 +237,24 @@ router.post(
   async (req, res) => {
     const { user } = req;
     const { preview } = req.body;
-    console.log("req.file 👉", req.file)
     const imageUrl = await singlePublicFileUpload(req.file);
-    console.log("imageUrl 👉", imageUrl);
-    console.log("-----------------------------------------------")
-    console.log("-----------------------------------------------")
-    console.log("-----------------------------------------------")
-    console.log("-----------------------------------------------")
-    console.log("-----------------------------------------------")
-    // const spot = await Spot.findByPk(req.params.spotId, { raw: true });
-    // if (!spot) res.status(404).json(doesNotExist("Spot"));
-    // else {
-    //   if (isAuthorized(user.id, spot.ownerId, res)) {
-    //     const newImage = await SpotImage.create({
-    //       url: imageUrl,
-    //       preview,
-    //       spotId: spot.id,
-    //     });
-    //     res.status(200).json(newImage);
-    //   }
-    // }
-
-    res.status(200).json({words: "hello"});
+    const spot = await Spot.findByPk(req.params.spotId, { raw: true });
+    if (!spot) res.status(404).json(doesNotExist("Spot"));
+    else {
+      if (isAuthorized(user.id, spot.ownerId, res)) {
+        const newImage = await SpotImage.create({
+          url: imageUrl,
+          preview: true,
+          spotId: spot.id,
+        });
+        res.status(200).json(newImage);
+      } else {
+        res.status(403).json({
+          message: "Forbidden",
+          statusCode: 403,
+        });
+      }
+    }
   }
 );
 

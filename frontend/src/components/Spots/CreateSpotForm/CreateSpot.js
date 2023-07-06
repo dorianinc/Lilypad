@@ -1,4 +1,4 @@
-import { createSpotThunk, addImageThunk, getSingleSpotThunk } from "../../../store/spotsReducer";
+import { createSpotThunk, addImageThunk } from "../../../store/spotsReducer";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -16,28 +16,29 @@ function NewSpotPage() {
   const [price, setPrice] = useState("");
   const [files, setFiles] = useState([]);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false)
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const err = {};
-    // const spot = { address, city, state, country, lat, lng, name, description, price };
-    // if (address === null || address === "") err.address = "Address is required";
-    // if (city === null || city === "") err.city = "City is required";
-    // if (state === null || state === "") err.state = "State is required";
-    // if (country === null || country === "") err.country = "Country is required";
-    // if (description.length < 30) err.description = "Description needs a minimum of 30 characters";
-    // if (name === null || name === "") err.name = "Name is required";
-    // if (price === null || price === "" || price === 0) {
-    //   err.price = "Price is required";
-    // }
+    const err = {};
+    const spot = { address, city, state, country, lat, lng, name, description, price };
+    if (address === null || address === "") err.address = "Address is required";
+    if (city === null || city === "") err.city = "City is required";
+    if (state === null || state === "") err.state = "State is required";
+    if (country === null || country === "") err.country = "Country is required";
+    if (description.length < 30) err.description = "Description needs a minimum of 30 characters";
+    if (name === null || name === "") err.name = "Name is required";
+    if (price === null || price === "" || price === 0) {
+      err.price = "Price is required";
+    }
 
-    // if (!!Object.values(err).length) {
-    //   setErrors(err);
-    // } else {
-      // const newSpot = await dispatch(createSpotThunk(spot));
+    if (!!Object.values(err).length) {
+      setErrors(err);
+    } else {
+      const newSpot = await dispatch(createSpotThunk(spot));
       const imagesArr = [];
       for (let i = 0; i < files.length; i++) {
         const image = files[i];
@@ -47,9 +48,11 @@ function NewSpotPage() {
           imagesArr.push({ image, preview: false });
         }
       }
-      dispatch(addImageThunk(4, imagesArr));
-      // history.push(`/spots/${newSpot.id}`);
-    // }
+      const spotImages = await dispatch(addImageThunk(newSpot.id, imagesArr));
+      if (spotImages) {
+        history.push(`/spots/${newSpot.id}`);
+      }
+    }
   };
 
   return (
