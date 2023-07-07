@@ -52,7 +52,7 @@ module.exports = {
           type: Sequelize.STRING,
         },
         description: {
-          type: Sequelize.STRING(400),
+          type: Sequelize.STRING(800),
         },
         minNights: {
           allowNull: false,

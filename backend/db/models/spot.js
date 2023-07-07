@@ -68,7 +68,7 @@ module.exports = (sequelize, DataTypes) => {
       description: {
         type: DataTypes.STRING,
         validate: {
-          max: 400,
+          max: 800,
         },
       },
       minNights: {
