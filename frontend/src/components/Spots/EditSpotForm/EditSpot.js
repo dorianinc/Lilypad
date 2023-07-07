@@ -33,11 +33,6 @@ function EditSpotPage() {
 
   }, [dispatch, spotId]);
   
-  useEffect(() => {
-    return(() => {
-      dispatch(getSpotsThunk())
-    })
-  }, [])
 
   
   const handleSubmit = async (e) => {

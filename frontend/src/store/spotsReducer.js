@@ -109,9 +109,7 @@ export const updateSpotThunk = (spotId, spotEdits) => async (dispatch) => {
   });
 
   if (res.ok) {
-    const data = await res.json();
-    dispatch(getUserSpotsThunk());
-    return data;
+    dispatch(getSingleSpotThunk(spotId));
   }
 };
 

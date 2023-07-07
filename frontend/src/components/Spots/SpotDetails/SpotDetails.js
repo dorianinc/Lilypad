@@ -16,6 +16,7 @@ function SpotPage() {
   const { setBookedDates } = useCalendar();
   const dispatch = useDispatch();
   const spot = useSelector((state) => state.spots);
+  console.log("spot  👉", spot )
 
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
@@ -23,9 +24,6 @@ function SpotPage() {
     dispatch(getSpotBookingsThunk(spotId)).then((bookings) => {
       setBookedDates(bookings);
     });
-    return(() => {
-      dispatch(clearReviews())
-    })
   }, [dispatch, spotId]);
 
 
