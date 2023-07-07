@@ -27,16 +27,73 @@ router.get("/", [restoreUser, requireAuth], async (req, res) => {
   for (let i = 0; i < bookings.length; i++) {
     const booking = bookings[i].toJSON();
 
-    const { id, spotId, userId, startDate, endDate, numNights, numAdults, numChildren, numInfants, Spot } = booking;
-    const {ownerId, address, city, state, lat, lng, name, price, minNights, maxGuests, SpotImages} = Spot
-    const spot = {ownerId, address, city, state, lat, lng, name, price, minNights, maxGuests, SpotImages}
+    const {
+      id,
+      spotId,
+      userId,
+      startDate,
+      endDate,
+      numNights,
+      numAdults,
+      numChildren,
+      numInfants,
+      Spot,
+    } = booking;
+    const {
+      ownerId,
+      address,
+      city,
+      state,
+      lat,
+      lng,
+      name,
+      price,
+      minNights,
+      maxGuests,
+      SpotImages,
+    } = Spot;
+    const spot = {
+      ownerId,
+      address,
+      city,
+      state,
+      lat,
+      lng,
+      name,
+      price,
+      minNights,
+      maxGuests,
+      SpotImages,
+    };
 
-    const newBooking = { id, spotId, userId, startDate, endDate, numNights, numAdults, numChildren, numInfants, spot  };
+    const newBooking = {
+      id,
+      spotId,
+      userId,
+      startDate,
+      endDate,
+      numNights,
+      numAdults,
+      numChildren,
+      numInfants,
+      spot,
+    };
     bookingsObj.push(newBooking);
   }
 
   for (let i = 0; i < bookingsObj.length; i++) {
     const booking = bookingsObj[i];
+    
+    for (let j = 0; j < booking.spot.SpotImages.length; j++) {
+      const image = booking.spot.SpotImages[j];
+      if (image.preview === true) {
+        booking.spot.previewImage = image.url;
+      }
+    }
+    if (!booking.spot.previewImage) {
+      booking.Spot.previewImage = "image url";
+    }
+    delete booking.spot.SpotImages;
     const owner = await User.findOne({
       where: {
         id: booking.spot.ownerId,
@@ -49,17 +106,6 @@ router.get("/", [restoreUser, requireAuth], async (req, res) => {
         firstName: owner.firstName,
         lastName: owner.lastName,
       };
-
-    for (let j = 0; j < booking.spot.SpotImages.length; j++) {
-      const image = booking.spot.SpotImages[j];
-      if (image.preview === true) {
-        booking.spot.previewImage = image.url;
-      }
-    }
-    if (!booking.spot.previewImage) {
-      booking.Spot.previewImage = "image url";
-    }
-    delete booking.spot.SpotImages;
   }
 
   res.status(200).json(bookingsObj);
@@ -80,11 +126,56 @@ router.get("/:bookingId", [restoreUser, requireAuth], async (req, res) => {
   if (!booking) res.status(404).json(doesNotExist("Booking"));
   else {
     if (isAuthorized(user.id, booking.userId, res)) {
-      const { id, spotId, userId, startDate, endDate, numNights, numAdults, numChildren, numInfants, Spot } =
-        booking.toJSON();
-        const {ownerId, address, city, state, lat, lng, name, price, minNights, maxGuests, SpotImages} = Spot
-        const spot = {ownerId, address, city, state, lat, lng, name, price, minNights, maxGuests, previewImage: SpotImages[0].url}
-      const newBooking = { id, spotId, userId, startDate, endDate, numNights, numAdults, numChildren, numInfants, spot };
+      const {
+        id,
+        spotId,
+        userId,
+        startDate,
+        endDate,
+        numNights,
+        numAdults,
+        numChildren,
+        numInfants,
+        Spot,
+      } = booking.toJSON();
+      const {
+        ownerId,
+        address,
+        city,
+        state,
+        lat,
+        lng,
+        name,
+        price,
+        minNights,
+        maxGuests,
+        SpotImages,
+      } = Spot;
+      const spot = {
+        ownerId,
+        address,
+        city,
+        state,
+        lat,
+        lng,
+        name,
+        price,
+        minNights,
+        maxGuests,
+        previewImage: SpotImages[0].url,
+      };
+      const newBooking = {
+        id,
+        spotId,
+        userId,
+        startDate,
+        endDate,
+        numNights,
+        numAdults,
+        numChildren,
+        numInfants,
+        spot,
+      };
       // const guestList = await GuestList.findOne({
       //   where: {
       //     bookingId: booking.id,

@@ -56,7 +56,10 @@ const Dates = ({ minNights }) => {
     const currentDate = format(addDays(new Date(utcDay), 1), "MMM-dd-yyyy");
     if (bookedDates.length) {
       for (let i = 0; i < bookedDates.length; i++) {
-        let formattedStartDate = format(addDays(new Date(bookedDates[i].startDate), 1), "MMM-dd-yyyy");
+        let formattedStartDate = format(
+          addDays(new Date(bookedDates[i].startDate), 1),
+          "MMM-dd-yyyy"
+        );
         let formattedEndDate = format(addDays(new Date(bookedDates[i].endDate), 1), "MMM-dd-yyyy");
         if (
           getTime(new Date(currentDate)) >= getTime(new Date(formattedStartDate)) &&

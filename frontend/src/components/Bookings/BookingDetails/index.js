@@ -13,6 +13,7 @@ const BookingDetails = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const booking = useSelector((state) => state.bookings);
+
   useEffect(() => {
     dispatch(getSingleBookingsThunk(bookingId));
   }, [dispatch, bookingId]);

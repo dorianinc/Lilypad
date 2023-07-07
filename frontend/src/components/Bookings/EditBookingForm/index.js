@@ -4,7 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { format, addDays } from "date-fns";
 import { useCalendar } from "../../../context/CalendarContext";
 import { useCounter } from "../../../context/CounterContext";
-import { getSingleBookingsThunk } from "../../../store/bookingsReducer";
+import { getSingleBookingsThunk, getSpotBookingsThunk } from "../../../store/bookingsReducer";
 import ModalButton from "../../Modals/ModalButton";
 import Calendar from "../../Calendar";
 import GuestCounter from "../GuestCounter";
@@ -14,8 +14,16 @@ const EditBookingForm = () => {
   const { bookingId } = useParams();
   const dispatch = useDispatch();
   const [changed, setChanged] = useState(false);
-  const { setStartDate, startDate, setEndDate, endDate, showCalendar, setShowCalendar, setFocus } =
-    useCalendar();
+  const {
+    setOnStartDate,
+    setStartDate,
+    startDate,
+    setEndDate,
+    endDate,
+    setShowCalendar,
+    setFocus,
+    setBookedDates
+  } = useCalendar();
   const {
     numAdult,
     setNumAdults,
@@ -26,28 +34,29 @@ const EditBookingForm = () => {
     setOccupancy,
     occupancy,
   } = useCounter();
-  const booking = useSelector((state) => state.bookings);
-
+  const [booking, setBooking] = useState("");
 
   const openCalendar = () => {
-    // setOnStartDate(true);
+    setOnStartDate(true);
     setShowCalendar(true);
     setFocus(1);
   };
 
-  // useEffect(() => {
-
-  // }, [startDate, endDate, numAdults, numChildren, numInfants]);
-
   useEffect(() => {
-    dispatch(getSingleBookingsThunk(bookingId));
-    setStartDate(addDays(new Date(booking.startDate), 1));
-    setEndDate(addDays(new Date(booking.endDate), 1));
-    setNumAdults(booking.numAdults);
-    setNumChildren(booking.numChildren);
-    setNumInfants(booking.numInfants);
-    setOccupancy(booking.numAdults + booking.numChildren + booking.numInfants);
+    dispatch(getSingleBookingsThunk(bookingId)).then((booking) => {
+      setBooking(booking);
+      setStartDate(addDays(new Date(booking.startDate), 1));
+      setEndDate(addDays(new Date(booking.endDate), 1));
+      setNumAdults(booking.numAdults);
+      setNumChildren(booking.numChildren);
+      setNumInfants(booking.numInfants);
+      setOccupancy(booking.numAdults + booking.numChildren + booking.numInfants);
+      dispatch(getSpotBookingsThunk(booking.spotId)).then((bookedDates) => {
+        setBookedDates(bookedDates);
+      });
+    });
   }, [dispatch, bookingId]);
+
 
   if (!booking || !booking.spot) return null;
   return (
@@ -60,7 +69,7 @@ const EditBookingForm = () => {
       <h2 style={{ marginBottom: "2px" }}>Reservation details</h2>
       <h4>Dates</h4>
       <ModalButton
-        modalComponent={<Calendar spotId={booking.spotId} minNights={booking.spot.minNights} />}
+        modalComponent={<Calendar minNights={booking.spot.minNights} />}
         buttonContent={
           <div
             className="start-end-display"
@@ -110,9 +119,7 @@ const EditBookingForm = () => {
       <div className="buttons-end" style={{ marginTop: "15px" }}>
         <button className="clear-button">Cancel</button>
         {/* <button className={`black-button ${changed && "disabled"}`} disabled={changed}> */}
-        <button className="black-button">
-          Save
-        </button>
+        <button className="black-button">Confirm Changes</button>
       </div>
     </div>
   );
