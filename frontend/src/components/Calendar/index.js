@@ -1,21 +1,17 @@
 import { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useCalendar } from "../../context/CalendarContext";
 import { useLocation } from "react-router-dom";
-import { getSpotBookingsThunk } from "../../store/bookingsReducer";
 import { format, differenceInCalendarDays } from "date-fns";
 import Dates from "./Dates";
 import "./Calendar.css";
 
-const Calendar = ({ spotId, minNights }) => {
-  const dispatch = useDispatch();
+const Calendar = ({ minNights }) => {
   const location = useLocation();
   const pathName = location.pathname;
   const calendarRef = useRef();
   const [formattedDate, setFormattedDate] = useState("");
   const [numNights, setNumNights] = useState();
-  const bookings = useSelector((state) => Object.values(state.bookings));
 
   const {
     setOnStartDate,
@@ -36,10 +32,6 @@ const Calendar = ({ spotId, minNights }) => {
 
   const { closeModal } = useModal();
 
-  ////// bookings logic ///////
-  useEffect(() => {
-    dispatch(getSpotBookingsThunk(spotId));
-  }, [dispatch, spotId]);
 
   ////// calendar logic ///////
   const openCalendar = () => {
@@ -134,7 +126,7 @@ const Calendar = ({ spotId, minNights }) => {
             </div>
           </div>
         </div>
-        <Dates bookings={bookings} minNights={minNights} />
+        <Dates minNights={minNights} />
         <p className="errors">{calendarErrors.numNights}</p>
         <div className="buttons-end">
           <button className="clear-button" onClick={() => clearDates(false)}>

@@ -6,7 +6,7 @@ import { format, addDays, getTime, isAfter, differenceInCalendarDays } from "dat
 import "react-date-range/dist/styles.css"; // main style file
 import "./Dates.css";
 
-const Dates = ({ bookings, minNights }) => {
+const Dates = ({ minNights }) => {
   const [shownDateChangeValue, setShownDateChangeValue] = useState(new Date());
   const [isNextMonth, setIsNextMonth] = useState(true);
   const {
@@ -16,6 +16,7 @@ const Dates = ({ bookings, minNights }) => {
     setBooking,
     setStartDate,
     setEndDate,
+    bookedDates,
     setCalendarErrors,
   } = useCalendar();
   const [state, setState] = useState(booking);
@@ -53,10 +54,10 @@ const Dates = ({ bookings, minNights }) => {
   const bookedDays = (day) => {
     const utcDay = new Date(day.toLocaleDateString("sv-SE"));
     const currentDate = format(addDays(new Date(utcDay), 1), "MMM-dd-yyyy");
-    if (bookings.length) {
-      for (let i = 0; i < bookings.length; i++) {
-        let formattedStartDate = format(addDays(new Date(bookings[i].startDate), 1), "MMM-dd-yyyy");
-        let formattedEndDate = format(addDays(new Date(bookings[i].endDate), 1), "MMM-dd-yyyy");
+    if (bookedDates.length) {
+      for (let i = 0; i < bookedDates.length; i++) {
+        let formattedStartDate = format(addDays(new Date(bookedDates[i].startDate), 1), "MMM-dd-yyyy");
+        let formattedEndDate = format(addDays(new Date(bookedDates[i].endDate), 1), "MMM-dd-yyyy");
         if (
           getTime(new Date(currentDate)) >= getTime(new Date(formattedStartDate)) &&
           getTime(new Date(currentDate)) <= getTime(new Date(formattedEndDate))

@@ -21,6 +21,7 @@ const BookingForm = ({ spot, action }) => {
     setFocus,
     calendarErrors,
   } = useCalendar();
+  
   const {
     numAdults,
     numChildren,

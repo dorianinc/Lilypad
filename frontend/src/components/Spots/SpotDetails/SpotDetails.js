@@ -1,26 +1,33 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { getSpotBookingsThunk } from "../../../store/bookingsReducer";
 import { getSingleSpotThunk } from "../../../store/spotsReducer";
 import { getReviewsThunk, clearReviews } from "../../../store/reviewsReducer";
 import ModalButton from "../../Modals/ModalButton";
 import BookingForm from "../../Bookings/BookingForm";
 import CreateReviewModal from "../../Modals/CreateReviewModal/CreateReview";
 import DeleteReviewModal from "../../Modals/DeleteReviewModal/DeleteReviewModal";
+import { useCalendar } from "../../../context/CalendarContext";
 import "./SpotDetails.css";
 
 function SpotPage() {
   const { spotId } = useParams();
+  const { setBookedDates } = useCalendar();
   const dispatch = useDispatch();
-
   const spot = useSelector((state) => state.spots);
+
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
-    return () => {
-      dispatch(clearReviews());
-    };
+    dispatch(getSpotBookingsThunk(spotId)).then((bookings) => {
+      setBookedDates(bookings);
+    });
+    return(() => {
+      dispatch(clearReviews())
+    })
   }, [dispatch, spotId]);
+
 
   const reviews = useSelector((state) => Object.values(state.reviews).reverse());
 

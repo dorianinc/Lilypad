@@ -90,6 +90,7 @@ const BookingConfirmation = () => {
         numInfants,
       };
       await dispatch(createBookingsThunk(spotId, requestedBooking));
+
       history.push(`/bookings`);
     }
   };

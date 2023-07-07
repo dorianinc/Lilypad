@@ -381,7 +381,7 @@ router.get("/:spotId/bookings", [restoreUser, requireAuth], async (req, res) => 
     const bookingsObj = [];
 
     if (user.id === spot.ownerId) {
-      bookings = await Booking.unscoped().findAll({
+      bookings = await Booking.findAll({
         where: {
           spotId: req.params.spotId,
         },
@@ -398,6 +398,9 @@ router.get("/:spotId/bookings", [restoreUser, requireAuth], async (req, res) => 
       bookings = await Booking.findAll({
         where: {
           spotId: req.params.spotId,
+        },
+        attributes: {
+          exclude: ["numAdults", "numChildren", "numInfants"],
         },
       });
       res.status(200).json(bookings);

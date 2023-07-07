@@ -22,14 +22,6 @@ const GuestCounter = ({ maxGuests }) => {
   const [localNumChildren, setLocalNumChildren] = useState(numChildren);
   const [localNumInfants, setLocalNumInfants] = useState(numInfants);
   const [localOccupancy, setLocalOccupancy] = useState(occupancy);
-  // console.log("localNumAdults 👉", localNumAdults);
-  // console.log("numAdults 👉", numAdults)
-  // console.log("localNumChildren 👉", localNumChildren)
-  // console.log("numChildren 👉", numChildren)
-  // console.log("localNumInfants 👉", localNumInfants)
-  // console.log("numInfants 👉", numInfants)
-  // console.log("localOccupancy 👉", localOccupancy);
-  // console.log("occupancy 👉", occupancy)
 
   const handleGuestList = (key, action) => {
     // if action is add and local occupancy count is less than max guest count

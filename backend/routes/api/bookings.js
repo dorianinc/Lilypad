@@ -10,7 +10,7 @@ const router = express.Router();
 router.get("/", [restoreUser, requireAuth], async (req, res) => {
   const { user } = req;
 
-  const bookings = await Booking.unscoped().findAll({
+  const bookings = await Booking.findAll({
     where: {
       userId: user.id,
     },
@@ -26,8 +26,12 @@ router.get("/", [restoreUser, requireAuth], async (req, res) => {
   const bookingsObj = [];
   for (let i = 0; i < bookings.length; i++) {
     const booking = bookings[i].toJSON();
-    const { id, spotId, userId, startDate, endDate, createdAt, updatedAt, Spot } = booking;
-    const newBooking = { id, spotId, Spot, userId, startDate, endDate, createdAt, updatedAt };
+
+    const { id, spotId, userId, startDate, endDate, numNights, numAdults, numChildren, numInfants, Spot } = booking;
+    const {ownerId, address, city, state, lat, lng, name, price, minNights, maxGuests, SpotImages} = Spot
+    const spot = {ownerId, address, city, state, lat, lng, name, price, minNights, maxGuests, SpotImages}
+
+    const newBooking = { id, spotId, userId, startDate, endDate, numNights, numAdults, numChildren, numInfants, spot  };
     bookingsObj.push(newBooking);
   }
 
@@ -35,29 +39,27 @@ router.get("/", [restoreUser, requireAuth], async (req, res) => {
     const booking = bookingsObj[i];
     const owner = await User.findOne({
       where: {
-        id: booking.Spot.ownerId,
+        id: booking.spot.ownerId,
       },
       attributes: ["id", "firstName", "lastName"],
       raw: true,
     });
     if (owner)
-      booking.Spot.owner = {
+      booking.spot.owner = {
         firstName: owner.firstName,
         lastName: owner.lastName,
       };
 
-    for (let j = 0; j < booking.Spot.SpotImages.length; j++) {
-      const image = booking.Spot.SpotImages[j];
+    for (let j = 0; j < booking.spot.SpotImages.length; j++) {
+      const image = booking.spot.SpotImages[j];
       if (image.preview === true) {
-        booking.Spot.previewImage = image.url;
-      } else {
-        booking.Spot.images = image.url;
+        booking.spot.previewImage = image.url;
       }
     }
-    if (!booking.Spot.previewImage) {
+    if (!booking.spot.previewImage) {
       booking.Spot.previewImage = "image url";
     }
-    delete booking.Spot.SpotImages;
+    delete booking.spot.SpotImages;
   }
 
   res.status(200).json(bookingsObj);

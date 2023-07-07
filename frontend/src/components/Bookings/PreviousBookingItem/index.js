@@ -11,16 +11,16 @@ const PreviousBookingItem = ({ booking }) => {
     history.push(`/bookings/${booking.id}`);
   };
 
-  if (!booking.id || !booking.Spot) return null;
+  if (!booking.id || !booking.spot) return null;
   return (
     <div className="prev-booking-item" onClick={handleClick}>
       <div className="prev-booking-image-container">
-        <img className="prev-booking-image" alt="booking-preview" loading="lazy" src={booking.Spot.previewImage} />
+        <img className="prev-booking-image" alt="booking-preview" loading="lazy" src={booking.spot.previewImage} />
       </div>
       <div className="prev-booking-info">
-        <p style={{ fontSize: ".9rem", fontWeight: "500" }}>{booking.Spot.city}</p>
+        <p style={{ fontSize: ".9rem", fontWeight: "500" }}>{booking.spot.city}</p>
         <p style={{ color: "#888888", fontSize: ".8rem", fontWeight: "400" }}>
-          Hosted by {booking.Spot.owner.firstName}
+          Hosted by {booking.spot.owner.firstName}
         </p>
         <p style={{ color: "#888888", fontSize: ".9rem", fontWeight: "400" }}>
           {formattedStartDate} - {formattedEndDate}
