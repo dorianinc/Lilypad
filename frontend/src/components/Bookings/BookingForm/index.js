@@ -28,13 +28,13 @@ const BookingForm = ({ spot, action }) => {
     setNumAdults,
     setNumChildren,
     setNumInfants,
+    occupancy,
     setOccupancy
   } = useCounter();
   const history = useHistory();
   const calendarRef = useRef();
   const counterRef = useRef();
   const user = useSelector((state) => state.session.user);
-  const counter = numAdults + numChildren + numInfants;
 
   const handleBooking = (e) => {
     e.preventDefault();
@@ -121,7 +121,7 @@ const BookingForm = ({ spot, action }) => {
                 <div style={{ padding: "5px 10px" }}>
                   <p id="checkout-text">Guests</p>
                   <p id="end-date-text">
-                    {counter} guest{counter > 1 ? "s" : ""}
+                    {occupancy} guest{occupancy > 1 ? "s" : ""}
                   </p>
                 </div>
                 <div className={`num-guests-container ${!showCounter ? "hidden" : ""}`}>

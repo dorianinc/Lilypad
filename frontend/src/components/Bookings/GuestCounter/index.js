@@ -1,8 +1,11 @@
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useModal } from "../../../context/Modal";
 import { useCounter } from "../../../context/CounterContext";
 import "./GuestCounter.css";
 
 const GuestCounter = ({ maxGuests }) => {
+  const { closeModal } = useModal();
   const location = useLocation();
   const pathName = location.pathname;
   const {
@@ -15,57 +18,148 @@ const GuestCounter = ({ maxGuests }) => {
     occupancy,
     setOccupancy,
   } = useCounter();
+  const [localNumAdults, setLocalNumAdults] = useState(numAdults);
+  const [localNumChildren, setLocalNumChildren] = useState(numChildren);
+  const [localNumInfants, setLocalNumInfants] = useState(numInfants);
+  const [localOccupancy, setLocalOccupancy] = useState(occupancy);
+  // console.log("localNumAdults 👉", localNumAdults);
+  // console.log("localNumChildren 👉", localNumChildren)
+  // console.log("localNumInfants 👉", localNumInfants)
+  console.log("localOccupancy 👉", localOccupancy);
 
-  const handleOccupancy = (key, action) => {
-    // let currentCount = 
-    if (action === "add" && occupancy < maxGuests) {
-      setOccupancy((prev) => prev + 1);
-      localStorage.setItem("storedOccupancy", occupancy + 1);
+  const handleGuestList = (key, action) => {
+    // if action is add and local occupancy count is less than max guest count
+    if (action === "add" && localOccupancy < maxGuests) {
+      // increment local count by 1
+      setLocalOccupancy((prev) => prev + 1);
+      // if we are in the spot details component...
+      if (pathName.startsWith("/spots")) {
+        // we also increment the global count
+        setOccupancy((prev) => prev + 1);
+        // we then set that count to local storage
+        localStorage.setItem("storedOccupancy", occupancy + 1);
+      }
+      // if key is adult ...
       if (key === "adult") {
-        setNumAdults((prev) => prev + 1);
-        localStorage.setItem("storedNumAdults", numAdults + 1);
+        // increment adult count by 1
+        setLocalNumAdults((prev) => prev + 1);
+        // if we are in the spot details component...
+        if (pathName.startsWith("/spots")) {
+          // we also increment the global count
+          setNumAdults((prev) => prev + 1);
+          // we then set that count to local storage
+          localStorage.setItem("storedNumAdults", numAdults + 1);
+        }
       }
+      // if key is child ...
       if (key === "child") {
-        setNumChildren((prev) => prev + 1);
-        localStorage.setItem("storedNumChildren", numChildren + 1);
+        // increment child count by 1
+        setLocalNumChildren((prev) => prev + 1);
+        // if we are in the spot details component...
+        if (pathName.startsWith("/spots")) {
+          // we also increment the global count
+          setNumChildren((prev) => prev + 1);
+          // we then set that count to local storage
+          localStorage.setItem("storedNumChildren", numChildren + 1);
+        }
       }
+      // if key is child ...
       if (key === "infant") {
-        setNumInfants((prev) => prev + 1);
-        localStorage.setItem("storedNumInfants", numInfants + 1);
+        // increment infant count by 1
+        setLocalNumInfants((prev) => prev + 1);
+        // if we are in the spot details component...
+        if (pathName.startsWith("/spots")) {
+          // we also increment the global count
+          setNumInfants((prev) => prev + 1);
+          // we then set that count to local storage
+          localStorage.setItem("storedNumInfants", numInfants + 1);
+        }
       }
+      // else if action is subtract
     } else if (action === "subtract") {
+      // if key is adults ...
       if (key === "adult") {
-        if (numAdults > 1) {
-          setNumAdults((prev) => prev - 1);
-          localStorage.setItem("storedNumAdults", numAdults - 1);
-          setOccupancy((prev) => prev - 1);
-          localStorage.setItem("storedOccupancy", occupancy - 1);
+        if (localNumAdults > 1) {
+          // decrement adult count and occupancy count by 1
+          setLocalNumAdults((prev) => prev - 1);
+          setLocalOccupancy((prev) => prev - 1);
+          // if we are in the spot details component...
+          if (pathName.startsWith("/spots")) {
+            // we also decrement the global count
+            setNumAdults((prev) => prev - 1);
+            setOccupancy((prev) => prev - 1);
+            // we then set that count to local storage
+            localStorage.setItem("storedNumAdults", numAdults - 1);
+            localStorage.setItem("storedOccupancy", occupancy - 1);
+          }
         }
       }
+      // if key is child ...
       if (key === "child") {
-        if (numChildren > 0) {
-          setNumChildren((prev) => prev - 1);
-          localStorage.setItem("storedNumChildren", numChildren - 1);
-          setOccupancy((prev) => prev - 1);
-          localStorage.setItem("storedOccupancy", occupancy - 1);
+        if (localNumChildren > 0) {
+          // decrement child count and occupancy count by 1
+          setLocalNumChildren((prev) => prev - 1);
+          setLocalOccupancy((prev) => prev - 1);
+          // if we are in the spot details component...
+          if (pathName.startsWith("/spots")) {
+            // we also decrement the global count
+            setNumChildren((prev) => prev - 1);
+            setOccupancy((prev) => prev - 1);
+            // we then set that count to local storage
+            localStorage.setItem("storedNumChildren", numChildren - 1);
+            localStorage.setItem("storedOccupancy", occupancy - 1);
+          }
         }
       }
+      // if key is infant ...
       if (key === "infant") {
-        if (numInfants > 0) {
-          setNumInfants((prev) => prev - 1);
-          localStorage.setItem("storedNumChildren", numChildren - 1);
-          setOccupancy((prev) => prev - 1);
-          localStorage.setItem("storedOccupancy", occupancy - 1);
+        if (localNumInfants > 0) {
+          // decrement child count and occupancy count by 1
+          setLocalNumInfants((prev) => prev - 1);
+          setLocalOccupancy((prev) => prev - 1);
+          // if we are in the spot details component...
+          if (pathName.startsWith("/spots")) {
+            // we also decrement the global count
+            setNumInfants((prev) => prev - 1);
+            setOccupancy((prev) => prev - 1);
+            // we then set that count to local storage
+            localStorage.setItem("storedNumChildren", numChildren - 1);
+            localStorage.setItem("storedOccupancy", occupancy - 1);
+          }
         }
       }
     }
+  };
+
+  // useEffect(() => {
+  //   setNumAdults(localNumAdults);
+  // }, [localNumAdults]);
+
+  // useEffect(() => {
+  //   setNumChildren(localNumChildren);
+  // }, [localNumChildren]);
+
+  // useEffect(() => {
+  //   setNumInfants(localNumInfants);
+  // }, [localNumInfants]);
+
+  // useEffect(() => {
+  //   setOccupancy(localOccupancy);
+  // }, [localOccupancy]);
+
+  const setGuestList = () => {
+    setNumAdults(localNumAdults);
+    setNumChildren(localNumChildren);
+    setNumInfants(localNumInfants);
+    setOccupancy(localOccupancy);
+    closeModal();
   };
 
   return (
     <div className={`num-guest-container ${!pathName.startsWith("/spots") && "bookings"}`}>
       {!pathName.startsWith("/spots") && (
         <div style={{ marginBottom: "5px" }}>
-          <button className="x-mark guest-counter">
+          <button className="x-mark guest-counter" onClick={closeModal}>
             <i class="fa-solid fa-xmark fa-xl" />
           </button>
           <h2>Guests</h2>
@@ -80,12 +174,14 @@ const GuestCounter = ({ maxGuests }) => {
           <div className="guest-values">
             <button
               className="plus-minus-button"
-              onClick={() => handleOccupancy("adult", "subtract")}
+              onClick={() => handleGuestList("adult", "subtract")}
             >
               <i class="fa-solid fa-minus" />
             </button>
-            <p style={{ minWidth: "15px", maxWidth: "15px", textAlign: "center" }}>{numAdults}</p>
-            <button className="plus-minus-button" onClick={() => handleOccupancy("adult", "add")}>
+            <p style={{ minWidth: "15px", maxWidth: "15px", textAlign: "center" }}>
+              {localNumAdults}
+            </p>
+            <button className="plus-minus-button" onClick={() => handleGuestList("adult", "add")}>
               <i class="fa-solid fa-plus" />
             </button>
           </div>
@@ -98,12 +194,14 @@ const GuestCounter = ({ maxGuests }) => {
           <div className="guest-values">
             <button
               className="plus-minus-button"
-              onClick={() => handleOccupancy("child", "subtract")}
+              onClick={() => handleGuestList("child", "subtract")}
             >
               <i class="fa-solid fa-minus" />
             </button>
-            <p style={{ minWidth: "15px", maxWidth: "15px", textAlign: "center" }}>{numChildren}</p>
-            <button className="plus-minus-button" onClick={() => handleOccupancy("child", "add")}>
+            <p style={{ minWidth: "15px", maxWidth: "15px", textAlign: "center" }}>
+              {localNumChildren}
+            </p>
+            <button className="plus-minus-button" onClick={() => handleGuestList("child", "add")}>
               <i class="fa-solid fa-plus" />
             </button>
           </div>
@@ -116,12 +214,14 @@ const GuestCounter = ({ maxGuests }) => {
           <div className="guest-values">
             <button
               className="plus-minus-button"
-              onClick={() => handleOccupancy("infant", "subtract")}
+              onClick={() => handleGuestList("infant", "subtract")}
             >
               <i class="fa-solid fa-minus" />
             </button>
-            <p style={{ minWidth: "15px", maxWidth: "15px", textAlign: "center" }}>{numInfants}</p>
-            <button className="plus-minus-button" onClick={() => handleOccupancy("infant", "add")}>
+            <p style={{ minWidth: "15px", maxWidth: "15px", textAlign: "center" }}>
+              {localNumInfants}
+            </p>
+            <button className="plus-minus-button" onClick={() => handleGuestList("infant", "add")}>
               <i class="fa-solid fa-plus" />
             </button>
           </div>
@@ -132,8 +232,12 @@ const GuestCounter = ({ maxGuests }) => {
       </div>
       {!pathName.startsWith("/spots") && (
         <div className="button-spaces-between">
-          <button className="clear-button">Cancel</button>
-          <button className="black-button">Save</button>
+          <button className="clear-button" onClick={closeModal}>
+            Cancel
+          </button>
+          <button className="black-button" onClick={setGuestList}>
+            Save
+          </button>
         </div>
       )}
     </div>

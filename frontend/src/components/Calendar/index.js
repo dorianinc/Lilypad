@@ -32,9 +32,7 @@ const Calendar = ({ spotId, minNights }) => {
     calendarErrors,
     setCalendarErrors,
   } = useCalendar();
-  console.log("booking 👉", booking);
-  console.log("endDate in calendar 👉", endDate);
-  console.log("startDate in calendar 👉", startDate);
+
 
   const { closeModal } = useModal();
 
