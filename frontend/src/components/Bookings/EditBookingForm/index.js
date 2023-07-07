@@ -4,7 +4,11 @@ import { useParams, useHistory } from "react-router-dom";
 import { format, addDays } from "date-fns";
 import { useCalendar } from "../../../context/CalendarContext";
 import { useCounter } from "../../../context/CounterContext";
-import { getSingleBookingsThunk, getSpotBookingsThunk } from "../../../store/bookingsReducer";
+import {
+  getSingleBookingsThunk,
+  getSpotBookingsThunk,
+  updateBookingsThunk,
+} from "../../../store/bookingsReducer";
 import ModalButton from "../../Modals/ModalButton";
 import Calendar from "../../Calendar";
 import GuestCounter from "../GuestCounter";
@@ -12,8 +16,8 @@ import "./EditBookingForm.css";
 
 const EditBookingForm = () => {
   const { bookingId } = useParams();
+  const history = useHistory();
   const dispatch = useDispatch();
-  const [changed, setChanged] = useState(false);
   const {
     setOnStartDate,
     setStartDate,
@@ -22,10 +26,11 @@ const EditBookingForm = () => {
     endDate,
     setShowCalendar,
     setFocus,
-    setBookedDates
+    setBookedDates,
   } = useCalendar();
+
   const {
-    numAdult,
+    numAdults,
     setNumAdults,
     numChildren,
     setNumChildren,
@@ -35,6 +40,9 @@ const EditBookingForm = () => {
     occupancy,
   } = useCounter();
   const [booking, setBooking] = useState("");
+  const numNights = Math.round(
+    (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 3600 * 24)
+  );
 
   const openCalendar = () => {
     setOnStartDate(true);
@@ -57,6 +65,22 @@ const EditBookingForm = () => {
     });
   }, [dispatch, bookingId]);
 
+  const updateBooking = async (e) => {
+    e.preventDefault();
+
+    const formattedStartDate = format(new Date(startDate), "Y-MM-dd");
+    const formattedEndDate = format(new Date(endDate), "Y-MM-dd");
+    const updatedBooking = {
+      startDate: formattedStartDate,
+      endDate: formattedEndDate,
+      numNights,
+      numAdults,
+      numChildren,
+      numInfants,
+    };
+    await dispatch(updateBookingsThunk(bookingId, updatedBooking));
+    history.push(`/bookings/${bookingId}`);
+  };
 
   if (!booking || !booking.spot) return null;
   return (
@@ -119,7 +143,7 @@ const EditBookingForm = () => {
       <div className="buttons-end" style={{ marginTop: "15px" }}>
         <button className="clear-button">Cancel</button>
         {/* <button className={`black-button ${changed && "disabled"}`} disabled={changed}> */}
-        <button className="black-button">Confirm Changes</button>
+        <button className="black-button" onClick={(e) => updateBooking(e)}>Confirm Changes</button>
       </div>
     </div>
   );

@@ -82,19 +82,19 @@ export const deleteBookingThunk = (bookingId) => async (dispatch) => {
   }
 };
 
-// // edit a booking
-// export const updateBookingsThunk = (bookingId) => async (dispatch) => {
-//   const res = await fetch(`/api/bookings`, {
-//     method: "PUT",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(bookingId),
-//   });
-//   if (res.ok) {
-//     dispatch(getUserBookingsThunk());
-//   }
-// };
+// edit a booking
+export const updateBookingsThunk = (bookingId, booking) => async (dispatch) => {
+  const res = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(booking),
+  });
+  if (res.ok) {
+    dispatch(getSingleBookingsThunk(bookingId));
+  }
+};
 
 const bookingsReducer = (state = {}, action) => {
   let newState;

@@ -176,51 +176,20 @@ router.get("/:bookingId", [restoreUser, requireAuth], async (req, res) => {
         numInfants,
         spot,
       };
-      // const guestList = await GuestList.findOne({
-      //   where: {
-      //     bookingId: booking.id,
-      //   },
-      //   raw: true,
-      // });
-
-      // if (guestList) {
-      //   newBooking.guestList = {
-      //     numAdults: guestList.numAdults,
-      //     numChildren: guestList.numChildren,
-      //     numInfants: guestList.numInfants,
-      //   };
-      // }
 
       res.status(200).json(newBooking);
     }
   }
 });
 
-// // Add guestlist to booking
-// router.post("/:bookingId/guestlist", [restoreUser, requireAuth], async (req, res) => {
-//   const { user } = req;
-//   const { numAdults, numChildren, numInfants } = req.body;
-//   const booking = await Booking.findByPk(req.params.bookingId, { raw: true });
-//   if (!booking) res.status(404).json(doesNotExist("Booking"));
-//   else {
-//     if (isAuthorized(user.id, booking.userId, res)) {
-//       const newGuestList = await GuestList.create({
-//         numAdults,
-//         numChildren,
-//         numInfants,
-//         bookingId: booking.id,
-//       });
-//       res.status(200).json(newGuestList);
-//     }
-//   }
-// });
+
 
 // Update a Booking
 router.put("/:bookingId", [restoreUser, requireAuth, validateBooking], async (req, res) => {
   const { user } = req;
-  const { startDate, endDate } = req.body;
+  const { startDate, endDate, numNights, numAdults, numChildren, numInfants } = req.body;
 
-  const booking = await Booking.unscoped().findByPk(req.params.bookingId, {
+  const booking = await Booking.findByPk(req.params.bookingId, {
     where: {
       id: req.params.bookingId,
     },
