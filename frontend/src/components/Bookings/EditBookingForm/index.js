@@ -13,19 +13,21 @@ import "./EditBookingForm.css";
 const EditBookingForm = () => {
   const { bookingId } = useParams();
   const dispatch = useDispatch();
+  const [changed, setChanged] = useState(false);
   const { setStartDate, startDate, setEndDate, endDate, showCalendar, setShowCalendar, setFocus } =
     useCalendar();
   const {
-    numAdults,
-    numChildren,
-    numInfants,
+    numAdult,
     setNumAdults,
+    numChildren,
     setNumChildren,
+    numInfants,
     setNumInfants,
     setOccupancy,
-    occupancy
+    occupancy,
   } = useCounter();
   const booking = useSelector((state) => state.bookings);
+
 
   const openCalendar = () => {
     // setOnStartDate(true);
@@ -33,14 +35,18 @@ const EditBookingForm = () => {
     setFocus(1);
   };
 
+  // useEffect(() => {
+
+  // }, [startDate, endDate, numAdults, numChildren, numInfants]);
+
   useEffect(() => {
     dispatch(getSingleBookingsThunk(bookingId));
     setStartDate(addDays(new Date(booking.startDate), 1));
     setEndDate(addDays(new Date(booking.endDate), 1));
     setNumAdults(booking.numAdults);
     setNumChildren(booking.numChildren);
-    setNumInfants(booking.numInfants)
-    setOccupancy(booking.numAdults + booking.numChildren + booking.numInfants)
+    setNumInfants(booking.numInfants);
+    setOccupancy(booking.numAdults + booking.numChildren + booking.numInfants);
   }, [dispatch, bookingId]);
 
   if (!booking || !booking.spot) return null;
@@ -53,7 +59,7 @@ const EditBookingForm = () => {
       </div>
       <h2 style={{ marginBottom: "2px" }}>Reservation details</h2>
       <h4>Dates</h4>
-      {/* <ModalButton
+      <ModalButton
         modalComponent={<Calendar spotId={booking.spotId} minNights={booking.spot.minNights} />}
         buttonContent={
           <div
@@ -74,23 +80,40 @@ const EditBookingForm = () => {
             </div>
           </div>
         }
-      /> */}
+      />
       <h4>Guests</h4>
       <ModalButton
-                modalComponent={<GuestCounter maxGuests={booking.spot.maxGuests} />}
-                buttonContent={
-                  <div className="num-guests-selector"
-                  style={{ border: "2px solid #c0c0c0", borderRadius: "5px" }}
-                  >
-                  <div style={{ padding: "5px 10px" }}>
-                    <p id="checkout-text">Guests</p>
-                    <p id="end-date-text">
-                      {occupancy} guest{occupancy > 1 ? "s" : ""}
-                    </p>
-                  </div>
-                </div>
-                }
-              />
+        modalComponent={
+          <GuestCounter
+            maxGuests={booking.spot.maxGuests}
+            guestList={{
+              numAdults: booking.numAdults,
+              numChildren: booking.numChildren,
+              numInfants: booking.numInfants,
+            }}
+          />
+        }
+        buttonContent={
+          <div
+            className="num-guests-selector"
+            style={{ border: "2px solid #c0c0c0", borderRadius: "5px" }}
+          >
+            <div style={{ padding: "5px 10px" }}>
+              <p id="checkout-text">Guests</p>
+              <p id="end-date-text">
+                {occupancy} guest{occupancy > 1 ? "s" : ""}
+              </p>
+            </div>
+          </div>
+        }
+      />
+      <div className="buttons-end" style={{ marginTop: "15px" }}>
+        <button className="clear-button">Cancel</button>
+        {/* <button className={`black-button ${changed && "disabled"}`} disabled={changed}> */}
+        <button className="black-button">
+          Save
+        </button>
+      </div>
     </div>
   );
 };

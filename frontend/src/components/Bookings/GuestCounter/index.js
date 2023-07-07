@@ -23,9 +23,13 @@ const GuestCounter = ({ maxGuests }) => {
   const [localNumInfants, setLocalNumInfants] = useState(numInfants);
   const [localOccupancy, setLocalOccupancy] = useState(occupancy);
   // console.log("localNumAdults 👉", localNumAdults);
+  // console.log("numAdults 👉", numAdults)
   // console.log("localNumChildren 👉", localNumChildren)
+  // console.log("numChildren 👉", numChildren)
   // console.log("localNumInfants 👉", localNumInfants)
-  console.log("localOccupancy 👉", localOccupancy);
+  // console.log("numInfants 👉", numInfants)
+  // console.log("localOccupancy 👉", localOccupancy);
+  // console.log("occupancy 👉", occupancy)
 
   const handleGuestList = (key, action) => {
     // if action is add and local occupancy count is less than max guest count
@@ -131,22 +135,6 @@ const GuestCounter = ({ maxGuests }) => {
     }
   };
 
-  // useEffect(() => {
-  //   setNumAdults(localNumAdults);
-  // }, [localNumAdults]);
-
-  // useEffect(() => {
-  //   setNumChildren(localNumChildren);
-  // }, [localNumChildren]);
-
-  // useEffect(() => {
-  //   setNumInfants(localNumInfants);
-  // }, [localNumInfants]);
-
-  // useEffect(() => {
-  //   setOccupancy(localOccupancy);
-  // }, [localOccupancy]);
-
   const setGuestList = () => {
     setNumAdults(localNumAdults);
     setNumChildren(localNumChildren);
@@ -154,6 +142,39 @@ const GuestCounter = ({ maxGuests }) => {
     setOccupancy(localOccupancy);
     closeModal();
   };
+
+
+  //----------------------------------------------------------------------------------------------------------//
+  // Sets the global guestlist variables if we are in a spot's detail page //
+  // Spot details page does not have a confirm/save button so this is the only way to set guestlist variables
+  // useEffect(() => {
+  //   if (pathName.startsWith("/spots")) {
+  //     setNumAdults(localNumAdults);
+  //     localStorage.setItem("storedNumAdults", localNumAdults);
+  //   }
+  // }, [localNumAdults]);
+
+  // useEffect(() => {
+  //   if (pathName.startsWith("/spots")) {
+  //     setNumChildren(localNumChildren);
+  //     localStorage.setItem("storedChildren", localNumChildren);
+  //   }
+  // }, [localNumChildren]);
+
+  // useEffect(() => {
+  //   if (pathName.startsWith("/spots")) {
+  //     setNumInfants(localNumInfants);
+  //     localStorage.setItem("storedInfants", localNumInfants);
+  //   }
+  // }, [localNumInfants]);
+
+  // useEffect(() => {
+  //   if (pathName.startsWith("/spots")) {
+  //     setOccupancy(localOccupancy);
+  //     localStorage.setItem("storedOccupancy", localOccupancy);
+  //   }
+  // }, [localOccupancy]);
+  //----------------------------------------------------------------------------------------------------------//
 
   return (
     <div className={`num-guest-container ${!pathName.startsWith("/spots") && "bookings"}`}>
