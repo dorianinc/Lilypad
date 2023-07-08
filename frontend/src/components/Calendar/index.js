@@ -63,10 +63,8 @@ const Calendar = ({ minNights }) => {
       setFormattedDate("");
     }
     if (startDate && endDate) {
-      const formattedStartDate = format(startDate, "MMM dd");
-      const formattedEndDate = format(endDate, "MMM dd");
-      if (formattedStartDate.getTime() < formattedEndDate.getTime()) {
-        setFormattedDate(`${formattedStartDate} - ${formattedEndDate}`);
+      if (new Date(startDate).getTime() < new Date(endDate).getTime()) {
+        setFormattedDate(`${format(startDate, "MMM dd")} - ${format(endDate, "MMM dd")}`);
         setNumNights(differenceInCalendarDays(endDate, startDate));
         if (pathName.startsWith("/spots") && !Object.values(calendarErrors).length) closeCalendar();
       }

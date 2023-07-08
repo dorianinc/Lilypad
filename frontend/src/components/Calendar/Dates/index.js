@@ -49,7 +49,7 @@ const Dates = ({ minNights }) => {
       localStorage.setItem("storedEndDate", endDate);
       if (differenceInCalendarDays(endDate, startDate) < minNights) {
         const err = {};
-        err.numNights = `Must book at least ${minNights} days`;
+        err.numNights = `Must book at least ${minNights} nights`;
         setCalendarErrors(err);
       }
     } else {
