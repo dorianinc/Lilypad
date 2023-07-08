@@ -1,16 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useCalendar } from "../../../context/CalendarContext";
 import { DateRange } from "react-date-range";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
-import {
-  format,
-  addDays,
-  getTime,
-  isAfter,
-  isBefore,
-  isSameDay,
-  differenceInCalendarDays,
-} from "date-fns";
+import { format, addDays, getTime, isAfter, isBefore, differenceInCalendarDays, rdrLocales } from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "./Dates.css";
 
@@ -27,14 +19,6 @@ const Dates = ({ minNights }) => {
     bookedDates,
     setCalendarErrors,
   } = useCalendar();
-
-  const [state, setState] = useState(booking);
-
-  const setFocusedRange = (focusedRange) => {
-    setState((state) => {
-      return { ...state, focusedRange };
-    });
-  };
 
   const handleSelect = (ranges) => {
     setCalendarErrors({});
@@ -97,7 +81,6 @@ const Dates = ({ minNights }) => {
             disabledDay={bookedDays} // pushed the days that should be disabled into an array
             disabledDates={disabledDays} // takes the disables days array and disables the days
             ranges={booking} // ** collects the start date and end date values **
-            onRangeFocusChange={setFocusedRange}
             onChange={handleSelect} // handles on change after every date is selected
             showSelectionPreview={true}
             moveRangeOnFirstSelection={false}

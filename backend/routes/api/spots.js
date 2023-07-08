@@ -371,40 +371,19 @@ router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], as
 });
 
 // Get all Bookings of Specific Spot
-router.get("/:spotId/bookings", [restoreUser, requireAuth], async (req, res) => {
-  const { user } = req;
-
+router.get("/:spotId/bookings", async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId, { raw: true });
   if (!spot) res.status(404).json(doesNotExist("Spot"));
   else {
-    let bookings;
-    const bookingsObj = [];
-
-    if (user.id === spot.ownerId) {
-      bookings = await Booking.findAll({
-        where: {
-          spotId: req.params.spotId,
-        },
-        include: { model: User, attributes: ["id", "firstName", "lastName"] },
-      });
-      for (let i = 0; i < bookings.length; i++) {
-        const booking = bookings[i].toJSON();
-        const { id, spotId, userId, startDate, endDate, createdAt, updatedAt, User } = booking;
-        const newBooking = { User, id, spotId, userId, startDate, endDate, createdAt, updatedAt };
-        bookingsObj.push(newBooking);
-      }
-      res.status(200).json(bookingsObj);
-    } else {
-      bookings = await Booking.findAll({
-        where: {
-          spotId: req.params.spotId,
-        },
-        attributes: {
-          exclude: ["numAdults", "numChildren", "numInfants"],
-        },
-      });
-      res.status(200).json(bookings);
-    }
+    bookings = await Booking.findAll({
+      where: {
+        spotId: req.params.spotId,
+      },
+      attributes: {
+        exclude: ["numAdults", "numChildren", "numInfants"],
+      },
+    });
+    res.status(200).json(bookings);
   }
 });
 
