@@ -2,7 +2,15 @@ import { useState, useEffect } from "react";
 import { useCalendar } from "../../../context/CalendarContext";
 import { DateRange } from "react-date-range";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
-import { format, addDays, getTime, isAfter, differenceInCalendarDays } from "date-fns";
+import {
+  format,
+  addDays,
+  getTime,
+  isAfter,
+  isBefore,
+  isSameDay,
+  differenceInCalendarDays,
+} from "date-fns";
 import "react-date-range/dist/styles.css"; // main style file
 import "./Dates.css";
 
@@ -19,6 +27,7 @@ const Dates = ({ minNights }) => {
     bookedDates,
     setCalendarErrors,
   } = useCalendar();
+
   const [state, setState] = useState(booking);
 
   const setFocusedRange = (focusedRange) => {
@@ -35,10 +44,10 @@ const Dates = ({ minNights }) => {
     setBooking([selection]);
     localStorage.setItem("storedStartDate", startDate);
     setStartDate(startDate);
-    if (startDate.getTime() < endDate.getTime()) {
-      localStorage.setItem("storedEndDate", endDate);
+    if (isBefore(startDate, endDate)) {
       setEndDate(endDate);
-      if (differenceInCalendarDays(new Date(endDate), new Date(startDate)) < minNights) {
+      localStorage.setItem("storedEndDate", endDate);
+      if (differenceInCalendarDays(endDate, startDate) < minNights) {
         const err = {};
         err.numNights = `Must book at least ${minNights} days`;
         setCalendarErrors(err);
@@ -53,14 +62,11 @@ const Dates = ({ minNights }) => {
   const disabledDays = [];
   const bookedDays = (day) => {
     const utcDay = new Date(day.toLocaleDateString("sv-SE"));
-    const currentDate = format(addDays(new Date(utcDay), 1), "MMM-dd-yyyy");
+    const currentDate = format(addDays(utcDay, 1), "MMM-dd-yyyy");
     if (bookedDates.length) {
       for (let i = 0; i < bookedDates.length; i++) {
-        let formattedStartDate = format(
-          addDays(new Date(bookedDates[i].startDate), 1),
-          "MMM-dd-yyyy"
-        );
-        let formattedEndDate = format(addDays(new Date(bookedDates[i].endDate), 1), "MMM-dd-yyyy");
+        let formattedStartDate = format(bookedDates[i].startDate, "MMM-dd-yyyy");
+        let formattedEndDate = format(bookedDates[i].endDate, "MMM-dd-yyyy");
         if (
           getTime(new Date(currentDate)) >= getTime(new Date(formattedStartDate)) &&
           getTime(new Date(currentDate)) <= getTime(new Date(formattedEndDate))

@@ -15,7 +15,8 @@ const BookingConfirmation = () => {
   const { spotId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { startDate, endDate, setFocus } = useCalendar();
+  const { startDate, endDate, setStartDate, setEndDate, booking, setBooking, setFocus } =
+    useCalendar();
   const {
     numAdults,
     numChildren,
@@ -90,7 +91,7 @@ const BookingConfirmation = () => {
         numInfants,
       };
       await dispatch(createBookingsThunk(spotId, requestedBooking));
-
+      
       history.push(`/bookings`);
     }
   };

@@ -13,12 +13,14 @@ import "./SpotDetails.css";
 
 function SpotPage() {
   const { spotId } = useParams();
-  const { setBookedDates } = useCalendar();
+  const { setBookedDates, booking, setBooking, setStartDate, setEndDate } = useCalendar();
   const dispatch = useDispatch();
   const spot = useSelector((state) => state.spots);
-  console.log("spot  👉", spot )
 
   useEffect(() => {
+    setStartDate("")
+    setEndDate("")
+    setBooking([{ ...booking[0], startDate: null, endDate: new Date("") }]);
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
     dispatch(getSpotBookingsThunk(spotId)).then((bookings) => {

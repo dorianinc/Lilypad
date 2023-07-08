@@ -27,6 +27,8 @@ const EditBookingForm = () => {
     setShowCalendar,
     setFocus,
     setBookedDates,
+    booking,
+    setBooking,
   } = useCalendar();
 
   const {
@@ -39,7 +41,7 @@ const EditBookingForm = () => {
     setOccupancy,
     occupancy,
   } = useCounter();
-  const [booking, setBooking] = useState("");
+  const [currentBooking, setCurrentBooking] = useState("");
   const numNights = Math.round(
     (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 3600 * 24)
   );
@@ -52,9 +54,10 @@ const EditBookingForm = () => {
 
   useEffect(() => {
     dispatch(getSingleBookingsThunk(bookingId)).then((booking) => {
-      setBooking(booking);
+      setCurrentBooking(booking);
       setStartDate(addDays(new Date(booking.startDate), 1));
       setEndDate(addDays(new Date(booking.endDate), 1));
+      // setBooking([{ ...booking[0], startDate: new Date(startDate), endDate: new Date(endDate) }]);
       setNumAdults(booking.numAdults);
       setNumChildren(booking.numChildren);
       setNumInfants(booking.numInfants);
@@ -82,18 +85,18 @@ const EditBookingForm = () => {
     history.push(`/bookings/${bookingId}`);
   };
 
-  if (!booking || !booking.spot) return null;
+  if (!currentBooking || !currentBooking.spot) return null;
   return (
     <div className="edit-booking-container">
       <h1>What do you want to change?</h1>
       <h3>We understand things happen and we're here for you!</h3>
       <div className="image-container edit-booking">
-        <img src={booking.spot.previewImage} />
+        <img src={currentBooking.spot.previewImage} />
       </div>
       <h2 style={{ marginBottom: "2px" }}>Reservation details</h2>
       <h4>Dates</h4>
       <ModalButton
-        modalComponent={<Calendar minNights={booking.spot.minNights} />}
+        modalComponent={<Calendar minNights={currentBooking.spot.minNights} />}
         buttonContent={
           <div
             className="start-end-display"
@@ -118,11 +121,11 @@ const EditBookingForm = () => {
       <ModalButton
         modalComponent={
           <GuestCounter
-            maxGuests={booking.spot.maxGuests}
+            maxGuests={currentBooking.spot.maxGuests}
             guestList={{
-              numAdults: booking.numAdults,
-              numChildren: booking.numChildren,
-              numInfants: booking.numInfants,
+              numAdults: currentBooking.numAdults,
+              numChildren: currentBooking.numChildren,
+              numInfants: currentBooking.numInfants,
             }}
           />
         }
@@ -143,7 +146,9 @@ const EditBookingForm = () => {
       <div className="buttons-end" style={{ marginTop: "15px" }}>
         <button className="clear-button">Cancel</button>
         {/* <button className={`black-button ${changed && "disabled"}`} disabled={changed}> */}
-        <button className="black-button" onClick={(e) => updateBooking(e)}>Confirm Changes</button>
+        <button className="black-button" onClick={(e) => updateBooking(e)}>
+          Confirm Changes
+        </button>
       </div>
     </div>
   );

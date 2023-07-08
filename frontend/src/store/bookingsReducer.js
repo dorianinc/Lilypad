@@ -1,4 +1,5 @@
 import { csrfFetch } from "./csrf";
+import { addDays } from "date-fns";
 
 ////////////// Action Creators ///////////////
 export const GET_BOOKINGS = "bookings/GET_BOOKINGS";
@@ -65,7 +66,7 @@ export const createBookingsThunk = (spotId, booking) => async (dispatch) => {
   });
   if (res.ok) {
     const data = await res.json();
-    return data
+    return data;
   }
 };
 
@@ -102,15 +103,15 @@ const bookingsReducer = (state = {}, action) => {
     case GET_BOOKINGS:
       newState = {};
       action.bookings.forEach((booking) => {
-        // booking.startDate = format(new Date(booking.startDate), "MMM-dd-yyyy");
-        // booking.endDate = format(new Date(booking.endDate), "MMM-dd-yyyy");
+        booking.startDate = addDays(new Date(booking.startDate), 1);
+        booking.endDate = addDays(new Date(booking.endDate), 1);
         newState[booking.id] = booking;
       });
       return newState;
     case GET_SINGLE_BOOKING:
       newState = {};
-      // action.booking.startDate = format(new Date(action.booking.startDate), "MMM-dd-yyyy");
-      // action.booking.endDate = format(new Date(action.booking.endDate), "MMM-dd-yyyy");
+      action.booking.startDate = addDays(new Date(action.booking.startDate), 1);
+      action.booking.endDate = addDays(new Date(action.booking.endDate), 1);
       newState = action.booking;
       return newState;
     case CLEAR_BOOKINGS:
