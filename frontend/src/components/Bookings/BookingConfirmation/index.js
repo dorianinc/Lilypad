@@ -5,7 +5,7 @@ import { getSingleSpotThunk } from "../../../store/spotsReducer";
 import { createBookingsThunk } from "../../../store/bookingsReducer";
 import { useCalendar } from "../../../context/CalendarContext";
 import { useCounter } from "../../../context/CounterContext";
-import { format } from "date-fns";
+import { format, differenceInCalendarDays } from "date-fns";
 import Calendar from "../../Calendar";
 import GuestCounter from "../GuestCounter";
 import ModalButton from "../../Modals/ModalButton";
@@ -47,9 +47,8 @@ const BookingConfirmation = () => {
   const formattedStartDate = format(new Date(localStartDate), "MMM do");
   const formattedEndDate = format(new Date(localEndDate), "MMM do");
 
-  const numNights = Math.round(
-    (new Date(localEndDate).getTime() - new Date(localStartDate).getTime()) / (1000 * 3600 * 24)
-  );
+
+  const numNights = differenceInCalendarDays(new Date(localEndDate), new Date(localStartDate))
   const price = Number(spot.price * numNights).toFixed(2);
   const taxes = (price / 14.25).toFixed(2);
   const total = Number(price) + Number(taxes);

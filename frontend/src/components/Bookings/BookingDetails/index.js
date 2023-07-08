@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { format, formatDistance } from "date-fns";
+import { format } from "date-fns";
 import { getSingleBookingsThunk } from "../../../store/bookingsReducer";
 import DeleteBooking from "../../Modals/DeleteBooking";
 import ModalButton from "../../Modals/ModalButton";
@@ -27,8 +27,8 @@ const BookingDetails = () => {
   }
 
   if (!booking || !booking.spot) return null;
-  const formattedStartDate = format(new Date(booking.startDate), "EE, MMM do");
-  const formattedEndDate = format(new Date(booking.endDate), "EE, MMM do");
+  const formattedStartDate = format(booking.startDate, "EE, MMM do");
+  const formattedEndDate = format(booking.endDate, "EE, MMM do");
   return (
     <div className="booking-details-section">
       <div className="booking-details-content">

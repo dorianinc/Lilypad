@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
-import { format, addDays } from "date-fns";
+import { format, differenceInCalendarDays } from "date-fns";
 import { useCalendar } from "../../../context/CalendarContext";
 import { useCounter } from "../../../context/CounterContext";
 import {
@@ -42,9 +42,7 @@ const EditBookingForm = () => {
     occupancy,
   } = useCounter();
   const [currentBooking, setCurrentBooking] = useState("");
-  const numNights = Math.round(
-    (new Date(endDate).getTime() - new Date(startDate).getTime()) / (1000 * 3600 * 24)
-  );
+  const numNights = differenceInCalendarDays(new Date(endDate), new Date(startDate))
 
   const openCalendar = () => {
     setOnStartDate(true);
@@ -55,8 +53,8 @@ const EditBookingForm = () => {
   useEffect(() => {
     dispatch(getSingleBookingsThunk(bookingId)).then((booking) => {
       setCurrentBooking(booking);
-      setStartDate(addDays(new Date(booking.startDate), 1));
-      setEndDate(addDays(new Date(booking.endDate), 1));
+      setStartDate(new Date(booking.startDate));
+      setEndDate(new Date(booking.endDate));
       // setBooking([{ ...booking[0], startDate: new Date(startDate), endDate: new Date(endDate) }]);
       setNumAdults(booking.numAdults);
       setNumChildren(booking.numChildren);
@@ -71,8 +69,8 @@ const EditBookingForm = () => {
   const updateBooking = async (e) => {
     e.preventDefault();
 
-    const formattedStartDate = format(new Date(startDate), "Y-MM-dd");
-    const formattedEndDate = format(new Date(endDate), "Y-MM-dd");
+    const formattedStartDate = format(startDate, "Y-MM-dd");
+    const formattedEndDate = format(endDate, "Y-MM-dd");
     const updatedBooking = {
       startDate: formattedStartDate,
       endDate: formattedEndDate,
@@ -105,13 +103,13 @@ const EditBookingForm = () => {
             <div className={`start-date-shell`} onClick={openCalendar}>
               <p id="checkin-text">CHECK-IN</p>
               <p id="start-date-text">
-                {startDate ? format(new Date(startDate), "MM/dd/yyyy") : "Add Date"}
+                {startDate ? format(startDate, "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
             <div className={`end-date-shell`} onClick={openCalendar}>
               <p id="checkout-text">CHECKOUT</p>
               <p id="end-date-text">
-                {endDate ? format(new Date(endDate), "MM/dd/yyyy") : "Add Date"}
+                {endDate ? format(endDate, "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
           </div>

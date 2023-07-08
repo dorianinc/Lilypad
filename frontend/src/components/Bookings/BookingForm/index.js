@@ -101,13 +101,13 @@ const BookingForm = ({ spot, action }) => {
                 <div className={`start-date-shell`} onClick={openCalendar}>
                   <p id="checkin-text">CHECK-IN</p>
                   <p id="start-date-text">
-                    {startDate ? format(new Date(startDate), "MM/dd/yyyy") : "Add Date"}
+                    {startDate ? format(startDate, "MM/dd/yyyy") : "Add Date"}
                   </p>
                 </div>
                 <div className={`end-date-shell`} onClick={openCalendar}>
                   <p id="checkout-text">CHECKOUT</p>
                   <p id="end-date-text">
-                    {endDate ? format(new Date(endDate), "MM/dd/yyyy") : "Add Date"}
+                    {endDate ? format(endDate, "MM/dd/yyyy") : "Add Date"}
                   </p>
                 </div>
                 <div className={`calendar-container ${!showCalendar ? "hidden" : ""}`}>

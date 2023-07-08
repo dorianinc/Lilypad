@@ -1,11 +1,11 @@
 import { useHistory } from "react-router-dom";
-import { format, formatDistance, addDays } from "date-fns";
+import { format, formatDistance} from "date-fns";
 import "./PreviousBookingItem.css";
 
 const PreviousBookingItem = ({ booking }) => {
   const history = useHistory();
-  const formattedStartDate = format(addDays(new Date(booking.startDate), 1), "MMM do");
-  const formattedEndDate = format(addDays(new Date(booking.endDate), 1), "MMM do");
+  const formattedStartDate = format(booking.startDate, "MMM do");
+  const formattedEndDate = format(booking.endDate, "MMM do");
 
   const handleClick = () => {
     history.push(`/bookings/${booking.id}`);

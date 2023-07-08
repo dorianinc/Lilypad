@@ -13,9 +13,9 @@ const UsersBookings = () => {
   const bookings = useSelector((state) => Object.values(state.bookings));
   const upcomingBookings = bookings.filter(
     (booking) =>
-      isFuture(new Date(booking.startDate)) || isSameDay(new Date(), new Date(booking.startDate))
+      isFuture(booking.startDate) || isSameDay(new Date(), booking.startDate)
   );
-  const previousBookings = bookings.filter((booking) => isPast(new Date(booking.endDate)));
+  const previousBookings = bookings.filter((booking) => isPast(booking.endDate));
 
   const goBack = () => {
     history.push("/")

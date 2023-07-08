@@ -6,17 +6,12 @@ const UpcomingBookingItem = ({ booking }) => {
   const history = useHistory();
   const startDate = addDays(new Date(booking.startDate), 1);
   const timeRemaining = formatDistance(Date.now(), startDate);
-  const formattedStartDate = format(addDays(new Date(booking.startDate), 1), "MMM do");
-  const formattedEndDate = format(addDays(new Date(booking.endDate), 1), "MMM do");
+  const formattedStartDate = format((booking.startDate), "MMM do");
+  const formattedEndDate = format((booking.endDate), "MMM do");
 
   const handleClick = () => {
     history.push(`/bookings/${booking.id}`);
   };
-  // const formattedRange = () => {
-  //   const rangeSet = new Set();
-  //   const formattedStartDate = format(new Date(booking.startDate), "MMM dd yyyy");
-  //   const formattedEndDate = format(new Date(booking.endDate), "MMM dd yyyy");
-  // };
 
   if (!booking.id || !booking.spot) return null;
   return (
