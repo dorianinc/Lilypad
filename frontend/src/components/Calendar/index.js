@@ -63,11 +63,11 @@ const Calendar = ({ minNights }) => {
       setFormattedDate("");
     }
     if (startDate && endDate) {
-      const formattedStartDate = format(new Date(startDate), "MMM dd");
-      const formattedEndDate = format(new Date(endDate), "MMM dd");
-      if (new Date(formattedStartDate).getTime() < new Date(formattedEndDate).getTime()) {
+      const formattedStartDate = format(startDate, "MMM dd");
+      const formattedEndDate = format(endDate, "MMM dd");
+      if (formattedStartDate.getTime() < formattedEndDate.getTime()) {
         setFormattedDate(`${formattedStartDate} - ${formattedEndDate}`);
-        setNumNights(differenceInCalendarDays(new Date(endDate), new Date(startDate)));
+        setNumNights(differenceInCalendarDays(endDate, startDate));
         if (pathName.startsWith("/spots") && !Object.values(calendarErrors).length) closeCalendar();
       }
     }
@@ -110,7 +110,7 @@ const Calendar = ({ minNights }) => {
             >
               <p id="checkin-text">CHECK-IN</p>
               <p id="start-date-text">
-                {startDate ? format(new Date(startDate), "MM/dd/yyyy") : "Add Date"}
+                {startDate ? format(startDate, "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
             <div
@@ -121,7 +121,7 @@ const Calendar = ({ minNights }) => {
             >
               <p id="checkout-text">CHECKOUT</p>
               <p id="end-date-text">
-                {endDate ? format(new Date(endDate), "MM/dd/yyyy") : "Add Date"}
+                {endDate ? format(endDate, "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
           </div>
