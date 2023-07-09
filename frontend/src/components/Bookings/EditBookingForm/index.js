@@ -80,7 +80,6 @@ const EditBookingForm = () => {
       numInfants,
     };
     await dispatch(updateBookingsThunk(bookingId, updatedBooking));
- =
     history.push(`/bookings/${bookingId}`);
   };
 
