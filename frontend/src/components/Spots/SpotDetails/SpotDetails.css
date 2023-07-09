@@ -16,6 +16,7 @@
   margin-bottom: 25px;
   overflow: hidden;
   border-radius: 10px;
+  height: 500px;
 }
 
 .preview-image-container > img {
