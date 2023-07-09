@@ -16,10 +16,10 @@ const BookingDetails = () => {
 
   useEffect(() => {
     dispatch(getSingleBookingsThunk(bookingId));
-    document.getElementsByClassName("content-container")[0].style.padding  = "0px 0px";
-    return(() => {
-      document.getElementsByClassName("content-container")[0].style.padding  = "25px 10px";
-    })
+    document.querySelector(".content-container").style.padding = "0px 0px";
+    return () => {
+      document.querySelector(".content-container").style.padding = "25px 10px";
+    };
   }, [dispatch, bookingId]);
 
   const goBack = () => {

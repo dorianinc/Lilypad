@@ -11,7 +11,6 @@ const UsersBookings = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const bookings = useSelector((state) => Object.values(state.bookings));
-  console.log("bookings 👉", bookings);
   const upcomingBookings = bookings.filter(
     (booking) => isFuture(booking.startDate) || isSameDay(new Date(), booking.startDate)
   );
