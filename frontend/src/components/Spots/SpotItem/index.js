@@ -31,7 +31,7 @@ const SpotItem = ({ spot }) => {
             style={{borderRadius: "10px"}}
             effect="blur"
             src={spot.previewImage}
-            // placeholder={spot.previewImage}
+            placeholderSrc={spot.previewImage}
             height="300px"
             width="100%"
           />
