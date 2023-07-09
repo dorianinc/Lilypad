@@ -1,4 +1,5 @@
 import { useHistory, useLocation } from "react-router-dom";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ModalButton from "../../Modals/ModalButton";
 import DeleteSpotModal from "../../Modals/DeleteSpotModal/DeleteSpot";
 import "./SpotItem.css"
@@ -25,7 +26,15 @@ const SpotItem = ({ spot }) => {
         onClick={() => handleClick(spot.id)}
       >
         <div className="imageContainer">
-          <img className="card-image" alt="airBnB" loading="lazy" src={spot.previewImage} />
+        <LazyLoadImage
+            alt="preview-image"
+            style={{borderRadius: "10px"}}
+            effect="blur"
+            src={spot.previewImage}
+            // placeholder={spot.previewImage}
+            height="300px"
+            width="100%"
+          />
         </div>
         <div className="card-info">
           <div className="city-state-info">
