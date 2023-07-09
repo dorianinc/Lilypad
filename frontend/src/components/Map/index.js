@@ -4,9 +4,11 @@ import { useMap } from "../../context/MapContext";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import "./Map.css";
 
-const Map = ({ spot }) => {
+const Map = ({ spotLat, spotLng }) => {
+
   const { currentZoom, setCurrentZoom, currentLat, setCurrentLat, currentLng, setCurrentLng } =
     useMap();
+    
   const center = useMemo(() => ({ lat: currentLat, lng: currentLng }), [currentLat, currentLng]);
   const mapOptions = {
     zoom: currentZoom,
@@ -14,9 +16,9 @@ const Map = ({ spot }) => {
   };
 
   useEffect(() => {
-    setCurrentZoom(8);
-    setCurrentLat(40.112206);
-    setCurrentLng(-120.90653);
+    setCurrentZoom(19);
+    setCurrentLat(spotLat);
+    setCurrentLng(spotLng);
   }, []);
 
   const { isLoaded } = useLoadScript({
@@ -25,7 +27,9 @@ const Map = ({ spot }) => {
   if (!isLoaded) return <h1>Loading...</h1>;
   return (
     <>
-      <GoogleMap options={mapOptions} mapContainerClassName="map-container"></GoogleMap>
+      <GoogleMap options={mapOptions} mapContainerClassName="map-container">
+      <Marker position={{ lat: spotLat, lng: spotLng }} />
+      </GoogleMap>
     </>
   );
 };

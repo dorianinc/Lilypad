@@ -63,9 +63,10 @@
 .booking-details-menu-section{
   display: flex;
   align-items: center;
-  padding: 0 15px;
+  padding: 0px 10px;
   gap: 5px;
   height: 70px;
+  box-sizing: border-box;
 }
 
 .booking-details-menu-section.clickable:hover{

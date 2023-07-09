@@ -11,21 +11,20 @@ const UsersBookings = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const bookings = useSelector((state) => Object.values(state.bookings));
+  console.log("bookings 👉", bookings);
   const upcomingBookings = bookings.filter(
-    (booking) =>
-      isFuture(booking.startDate) || isSameDay(new Date(), booking.startDate)
+    (booking) => isFuture(booking.startDate) || isSameDay(new Date(), booking.startDate)
   );
   const previousBookings = bookings.filter((booking) => isPast(booking.endDate));
 
   const goBack = () => {
-    history.push("/")
-  }
+    history.push("/");
+  };
 
   useEffect(() => {
     dispatch(getUserBookingsThunk());
   }, [dispatch]);
-  
-  if (!bookings.length) return null;
+
   return (
     <div className="bookings-spots-container">
       <div className="content-header-container">
@@ -39,8 +38,10 @@ const UsersBookings = () => {
           ) : (
             <div>
               <h2>Looks like you dont have any upcoming trips!</h2>
-              <div style={{marginTop: "20px"}}>
-                <button className="pink-button" onClick={goBack}>Go back to spots</button>
+              <div style={{ marginTop: "20px" }}>
+                <button className="pink-button" onClick={goBack}>
+                  Go back to spots
+                </button>
               </div>
             </div>
           )}
@@ -48,8 +49,13 @@ const UsersBookings = () => {
         <div className="previous-booking-cards">
           <h2 className="previous-trips-header">Previous trips</h2>
           <div className="previous-bookings-grid">
-            {previousBookings.length &&
-              previousBookings.map((booking) => <PreviousBookingItem booking={booking} />)}
+            {previousBookings.length ? (
+              previousBookings.map((booking) => <PreviousBookingItem booking={booking} />)
+            ) : (
+              <div>
+                <p>Your past trips wil be found here!</p>
+              </div>
+            )}
           </div>
         </div>
       </div>

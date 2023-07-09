@@ -18,8 +18,8 @@ function SpotPage() {
   const spot = useSelector((state) => state.spots);
 
   useEffect(() => {
-    setStartDate("")
-    setEndDate("")
+    setStartDate("");
+    setEndDate("");
     setBooking([{ ...booking[0], startDate: null, endDate: new Date("") }]);
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));
@@ -27,7 +27,6 @@ function SpotPage() {
       setBookedDates(bookings);
     });
   }, [dispatch, spotId]);
-
 
   const reviews = useSelector((state) => Object.values(state.reviews).reverse());
 
@@ -112,7 +111,7 @@ function SpotPage() {
         ) : null}
         {!!reviews.length ? (
           reviews.map((review, i) => (
-            <div className="reviewStatement" key={review.id}>
+            <div className="review-statement" key={review.id}>
               <h3>
                 {review.User.firstName} {review.User.lastName}
               </h3>

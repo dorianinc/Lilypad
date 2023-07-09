@@ -27,7 +27,7 @@ function LoginFormModal() {
 
   const signInDemo = (e) => {
     e.preventDefault();
-    return dispatch(sessionActions.login({ credential: "demoUser", password: "demoPassword" }))
+    return dispatch(sessionActions.login({ credential: "demo_user123", password: "password1" }))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();

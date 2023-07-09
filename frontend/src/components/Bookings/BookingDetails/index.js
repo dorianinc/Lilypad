@@ -16,6 +16,7 @@ const BookingDetails = () => {
 
   useEffect(() => {
     dispatch(getSingleBookingsThunk(bookingId));
+    document.getElementsByClassName("content-container")[0].style.padding  = "0px 0px";
   }, [dispatch, bookingId]);
 
   const goBack = () => {
@@ -23,8 +24,8 @@ const BookingDetails = () => {
   };
 
   const goToEdit = () => {
-    history.push(`/bookings/${bookingId}/edit`)
-  }
+    history.push(`/bookings/${bookingId}/edit`);
+  };
 
   if (!booking || !booking.spot) return null;
   const formattedStartDate = format(booking.startDate, "EE, MMM do");
@@ -76,7 +77,7 @@ const BookingDetails = () => {
               <div className="booking-details-meu-content">
                 <p style={{ fontSize: "1rem", fontWeight: "500" }}>Change Booking</p>
                 <p style={{ fontSize: "1rem", fontWeight: "500", color: "#888888" }}>
-                  Customize Your Lilypad bookings for the perfect stay
+                  Customize your bookings for the perfect stay
                 </p>
               </div>
             </div>
@@ -102,7 +103,7 @@ const BookingDetails = () => {
         </div>
       </div>
       <div className="map">
-        <Map />
+        <Map spotLat={booking.spot.lat} spotLng={booking.spot.lng} />
       </div>
     </div>
   );

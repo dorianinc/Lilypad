@@ -223,7 +223,7 @@ module.exports = {
           ownerId: 8
         },
         {
-          name: "Cozy Beach Cottage in SD",
+          name: "Amazing Beachfront in SD",
           address: "1357 Palm Tree Lane",
           city: "San Diego",
           state: "California",
@@ -251,7 +251,7 @@ module.exports = {
           ownerId: 9
         },
         {
-          name: "Modern Apartment in SF",
+          name: "Cozy Apartment in SF",
           address: "5432 Sunset Avenue",
           city: "San Francisco",
           state: "California",
@@ -279,7 +279,7 @@ module.exports = {
           ownerId: 10
         },
         {
-          name: "Chic City Apartment in LA",
+          name: "Guesthouse in LA",
           address: "5678 Sunset Boulevard",
           city: "Los Angeles",
           state: "California",
