@@ -24,11 +24,8 @@ const EditBookingForm = () => {
     startDate,
     setEndDate,
     endDate,
-    setShowCalendar,
     setFocus,
     setBookedDates,
-    booking,
-    setBooking,
   } = useCalendar();
 
   const {
@@ -46,7 +43,6 @@ const EditBookingForm = () => {
 
   const openCalendar = () => {
     setOnStartDate(true);
-    setShowCalendar(true);
     setFocus(1);
   };
 
