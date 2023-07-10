@@ -9,7 +9,7 @@ const Map = ({ spotLat, spotLng }) => {
   const { currentZoom, setCurrentZoom, currentLat, setCurrentLat, currentLng, setCurrentLng } =
     useMap();
     
-  const center = useMemo(() => ({ lat: currentLat, lng: currentLng }), [currentLat, currentLng]);
+  const center = useMemo(() => ({ lat: Number(currentLat), lng: Number(currentLng) }), [currentLat, currentLng]);
   const mapOptions = {
     zoom: currentZoom,
     center,
@@ -17,8 +17,8 @@ const Map = ({ spotLat, spotLng }) => {
 
   useEffect(() => {
     setCurrentZoom(19);
-    setCurrentLat(spotLat);
-    setCurrentLng(spotLng);
+    setCurrentLat(Number(spotLat));
+    setCurrentLng(Number(spotLng));
   }, []);
 
   const { isLoaded } = useLoadScript({
