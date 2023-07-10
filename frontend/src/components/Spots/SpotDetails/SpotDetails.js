@@ -3,12 +3,14 @@ import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getSpotBookingsThunk } from "../../../store/bookingsReducer";
 import { getSingleSpotThunk } from "../../../store/spotsReducer";
-import { getReviewsThunk, clearReviews } from "../../../store/reviewsReducer";
+import { getReviewsThunk } from "../../../store/reviewsReducer";
 import ModalButton from "../../Modals/ModalButton";
 import BookingForm from "../../Bookings/BookingForm";
 import CreateReviewModal from "../../Modals/CreateReviewModal/CreateReview";
 import DeleteReviewModal from "../../Modals/DeleteReviewModal/DeleteReviewModal";
 import { useCalendar } from "../../../context/CalendarContext";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 import "./SpotDetails.css";
 
 function SpotPage() {
@@ -55,11 +57,27 @@ function SpotPage() {
       </h2>
       <div className="spot-details-images">
         <div className="preview-image-container" id="box-1">
-          <img alt="preview" loading="lazy" src={spot.previewImage} />
+          {/* <img alt="preview" loading="lazy" src={spot.previewImage} /> */}
+          <LazyLoadImage
+            alt="preview-image"
+            effect="blur"
+            src={spot.previewImage}
+            placeholderSrc={spot.previewImage}
+            height="100%"
+            width="100%"
+          />
         </div>
         {spot.images.map((image, i) => (
           <div className="support-images" key={i}>
-            <img className="supportingImages" alt={i} loading="lazy" src={image} />
+            <LazyLoadImage
+              alt="support-image"
+              effect="blur"
+              src={image}
+              placeholderSrc={image}
+              height="100%"
+              width="100%"
+            />
+            {/* <img className="supportingImages" alt={i} loading="lazy" src={image} /> */}
           </div>
         ))}
       </div>

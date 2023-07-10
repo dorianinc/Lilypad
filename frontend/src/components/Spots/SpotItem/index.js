@@ -1,7 +1,8 @@
 import { useHistory, useLocation } from "react-router-dom";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ModalButton from "../../Modals/ModalButton";
 import DeleteSpotModal from "../../Modals/DeleteSpotModal/DeleteSpot";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css'; 
 import "./SpotItem.css"
 
 const SpotItem = ({ spot }) => {
