@@ -7,18 +7,21 @@ import "./Map.css";
 const Map = ({ spotLat, spotLng }) => {
   const { currentZoom, setCurrentZoom, currentLat, setCurrentLat, currentLng, setCurrentLng } =
     useMap();
-    
-  const center = useMemo(() => ({ lat: Number(currentLat), lng: Number(currentLng) }), [currentLat, currentLng]);
+
+  const center = useMemo(
+    () => ({ lat: Number(spotLat), lng: Number(spotLng) }),
+    [spotLat, spotLng]
+  );
   const mapOptions = {
-    zoom: currentZoom,
+    zoom: 19,
     center,
   };
 
-  useEffect(() => {
-    setCurrentZoom(19);
-    setCurrentLat(Number(spotLat));
-    setCurrentLng(Number(spotLng));
-  }, []);
+  // useEffect(() => {
+  //   setCurrentZoom(19);
+  //   setCurrentLat(Number(spotLat));
+  //   setCurrentLng(Number(spotLng));
+  // }, []);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
@@ -27,7 +30,7 @@ const Map = ({ spotLat, spotLng }) => {
   return (
     <>
       <GoogleMap options={mapOptions} mapContainerClassName="map-container">
-      <Marker position={{ lat: Number(spotLat), lng: Number(spotLng) }} />
+        <Marker position={{ lat: Number(spotLat), lng: Number(spotLng) }} />
       </GoogleMap>
     </>
   );
