@@ -309,7 +309,7 @@ module.exports = {
           spotId: 12,
         },
         {
-          url: "https://a0.muscache.com/im/pictures/miso/Hosting-613869148760315738/original/a95a3228-93c6-4004-935d-9ac83dc7cbbb.jpeg",
+          url: "https://a0.muscache.com/im/pictures/miso/Hosting-613869148760315738/original/2604bf97-293d-4cc7-9fac-d9955ff31b9f.jpeg",
           preview: false,
           spotId: 12,
         },
