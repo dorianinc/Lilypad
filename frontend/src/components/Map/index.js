@@ -5,8 +5,6 @@ import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import "./Map.css";
 
 const Map = ({ spotLat, spotLng }) => {
-  console.log("spotLat ===>", spotLat)
-  console.log("spotLng ===>", spotLng)
   const { currentZoom, setCurrentZoom, currentLat, setCurrentLat, currentLng, setCurrentLng } =
     useMap();
     
