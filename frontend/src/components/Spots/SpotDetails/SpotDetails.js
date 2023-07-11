@@ -140,7 +140,7 @@ function SpotPage() {
                       <p>Delete</p>
                     </button>
                   }
-                  modalComponent={<DeleteReviewModal spotId ={spotId} reviewId={review.id} />}
+                  modalComponent={<DeleteReviewModal spotId={spotId} reviewId={review.id} />}
                 />
               ) : null}
             </div>
