@@ -64,8 +64,10 @@ export const createSpotThunk = (spot) => async () => {
     },
     body: JSON.stringify(spot),
   });
-
-  if (!res.ok && res.status < 500) {
+  if (res.ok) {
+    const data = await res.json();
+    return data;
+  } else if (res.status < 500) {
     const data = await res.json();
     if (data.errors) {
       return data;

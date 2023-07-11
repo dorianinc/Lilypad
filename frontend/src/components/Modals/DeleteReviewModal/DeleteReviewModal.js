@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { deleteReviewThunk } from "../../../store/reviewsReducer";
 
 function DeleteReviewModal({ spotId, reviewId }) {
-  console.log("spotId 👉", spotId)
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 

@@ -7,6 +7,7 @@ import "./HomePage.css";
 function HomePage() {
   const dispatch = useDispatch();
   const spots = useSelector((state) => Object.values(state.spots));
+  console.log("spots 👉", spots)
 
   useEffect(() => {
     dispatch(getSpotsThunk());
