@@ -8,17 +8,6 @@ module.exports = (sequelize, DataTypes) => {
       Spot.hasMany(models.SpotImage, { foreignKey: "spotId" });
       Spot.hasMany(models.Booking, { foreignKey: "spotId" });
       Spot.hasMany(models.Review, { foreignKey: "spotId" });
-      // Spot.belongsToMany(models.User, {
-      //   through: models.Review,
-      //   otherKey: "userId",
-      //   foreignKey: "spotId",
-      // });
-      // Spot.belongsToMany(models.User, {
-      //   through: models.Booking,
-      //   as: "owner",
-      //   otherKey: "ownerId",
-      //   foreignKey: "spotId",
-      // });
     }
   }
   Spot.init(
@@ -42,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
         validate: {
-          len: [2, 20],
+          len: [2, 2],
         },
       },
       country: {
@@ -68,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
       description: {
         type: DataTypes.STRING,
         validate: {
-          max: 800,
+          len: [100, 600],
         },
       },
       minNights: {

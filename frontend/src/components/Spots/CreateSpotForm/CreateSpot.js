@@ -17,33 +17,21 @@ function NewSpotPage() {
   const [price, setPrice] = useState("");
   const [files, setFiles] = useState([]);
   const [errors, setErrors] = useState({});
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const err = {};
+    let err = {};
     const spot = { address, city, state, country, lat, lng, name, description, price };
-    if (address === null || address === "") err.address = "Address is required";
-    if (city === null || city === "") err.city = "City is required";
-    if (state === null || state === "") err.state = "State is required";
-    if (country === null || country === "") err.country = "Country is required";
-    if (description.length < 30) err.description = "Description needs a minimum of 30 characters";
-    if (name === null || name === "") err.name = "Name is required";
-    if (price === null || price === "" || price === 0) {
-      err.price = "Price is required";
-    }
-    if(files.length <= 0){
-      err.images = "Please add at least one image to your pad";
-    }
-    
-    if (!!Object.values(err).length) {
-      setErrors(err);
-    } else {
-      setIsLoading(true)
-      const newSpot = await dispatch(createSpotThunk(spot));
+    const newSpot = await dispatch(createSpotThunk(spot));
+    if (newSpot.errors) err = newSpot.errors;
+    if (files.length <= 0) err.images = "Please add at least one image to your pad";
+    setErrors(err);
+    if (!Object.values(err).length) {
+      setIsLoading(true);
       const imagesArr = [];
       for (let i = 0; i < files.length; i++) {
         const image = files[i];
@@ -52,11 +40,11 @@ function NewSpotPage() {
         } else {
           imagesArr.push({ image, preview: false });
         }
-      }
-      const spotImages = await dispatch(addImageThunk(newSpot.id, imagesArr));
-      if (spotImages) {
-        setIsLoading(false)
-        history.push(`/spots/${newSpot.id}`);
+        const spotImages = await dispatch(addImageThunk(newSpot.id, imagesArr));
+        if (spotImages) {
+          setIsLoading(false);
+          history.push(`/spots/${newSpot.id}`);
+        }
       }
     }
   };
@@ -108,13 +96,61 @@ function NewSpotPage() {
           </label>
           <label className="state-label">
             State
-            <input
-              name="state"
-              value={state}
-              id="state"
-              placeholder="State"
-              onChange={(e) => setState(e.target.value)}
-            />
+            <select id="state" name="state" onChange={(e) => setState(e.target.value)}>
+              <option value="" style={{ color: "#7f7c79" }}>
+                Select your option
+              </option>
+              <option value="AL">Alabama</option>
+              <option value="AK">Alaska</option>
+              <option value="AZ">Arizona</option>
+              <option value="AR">Arkansas</option>
+              <option value="CA">California</option>
+              <option value="CO">Colorado</option>
+              <option value="CT">Connecticut</option>
+              <option value="DE">Delaware</option>
+              <option value="FL">Florida</option>
+              <option value="GA">Georgia</option>
+              <option value="HI">Hawaii</option>
+              <option value="ID">Idaho</option>
+              <option value="IL">Illinois</option>
+              <option value="IN">Indiana</option>
+              <option value="IA">Iowa</option>
+              <option value="KS">Kansas</option>
+              <option value="KY">Kentucky</option>
+              <option value="LA">Louisiana</option>
+              <option value="ME">Maine</option>
+              <option value="MD">Maryland</option>
+              <option value="MA">Massachusetts</option>
+              <option value="MI">Michigan</option>
+              <option value="MN">Minnesota</option>
+              <option value="MS">Mississippi</option>
+              <option value="MO">Missouri</option>
+              <option value="MT">Montana</option>
+              <option value="NE">Nebraska</option>
+              <option value="NV">Nevada</option>
+              <option value="NH">New Hampshire</option>
+              <option value="NJ">New Jersey</option>
+              <option value="NM">New Mexico</option>
+              <option value="NY">New York</option>
+              <option value="NC">North Carolina</option>
+              <option value="ND">North Dakota</option>
+              <option value="OH">Ohio</option>
+              <option value="OK">Oklahoma</option>
+              <option value="OR">Oregon</option>
+              <option value="PA">Pennsylvania</option>
+              <option value="RI">Rhode Island</option>
+              <option value="SC">South Carolina</option>
+              <option value="SD">South Dakota</option>
+              <option value="TN">Tennessee</option>
+              <option value="TX">Texas</option>
+              <option value="UT">Utah</option>
+              <option value="VT">Vermont</option>
+              <option value="VA">Virginia</option>
+              <option value="WA">Washington</option>
+              <option value="WV">West Virginia</option>
+              <option value="WI">Wisconsin</option>
+              <option value="WY">Wyoming</option>
+            </select>
             <p className="errors">{errors.state}</p>
           </label>
         </div>

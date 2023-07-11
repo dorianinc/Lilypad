@@ -1,5 +1,5 @@
 import { csrfFetch } from "./csrf";
-
+import { getSingleSpotThunk } from "./spotsReducer";
 ////////////// Action Creators ////////////////
 
 export const GET_REVIEWS = "reviews/GET_REVIEWS";
@@ -54,18 +54,20 @@ export const postReviewThunk = (spotId, review) => async (dispatch) => {
   });
   if (res.ok) {
     const data = await res.json();
-    dispatch(postReview(data));
+    await dispatch(postReview(data));
+    dispatch(getSingleSpotThunk(spotId));
     return res;
   }
 };
 
 // delete a review
-export const deleteReviewThunk = (reviewId) => async (dispatch) => {
+export const deleteReviewThunk = (reviewId, spotId) => async (dispatch) => {
   const res = await csrfFetch(`/api/reviews/${reviewId}`, {
     method: "DELETE",
   });
   if (res.ok) {
-    dispatch(deleteReview(reviewId));
+    await dispatch(deleteReview(reviewId));
+    dispatch(getSingleSpotThunk(spotId));
   }
 };
 

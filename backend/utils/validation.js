@@ -2,9 +2,10 @@ const { validationResult } = require("express-validator");
 const { check } = require("express-validator");
 const lngRegex = /^-?((([0-9]|[1-9][0-9]|1[0-7][0-9])(\.\d+)?)|180(\.0+)?)/;
 const latRegex = /^-?(([0-8][0-9](\.\d+)?)|90(\.0+)?)/;
+const addressRegex = /^\d+\s+[^,]+$/;
 
 // main function that makes validation handling work
-const handleValidationErrors = (req, _res, next) => {
+const handleValidationErrors = (req, res, next) => {
   const validationErrors = validationResult(req);
 
   if (!validationErrors.isEmpty()) {
@@ -51,33 +52,50 @@ const validateLogin = [
 
 // validator for when trying to create new spot
 const validateSpot = [
+  // address
   check("address")
+    .custom((value) => value.match(addressRegex))
+    .withMessage("Please enter a valid street address")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Street address is required"),
+  // city
   check("city")
+    .isLength({ min: 5, max: 58 })
+    .withMessage("City name must be between 5-58 characters long")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("City is required"),
+  // state
   check("state")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("State is required"),
+  // country
   check("country")
+    .isLength({ min: 4, max: 35 })
+    .withMessage("Country name must be between 4-35 characters long")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Country is required"),
+  // latitude
   check("lat")
     .custom((value) => value === null || value.toString().match(latRegex))
     .withMessage("Latitude is not valid"),
+  // longitude
   check("lng")
     .custom((value) => value === null || value.toString().match(lngRegex))
     .withMessage("Longitude is not valid"),
+  // spot name
   check("name")
+    .isLength({ min: 5, max: 25 })
+    .withMessage("Name must between 5-25 characters long")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
-    .withMessage("Name is required")
-    .isLength({ max: 25 })
-    .withMessage("Name must be less than 50 characters"),
-    check("description")
+    .withMessage("Name is required"),
+  check("description")
+    .isLength({ min: 100, max: 600 })
+    .withMessage("Description must between 100-600 characters long")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or nullls
     .withMessage("Description is required"),
   check("price")
+    .isNumeric()
+    .withMessage("Please enter a valid price")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Price per day is required"),
   handleValidationErrors,

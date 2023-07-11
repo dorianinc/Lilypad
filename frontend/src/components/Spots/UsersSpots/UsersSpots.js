@@ -20,18 +20,20 @@ function UsersSpots() {
     history.push("/spots/new");
   };
 
-
   return (
     <div style={{ width: "95%", margin: "0 auto" }}>
-      <h1 className="content-header">Manage Your Spots</h1>
       {spots.length ? (
-        <div className="spots-container manageSpots">
-          {spots.map((spot) => (
-            <SpotItem spot={spot} />
-          ))}
-        </div>
+        <>
+          <h1 className="content-header">Manage Your Spots</h1>
+          <div className="users-spots-container">
+            {spots.map((spot) => (
+              <SpotItem spot={spot} />
+            ))}
+          </div>
+        </>
       ) : (
-        <div>
+        <div style={{ display: "grid", justifyContent: "center", marginTop: "25px" }}>
+          <h3>You have no spots! Create one now!</h3>
           <button className="grey-button create" onClick={handleCreate}>
             Create a Spot
           </button>

@@ -51,7 +51,7 @@ const SpotItem = ({ spot }) => {
         </div>
       </div>
         {pathName.startsWith("/spots") ? (
-          <div className="buttonsContainer" onClick={(e) => e.stopPropagation()}>
+          <div className="button-container" onClick={(e) => e.stopPropagation()}>
             <button className="grey-button update" onClick={() => handleUpdate()}>
               Update
             </button>

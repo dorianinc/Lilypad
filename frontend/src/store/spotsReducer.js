@@ -4,8 +4,6 @@ import { csrfFetch } from "./csrf";
 
 export const GET_SPOTS = "spots/GET_SPOTS";
 export const GET_SINGLE_SPOT = "spots/GET_SINGLE_SPOT";
-// export const UPDATE_SPOT = "spots/UPDATE_SPOT";
-// export const DELETE_SPOT = "spots/DELETE_SPOT";
 export const CLEAR_SPOTS = "spots/CLEAR_SPOTS";
 
 ///////////// Action Creators ///////////////
@@ -20,7 +18,6 @@ export const getSingleSpot = (spot) => ({
   type: GET_SINGLE_SPOT,
   spot,
 });
-
 
 // clear spots state
 export const clearSpots = () => ({
@@ -59,7 +56,7 @@ export const getSingleSpotThunk = (spotId) => async (dispatch) => {
 };
 
 // post a spot
-export const createSpotThunk = (spot) => async (dispatch) => {
+export const createSpotThunk = (spot) => async () => {
   const res = await csrfFetch("/api/spots/", {
     method: "POST",
     headers: {
@@ -67,9 +64,12 @@ export const createSpotThunk = (spot) => async (dispatch) => {
     },
     body: JSON.stringify(spot),
   });
-  if (res.ok) {
+
+  if (!res.ok && res.status < 500) {
     const data = await res.json();
-    return data;
+    if (data.errors) {
+      return data;
+    }
   }
 };
 
@@ -82,19 +82,19 @@ export const addImageThunk = (spotId, imageObjects) => async (dispatch) => {
       let image = imageObjects[i].image;
       formData.append("preview", previewStatus);
       formData.append("image", image);
-     const res = await csrfFetch(`/api/spots/${spotId}/images`, {
+      const res = await csrfFetch(`/api/spots/${spotId}/images`, {
         method: "POST",
         headers: {
           "Content-Type": "multipart/form-data",
         },
-        body: formData
+        body: formData,
       });
       if (!res.ok) {
-        return false
+        return false;
       }
     }
     await dispatch(getSingleSpotThunk(spotId));
-    return true
+    return true;
   }
 };
 
