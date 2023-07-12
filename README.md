@@ -1,15 +1,15 @@
-## ![airdnd-logo] Xenios
+## ![airdnd-logo] Lilypad
 
 [airdnd-logo]: /backend/assets/air-dnd-logo.png
 
-Xenios is a website clone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd can be used to connect hosts who want to post their homes or rooms for travelers to rent. Users can search for unique accommodations in various locations and leave reviews after their stay.
+Lilypad is a website clone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd can be used to connect hosts who want to post their homes or rooms for travelers to rent. Users can search for unique accommodations in various locations and leave reviews after their stay.
 
-**Live Site: [Xenios]([https://air-dnd-la4z.onrender.com/](https://xenios.onrender.com/))**
+**Live Site: [Lilypad]([https://lilypad.onrender.com/](https://lilypad.onrender.com/))**
 
 #### Please see below links to project Wiki:
-* [Feature List](https://github.com/dorianinc/Xenios/wiki/Features-List)
+* [Feature List](https://github.com/dorianinc/Lilypad/wiki/Features-List)
 * [Database Schema](https://github.com/dorianinc/01-AirBnB/wiki/Database-Schema)
-* [Frontend Routes](https://github.com/dorianinc/Xenios/wiki/Front-End-Routes)
+* [Frontend Routes](https://github.com/dorianinc/Lilypad/wiki/Front-End-Routes)
 * [Backend Routes](https://github.com/dorianinc/01-AirBnB/wiki/Back-End-Routes)
 * [Redux Store State Shape](https://github.com/dorianinc/01-AirBnB/wiki/Redux-Store-Shape)
 
