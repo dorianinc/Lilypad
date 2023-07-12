@@ -20,8 +20,6 @@ const EditBookingForm = () => {
   const dispatch = useDispatch();
   const { setOnStartDate, setStartDate, startDate, setEndDate, endDate, setFocus, setBookedDates, setBooking } =
     useCalendar();
-  console.log("endDate 👉", endDate);
-  console.log("startDate 👉", startDate);
 
   const {
     numAdults,
