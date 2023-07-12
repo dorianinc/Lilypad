@@ -18,16 +18,10 @@ const EditBookingForm = () => {
   const { bookingId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const {
-    setOnStartDate,
-    setStartDate,
-    startDate,
-    setEndDate,
-    endDate,
-    setFocus,
-    setBooking,
-    setBookedDates,
-  } = useCalendar();
+  const { setOnStartDate, setStartDate, startDate, setEndDate, endDate, setFocus, setBookedDates, setBooking } =
+    useCalendar();
+  console.log("endDate 👉", endDate);
+  console.log("startDate 👉", startDate);
 
   const {
     numAdults,
@@ -40,7 +34,7 @@ const EditBookingForm = () => {
     occupancy,
   } = useCounter();
   const [currentBooking, setCurrentBooking] = useState("");
-  const numNights = differenceInCalendarDays(new Date(endDate), new Date(startDate))
+  const numNights = differenceInCalendarDays(new Date(endDate), new Date(startDate));
 
   const openCalendar = () => {
     setOnStartDate(true);
@@ -61,8 +55,6 @@ const EditBookingForm = () => {
         setBookedDates(bookedDates);
       });
     });
-
-
   }, [dispatch, bookingId]);
 
   const updateBooking = async (e) => {
@@ -77,7 +69,7 @@ const EditBookingForm = () => {
       numAdults,
       numChildren,
       numInfants,
-      spotId: currentBooking.spotId
+      spotId: currentBooking.spotId,
     };
     await dispatch(updateBookingsThunk(bookingId, updatedBooking));
     history.push(`/bookings/${bookingId}`);
@@ -94,7 +86,9 @@ const EditBookingForm = () => {
       <h2 style={{ marginBottom: "2px" }}>Reservation details</h2>
       <h4>Dates</h4>
       <ModalButton
-        modalComponent={<Calendar minNights={currentBooking.spot.minNights} bookingIdKey={Number(bookingId)} />}
+        modalComponent={
+          <Calendar minNights={currentBooking.spot.minNights} bookingIdKey={Number(bookingId)} />
+        }
         buttonContent={
           <div
             className="start-end-display"
@@ -103,13 +97,13 @@ const EditBookingForm = () => {
             <div className={`start-date-shell`} onClick={openCalendar}>
               <p id="checkin-text">CHECK-IN</p>
               <p id="start-date-text">
-                {startDate ? format(startDate, "MM/dd/yyyy") : "Add Date"}
+                {startDate ? format(new Date(startDate), "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
             <div className={`end-date-shell`} onClick={openCalendar}>
               <p id="checkout-text">CHECKOUT</p>
               <p id="end-date-text">
-                {endDate ? format(endDate, "MM/dd/yyyy") : "Add Date"}
+                {endDate ? format(new Date(endDate), "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
           </div>

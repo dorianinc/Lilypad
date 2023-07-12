@@ -15,8 +15,7 @@ const BookingConfirmation = () => {
   const { spotId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { startDate, endDate, setStartDate, setEndDate, booking, setBooking, setFocus } =
-    useCalendar();
+  const { startDate, endDate, setFocus } = useCalendar();
   const {
     numAdults,
     numChildren,
@@ -47,8 +46,7 @@ const BookingConfirmation = () => {
   const formattedStartDate = format(new Date(localStartDate), "MMM do");
   const formattedEndDate = format(new Date(localEndDate), "MMM do");
 
-
-  const numNights = differenceInCalendarDays(new Date(localEndDate), new Date(localStartDate))
+  const numNights = differenceInCalendarDays(new Date(localEndDate), new Date(localStartDate));
   const price = Number(spot.price * numNights).toFixed(2);
   const taxes = (price / 14.25).toFixed(2);
   const total = Number(price) + Number(taxes);
@@ -90,7 +88,7 @@ const BookingConfirmation = () => {
         numInfants,
       };
       await dispatch(createBookingsThunk(spotId, requestedBooking));
-      
+
       history.push(`/bookings`);
     }
   };
