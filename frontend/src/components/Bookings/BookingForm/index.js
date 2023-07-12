@@ -18,7 +18,9 @@ const BookingForm = ({ spot, action }) => {
   const { globalStartDate, globalEndDate } = useCalendar();
   const { showCalendar, setShowCalendar } = useCalendar();
   const { setOnStartDate, setFocus, calendarErrors } = useCalendar();
-  const { setNumAdults, setNumChildren, setNumInfants, setOccupancy, occupancy } = useCounter();
+  const { occupancy, setOccupancy } = useCounter();
+  const { setNumAdults, setNumChildren, setNumInfants } = useCounter();
+
   const user = useSelector((state) => state.session.user);
 
   // go to booking confirmations
