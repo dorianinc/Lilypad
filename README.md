@@ -1,6 +1,4 @@
-## ![lilypad-logo] Lilypad
-
-[airdnd-logo]: /backend/assets/lilypad.png
+# <img src="/backend/assets/lilypad.png" height="30" width="30"> Lilypad
 
 Lilypad is a website clone, inspired by [Airbnb](https://www.airbnb.com/). Airdnd can be used to connect hosts who want to post their homes or rooms for travelers to rent. Users can search for unique accommodations in various locations and leave reviews after their stay.
 
