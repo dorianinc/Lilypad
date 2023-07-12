@@ -103,11 +103,7 @@ const BookingForm = ({ spot, action }) => {
                   <p id="end-date-text">{endDate ? format(endDate, "MM/dd/yyyy") : "Add Date"}</p>
                 </div>
                 <div className={`calendar-container ${!showCalendar ? "hidden" : ""}`}>
-                  <Calendar
-                    spotId={spot.id}
-                    minNights={spot.minNights}
-                    setShowCalendar={setShowCalendar}
-                  />
+                  <Calendar minNights={spot.minNights} />
                 </div>
               </div>
               <div className="num-guests-selector" onClick={openCounter} ref={counterRef}>

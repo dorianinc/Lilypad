@@ -6,7 +6,7 @@ import { format, differenceInCalendarDays } from "date-fns";
 import Dates from "./Dates";
 import "./Calendar.css";
 
-const Calendar = ({ minNights }) => {
+const Calendar = ({bookingIdKey, minNights }) => {
   const location = useLocation();
   const pathName = location.pathname;
   const calendarRef = useRef();
@@ -124,8 +124,8 @@ const Calendar = ({ minNights }) => {
             </div>
           </div>
         </div>
-        <Dates minNights={minNights} />
-        <p className="errors">{calendarErrors.numNights}</p>
+        <Dates minNights={minNights} bookingIdKey={bookingIdKey} />
+        <p className="errors" style={{textAlign: "center"}}>{calendarErrors.error}</p>
         <div className="buttons-end">
           <button className="clear-button" onClick={() => clearDates(false)}>
             Clear Dates

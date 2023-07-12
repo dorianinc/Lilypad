@@ -25,6 +25,7 @@ const EditBookingForm = () => {
     setEndDate,
     endDate,
     setFocus,
+    setBooking,
     setBookedDates,
   } = useCalendar();
 
@@ -60,6 +61,8 @@ const EditBookingForm = () => {
         setBookedDates(bookedDates);
       });
     });
+
+
   }, [dispatch, bookingId]);
 
   const updateBooking = async (e) => {
@@ -74,6 +77,7 @@ const EditBookingForm = () => {
       numAdults,
       numChildren,
       numInfants,
+      spotId: currentBooking.spotId
     };
     await dispatch(updateBookingsThunk(bookingId, updatedBooking));
     history.push(`/bookings/${bookingId}`);
@@ -90,7 +94,7 @@ const EditBookingForm = () => {
       <h2 style={{ marginBottom: "2px" }}>Reservation details</h2>
       <h4>Dates</h4>
       <ModalButton
-        modalComponent={<Calendar minNights={currentBooking.spot.minNights} />}
+        modalComponent={<Calendar minNights={currentBooking.spot.minNights} bookingIdKey={Number(bookingId)} />}
         buttonContent={
           <div
             className="start-end-display"
@@ -139,7 +143,6 @@ const EditBookingForm = () => {
       />
       <div className="buttons-end" style={{ marginTop: "15px" }}>
         <button className="clear-button">Cancel</button>
-        {/* <button className={`black-button ${changed && "disabled"}`} disabled={changed}> */}
         <button className="black-button" onClick={(e) => updateBooking(e)}>
           Confirm Changes
         </button>

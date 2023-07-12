@@ -13,7 +13,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "./SpotDetails.css";
 
-function SpotPage() {
+function SpotDetails() {
   const { spotId } = useParams();
   const { setBookedDates, booking, setBooking, setStartDate, setEndDate } = useCalendar();
   const dispatch = useDispatch();
@@ -155,4 +155,4 @@ function SpotPage() {
   );
 }
 
-export default SpotPage;
+export default SpotDetails;

@@ -121,7 +121,7 @@ const BookingConfirmation = () => {
                 {`${formattedStartDate} - ${formattedEndDate}`}
               </div>
               <ModalButton
-                modalComponent={<Calendar spotId={spotId} />}
+                modalComponent={<Calendar />}
                 buttonContent={
                   <p className="edit-tags" onClick={() => setFocus(1)}>
                     Edit

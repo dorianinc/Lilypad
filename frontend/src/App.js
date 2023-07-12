@@ -12,7 +12,6 @@ import BookingsPage from "./components/Bookings/UsersBookings";
 import ConfirmBooking from "./components/Bookings/BookingConfirmation";
 import BookingDetails from "./components/Bookings/BookingDetails";
 import EditBookingForm from "./components/Bookings/EditBookingForm";
-import Calendar from "./components/Calendar";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,9 +26,6 @@ function App() {
       {isLoaded && (
         <div className="content-container">
           <Switch>
-            <Route path="/calendar/:spotId">
-              <Calendar />
-            </Route>
             <Route path="/spots/new">
               <NewSpotPage />
             </Route>
