@@ -18,21 +18,24 @@ const EditBookingForm = () => {
   const { bookingId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { setOnStartDate, setStartDate, startDate, setEndDate, endDate, setFocus, setBookedDates, booking, setBooking } =
-    useCalendar();
-
   const {
-    numAdults,
-    setNumAdults,
-    numChildren,
-    setNumChildren,
-    numInfants,
-    setNumInfants,
-    setOccupancy,
-    occupancy,
-  } = useCounter();
+    setOnStartDate,
+    setGlobalStartDate,
+    globalStartDate,
+    setGlobalEndDate,
+    globalEndDate,
+    setFocus,
+    setBookedDates,
+    booking,
+    setBooking,
+  } = useCalendar();
+
+  const { numAdults, setNumAdults } = useCounter();
+  const { numChildren, setNumChildren } = useCounter();
+  const { numInfants, setNumInfants } = useCounter();
+  const { occupancy, setOccupancy } = useCounter();
   const [currentBooking, setCurrentBooking] = useState("");
-  const numNights = differenceInCalendarDays(new Date(endDate), new Date(startDate));
+  const numNights = differenceInCalendarDays(new Date(globalEndDate), new Date(globalStartDate));
 
   const openCalendar = () => {
     setOnStartDate(true);
@@ -42,8 +45,8 @@ const EditBookingForm = () => {
   useEffect(() => {
     dispatch(getSingleBookingsThunk(bookingId)).then((data) => {
       setCurrentBooking(data);
-      setStartDate(new Date(data.startDate));
-      setEndDate(new Date(data.endDate));
+      setGlobalStartDate(new Date(data.startDate));
+      setGlobalEndDate(new Date(data.endDate));
       setBooking([
         {
           ...booking[0],
@@ -63,8 +66,8 @@ const EditBookingForm = () => {
 
   const updateBooking = async (e) => {
     e.preventDefault();
-    const formattedStartDate = format(new Date(startDate), "Y-MM-dd");
-    const formattedEndDate = format(new Date(endDate), "Y-MM-dd");
+    const formattedStartDate = format(new Date(globalStartDate), "Y-MM-dd");
+    const formattedEndDate = format(new Date(globalEndDate), "Y-MM-dd");
     const updatedBooking = {
       startDate: formattedStartDate,
       endDate: formattedEndDate,
@@ -80,8 +83,8 @@ const EditBookingForm = () => {
 
   const goBack = (e) => {
     e.preventDefault();
-    history.push(`/bookings/${currentBooking.id}`)
-  }
+    history.push(`/bookings/${currentBooking.id}`);
+  };
 
   if (!currentBooking || !currentBooking.spot) return null;
   return (
@@ -105,13 +108,13 @@ const EditBookingForm = () => {
             <div className={`start-date-shell`} onClick={openCalendar}>
               <p id="checkin-text">CHECK-IN</p>
               <p id="start-date-text">
-                {startDate ? format(new Date(startDate), "MM/dd/yyyy") : "Add Date"}
+                {globalStartDate ? format(new Date(globalStartDate), "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
             <div className={`end-date-shell`} onClick={openCalendar}>
               <p id="checkout-text">CHECKOUT</p>
               <p id="end-date-text">
-                {endDate ? format(new Date(endDate), "MM/dd/yyyy") : "Add Date"}
+                {globalEndDate ? format(new Date(globalEndDate), "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
           </div>
@@ -144,7 +147,9 @@ const EditBookingForm = () => {
         }
       />
       <div className="buttons-end" style={{ marginTop: "15px" }}>
-        <button className="clear-button" onClick={(e) => goBack(e)}>Cancel</button>
+        <button className="clear-button" onClick={(e) => goBack(e)}>
+          Cancel
+        </button>
         <button className="black-button" onClick={(e) => updateBooking(e)}>
           Confirm Changes
         </button>

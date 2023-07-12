@@ -7,14 +7,14 @@ export default function CalendarProvider({ children }) {
   const [onStartDate, setOnStartDate] = useState(true);
   const [showCalendar, setShowCalendar] = useState(false);
   const [focus, setFocus] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [globalStartDate, setGlobalStartDate] = useState(""); // global start date
+  const [globalEndDate, setGlobalEndDate] = useState(""); // global end date
   const [bookedDates, setBookedDates] = useState([]);
   const [calendarErrors, setCalendarErrors] = useState({});
   const [booking, setBooking] = useState([
     {
-      startDate: startDate ? new Date(startDate) : null,
-      endDate: endDate ? new Date(endDate) : new Date(""),
+      startDate: globalStartDate ? new Date(globalStartDate) : null,
+      endDate: globalEndDate ? new Date(globalEndDate) : new Date(""),
       color: "#5de373",
       key: "selection",
     },
@@ -23,10 +23,10 @@ export default function CalendarProvider({ children }) {
   return (
     <CalendarContext.Provider
       value={{
-        startDate, // holds start date
-        setStartDate, // sets start date
-        endDate, // holds end date
-        setEndDate, //sets end date
+        globalStartDate, // holds start date
+        setGlobalStartDate, // sets start date
+        globalEndDate, // holds end date
+        setGlobalEndDate, //sets end date
         onStartDate, // boolean the determines whether we are focused on the start date value or not
         setOnStartDate, // sets on setOnstartDate (boolean)
         booking, // holds information for calendar like color and startdate/endate object

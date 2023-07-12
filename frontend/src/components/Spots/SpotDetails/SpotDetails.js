@@ -14,14 +14,15 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import "./SpotDetails.css";
 
 function SpotDetails() {
-  const { spotId } = useParams();
-  const { setBookedDates, booking, setBooking, setStartDate, setEndDate } = useCalendar();
   const dispatch = useDispatch();
+  const { spotId } = useParams();
+  const { booking, setBooking } = useCalendar();
+  const { setBookedDates, setGlobalStartDate, setGlobalEndDate } = useCalendar();
   const spot = useSelector((state) => state.spots);
 
   useEffect(() => {
-    setStartDate("");
-    setEndDate("");
+    setGlobalStartDate("");
+    setGlobalEndDate("");
     setBooking([{ ...booking[0], startDate: null, endDate: new Date("") }]);
     dispatch(getSingleSpotThunk(spotId));
     dispatch(getReviewsThunk(spotId));

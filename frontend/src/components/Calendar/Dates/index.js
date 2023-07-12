@@ -9,16 +9,11 @@ import "./Dates.css";
 const Dates = ({ bookingIdKey, minNights }) => {
   const [shownDateChangeValue, setShownDateChangeValue] = useState(new Date());
   const [isNextMonth, setIsNextMonth] = useState(true);
-  const {
-    onStartDate,
-    setOnStartDate,
-    booking,
-    setBooking,
-    setStartDate,
-    setEndDate,
-    bookedDates,
-    setCalendarErrors,
-  } = useCalendar();
+  const { bookedDates } = useCalendar();
+  const { booking, setBooking } = useCalendar();
+  const { setGlobalStartDate, setGlobalEndDate } = useCalendar();
+  const { onStartDate, setOnStartDate } = useCalendar();
+  const { setCalendarErrors } = useCalendar();
 
   const bookingConflicts = (requestDates) => {
     const requestedStart = new Date(requestDates.startDate).getTime();
@@ -60,9 +55,9 @@ const Dates = ({ bookingIdKey, minNights }) => {
     const endDate = selection.endDate;
     setBooking([selection]);
     localStorage.setItem("storedStartDate", startDate);
-    setStartDate(startDate);
+    setGlobalStartDate(startDate);
     if (isBefore(startDate, endDate)) {
-      setEndDate(endDate);
+      setGlobalEndDate(endDate);
       localStorage.setItem("storedEndDate", endDate);
       if (differenceInCalendarDays(endDate, startDate) < minNights) {
         err.error = `Must book at least ${minNights} nights`;
@@ -74,7 +69,7 @@ const Dates = ({ bookingIdKey, minNights }) => {
       }
     } else {
       localStorage.setItem("storedEndDate", "");
-      setEndDate("");
+      setGlobalEndDate("");
     }
     setOnStartDate(false);
   };

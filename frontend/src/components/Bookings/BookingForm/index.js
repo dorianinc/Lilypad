@@ -11,25 +11,17 @@ import LoginFormModal from "../../Modals/LoginFormModal/LoginForm";
 import "./BookingForm.css";
 
 const BookingForm = ({ spot, action }) => {
-  const [showCounter, setShowCounter] = useState(false);
-  const {
-    setOnStartDate,
-    startDate,
-    endDate,
-    showCalendar,
-    setShowCalendar,
-    setFocus,
-    calendarErrors,
-  } = useCalendar();
-
-  const { setNumAdults, setNumChildren, setNumInfants, occupancy, setOccupancy } = useCounter();
   const history = useHistory();
   const calendarRef = useRef();
   const counterRef = useRef();
+  const [showCounter, setShowCounter] = useState(false);
+  const { globalStartDate, globalEndDate } = useCalendar();
+  const { showCalendar, setShowCalendar } = useCalendar();
+  const { setOnStartDate, setFocus, calendarErrors } = useCalendar();
+  const { setNumAdults, setNumChildren, setNumInfants, setOccupancy, occupancy } = useCounter();
   const user = useSelector((state) => state.session.user);
 
-
-// go to booking confirmations
+  // go to booking confirmations
   const handleBooking = (e) => {
     e.preventDefault();
     if (!Object.values(calendarErrors).length) {
@@ -57,7 +49,6 @@ const BookingForm = ({ spot, action }) => {
     setShowCounter(false);
   };
 
-
   // setting states
   useEffect(() => {
     localStorage.setItem("storedNumAdults", 1);
@@ -72,7 +63,7 @@ const BookingForm = ({ spot, action }) => {
     };
   }, []);
 
-  // handle close and opening of counter and calendar 
+  // handle close and opening of counter and calendar
   useEffect(() => {
     if (!showCalendar && !showCounter) return;
     document.addEventListener("click", (e) => {
@@ -99,12 +90,14 @@ const BookingForm = ({ spot, action }) => {
                 <div className={`start-date-shell`} onClick={openCalendar}>
                   <p id="checkin-text">CHECK-IN</p>
                   <p id="start-date-text">
-                    {startDate ? format(startDate, "MM/dd/yyyy") : "Add Date"}
+                    {globalStartDate ? format(globalStartDate, "MM/dd/yyyy") : "Add Date"}
                   </p>
                 </div>
                 <div className={`end-date-shell`} onClick={openCalendar}>
                   <p id="checkout-text">CHECKOUT</p>
-                  <p id="end-date-text">{endDate ? format(endDate, "MM/dd/yyyy") : "Add Date"}</p>
+                  <p id="end-date-text">
+                    {globalEndDate ? format(globalEndDate, "MM/dd/yyyy") : "Add Date"}
+                  </p>
                 </div>
                 <div className={`calendar-container ${!showCalendar ? "hidden" : ""}`}>
                   <Calendar minNights={spot.minNights} />
@@ -124,7 +117,7 @@ const BookingForm = ({ spot, action }) => {
             </div>
           </div>
           <div className="booking-button-container">
-            {startDate && endDate ? (
+            {globalStartDate && globalEndDate ? (
               user ? (
                 <button className="pink-button reserve" onClick={(e) => handleBooking(e)}>
                   Reserve

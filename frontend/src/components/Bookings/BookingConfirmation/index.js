@@ -12,27 +12,21 @@ import ModalButton from "../../Modals/ModalButton";
 import "./BookingConfirmation.css";
 
 const BookingConfirmation = () => {
-  const { spotId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { startDate, endDate, setFocus, setStartDate, setEndDate, booking, setBooking } =
-    useCalendar();
-
-  const {
-    numAdults,
-    numChildren,
-    numInfants,
-    setNumAdults,
-    setNumChildren,
-    setNumInfants,
-    setOccupancy,
-  } = useCounter();
-  const [localStartDate, setLocalStartDate] = useState(
-    startDate || localStorage.getItem("storedStartDate")
+  const { spotId } = useParams();
+  const { setFocus } = useCalendar();
+  const { booking, setBooking } = useCalendar();
+  const { globalStartDate, setGlobalStartDate } = useCalendar();
+  const { globalEndDate, setGlobalEndDate } = useCalendar();
+  const { numAdults, setNumAdults } = useCounter();
+  const { numChildren, setNumChildren } = useCounter();
+  const { numInfants, setNumInfants } = useCounter();
+  const { setOccupancy } = useCounter();
+  const [startDate, setStartDate] = useState(
+    globalStartDate || localStorage.getItem("storedStartDate")
   );
-  const [localEndDate, setLocalEndDate] = useState(
-    endDate || localStorage.getItem("storedEndDate")
-  );
+  const [endDate, setEndDate] = useState(globalEndDate || localStorage.getItem("storedEndDate"));
   const [paymentOption, setPaymentOption] = useState("");
   const [errors, setErrors] = useState({});
   const counter = numAdults + numChildren + numInfants;
@@ -49,10 +43,10 @@ const BookingConfirmation = () => {
 
   const user = useSelector((state) => state.session.user);
   const spot = useSelector((state) => state.spots);
-  const formattedStartDate = format(new Date(localStartDate), "MMM do");
-  const formattedEndDate = format(new Date(localEndDate), "MMM do");
+  const formattedStartDate = format(new Date(startDate), "MMM do");
+  const formattedEndDate = format(new Date(endDate), "MMM do");
 
-  const numNights = differenceInCalendarDays(new Date(localEndDate), new Date(localStartDate));
+  const numNights = differenceInCalendarDays(new Date(endDate), new Date(startDate));
   const price = Number(spot.price * numNights).toFixed(2);
   const taxes = (price / 14.25).toFixed(2);
   const total = Number(price) + Number(taxes);
@@ -62,31 +56,30 @@ const BookingConfirmation = () => {
     dispatch(getSingleSpotThunk(spotId));
   }, [dispatch, spotId]);
 
-  // setting states 
+  // setting states
   useEffect(() => {
     setNumAdults(Number(localStorage.getItem("storedNumAdults")));
     setNumChildren(Number(localStorage.getItem("storedNumChildren")));
     setNumInfants(Number(localStorage.getItem("storedNumInfants")));
     setOccupancy(Number(localStorage.getItem("storedOccupancy")));
-    setStartDate(localStorage.getItem("storedStartDate"));
-    setEndDate(localStorage.getItem("storedEndDate"));
+    setGlobalStartDate(localStorage.getItem("storedStartDate"));
+    setGlobalEndDate(localStorage.getItem("storedEndDate"));
     setBooking([
       {
         ...booking[0],
-        startDate: new Date(localStorage.getItem("storedStartDate")),
-        endDate: new Date(localStorage.getItem("storedEndDate")),
+        globalStartDate: new Date(localStorage.getItem("storedStartDate")),
+        globalEndDate: new Date(localStorage.getItem("storedEndDate")),
       },
     ]);
   }, []);
 
   // updating local dates if global dates exist
   useEffect(() => {
-    if (startDate && endDate) {
-      setLocalStartDate(startDate);
-      setLocalEndDate(endDate);
+    if (globalStartDate && globalEndDate) {
+      setStartDate(globalStartDate);
+      setEndDate(globalEndDate);
     }
-  }, [startDate, endDate]);
-
+  }, [globalStartDate, globalEndDate]);
 
   // book spot function
   const confirmBooking = async (e) => {
@@ -97,8 +90,8 @@ const BookingConfirmation = () => {
       err.payment = "Please select a payment plan";
       setErrors(err);
     } else {
-      const formattedStartDate = format(new Date(localStartDate), "Y-MM-dd");
-      const formattedEndDate = format(new Date(localEndDate), "Y-MM-dd");
+      const formattedStartDate = format(new Date(startDate), "Y-MM-dd");
+      const formattedEndDate = format(new Date(endDate), "Y-MM-dd");
       const requestedBooking = {
         startDate: formattedStartDate,
         endDate: formattedEndDate,
@@ -107,7 +100,7 @@ const BookingConfirmation = () => {
         numChildren,
         numInfants,
       };
-      await dispatch(createBookingsThunk(spotId, requestedBooking))
+      await dispatch(createBookingsThunk(spotId, requestedBooking));
       history.push(`/bookings`);
     }
   };

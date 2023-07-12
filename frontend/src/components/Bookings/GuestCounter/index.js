@@ -5,19 +5,13 @@ import { useCounter } from "../../../context/CounterContext";
 import "./GuestCounter.css";
 
 const GuestCounter = ({ maxGuests }) => {
-  const { closeModal } = useModal();
   const location = useLocation();
   const pathName = location.pathname;
-  const {
-    numAdults,
-    setNumAdults,
-    numChildren,
-    setNumChildren,
-    numInfants,
-    setNumInfants,
-    occupancy,
-    setOccupancy,
-  } = useCounter();
+  const { closeModal } = useModal();
+  const { numAdults, setNumAdults } = useCounter();
+  const { numChildren, setNumChildren } = useCounter();
+  const { numInfants, setNumInfants } = useCounter();
+  const { occupancy, setOccupancy } = useCounter();
   const [localNumAdults, setLocalNumAdults] = useState(numAdults);
   const [localNumChildren, setLocalNumChildren] = useState(numChildren);
   const [localNumInfants, setLocalNumInfants] = useState(numInfants);
@@ -134,7 +128,6 @@ const GuestCounter = ({ maxGuests }) => {
     setOccupancy(localOccupancy);
     closeModal();
   };
-
 
   //----------------------------------------------------------------------------------------------------------//
   // Sets the global guestlist variables if we are in a spot's detail page //

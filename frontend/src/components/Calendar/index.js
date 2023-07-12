@@ -6,31 +6,20 @@ import { format, differenceInCalendarDays } from "date-fns";
 import Dates from "./Dates";
 import "./Calendar.css";
 
-const Calendar = ({bookingIdKey, minNights }) => {
+const Calendar = ({ bookingIdKey, minNights }) => {
   const location = useLocation();
   const pathName = location.pathname;
   const calendarRef = useRef();
   const [formattedDate, setFormattedDate] = useState("");
   const [numNights, setNumNights] = useState();
-
-  const {
-    setOnStartDate,
-    booking,
-    setBooking,
-    startDate,
-    setStartDate,
-    endDate,
-    setEndDate,
-    showCalendar,
-    setShowCalendar,
-    focus,
-    setFocus,
-    calendarErrors,
-    setCalendarErrors,
-  } = useCalendar();
-
-
   const { closeModal } = useModal();
+  const { setOnStartDate } = useCalendar();
+  const { booking, setBooking } = useCalendar();
+  const { globalStartDate, setGlobalStartDate } = useCalendar();
+  const { globalEndDate, setGlobalEndDate } = useCalendar();
+  const { showCalendar, setShowCalendar } = useCalendar();
+  const { focus, setFocus } = useCalendar();
+  const { calendarErrors, setCalendarErrors } = useCalendar();
 
 
   ////// calendar logic ///////
@@ -57,31 +46,36 @@ const Calendar = ({bookingIdKey, minNights }) => {
   }, [showCalendar]);
 
   useEffect(() => {
-    if (startDate && !endDate) {
+    if (globalStartDate && !globalEndDate) {
       setFocus(2);
       setNumNights(0);
       setFormattedDate("");
     }
-    if (startDate && endDate) {
-      if (new Date(startDate).getTime() < new Date(endDate).getTime()) {
-        setFormattedDate(`${format(new Date(startDate), "MMM dd")} - ${format(new Date(endDate), "MMM dd")}`);
-        setNumNights(differenceInCalendarDays(endDate, startDate));
+    if (globalStartDate && globalEndDate) {
+      if (new Date(globalStartDate).getTime() < new Date(globalEndDate).getTime()) {
+        setFormattedDate(
+          `${format(new Date(globalStartDate), "MMM dd")} - ${format(
+            new Date(globalEndDate),
+            "MMM dd"
+          )}`
+        );
+        setNumNights(differenceInCalendarDays(globalEndDate, globalStartDate));
         if (pathName.startsWith("/spots") && !Object.values(calendarErrors).length) closeCalendar();
       }
     }
-  }, [startDate, endDate]);
+  }, [globalStartDate, globalEndDate]);
 
   const clearDates = (submitted) => {
     const dates = booking[0];
 
     if (submitted) setFocus("");
     else setFocus(1);
-    dates.startDate = null;
-    dates.endDate = new Date("");
+    dates.globalStartDate = null;
+    dates.globalEndDate = new Date("");
     localStorage.setItem("storedStartDate", "");
-    setStartDate("");
+    setGlobalStartDate("");
     localStorage.setItem("storedEndDate", "");
-    setEndDate("");
+    setGlobalEndDate("");
     setNumNights(0);
     setFormattedDate("");
     setBooking([dates]);
@@ -108,7 +102,7 @@ const Calendar = ({bookingIdKey, minNights }) => {
             >
               <p id="checkin-text">CHECK-IN</p>
               <p id="start-date-text">
-                {startDate ? format(new Date(startDate), "MM/dd/yyyy") : "Add Date"}
+                {globalStartDate ? format(new Date(globalStartDate), "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
             <div
@@ -119,13 +113,15 @@ const Calendar = ({bookingIdKey, minNights }) => {
             >
               <p id="checkout-text">CHECKOUT</p>
               <p id="end-date-text">
-                {endDate ? format(new Date(endDate), "MM/dd/yyyy") : "Add Date"}
+                {globalEndDate ? format(new Date(globalEndDate), "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
           </div>
         </div>
         <Dates minNights={minNights} bookingIdKey={bookingIdKey} />
-        <p className="errors" style={{textAlign: "center"}}>{calendarErrors.error}</p>
+        <p className="errors" style={{ textAlign: "center" }}>
+          {calendarErrors.error}
+        </p>
         <div className="buttons-end">
           <button className="clear-button" onClick={() => clearDates(false)}>
             Clear Dates
