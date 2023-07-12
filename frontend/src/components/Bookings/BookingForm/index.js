@@ -21,17 +21,8 @@ const BookingForm = ({ spot, action }) => {
     setFocus,
     calendarErrors,
   } = useCalendar();
-  
-  const {
-    numAdults,
-    numChildren,
-    numInfants,
-    setNumAdults,
-    setNumChildren,
-    setNumInfants,
-    occupancy,
-    setOccupancy
-  } = useCounter();
+
+  const { setNumAdults, setNumChildren, setNumInfants, occupancy, setOccupancy } = useCounter();
   const history = useHistory();
   const calendarRef = useRef();
   const counterRef = useRef();
@@ -71,6 +62,9 @@ const BookingForm = ({ spot, action }) => {
     setNumChildren(0);
     setNumInfants(0);
     setOccupancy(1);
+    return () => {
+      setShowCalendar(false);
+    };
   }, []);
 
   useEffect(() => {
@@ -106,9 +100,7 @@ const BookingForm = ({ spot, action }) => {
                 </div>
                 <div className={`end-date-shell`} onClick={openCalendar}>
                   <p id="checkout-text">CHECKOUT</p>
-                  <p id="end-date-text">
-                    {endDate ? format(endDate, "MM/dd/yyyy") : "Add Date"}
-                  </p>
+                  <p id="end-date-text">{endDate ? format(endDate, "MM/dd/yyyy") : "Add Date"}</p>
                 </div>
                 <div className={`calendar-container ${!showCalendar ? "hidden" : ""}`}>
                   <Calendar

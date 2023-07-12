@@ -20,29 +20,7 @@ const Dates = ({ minNights }) => {
     setCalendarErrors,
   } = useCalendar();
 
-  const handleSelect = (ranges) => {
-    setCalendarErrors({});
-    const { selection } = ranges;
-    const startDate = selection.startDate;
-    const endDate = selection.endDate;
-    setBooking([selection]);
-    localStorage.setItem("storedStartDate", startDate);
-    setStartDate(startDate);
-    if (isBefore(startDate, endDate)) {
-      setEndDate(endDate);
-      localStorage.setItem("storedEndDate", endDate);
-      if (differenceInCalendarDays(endDate, startDate) < minNights) {
-        const err = {};
-        err.numNights = `Must book at least ${minNights} nights`;
-        setCalendarErrors(err);
-      }
-    } else {
-      localStorage.setItem("storedEndDate", "");
-      setEndDate("");
-    }
-    setOnStartDate(false);
-  };
-
+  
   const disabledDays = [];
   const bookedDays = (day) => {
     const utcDay = new Date(day.toLocaleDateString("sv-SE"));
@@ -54,13 +32,36 @@ const Dates = ({ minNights }) => {
         if (
           getTime(new Date(currentDate)) >= getTime(new Date(formattedStartDate)) &&
           getTime(new Date(currentDate)) <= getTime(new Date(formattedEndDate))
-        ) {
-          disabledDays.push(new Date(currentDate));
-          return true;
+          ) {
+            disabledDays.push(new Date(currentDate));
+            return true;
+          }
         }
       }
-    }
-  };
+    };
+
+    const handleSelect = (ranges) => {
+      setCalendarErrors({});
+      const { selection } = ranges;
+      const startDate = selection.startDate;
+      const endDate = selection.endDate;
+      setBooking([selection]);
+      localStorage.setItem("storedStartDate", startDate);
+      setStartDate(startDate);
+      if (isBefore(startDate, endDate)) {
+        setEndDate(endDate);
+        localStorage.setItem("storedEndDate", endDate);
+        if (differenceInCalendarDays(endDate, startDate) < minNights) {
+          const err = {};
+          err.numNights = `Must book at least ${minNights} nights`;
+          setCalendarErrors(err);
+        }
+      } else {
+        localStorage.setItem("storedEndDate", "");
+        setEndDate("");
+      }
+      setOnStartDate(false);
+    };
 
   return (
     <>
