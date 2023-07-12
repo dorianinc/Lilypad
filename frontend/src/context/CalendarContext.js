@@ -7,8 +7,8 @@ export default function CalendarProvider({ children }) {
   const [onStartDate, setOnStartDate] = useState(true);
   const [showCalendar, setShowCalendar] = useState(false);
   const [focus, setFocus] = useState("");
-  const [startDate, setStartDate] = useState(localStorage.getItem("storedStartDate"));
-  const [endDate, setEndDate] = useState(localStorage.getItem("storedEndDate"));
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [bookedDates, setBookedDates] = useState([]);
   const [calendarErrors, setCalendarErrors] = useState({});
   const [booking, setBooking] = useState([

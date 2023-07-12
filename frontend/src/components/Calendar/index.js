@@ -64,7 +64,7 @@ const Calendar = ({bookingIdKey, minNights }) => {
     }
     if (startDate && endDate) {
       if (new Date(startDate).getTime() < new Date(endDate).getTime()) {
-        setFormattedDate(`${format(startDate, "MMM dd")} - ${format(endDate, "MMM dd")}`);
+        setFormattedDate(`${format(new Date(startDate), "MMM dd")} - ${format(new Date(endDate), "MMM dd")}`);
         setNumNights(differenceInCalendarDays(endDate, startDate));
         if (pathName.startsWith("/spots") && !Object.values(calendarErrors).length) closeCalendar();
       }
@@ -108,7 +108,7 @@ const Calendar = ({bookingIdKey, minNights }) => {
             >
               <p id="checkin-text">CHECK-IN</p>
               <p id="start-date-text">
-                {startDate ? format(startDate, "MM/dd/yyyy") : "Add Date"}
+                {startDate ? format(new Date(startDate), "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
             <div
@@ -119,7 +119,7 @@ const Calendar = ({bookingIdKey, minNights }) => {
             >
               <p id="checkout-text">CHECKOUT</p>
               <p id="end-date-text">
-                {endDate ? format(endDate, "MM/dd/yyyy") : "Add Date"}
+                {endDate ? format(new Date(endDate), "MM/dd/yyyy") : "Add Date"}
               </p>
             </div>
           </div>

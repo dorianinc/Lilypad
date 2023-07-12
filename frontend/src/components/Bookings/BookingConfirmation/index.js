@@ -15,7 +15,9 @@ const BookingConfirmation = () => {
   const { spotId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { startDate, endDate, setFocus } = useCalendar();
+  const { startDate, endDate, setFocus, setStartDate, setEndDate, booking, setBooking } =
+    useCalendar();
+
   const {
     numAdults,
     numChildren,
@@ -25,8 +27,12 @@ const BookingConfirmation = () => {
     setNumInfants,
     setOccupancy,
   } = useCounter();
-  const [localStartDate, setLocalStartDate] = useState(startDate);
-  const [localEndDate, setLocalEndDate] = useState(endDate);
+  const [localStartDate, setLocalStartDate] = useState(
+    startDate || localStorage.getItem("storedStartDate")
+  );
+  const [localEndDate, setLocalEndDate] = useState(
+    endDate || localStorage.getItem("storedEndDate")
+  );
   const [paymentOption, setPaymentOption] = useState("");
   const [errors, setErrors] = useState({});
   const counter = numAdults + numChildren + numInfants;
@@ -51,10 +57,29 @@ const BookingConfirmation = () => {
   const taxes = (price / 14.25).toFixed(2);
   const total = Number(price) + Number(taxes);
 
+  // getting single spot data
   useEffect(() => {
     dispatch(getSingleSpotThunk(spotId));
   }, [dispatch, spotId]);
 
+  // setting states 
+  useEffect(() => {
+    setNumAdults(Number(localStorage.getItem("storedNumAdults")));
+    setNumChildren(Number(localStorage.getItem("storedNumChildren")));
+    setNumInfants(Number(localStorage.getItem("storedNumInfants")));
+    setOccupancy(Number(localStorage.getItem("storedOccupancy")));
+    setStartDate(localStorage.getItem("storedStartDate"));
+    setEndDate(localStorage.getItem("storedEndDate"));
+    setBooking([
+      {
+        ...booking[0],
+        startDate: new Date(localStorage.getItem("storedStartDate")),
+        endDate: new Date(localStorage.getItem("storedEndDate")),
+      },
+    ]);
+  }, []);
+
+  // updating local dates if global dates exist
   useEffect(() => {
     if (startDate && endDate) {
       setLocalStartDate(startDate);
@@ -62,13 +87,8 @@ const BookingConfirmation = () => {
     }
   }, [startDate, endDate]);
 
-  useEffect(() => {
-    setNumAdults(Number(localStorage.getItem("storedNumAdults")));
-    setNumChildren(Number(localStorage.getItem("storedNumChildren")));
-    setNumInfants(Number(localStorage.getItem("storedNumInfants")));
-    setOccupancy(Number(localStorage.getItem("storedOccupancy")));
-  }, []);
 
+  // book spot function
   const confirmBooking = async (e) => {
     e.preventDefault();
 
@@ -87,8 +107,7 @@ const BookingConfirmation = () => {
         numChildren,
         numInfants,
       };
-      await dispatch(createBookingsThunk(spotId, requestedBooking));
-
+      await dispatch(createBookingsThunk(spotId, requestedBooking))
       history.push(`/bookings`);
     }
   };

@@ -28,13 +28,15 @@ const BookingForm = ({ spot, action }) => {
   const counterRef = useRef();
   const user = useSelector((state) => state.session.user);
 
+
+// go to booking confirmations
   const handleBooking = (e) => {
     e.preventDefault();
     if (!Object.values(calendarErrors).length) {
       history.push(`/bookings/spots/${spot.id}`);
     }
   };
-
+  // open and close calendar functions //
   const openCalendar = () => {
     setOnStartDate(true);
     setShowCalendar(true);
@@ -46,6 +48,7 @@ const BookingForm = ({ spot, action }) => {
     setFocus("");
   };
 
+  // open and close counter functions //
   const openCounter = () => {
     setShowCounter(true);
   };
@@ -54,6 +57,8 @@ const BookingForm = ({ spot, action }) => {
     setShowCounter(false);
   };
 
+
+  // setting states
   useEffect(() => {
     localStorage.setItem("storedNumAdults", 1);
     localStorage.setItem("storedNumChildren", 0);
@@ -67,9 +72,9 @@ const BookingForm = ({ spot, action }) => {
     };
   }, []);
 
+  // handle close and opening of counter and calendar 
   useEffect(() => {
     if (!showCalendar && !showCounter) return;
-
     document.addEventListener("click", (e) => {
       if (calendarRef.current && !calendarRef.current.contains(e.target)) {
         closeCalendar(true);
@@ -78,7 +83,6 @@ const BookingForm = ({ spot, action }) => {
         closeCounter();
       }
     });
-
     return () => {
       document.removeEventListener("click", closeCalendar);
       document.removeEventListener("click", closeCounter);

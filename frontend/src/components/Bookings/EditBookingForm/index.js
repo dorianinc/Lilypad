@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import { format, differenceInCalendarDays } from "date-fns";
 import { useCalendar } from "../../../context/CalendarContext";
@@ -18,7 +18,7 @@ const EditBookingForm = () => {
   const { bookingId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
-  const { setOnStartDate, setStartDate, startDate, setEndDate, endDate, setFocus, setBookedDates, setBooking } =
+  const { setOnStartDate, setStartDate, startDate, setEndDate, endDate, setFocus, setBookedDates, booking, setBooking } =
     useCalendar();
 
   const {
@@ -40,16 +40,22 @@ const EditBookingForm = () => {
   };
 
   useEffect(() => {
-    dispatch(getSingleBookingsThunk(bookingId)).then((booking) => {
-      setCurrentBooking(booking);
-      setStartDate(new Date(booking.startDate));
-      setEndDate(new Date(booking.endDate));
-      // setBooking([{ ...booking[0], startDate: new Date(startDate), endDate: new Date(endDate) }]);
-      setNumAdults(booking.numAdults);
-      setNumChildren(booking.numChildren);
-      setNumInfants(booking.numInfants);
-      setOccupancy(booking.numAdults + booking.numChildren + booking.numInfants);
-      dispatch(getSpotBookingsThunk(booking.spotId)).then((bookedDates) => {
+    dispatch(getSingleBookingsThunk(bookingId)).then((data) => {
+      setCurrentBooking(data);
+      setStartDate(new Date(data.startDate));
+      setEndDate(new Date(data.endDate));
+      setBooking([
+        {
+          ...booking[0],
+          startDate: new Date(data.startDate),
+          endDate: new Date(data.endDate),
+        },
+      ]);
+      setNumAdults(data.numAdults);
+      setNumChildren(data.numChildren);
+      setNumInfants(data.numInfants);
+      setOccupancy(data.numAdults + data.numChildren + data.numInfants);
+      dispatch(getSpotBookingsThunk(data.spotId)).then((bookedDates) => {
         setBookedDates(bookedDates);
       });
     });
@@ -57,9 +63,8 @@ const EditBookingForm = () => {
 
   const updateBooking = async (e) => {
     e.preventDefault();
-
-    const formattedStartDate = format(startDate, "Y-MM-dd");
-    const formattedEndDate = format(endDate, "Y-MM-dd");
+    const formattedStartDate = format(new Date(startDate), "Y-MM-dd");
+    const formattedEndDate = format(new Date(endDate), "Y-MM-dd");
     const updatedBooking = {
       startDate: formattedStartDate,
       endDate: formattedEndDate,
@@ -72,6 +77,11 @@ const EditBookingForm = () => {
     await dispatch(updateBookingsThunk(bookingId, updatedBooking));
     history.push(`/bookings/${bookingId}`);
   };
+
+  const goBack = (e) => {
+    e.preventDefault();
+    history.push(`/bookings/${currentBooking.id}`)
+  }
 
   if (!currentBooking || !currentBooking.spot) return null;
   return (
@@ -134,7 +144,7 @@ const EditBookingForm = () => {
         }
       />
       <div className="buttons-end" style={{ marginTop: "15px" }}>
-        <button className="clear-button">Cancel</button>
+        <button className="clear-button" onClick={(e) => goBack(e)}>Cancel</button>
         <button className="black-button" onClick={(e) => updateBooking(e)}>
           Confirm Changes
         </button>
