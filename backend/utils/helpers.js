@@ -1,24 +1,33 @@
-const isAvailable = (startDate, endDate, bookedDates, res) => {
+const isAvailable = (booking, bookedDates, res) => {
   const errorHandler = {
     message: "Sorry, this spot is already booked for the specified dates",
     statusCode: 403,
     errors: {},
   };
-  const requestedStart = new Date(startDate).getTime();
-  const requestedEnd = new Date(endDate).getTime();
+  const bookingIdKey = booking.bookingId ? Number(booking.bookingId) : null;
+  const requestedStart = new Date(booking.startDate).getTime();
+  const requestedEnd = new Date(booking.endDate).getTime();
 
   for (let i = 0; i < bookedDates.length; i++) {
+    let bookingId = bookedDates[i].id;
     let bookedStartDate = new Date(bookedDates[i].startDate).getTime();
     let bookedEndDate = new Date(bookedDates[i].endDate).getTime();
+
     if (requestedStart >= bookedStartDate && requestedStart <= bookedEndDate) {
-      errorHandler.errors.startDate = "Start date conflicts with an existing booking";
+      if (bookingId !== bookingIdKey) {
+        errorHandler.errors.startDate = "Start date conflicts with an existing booking";
+      }
     }
     if (requestedEnd >= bookedStartDate && requestedEnd <= bookedEndDate) {
-      errorHandler.errors.endDate = "End date conflicts with an existing booking";
+      if (bookingId !== bookingIdKey) {
+        errorHandler.errors.endDate = "End date conflicts with an existing booking";
+      }
     }
     if (requestedStart < bookedStartDate && requestedEnd > bookedEndDate) {
-      errorHandler.errors.startDate = "Start date conflicts with an existing booking";
-      errorHandler.errors.endDate = "End date conflicts with an existing booking";
+      if (bookingId !== bookingIdKey) {
+        errorHandler.errors.startDate = "Start date conflicts with an existing booking";
+        errorHandler.errors.endDate = "End date conflicts with an existing booking";
+      }
     }
   }
   if (Object.values(errorHandler.errors).length) {
@@ -34,7 +43,7 @@ const doesNotExist = (object) => {
 };
 
 const hasPassed = (startDate, endDate, res) => {
-  if(startDate){
+  if (startDate) {
     if (new Date(startDate).getTime() <= new Date().getTime()) {
       res.status(400).json({
         message: "Bookings that have been started can't be deleted",
@@ -42,7 +51,7 @@ const hasPassed = (startDate, endDate, res) => {
       return true;
     }
   }
-  if(endDate){
+  if (endDate) {
     if (new Date(endDate).getTime() < new Date().getTime()) {
       res.status(400).json({
         message: "Past bookings can't be modified",
@@ -55,5 +64,5 @@ const hasPassed = (startDate, endDate, res) => {
 module.exports = {
   isAvailable,
   doesNotExist,
-  hasPassed
+  hasPassed,
 };

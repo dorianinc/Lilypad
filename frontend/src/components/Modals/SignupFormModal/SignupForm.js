@@ -67,7 +67,6 @@ function SignupFormModal() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            required
           />
         </label>
         {errors.email && <p className="errors">{errors.email}</p>}
@@ -77,7 +76,6 @@ function SignupFormModal() {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            required
           />
         </label>
         {errors.username && <p className="errors">{errors.username}</p>}
@@ -87,7 +85,6 @@ function SignupFormModal() {
             placeholder="First Name"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
-            required
           />
         </label>
         {errors.firstName && <p className="errors">{errors.firstName}</p>}
@@ -97,7 +94,6 @@ function SignupFormModal() {
             placeholder="Last Name"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            required
           />
         </label>
         {errors.lastName && <p className="errors">{errors.lastName}</p>}
@@ -107,7 +103,6 @@ function SignupFormModal() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
         </label>
         {errors.password && <p className="errors">{errors.password}</p>}
@@ -117,13 +112,11 @@ function SignupFormModal() {
             placeholder="Confirm Password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
-            required
           />
         </label>
         {errors.confirmPassword && <p className="errors">{errors.confirmPassword}</p>}
         <button
-          className={buttonClass}
-          disabled={buttonClass === "pink-button disabled"}
+          className="pink-button"
           type="submit"
         >
           Sign Up

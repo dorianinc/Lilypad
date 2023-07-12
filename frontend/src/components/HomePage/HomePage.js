@@ -7,7 +7,6 @@ import "./HomePage.css";
 function HomePage() {
   const dispatch = useDispatch();
   const spots = useSelector((state) => Object.values(state.spots));
-  console.log("spots 👉", spots)
 
   useEffect(() => {
     dispatch(getSpotsThunk());
@@ -15,7 +14,7 @@ function HomePage() {
 
 
   return (
-      <div className="spots-container homepage">
+      <div className="spots-container">
         {spots.map((spot) => (
           <SpotItem spot={spot}/>
         ))}

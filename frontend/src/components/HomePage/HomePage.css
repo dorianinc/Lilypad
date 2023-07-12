@@ -1,8 +1,25 @@
+/* .spots-container {
+  display: grid;
+  grid-template-columns: repeat(6, 350px);
+  justify-content: flex-start;
+  width:fit-content;
+  margin: 0 auto;
+  gap: 2.5em;
+} */
+
 .spots-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
   justify-content: center;
-  width: 100%;
   margin: 0 auto;
   gap: 2.5em;
 }
+
+/* .spots-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 350px));
+  width: max-content;
+  margin: 0 auto;
+  gap: 2.5rem;
+  border: 2px solid red;
+} */

@@ -79,7 +79,7 @@ const Dates = ({ minNights }) => {
             showDateDisplay={false} // hides the default start date - end date display
             focusedRange={onStartDate ? [0, 0] : [0, 1]} // [0,0] focuses the start date && [0,1] focuses the end date
             disabledDay={bookedDays} // pushed the days that should be disabled into an array
-            disabledDates={disabledDays} // takes the disables days array and disables the days
+            // disabledDates={disabledDays} // takes the disables days array and disables the days
             ranges={booking} // ** collects the start date and end date values **
             onChange={handleSelect} // handles on change after every date is selected
             showSelectionPreview={true}

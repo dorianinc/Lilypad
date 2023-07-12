@@ -79,27 +79,38 @@ function NewSpotPage() {
     e.preventDefault();
     let err = {};
     const spot = { address, city, state, country, lat, lng, name, description, price };
-    const newSpot = await dispatch(createSpotThunk(spot));
-    if (newSpot && newSpot.errors) err = newSpot.errors;
     if (files.length <= 0) err.images = "Please add at least one image to your pad";
     setErrors(err);
-    if (!Object.values(err).length) {
-      setIsLoading(true);
-      const imagesArr = [];
-      for (let i = 0; i < files.length; i++) {
-        const image = files[i];
-        if (i === 0) {
-          imagesArr.push({ image, preview: true });
-        } else {
-          imagesArr.push({ image, preview: false });
+    if (err.images) return;
+    dispatch(createSpotThunk(spot))
+      .then(async (newSpot) => {
+        setIsLoading(true);
+        if (!Object.values(err).length) {
+          setIsLoading(true);
+          const imagesArr = [];
+          for (let i = 0; i < files.length; i++) {
+            const image = files[i];
+            if (i === 0) {
+              imagesArr.push({ image, preview: true });
+            } else {
+              imagesArr.push({ image, preview: false });
+            }
+          }
+          const spotImages = await dispatch(addImageThunk(newSpot.id, imagesArr));
+          if (spotImages) {
+            setIsLoading(false);
+            history.push(`/spots/${newSpot.id}`);
+          }
         }
-        const spotImages = await dispatch(addImageThunk(newSpot.id, imagesArr));
-        if (spotImages) {
-          setIsLoading(false);
-          history.push(`/spots/${newSpot.id}`);
+      })
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          let errors = data.errors;
+          err = { ...err, ...errors };
+          setErrors(err);
         }
-      }
-    }
+      });
   };
 
   return (

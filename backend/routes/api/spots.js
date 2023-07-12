@@ -20,7 +20,7 @@ router.get("/", validateQueries, async (req, res) => {
 
   // set defaults for page and sizes
   if (!page) page = 1;
-  if (!size) size = 20;
+  if (!size) size = 25;
 
   // convert page and size into numbers
   page = parseInt(page);
@@ -28,7 +28,7 @@ router.get("/", validateQueries, async (req, res) => {
 
   // declare limits for page and size
   if (page > 10) page = 10;
-  if (size > 20) size = 20;
+  if (size > 20) size = 25;
 
   let pagination = {};
   pagination.limit = size;
@@ -351,7 +351,8 @@ router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], as
       raw: true,
     });
     if (user.id !== spot.ownerId) {
-      if (isAvailable(startDate, endDate, bookedDates, res)) {
+      const bookingRequest = {startDate, endDate}
+      if (isAvailable(bookingRequest, bookedDates, res)) {
         const newBooking = await Booking.create({
           spotId: spot.id,
           userId: user.id,

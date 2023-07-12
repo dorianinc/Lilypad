@@ -9,13 +9,12 @@ function LoginFormModal() {
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-  const [buttonClass, setButtonClass] = useState("pink-button disabled");
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(sessionActions.login({ credential, password }))
+    dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
@@ -27,23 +26,17 @@ function LoginFormModal() {
 
   const signInDemo = (e) => {
     e.preventDefault();
-    return dispatch(sessionActions.login({ credential: "demo_user123", password: "password1" }))
-      .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
-      });
+    return (
+      dispatch(sessionActions.login({ credential: "demo_user123", password: "password1" }))
+        .then(closeModal)
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.errors) {
+            setErrors(data.errors);
+          }
+        })
+    );
   };
-
-  useEffect(() => {
-    if (credential.length >= 4 && password.length >= 6) {
-      setButtonClass("pink-button");
-    } else {
-      setButtonClass("pink-button disabled");
-    }
-  }, [credential, password]);
 
   return (
     <div className="loginModal">
@@ -55,8 +48,8 @@ function LoginFormModal() {
             placeholder="Username or Email"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
-            required
           />
+          {errors.credential && <p className="errors">{errors.credential}</p>}
         </label>
         <label>
           <input
@@ -64,15 +57,11 @@ function LoginFormModal() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
           />
+          {errors.password && <p className="errors">{errors.password}</p>}
+          {errors.login && <p className="errors">{errors.login}</p>}
         </label>
-        {errors.credential && <p className="errors">{errors.credential}</p>}
-        <button
-          className={buttonClass}
-          disabled={buttonClass === "pink-button disabled"}
-          type="submit"
-        >
+        <button className="pink-button" type="submit">
           Log In
         </button>
       </form>
