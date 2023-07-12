@@ -4,7 +4,7 @@ const isAvailable = (booking, bookedDates, res) => {
     statusCode: 403,
     errors: {},
   };
-  const bookingIdKey = booking.bookingId ? Number(booking.bookingId) : null;
+  const bookingIdKey = Number(booking.bookingId);
   const requestedStart = new Date(booking.startDate).getTime();
   const requestedEnd = new Date(booking.endDate).getTime();
 
