@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import LoadingScreen from "../../LoadingScreen";
 import DropZone from "../../DropZone";
+import LocationSearchInput from "../../LocationSearchInput";
 
 function NewSpotPage() {
   const [country, setCountry] = useState("");
@@ -136,14 +137,15 @@ function NewSpotPage() {
         </label>
         <label className="street-label">
           Street Address
-          <input
+          <LocationSearchInput nameOfClass="one-liner" />
+          {/* <input
             name="address"
             value={address}
             className="one-liner"
             id="address"
             placeholder="Address"
             onChange={(e) => setAddress(e.target.value)}
-          />
+          /> */}
           <p className="errors">{errors.address}</p>
         </label>
         <div className="flex-inputs">
