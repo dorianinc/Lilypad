@@ -12,7 +12,7 @@ import BookingsPage from "./components/Bookings/UsersBookings";
 import ConfirmBooking from "./components/Bookings/BookingConfirmation";
 import BookingDetails from "./components/Bookings/BookingDetails";
 import EditBookingForm from "./components/Bookings/EditBookingForm";
-import LocationSearchInput from "./components/LocationSearchInput";
+import SpotForm from "./components/Spots/SpotForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,8 +27,8 @@ function App() {
       {isLoaded && (
         <div className="content-container">
           <Switch>
-          <Route path="/location">
-            <LocationSearchInput/>
+            <Route path="/spotform">
+              <SpotForm />
             </Route>
             <Route path="/spots/new">
               <NewSpotPage />

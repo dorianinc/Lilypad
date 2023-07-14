@@ -16,7 +16,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 400px;
+    height: 350px;
     border: 2px dotted #2B381F;
 }
 
@@ -43,8 +43,8 @@
 }
 
 .dropzone-preview-image{
-    height: 75px;
-    width: 75px;
+    height: 60px;
+    width: 60px;
     border-radius: 10px;
 }
 

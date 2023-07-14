@@ -33,9 +33,9 @@ h4 {
   font-weight: 500;
 }
 
-text-area,
+textarea,
 input, select {
-  font-size: 18px;
+  font-size: 1rem;
 }
 
 
@@ -116,9 +116,8 @@ input, select {
 }
 
 .one-liner {
-  min-width: 0;
   width: 100%;
-  overflow: hidden;
+  margin-bottom: 15px;
 }
 
 .flex-inputs {

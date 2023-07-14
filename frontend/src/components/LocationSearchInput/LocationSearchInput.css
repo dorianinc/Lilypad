@@ -1,0 +1,18 @@
+.auto-complete-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.auto-complete-input {
+  width: 100%;
+}
+
+.auto-complete-dropdown {
+  position: absolute;
+  border: 1px solid black;
+  width: 100%;
+  top: 35px;
+  padding: 5px;
+}

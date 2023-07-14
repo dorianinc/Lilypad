@@ -1,11 +1,10 @@
-import { useState } from "react";
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import "./LocationSearchInput.css"
 
-const LocationSearchInput = ({nameOfClass}) => {
-  const [address, setAddress] = useState();
+const LocationSearchInput = ({ location, setLocation, nameOfClass }) => {
 
   const handleChange = (value) => {
-    setAddress(value);
+    setLocation(value);
   };
 
   const handleSelect = (value) => {
@@ -15,18 +14,18 @@ const LocationSearchInput = ({nameOfClass}) => {
       .catch((error) => console.error("Error", error));
   };
 
-
   return (
-    <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
+    <PlacesAutocomplete value={location} onChange={handleChange} onSelect={handleSelect}>
       {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-        <div>
+        <div className="auto-complete-container">
           <input
             {...getInputProps({
-              placeholder: "Search Places ...",
-              className: nameOfClass,
+              placeholder: "123 Lilypad Drive, Ribbit, CA, USA",
+              className: "auto-complete-input"
             })}
           />
-          <div className="autocomplete-dropdown-container">
+          {suggestions.length ? (
+          <div className="auto-complete-dropdown">
             {loading && <div>Loading...</div>}
             {suggestions.map((suggestion) => {
               const className = suggestion.active ? "suggestion-item--active" : "suggestion-item";
@@ -41,13 +40,15 @@ const LocationSearchInput = ({nameOfClass}) => {
                     style,
                   })}
                 >
-                  <span onClick={(e) => setAddress(suggestion.description)}>
+                  <span onClick={(e) => setLocation(suggestion.description)}>
                     {suggestion.description}
                   </span>
                 </div>
               );
             })}
           </div>
+
+          ): null}
         </div>
       )}
     </PlacesAutocomplete>

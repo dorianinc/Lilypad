@@ -66,19 +66,22 @@ const Calendar = ({ bookingIdKey, minNights }) => {
   }, [globalStartDate, globalEndDate]);
 
   const clearDates = (submitted) => {
-    const dates = booking[0];
 
     if (submitted) setFocus("");
     else setFocus(1);
-    dates.globalStartDate = null;
-    dates.globalEndDate = new Date("");
     localStorage.setItem("storedStartDate", "");
     setGlobalStartDate("");
     localStorage.setItem("storedEndDate", "");
     setGlobalEndDate("");
     setNumNights(0);
     setFormattedDate("");
-    setBooking([dates]);
+    setBooking([
+      {
+        ...booking[0],
+        startDate: null,
+        endDate: new Date(""),
+      },
+    ]);
     setOnStartDate(true);
     setCalendarErrors({});
   };

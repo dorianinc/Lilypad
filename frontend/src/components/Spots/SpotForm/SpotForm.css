@@ -1,0 +1,82 @@
+.spot-form-container {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 40%;
+  height: 60%;
+  margin: auto auto;
+}
+
+.spot-form-left {
+  width: 450px;
+}
+
+.lottie-svg {
+  height: 525px;
+}
+
+.spot-form-right {
+  width: 600px;
+}
+
+
+.spot-form-sub-headers {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+section {
+  display: flex;
+  align-items: center;
+}
+
+.search-input-container{
+  width: 90%;
+  margin: 0 auto;
+}
+
+.spot-form-textarea {
+  resize: none;
+  padding: 5px;
+  height: 200px;
+  width: 100%;
+}
+
+.spot-form-price,
+.spot-form-guests,
+.spot-form-nights {
+  width: 30%;
+  font-size: 0.9rem;
+}
+
+.spot-form-price > input,
+.spot-form-guests > input,
+.spot-form-nights > input {
+  width: 100%;
+}
+
+.spot-form-one-liner {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.spot-form-flex-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.spot-form-errors{
+  color: #ff0000;
+  font-size: .9rem;
+  font-weight: 500;
+}
