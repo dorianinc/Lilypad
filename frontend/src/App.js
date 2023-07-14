@@ -6,7 +6,6 @@ import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage/HomePage";
 import SpotPage from "./components/Spots/SpotDetails/SpotDetails";
 import ManageSpotsPage from "./components/Spots/UsersSpots/UsersSpots";
-import NewSpotPage from "./components/Spots/CreateSpotForm/CreateSpot";
 import EditSpotPage from "./components/Spots/EditSpotForm/EditSpot";
 import BookingsPage from "./components/Bookings/UsersBookings";
 import ConfirmBooking from "./components/Bookings/BookingConfirmation";
@@ -27,11 +26,8 @@ function App() {
       {isLoaded && (
         <div className="content-container">
           <Switch>
-            <Route path="/spotform">
-              <SpotForm />
-            </Route>
             <Route path="/spots/new">
-              <NewSpotPage />
+              <SpotForm/>
             </Route>
             <Route path="/spots/:spotId/edit">
               <EditSpotPage />

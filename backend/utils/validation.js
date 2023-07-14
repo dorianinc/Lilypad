@@ -70,8 +70,6 @@ const validateSpot = [
     .withMessage("State is required"),
   // country
   check("country")
-    .isLength({ min: 4, max: 35 })
-    .withMessage("Country name must be between 4-35 characters long")
     .exists({ checkFalsy: true, checkNull: true }) // check if value is falsey or null
     .withMessage("Country is required"),
   // latitude

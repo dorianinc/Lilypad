@@ -5,8 +5,9 @@ const {
   validateBooking,
   validateQueries,
 } = require("../../utils/validation");
+const validators = require("../../utils/validation");
 const { restoreUser, requireAuth, isAuthorized } = require("../../utils/auth");
-const { isAvailable, doesNotExist } = require("../../utils/helpers.js");
+const { isAvailable, doesNotExist, getName } = require("../../utils/helpers.js");
 const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require("../../db/models");
 const { singlePublicFileUpload, singleMulterUpload } = require("../../awsS3.js");
 const { Op } = require("sequelize");
@@ -219,13 +220,20 @@ router.get("/:spotId", async (req, res) => {
 // Create a new Spot
 router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
   const { user } = req;
-  const reqData = { ownerId: user.id, minNights: 2, maxGuests: 8 };
+  const reqData = { ownerId: user.id };
 
   for (property in req.body) {
     let value = req.body[property];
-    reqData[property] = value;
+    if (property === "state") {
+      reqData[property] = getName(value, false);
+    } else if (property === "country") {
+      reqData[property] = getName(value, true);
+    } else {
+      reqData[property] = value;
+    }
   }
 
+  console.log("reqData 👉", reqData)
   const newSpot = await Spot.create({ ...reqData });
   res.status(201).json(newSpot);
 });
@@ -351,7 +359,7 @@ router.post("/:spotId/bookings", [restoreUser, requireAuth, validateBooking], as
       raw: true,
     });
     if (user.id !== spot.ownerId) {
-      const bookingRequest = {startDate, endDate}
+      const bookingRequest = { startDate, endDate };
       if (isAvailable(bookingRequest, bookedDates, res)) {
         const newBooking = await Booking.create({
           spotId: spot.id,

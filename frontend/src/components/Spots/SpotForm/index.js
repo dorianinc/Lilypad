@@ -1,5 +1,6 @@
-import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import { useState, useRef } from "react";
+import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import { createSpotThunk, addImageThunk } from "../../../store/spotsReducer";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import pin from "./lottie/lilypad-pindrop.json";
@@ -7,6 +8,7 @@ import house from "./lottie/lilypad-house.json";
 import camera from "./lottie/lilypad-camera.json";
 import LocationSearchInput from "../../LocationSearchInput";
 import DropZone from "../../DropZone";
+import LoadingScreen from "../../LoadingScreen";
 import "./SpotForm.css";
 
 function SpotForm() {
@@ -15,8 +17,8 @@ function SpotForm() {
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
-  const [lng] = useState(null);
-  const [lat] = useState(null);
+  const [lng, setLng] = useState("");
+  const [lat, setLat] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
   const [maxGuests, setMaxGuests] = useState("");
@@ -48,17 +50,16 @@ function SpotForm() {
       } else if (locationArr.length < 4 || !addressRegex.test(location.trim())) {
         err.location = "Enter a valid address";
       } else {
-        setAddress(locationArr[0]);
-        setCity(locationArr[1]);
-        setState(locationArr[2]);
-        setCountry(locationArr[3]);
+        setAddress(locationArr[0].trim());
+        setCity(locationArr[1].trim());
+        setState(locationArr[2].trim());
+        setCountry(locationArr[3].trim());
       }
 
       // part 2/3 of form --> general info
     } else if (sectionIndex === 1) {
       // title
-      if (title.length < 5 || description.length > 25)
-        err.title = "Title must be 5-25 characters long";
+      if (title.length < 5 || title.length > 25) err.title = "Title must be 5-25 characters long";
       // description
       if (description.length < 100 || description.length > 600)
         err.description = "Description must be 100-600 characters long";
@@ -83,23 +84,68 @@ function SpotForm() {
     }
     if (!!Object.values(err).length) setErrors(err);
     else {
-        setSectionIndex((prev) => prev + 1);
-        setErrors({})
+      setSectionIndex((prev) => prev + 1);
+      setErrors({});
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
     const err = {};
-    if (files.length <= 0) {
+    const spot = {
+      address,
+      city,
+      state,
+      country,
+      lat,
+      lng,
+      name: title,
+      description,
+      minNights,
+      maxGuests,
+      price,
+    };
+
+    if (files.length !== 5) {
       console.log("error");
-      err.images = "Please add at least one image to your pad";
+      err.images = "Add 5 images to your pad";
     }
     if (!!Object.values(err).length) setErrors(err);
-    console.log("")
+    else {
+      dispatch(createSpotThunk(spot))
+        .then(async (newSpot) => {
+          setIsLoading(true);
+          if (!Object.values(err).length) {
+            setIsLoading(true);
+            const imagesArr = [];
+            for (let i = 0; i < files.length; i++) {
+              const image = files[i];
+              if (i === 0) {
+                imagesArr.push({ image, preview: true });
+              } else {
+                imagesArr.push({ image, preview: false });
+              }
+            }
+            const spotImages = await dispatch(addImageThunk(newSpot.id, imagesArr));
+            if (spotImages) {
+              setIsLoading(false);
+              history.push(`/spots/${newSpot.id}`);
+            }
+          }
+        })
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.errors) {
+            let errors = data.errors;
+            err = { ...err, ...errors };
+            setErrors(err);
+          }
+        });
+    }
   };
 
   return (
     <div className="spot-form-container">
+      {isLoading && <LoadingScreen />}
       <h1 style={{ alignSelf: "flex-start" }}>Create a new Pad...</h1>
       <div className="spot-form-content">
         {sectionIndex === 0 ? (
@@ -116,7 +162,10 @@ function SpotForm() {
                 <LocationSearchInput
                   location={location}
                   setLocation={setLocation}
-                  nameOfClass="location-input"
+                  lat={lat}
+                  setLat={setLat}
+                  lng={lng}
+                  setLng={setLng}
                 />
                 <p className="spot-form-errors">{errors.location}</p>
               </div>
@@ -198,7 +247,7 @@ function SpotForm() {
             <div className="spot-form-right">
               <div className="spot-form-sub-headers">
                 <h1>Liven up your spot with photos</h1>
-                <p>Upload up to 5 images</p>
+                <p>Upload 5 images</p>
               </div>
               <DropZone files={files} setFiles={setFiles} />
               <p className="errors">{errors.images}</p>
@@ -210,7 +259,7 @@ function SpotForm() {
             Previous
           </button>
           {sectionIndex === 2 ? (
-            <button className="black-button" onClick={handleSubmit}>
+            <button className="black-button" onClick={(e) => handleSubmit(e)}>
               Create Pad
             </button>
           ) : (

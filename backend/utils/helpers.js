@@ -61,8 +61,113 @@ const hasPassed = (startDate, endDate, res) => {
   }
 };
 
+
+const getName = (acronym, isCountry) => {
+  acronym = acronym.toUpperCase();
+
+  const stateMap = {
+    AL: 'Alabama',
+    AK: 'Alaska',
+    AZ: 'Arizona',
+    AR: 'Arkansas',
+    CA: 'California',
+    CO: 'Colorado',
+    CT: 'Connecticut',
+    DE: 'Delaware',
+    FL: 'Florida',
+    GA: 'Georgia',
+    HI: 'Hawaii',
+    ID: 'Idaho',
+    IL: 'Illinois',
+    IN: 'Indiana',
+    IA: 'Iowa',
+    KS: 'Kansas',
+    KY: 'Kentucky',
+    LA: 'Louisiana',
+    ME: 'Maine',
+    MD: 'Maryland',
+    MA: 'Massachusetts',
+    MI: 'Michigan',
+    MN: 'Minnesota',
+    MS: 'Mississippi',
+    MO: 'Missouri',
+    MT: 'Montana',
+    NE: 'Nebraska',
+    NV: 'Nevada',
+    NH: 'New Hampshire',
+    NJ: 'New Jersey',
+    NM: 'New Mexico',
+    NY: 'New York',
+    NC: 'North Carolina',
+    ND: 'North Dakota',
+    OH: 'Ohio',
+    OK: 'Oklahoma',
+    OR: 'Oregon',
+    PA: 'Pennsylvania',
+    RI: 'Rhode Island',
+    SC: 'South Carolina',
+    SD: 'South Dakota',
+    TN: 'Tennessee',
+    TX: 'Texas',
+    UT: 'Utah',
+    VT: 'Vermont',
+    VA: 'Virginia',
+    WA: 'Washington',
+    WV: 'West Virginia',
+    WI: 'Wisconsin',
+    WY: 'Wyoming',
+  };
+
+  const countryMap = {
+    USA: 'United States',
+    CA: 'Canada',
+    MX: 'Mexico',
+    GB: 'United Kingdom',
+    DE: 'Germany',
+    FR: 'France',
+    ES: 'Spain',
+    IT: 'Italy',
+    JP: 'Japan',
+    CN: 'China',
+    IN: 'India',
+    BR: 'Brazil',
+    AU: 'Australia',
+    RU: 'Russia',
+    SA: 'Saudi Arabia',
+    ZA: 'South Africa',
+    AR: 'Argentina',
+    CL: 'Chile',
+    CO: 'Colombia',
+    EG: 'Egypt',
+    NG: 'Nigeria',
+    KE: 'Kenya',
+    PK: 'Pakistan',
+    TR: 'Turkey',
+    SE: 'Sweden',
+    CH: 'Switzerland',
+    NL: 'Netherlands',
+    BE: 'Belgium',
+    AT: 'Austria',
+    PT: 'Portugal',
+    GR: 'Greece',
+    KR: 'South Korea',
+    ID: 'Indonesia',
+    TH: 'Thailand',
+    VN: 'Vietnam',
+    MY: 'Malaysia',
+    SG: 'Singapore',
+    PH: 'Philippines',
+    NZ: 'New Zealand',
+  };
+
+  const map = isCountry ? countryMap : stateMap;
+
+  return map[acronym] || null;
+};
+
 module.exports = {
   isAvailable,
   doesNotExist,
   hasPassed,
+  getName
 };
