@@ -1,8 +1,13 @@
-import { useState, useRef } from "react";
-import Lottie, { LottieRefCurrentProps } from "lottie-react";
-import { createSpotThunk, addImageThunk } from "../../../store/spotsReducer";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
+import {
+  createSpotThunk,
+  addImageThunk,
+  getSingleSpotThunk,
+  updateSpotThunk,
+} from "../../../store/spotsReducer";
+import Lottie from "lottie-react";
 import pin from "./lottie/lilypad-pindrop.json";
 import house from "./lottie/lilypad-house.json";
 import camera from "./lottie/lilypad-camera.json";
@@ -28,6 +33,7 @@ function SpotForm() {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [sectionIndex, setSectionIndex] = useState(0);
+  const { spotId } = useParams();
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -89,7 +95,7 @@ function SpotForm() {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, create = true) => {
     const err = {};
     const spot = {
       address,
@@ -105,48 +111,53 @@ function SpotForm() {
       price,
     };
 
-    if (files.length !== 5) {
-      console.log("error");
-      err.images = "Add 5 images to your pad";
-    }
-    if (!!Object.values(err).length) setErrors(err);
-    else {
-      dispatch(createSpotThunk(spot))
-        .then(async (newSpot) => {
-          setIsLoading(true);
-          if (!Object.values(err).length) {
-            setIsLoading(true);
-            const imagesArr = [];
-            for (let i = 0; i < files.length; i++) {
-              const image = files[i];
-              if (i === 0) {
-                imagesArr.push({ image, preview: true });
-              } else {
-                imagesArr.push({ image, preview: false });
-              }
-            }
-            const spotImages = await dispatch(addImageThunk(newSpot.id, imagesArr));
-            if (spotImages) {
-              setIsLoading(false);
-              history.push(`/spots/${newSpot.id}`);
-            }
+    if (create) {
+      if (files.length !== 5) err.images = "Add 5 images to your pad";
+      if (!!Object.values(err).length) setErrors(err);     
+      dispatch(createSpotThunk(spot)).then(async (newSpot) => {
+        setIsLoading(true);
+        const imagesArr = [];
+        for (let i = 0; i < files.length; i++) {
+          const image = files[i];
+          if (i === 0) {
+            imagesArr.push({ image, preview: true });
+          } else {
+            imagesArr.push({ image, preview: false });
           }
-        })
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) {
-            let errors = data.errors;
-            err = { ...err, ...errors };
-            setErrors(err);
-          }
-        });
+        }
+        const spotImages = await dispatch(addImageThunk(newSpot.id, imagesArr));
+        if (spotImages) {
+          setIsLoading(false);
+          history.push(`/spots/${newSpot.id}`);
+        }
+      });
+    } else {
+      await dispatch(updateSpotThunk(spotId, spot));
+      history.push(`/spots/${spotId}`);
     }
   };
+
+  useEffect(() => {
+    if (spotId) {
+      dispatch(getSingleSpotThunk(spotId)).then((spot) => {
+        setLocation(`${spot.address}, ${spot.city}, ${spot.state}, ${spot.country}`);
+        setLat(spot.lat);
+        setLng(spot.lng);
+        setTitle(spot.name);
+        setDescription(spot.description);
+        setPrice(spot.price);
+        setMinNights(spot.minNights);
+        setMaxGuests(spot.maxGuests);
+      });
+    }
+  }, [dispatch, spotId]);
 
   return (
     <div className="spot-form-container">
       {isLoading && <LoadingScreen />}
-      <h1 style={{ alignSelf: "flex-start" }}>Create a new Pad...</h1>
+      <h1 style={{ alignSelf: "flex-start" }}>
+        {!spotId ? "Create a new Pad..." : "Update your Pad..."}
+      </h1>
       <div className="spot-form-content">
         {sectionIndex === 0 ? (
           <section id="spot-location">
@@ -261,6 +272,10 @@ function SpotForm() {
           {sectionIndex === 2 ? (
             <button className="black-button" onClick={(e) => handleSubmit(e)}>
               Create Pad
+            </button>
+          ) : sectionIndex === 1 && spotId ? (
+            <button className="black-button" onClick={(e) => handleSubmit(e, false)}>
+              Submit Changes
             </button>
           ) : (
             <button className="black-button" onClick={nextSection}>

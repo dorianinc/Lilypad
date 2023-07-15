@@ -220,20 +220,19 @@ router.get("/:spotId", async (req, res) => {
 // Create a new Spot
 router.post("/", [restoreUser, requireAuth, validateSpot], async (req, res) => {
   const { user } = req;
-  const reqData = { ownerId: user.id };
+  const data = { ownerId: user.id };
 
   for (property in req.body) {
     let value = req.body[property];
     if (property === "state") {
-      reqData[property] = getName(value, false);
+      data[property] = getName(value, false);
     } else if (property === "country") {
-      reqData[property] = getName(value, true);
+      data[property] = getName(value, true);
     } else {
-      reqData[property] = value;
+      data[property] = value;
     }
   }
-
-  console.log("reqData 👉", reqData)
+  
   const newSpot = await Spot.create({ ...reqData });
   res.status(201).json(newSpot);
 });
@@ -276,7 +275,13 @@ router.put("/:spotId", [restoreUser, requireAuth, validateSpot], async (req, res
     if (isAuthorized(user.id, spot.ownerId, res)) {
       for (property in req.body) {
         let value = req.body[property];
-        spot[property] = value;
+        if (property === "state") {
+          spot[property] = getName(value, false);
+        } else if (property === "country") {
+          spot[property] = getName(value, true);
+        } else {
+          spot[property] = value;
+        }
       }
       await spot.save();
       res.status(200).json(spot);
