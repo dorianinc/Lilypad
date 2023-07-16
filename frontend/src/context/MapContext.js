@@ -4,20 +4,16 @@ export const MapContext = createContext();
 export const useMap = () => useContext(MapContext);
 
 export default function MapProvider({ children }) {
-  const [currentZoom, setCurrentZoom] = useState(5);
-  const [currentLat, setCurrentLat] = useState();
-  const [currentLng, setCurrentLng] = useState();
-
+  const [spotLngLat, setSpotLngLat] = useState();
+  const [userLngLat, setUserLngLat] = useState();
 
   return (
     <MapContext.Provider
       value={{
-        currentZoom,
-        setCurrentZoom,
-        currentLat,
-        setCurrentLat,
-        currentLng,
-        setCurrentLng
+        spotLngLat,
+        setSpotLngLat,
+        userLngLat,
+        setUserLngLat,
       }}
     >
       {children}

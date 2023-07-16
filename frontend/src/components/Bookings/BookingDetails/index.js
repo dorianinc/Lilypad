@@ -12,6 +12,7 @@ const BookingDetails = () => {
   const { bookingId } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+  const [originLatLng, setOriginLatLng] = useState({});
   const booking = useSelector((state) => state.bookings);
 
   useEffect(() => {
@@ -28,6 +29,17 @@ const BookingDetails = () => {
 
   const goToEdit = () => {
     history.push(`/bookings/${bookingId}/edit`);
+  };
+
+  const getDirections = async () => {
+    await navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        setOriginLatLng({ lat, lng });
+      },
+      // (error) => console.log(error)
+    );
   };
 
   if (!booking || !booking.spot) return null;
@@ -65,7 +77,7 @@ const BookingDetails = () => {
           </div>
           <hr style={{ border: "1px solid #d2d2d2" }} />
           <div className="bookings-details-menu">
-            <div className="booking-details-menu-section">
+            <div className="booking-details-menu-section clickable" onClick={getDirections}>
               <i class="fa-solid fa-location-dot fa-2xl booking-icon" />
               <div className="booking-details-meu-content">
                 <p style={{ fontSize: "1rem", fontWeight: "500" }}>Getting there</p>
@@ -105,9 +117,12 @@ const BookingDetails = () => {
           </div>
         </div>
       </div>
-      <div className="map">
-        <Map spotLat={booking.spot.lat} spotLng={booking.spot.lng} />
-      </div>
+      <section className="map-section">
+        <Map
+          spotLatLng={{ lat: Number(booking.spot.lat), lng: Number(booking.spot.lng) }}
+          originLatLng={originLatLng}
+        />
+      </section>
     </div>
   );
 };

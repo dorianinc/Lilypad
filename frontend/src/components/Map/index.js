@@ -1,36 +1,42 @@
-// import dotenv from "dotenv";
-import { useEffect, useMemo } from "react";
-import { useMap } from "../../context/MapContext";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { useState, useMemo, useEffect } from "react";
+import { GoogleMap, Marker, DirectionsRenderer, useLoadScript } from "@react-google-maps/api";
 import "./Map.css";
 
-const Map = ({ spotLat, spotLng }) => {
-  const { currentZoom, setCurrentZoom, currentLat, setCurrentLat, currentLng, setCurrentLng } =
-    useMap();
+const Map = ({ spotLatLng, originLatLng }) => {
+  const google = window.google;
+  const [directions, setDirections] = useState();
+  const center = useMemo(() => spotLatLng, [spotLatLng]);
+  const mapOptions = { zoom: 19, center };
 
-  const center = useMemo(
-    () => ({ lat: Number(spotLat), lng: Number(spotLng) }),
-    [spotLat, spotLng]
-  );
-  const mapOptions = {
-    zoom: 19,
-    center,
-  };
 
-  // useEffect(() => {
-  //   setCurrentZoom(19);
-  //   setCurrentLat(Number(spotLat));
-  //   setCurrentLng(Number(spotLng));
-  // }, []);
+  useEffect(() => {
+    if (!originLatLng || !spotLatLng) return;
+    const service = new google.maps.DirectionsService();
+    service.route(
+      {
+        origin: originLatLng,
+        destination: spotLatLng,
+        travelMode: google.maps.TravelMode.DRIVING,
+      },
+      (result, status) => {
+        if (status === "OK" && result) {
+          setDirections(result);
+        }
+      }
+    );
+  }, [spotLatLng, originLatLng])
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY,
+    libraries: ["places"],
   });
+
   if (!isLoaded) return <h1>Loading...</h1>;
   return (
     <>
       <GoogleMap options={mapOptions} mapContainerClassName="map-container">
-        <Marker position={{ lat: Number(spotLat), lng: Number(spotLng) }} />
+        {directions && <DirectionsRenderer directions={directions} />}
+        <Marker position={spotLatLng} />
       </GoogleMap>
     </>
   );
