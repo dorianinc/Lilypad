@@ -36,7 +36,7 @@
     font-weight: 600;
   }
   
-  .card-container:hover::before {
+  /* .card-container:hover::before {
     position: absolute;
     top: 0;
     font-weight: 500;
@@ -46,6 +46,26 @@
     content: attr(data-tooltip);
     background-color: white;
     border-bottom-right-radius: 10px;
+  } */
+
+
+  
+
+  .card-container:hover::before {
+    position: absolute;
+    top: 0; /* Position at the top */
+    left: 0; /* Position at the left */
+    font-weight: 500;
+    font-size: 1rem;
+    height: 30px;
+    line-height: 30px;
+    padding: 5px;
+    content: attr(data-tooltip);
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    z-index: 1;
+    white-space: nowrap;
   }
   
   .item-divider {

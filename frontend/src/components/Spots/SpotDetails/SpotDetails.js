@@ -17,7 +17,8 @@ function SpotDetails() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const { booking, setBooking } = useCalendar();
-  const { setBookedDates, setGlobalStartDate, setGlobalEndDate } = useCalendar();
+  const { setBookedDates, setGlobalStartDate, setGlobalEndDate } =
+    useCalendar();
   const spot = useSelector((state) => state.spots);
 
   useEffect(() => {
@@ -31,8 +32,9 @@ function SpotDetails() {
     });
   }, [dispatch, spotId]);
 
-  const reviews = useSelector((state) => Object.values(state.reviews).reverse());
-
+  const reviews = useSelector((state) =>
+    Object.values(state.reviews).reverse()
+  );
   // find user then check if user has left a review
   let hasReviewed = false;
   const user = useSelector((state) => state.session.user);
@@ -94,7 +96,9 @@ function SpotDetails() {
             </p>
             <p id="spotRating">
               <i className="fa-solid fa-star" />
-              {Number(spot.avgStarRating) ? " " + Number(spot.avgStarRating).toFixed(2) : " New"}
+              {Number(spot.avgStarRating)
+                ? " " + Number(spot.avgStarRating).toFixed(2)
+                : " New"}
               {Number(spot.numReviews) === 1
                 ? ` · ${spot.numReviews} review`
                 : spot.numReviews < 1
@@ -109,7 +113,9 @@ function SpotDetails() {
       <div className="reviews-container">
         <h2>
           <i className="fa-solid fa-star" />
-          {Number(spot.avgStarRating) ? " " + Number(spot.avgStarRating).toFixed(2) : " New"}
+          {Number(spot.avgStarRating)
+            ? " " + Number(spot.avgStarRating).toFixed(2)
+            : " New"}
           {Number(spot.numReviews) === 1
             ? ` · ${spot.numReviews} review`
             : spot.numReviews < 1
@@ -141,7 +147,9 @@ function SpotDetails() {
                       <p>Delete</p>
                     </button>
                   }
-                  modalComponent={<DeleteReviewModal spotId={spotId} reviewId={review.id} />}
+                  modalComponent={
+                    <DeleteReviewModal spotId={spotId} reviewId={review.id} />
+                  }
                 />
               ) : null}
             </div>
