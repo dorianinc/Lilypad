@@ -292,18 +292,15 @@ const spotSeeds = () => {
   ];
 };
 
-const up = async (queryInterface, Sequelize) => {
-  options.tableName = "Spots";
-  return queryInterface.bulkInsert(options, spotSeeds(), {});
-};
-
-const down = async (queryInterface, Sequelize) => {
-  options.tableName = "Spots";
-  return queryInterface.bulkDelete(options, null, {});
-};
-
 module.exports = {
-  up,
-  down,
-  spotSeeds
+  spotSeeds,
+  up: async (queryInterface, Sequelize) => {
+    options.tableName = "Spots";
+    return queryInterface.bulkInsert(options, spotSeeds(), {});
+  },
+
+  down: async (queryInterface, Sequelize) => {
+    options.tableName = "Spots";
+    return queryInterface.bulkDelete(options, null, {});
+  },
 };
